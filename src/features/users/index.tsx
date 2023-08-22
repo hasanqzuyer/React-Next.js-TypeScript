@@ -12,10 +12,10 @@ import { Grid, Stack, Collapse } from 'components/system';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import Link from 'next/link';
 import { useModal, usePagination, useSnackbar } from 'hooks';
-import ExportUsersModal from './elements/export-influencers-modal';
 import UsersAPI from 'api/users';
 import { IUser } from 'api/users/types';
 import { getAge } from 'utilities/birthday-age-converter';
+import ExportUsersModal from './elements/export-influencers-modal';
 
 const UsersPage = () => {
   const [filters, setFilter] = useState<any>(DUsersFilters());
@@ -34,12 +34,6 @@ const UsersPage = () => {
 
   const clearFilters = () => {
     setFilter(DUsersFilters());
-  };
-
-  const applyFilters = () => {
-    getAllUsers()
-      .then((data) => setTotalColumnItems(data))
-      .catch((error) => push('Something went wrong!', { variant: 'error' }));
   };
 
   const toggleUser = (rowId: number, checked: boolean) => {
@@ -83,13 +77,19 @@ const UsersPage = () => {
     }
   };
 
+  const applyFilters = () => {
+    getAllUsers()
+      .then((data) => setTotalColumnItems(data))
+      .catch((error) => push('Something went wrong!', { variant: 'error' }));
+  };
+
   useEffect(() => {
     getAllUsers()
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   }, []);
 
-  let PageSize = 10;
+  const PageSize = 10;
 
   const { pagesCount, page, setTotalResults, handlePageChange, reload } =
     usePagination({
