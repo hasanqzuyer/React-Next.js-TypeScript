@@ -40,6 +40,11 @@ export const DUsersHead = [
     visible: true,
   },
   {
+    reference: 'language',
+    label: 'Language',
+    visible: true,
+  },
+  {
     reference: 'applications',
     label: 'Applications',
     visible: true,

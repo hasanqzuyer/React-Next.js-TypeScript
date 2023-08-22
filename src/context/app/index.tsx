@@ -21,7 +21,7 @@ const AppContextProvider = ({ ...props }) => {
   const [state, setState] = useState<TAppContextState>({
     routeName: '',
     user: null,
-    role: 'ADMIN',
+    role: 'USER',
     initialLoading: true,
     showMobileMenu: true,
     currency: 'CHF',
@@ -54,11 +54,7 @@ const AppContextProvider = ({ ...props }) => {
 
       if (!user) throw 'No user returned';
 
-      const roleResult = convertNumberToRole(user.role);
-
-      if (!roleResult) throw 'No role found';
-
-      setState({ ...state, user, role: roleResult, initialLoading: false });
+      setState({ ...state, user, role: user.role, initialLoading: false });
 
       return user;
     } catch {

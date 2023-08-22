@@ -1,8 +1,4 @@
-import {
-  IInfluencer,
-  ILocation,
-  TAffiliatedInfluencer,
-} from 'api/influencer/types';
+import { IApplication } from 'api/applications/types';
 
 export type TCreateUser = {
   id: string;
@@ -32,17 +28,15 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  emailResendTokens: number;
-  locationId: number | null;
-  role: number;
-  status: number;
-  currency: number;
+  role: string;
+  dateOfBirth: string;
+  nationality: string;
+  profileImageUrl: string;
+  language: string;
+  location: string;
+  tokenBalance: number;
+  applications: IApplication[];
+  invested: number;
   createdAt: string;
   updatedAt: string;
-  assigneeUserLabels: any[];
-  productOrderChatRoomMember: any[];
-  notificationUsers: any[];
-  invitedInfluencers: TAffiliatedInfluencer[];
-  influencer: IInfluencer;
-  location?: ILocation;
 }
