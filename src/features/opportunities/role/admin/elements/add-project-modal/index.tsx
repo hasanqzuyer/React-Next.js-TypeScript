@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 import { Modal, RichTextEditor, Tabs } from 'components/custom';
 import { TExportFinanceModalProps } from 'features/finance/elements/export-finance-modal/types';
 import {
@@ -22,7 +22,7 @@ const ExportFinanceModal = ({
     <Modal
       size="medium"
       title="Add Project"
-      actions={[
+      actions={Children.toArray([
         <Button
           color="primary"
           variant="contained"
@@ -31,7 +31,7 @@ const ExportFinanceModal = ({
         >
           Add
         </Button>,
-      ]}
+      ])}
       onClose={onClose}
       {...props}
     >
@@ -42,49 +42,49 @@ const ExportFinanceModal = ({
             <Input
               type="text"
               label="Name"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Enter"
             />
             <Input
               type="select"
               label="Location"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Select"
             />
             <Input
               type="text"
               label="Total Spots"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Enter"
             />
             <Input
               type="text"
               label="Available Spots"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Enter"
             />
             <Input
               type="text"
               label="Rent"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Enter"
             />
             <Input
               type="select"
               label="Theme"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Select"
             />
             <Input
               type="select"
               label="Status"
-              value={null}
+              value=""
               onValue={() => {}}
               placeholder="Please Select"
             />

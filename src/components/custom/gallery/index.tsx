@@ -47,8 +47,8 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
             }}
             aria-label="My Favorite Images"
           >
-            {images.map((image: any) => (
-              <SplideItem key={image}>
+            {images.map((image: any, index: number) => (
+              <SplideItem key={image + index}>
                 <Image
                   fullscreen={fullscreen}
                   alt="Beautifull"
@@ -74,7 +74,7 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
       >
         {images.map((image: any, index: any) => (
           <SplideItem
-            key={image}
+            key={image + index + index}
             onClick={() => {
               handleFullScreen();
               handleStartIndex(index);

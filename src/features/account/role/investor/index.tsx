@@ -11,7 +11,7 @@ import {
   AccountGrid,
   ApplicationContainer,
 } from 'features/account/style';
-import { Button, Checkbox, Input } from 'components/ui';
+import { Button, Card, Checkbox, Input } from 'components/ui';
 import { ChangePasswordModal } from 'features/account/role/investor/elements';
 import { useModal } from 'hooks';
 import { Tabs } from 'components/custom';
@@ -20,9 +20,9 @@ import { AddIcon, DeleteIcon } from 'components/svg';
 
 const AccountPage = ({ ...props }) => {
   const [state, setState] = useState<any>({
-    firstName: null,
-    lastName: null,
-    email: null,
+    firstName: '',
+    lastName: '',
+    email: '',
     password: '',
   });
 
@@ -31,13 +31,13 @@ const AccountPage = ({ ...props }) => {
   const [tabs, setTabs] = useState(0);
 
   return (
-    <AccountMain {...props}>
-      <Stack>
-        <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
-        {tabs === 0 && (
-          <AccountContainer>
-            <AccountForm>
-              <AccountStack direction="horizontal">
+    <Stack>
+      <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
+      <AccountMain {...props}>
+        <Stack>
+          {tabs === 0 && (
+            <ApplicationContainer>
+              <AccountGrid>
                 <Input
                   type="text"
                   label="First Name"
@@ -52,8 +52,6 @@ const AccountPage = ({ ...props }) => {
                   onValue={(lastName) => setState({ ...state, lastName })}
                   disabled
                 />
-              </AccountStack>
-              <AccountChange>
                 <Input
                   type="text"
                   label="Email"
@@ -61,270 +59,286 @@ const AccountPage = ({ ...props }) => {
                   onValue={(email) => setState({ ...state, email })}
                   disabled
                 />
-              </AccountChange>
-              <AccountChange>
-                <Input
-                  type="text"
-                  label="Password"
-                  placeholder="**********"
-                  value={state.password}
-                  onValue={(password) => setState({ ...state, password })}
-                  disabled
-                />
-                <AccountSpan onClick={openCpModal}>Change Password</AccountSpan>
-              </AccountChange>
-            </AccountForm>
-          </AccountContainer>
-        )}
-        {tabs === 1 && (
-          <ApplicationContainer>
-            <Stack>
-              <AccountHeadline>Work Experience</AccountHeadline>
-              <AccountGrid>
-                <Input
-                  type="text"
-                  label="Job Title"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Company"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Location"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Stack direction="horizontal">
+                <AccountChange>
                   <Input
-                    type="date"
-                    label="From"
-                    value={null}
-                    onValue={() => {}}
+                    type="text"
+                    label="Password"
+                    placeholder="**********"
+                    value={state.password}
+                    onValue={(password) => setState({ ...state, password })}
                     disabled
                   />
+                  <AccountSpan onClick={openCpModal}>
+                    Change Password
+                  </AccountSpan>
+                </AccountChange>
+              </AccountGrid>
+            </ApplicationContainer>
+          )}
+          {tabs === 1 && (
+            <ApplicationContainer>
+              <Stack>
+                <AccountHeadline>Work Experience</AccountHeadline>
+                <AccountGrid style={{ position: 'relative' }}>
                   <Input
-                    type="date"
-                    label="To"
-                    value={null}
+                    type="select"
+                    label="Job Title"
+                    placeholder="Please Select"
+                    value=""
                     onValue={() => {}}
-                    disabled
                   />
-                </Stack>
-                <Input
-                  type="text"
-                  label="Role Description"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                  multiline
-                  rows={3}
-                  style={{ gridColumn: '1/3' }}
-                />
-                <AccountGrid>
-                  <Checkbox label="I still work here." />
-                </AccountGrid>
-                <AccountGrid>
-                  <div style={{ display: 'flex', gap: '16px' }}>
-                    <AddIcon style={{ color: '#9F9FB0' }} />
+                  <Input
+                    type="select"
+                    label="Company"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Location"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Stack
+                    direction="horizontal"
+                    style={{ position: 'relative' }}
+                  >
+                    <Input
+                      type="date"
+                      label="From"
+                      placeholder="Please Select"
+                      value=""
+                      onValue={() => {}}
+                    />
+                    <Input
+                      type="date"
+                      label="To"
+                      placeholder="Please Select"
+                      value=""
+                      onValue={() => {}}
+                    />
+                    <Checkbox
+                      label="I still work here."
+                      style={{
+                        position: 'absolute',
+                        right: '0',
+                        bottom: '-25px',
+                      }}
+                    />
+                  </Stack>
+                  <Input
+                    type="text"
+                    label="Role Description"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                    style={{ gridColumn: '1/3' }}
+                  />
+                  <Stack
+                    style={{
+                      position: 'absolute',
+                      right: '36px',
+                      top: '90px',
+                      width: 'fit-content',
+                      display: 'grid',
+                      placeItems: 'center',
+                    }}
+                  >
                     <DeleteIcon style={{ color: '#9F9FB0' }} />
-                  </div>
+                    <AddIcon style={{ color: '#9F9FB0' }} />
+                  </Stack>
                 </AccountGrid>
-              </AccountGrid>
-              <AccountHeadline>Education</AccountHeadline>
-              <AccountGrid>
-                <Input
-                  type="text"
-                  label="School or University"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Degree"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Field of Study"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Stack direction="horizontal">
+                <AccountHeadline>Education</AccountHeadline>
+                <AccountGrid style={{ position: 'relative' }}>
                   <Input
-                    type="date"
-                    label="From"
-                    value={null}
+                    type="select"
+                    label="School or University"
+                    placeholder="Please Select"
+                    value=""
                     onValue={() => {}}
-                    disabled
                   />
                   <Input
-                    type="date"
-                    label="To"
-                    value={null}
+                    type="select"
+                    label="Degree"
+                    placeholder="Please Select"
+                    value=""
                     onValue={() => {}}
-                    disabled
                   />
-                </Stack>
-                <Input
-                  type="text"
-                  label="Overall GPA"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '16px',
-                    alignItems: 'flex-end',
-                    marginBottom: '16px',
-                  }}
+                  <Input
+                    type="select"
+                    label="Field of Study"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Stack direction="horizontal">
+                    <Input
+                      type="date"
+                      label="From"
+                      placeholder="Please Select"
+                      value=""
+                      onValue={() => {}}
+                    />
+                    <Input
+                      type="date"
+                      label="To"
+                      placeholder="Please Select"
+                      value=""
+                      onValue={() => {}}
+                    />
+                  </Stack>
+                  <Input
+                    type="select"
+                    label="Overall GPA"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Stack
+                    style={{
+                      position: 'absolute',
+                      right: '36px',
+                      top: '90px',
+                      width: 'fit-content',
+                      display: 'grid',
+                      placeItems: 'center',
+                    }}
+                  >
+                    <DeleteIcon style={{ color: '#9F9FB0' }} />
+                    <AddIcon style={{ color: '#9F9FB0' }} />
+                  </Stack>
+                </AccountGrid>
+                <AccountHeadline>Skills</AccountHeadline>
+                <AccountGrid>
+                  <Input
+                    type="select"
+                    label="Type to Add Skills"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                </AccountGrid>
+                <AccountHeadline>Social Media</AccountHeadline>
+                <AccountGrid>
+                  <Input
+                    type="text"
+                    label="Instagram"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="text"
+                    label="LinkedIn"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="text"
+                    label="TikTok"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="text"
+                    label="Website"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                  />
+                </AccountGrid>
+                <AccountHeadline>House Preferences</AccountHeadline>
+                <AccountGrid>
+                  <Input
+                    type="select"
+                    label="Theme"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Skills of Others"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Location"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Language"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="min-max"
+                    label="Monthly Rent"
+                    value={{ min: '', max: '' }}
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="min-max"
+                    label="Age"
+                    value={{ min: '', max: '' }}
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="min-max"
+                    label="Tenants per House"
+                    value={{ min: '', max: '' }}
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Interests and Hobbies"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                  <Input
+                    type="select"
+                    label="Diet"
+                    placeholder="Please Select"
+                    value=""
+                    onValue={() => {}}
+                  />
+                </AccountGrid>
+                <AccountGrid>
+                  <Input
+                    type="text"
+                    label="Motivation"
+                    placeholder="Please Enter"
+                    value=""
+                    onValue={() => {}}
+                    style={{ gridColumn: '1/3' }}
+                  />
+                </AccountGrid>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
                 >
-                  <AddIcon style={{ color: '#9F9FB0' }} />
-                  <DeleteIcon style={{ color: '#9F9FB0' }} />
-                </div>
-              </AccountGrid>
-              <AccountHeadline>Skills</AccountHeadline>
-              <Input
-                type="text"
-                label="Type to Add Skills"
-                value={null}
-                onValue={() => {}}
-                disabled
-                style={{ maxWidth: '50%' }}
-              />
-              <AccountHeadline>Social Media</AccountHeadline>
-              <AccountGrid>
-                <Input
-                  type="text"
-                  label="Instagram"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="LinkedIn"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="TikTok"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Website"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-              </AccountGrid>
-              <AccountHeadline>House Preferences</AccountHeadline>
-              <AccountGrid>
-                <Input
-                  type="text"
-                  label="Theme"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Skills of Others"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Location"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Language"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="min-max"
-                  label="Monthly Rent"
-                  value={{ min: null, max: null }}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="min-max"
-                  label="Age"
-                  value={{ min: null, max: null }}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="min-max"
-                  label="Tenants per House"
-                  value={{ min: null, max: null }}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Interests and Hobbies"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-                <Input
-                  type="text"
-                  label="Diet"
-                  value={null}
-                  onValue={() => {}}
-                  disabled
-                />
-              </AccountGrid>
-              <Input
-                type="text"
-                label="Motivation"
-                value={null}
-                onValue={() => {}}
-                disabled
-                multiline
-                rows={3}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ maxWidth: '250px' }}
-              >
-                Save
-              </Button>
-            </Stack>
-          </ApplicationContainer>
-        )}
-      </Stack>
+                  Save
+                </Button>
+              </Stack>
+            </ApplicationContainer>
+          )}
+        </Stack>
 
-      {cpModal && <ChangePasswordModal onClose={closeCpModal} />}
-    </AccountMain>
+        {cpModal && <ChangePasswordModal onClose={closeCpModal} />}
+      </AccountMain>
+    </Stack>
   );
 };
 
