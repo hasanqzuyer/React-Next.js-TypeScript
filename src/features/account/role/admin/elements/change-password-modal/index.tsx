@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 import { Modal } from 'components/custom';
 import { TChangePasswordModalProps } from 'features/account/role/investor/elements/change-password-modal/types';
 import { ChangePasswordModalMain } from 'features/account/role/investor/elements/change-password-modal/styles';
@@ -35,7 +35,7 @@ const ChangePasswordModal = ({
     <Modal
       size="small"
       title="Do you want to change password?"
-      actions={[
+      actions={Children.toArray([
         <Button
           color="primary"
           variant="contained"
@@ -47,7 +47,7 @@ const ChangePasswordModal = ({
         >
           Change password
         </Button>,
-      ]}
+      ])}
       onClose={onClose}
       {...props}
     >

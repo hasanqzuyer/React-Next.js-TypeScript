@@ -50,9 +50,9 @@ const Table = ({
           {!!items.length && (
             <TableBody>
               {items.map((x: any, y: number) => (
-                <TableBodyRow>
+                <TableBodyRow key={y}>
                   {visibleItems.map((a: TTableHeadItem, b: number) => (
-                    <TableBodyCell>
+                    <TableBodyCell key={y + b}>
                       {renderItem({
                         headItem: a,
                         cell: {

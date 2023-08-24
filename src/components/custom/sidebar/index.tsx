@@ -60,7 +60,7 @@ const Sidebar = ({ ...props }: TSidebarProps) => {
         <CancelIcon />
       </SidebarCancel>
       <SidebarLogoLink href="/">
-        <SidebarLogo src="/static/assets/images/StakeEstateFull.svg" />
+        <SidebarLogo src="/static/assets/images/Brotherhood.svg" />
       </SidebarLogoLink>
       <SidebarItems>
         {DSidebarItems.filter((x) => x.roles.includes(role)).map((x, index) =>
@@ -70,11 +70,6 @@ const Sidebar = ({ ...props }: TSidebarProps) => {
               icon={x.icon}
               items={x.items}
               key={x.id}
-              item={nested[index]}
-              onClick={() => {
-                handleNested(index - 1);
-              }}
-              action={handleSidebar}
             />
           ) : (
             <SidebarItem

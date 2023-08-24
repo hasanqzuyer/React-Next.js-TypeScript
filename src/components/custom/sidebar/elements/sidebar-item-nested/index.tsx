@@ -18,31 +18,24 @@ const SidebarItemNested = ({
   icon,
   label,
   items,
-  item,
-  action,
   ...props
 }: TSidebarItemNestedProps) => {
   const router = useRouter();
 
   const active = items.map((x) => x.location).includes(router.pathname);
-  const { state } = item;
 
   return (
     <SidebarItemNestedOuter active={active} {...props}>
       <SidebarItemNestedMain>
         <SidebarItemNestedIcon>{icon}</SidebarItemNestedIcon>
         <SidebarItemNestedLabel>{label}</SidebarItemNestedLabel>
-        <SidebarItemNestedExpandIcon expanded={item.state}>
+        <SidebarItemNestedExpandIcon expanded={active}>
           <ArrowDownIcon />
         </SidebarItemNestedExpandIcon>
       </SidebarItemNestedMain>
-      <SidebarItemNestedDropDown expanded={item.state}>
+      <SidebarItemNestedDropDown expanded={active}>
         {items.map((x: TSidebarSubItem) => (
-          <SidebarItemNestedDropDownSubItem
-            href={x.location}
-            key={x.id}
-            // onClick={action}
-          >
+          <SidebarItemNestedDropDownSubItem href={x.location} key={x.id}>
             <SidebarItemNestedDropDownSubItemLabel
               active={x.location === router.pathname}
             >

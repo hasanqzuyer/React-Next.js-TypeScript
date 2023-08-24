@@ -20,6 +20,38 @@ export const DApplicationsFilters = () => ({
   status: null,
   dateFrom: null,
   dateTo: null,
+
+  jobTitle: null,
+  company: null,
+  workExperienceLocation: null,
+  currentlyEmployed: null,
+  skills: null,
+
+  school: null,
+  degree: null,
+  fieldOfStudy: null,
+
+  theme: null,
+  skillsOfOthers: null,
+  houseLocation: null,
+  houseLanguage: null,
+  monthlyRent: {
+    min: '',
+    max: '',
+  },
+  houseAge: {
+    min: '',
+    max: '',
+  },
+  tenantsPerHouse: {
+    min: '',
+    max: '',
+  },
+  interestsAndHobbies: {
+    min: '',
+    max: '',
+  },
+  diet: null,
 });
 
 export const DApplicationsHead = [
