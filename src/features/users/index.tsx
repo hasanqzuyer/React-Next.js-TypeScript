@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect,Children, useMemo } from 'react';
+import React, { useState, useEffect, Children, useMemo } from 'react';
 
 import {
   UsersPageMain,
@@ -615,7 +614,6 @@ const UsersPage = () => {
 
               <UsersPageFilterActions direction="horizontal">
                 <Button color="primary" variant="contained">
-
                   Filter
                 </Button>
                 <Button

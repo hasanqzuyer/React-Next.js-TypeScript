@@ -26,14 +26,8 @@ const Navigation = ({ ...props }: TNavigationProps) => {
 
   const router = useRouter();
 
-  const {
-    logout,
-    routeName,
-    role,
-    user,
-    handleMobileMenu,
-    showMobileMenu,
-  } = useAppContext();
+  const { logout, routeName, role, user, handleMobileMenu, showMobileMenu } =
+    useAppContext();
 
   const handleMenu = () => {
     setOpen(!open);
