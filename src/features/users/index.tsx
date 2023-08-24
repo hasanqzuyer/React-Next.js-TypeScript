@@ -316,86 +316,6 @@ const UsersPage = () => {
                 value={tabs}
                 onValue={setTabs}
               />
-
-              {/* <Grid columns={4}>
-                <Input
-                  type="text"
-                  label="Search"
-                  placeholder="Please Select"
-                  value={filters.search}
-                  onValue={(search) => setFilter({ ...filters, search })}
-                />
-                <Input
-                  type="select"
-                  label="Location"
-                  onSearch={debouncedLocation}
-                  placeholder="Please Select"
-                  options={locations}
-                  value={filters.location}
-                  onValue={(location) => setFilter({ ...filters, location })}
-                />
-                <Input
-                  type="select"
-                  label="Nationality"
-                  onSearch={debouncedNationalities}
-                  placeholder="Please Select"
-                  options={nationalities}
-                  value={filters.nationality}
-                  onValue={(nationality) =>
-                    setFilter({ ...filters, nationality })
-                  }
-                />
-                <Input
-                  type="min-max"
-                  label="Age"
-                  placeholder="Please Select"
-                  value={filters.age}
-                  onValue={(age) => setFilter({ ...filters, age })}
-                />
-                <Input
-                  type="select"
-                  label="Language"
-                  onSearch={debouncedLanguages}
-                  placeholder="Please Select"
-                  options={languages}
-                  value={filters.language}
-                  onValue={(language) => setFilter({ ...filters, language })}
-                />
-                <Input
-                  type="min-max"
-                  label="Applications"
-                  placeholder="Please Select"
-                  value={filters.applications}
-                  onValue={(applications) =>
-                    setFilter({ ...filters, applications })
-                  }
-                />
-                <Input
-                  type="min-max"
-                  label="Invested"
-                  placeholder="Please Select"
-                  value={filters.invested}
-                  onValue={(invested) => setFilter({ ...filters, invested })}
-                />
-                <Input
-                  type="select"
-                  label="Social Media"
-                  placeholder="Please Select"
-                  value={filters.socialMedia}
-                  onSearch={debouncedSocialMedias}
-                  options={socialMedias}
-                  onValue={(socialMedia) =>
-                    setFilter({ ...filters, socialMedia })
-                  }
-                />
-              </Grid>
-              <UsersPageFilterActions direction="horizontal">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={applyFilters}
-                >  */}
-
               {tabs === 0 && (
                 <Grid columns={4}>
                   <Input
@@ -408,14 +328,18 @@ const UsersPage = () => {
                   <Input
                     type="select"
                     label="Location"
+                    onSearch={debouncedLocation}
                     placeholder="Please Select"
+                    options={locations}
                     value={filters.location}
                     onValue={(location) => setFilter({ ...filters, location })}
                   />
                   <Input
                     type="select"
                     label="Nationality"
+                    onSearch={debouncedNationalities}
                     placeholder="Please Select"
+                    options={nationalities}
                     value={filters.nationality}
                     onValue={(nationality) =>
                       setFilter({ ...filters, nationality })
@@ -431,7 +355,9 @@ const UsersPage = () => {
                   <Input
                     type="select"
                     label="Language"
+                    onSearch={debouncedLanguages}
                     placeholder="Please Select"
+                    options={languages}
                     value={filters.language}
                     onValue={(language) => setFilter({ ...filters, language })}
                   />
@@ -456,6 +382,8 @@ const UsersPage = () => {
                     label="Social Media"
                     placeholder="Please Select"
                     value={filters.socialMedia}
+                    onSearch={debouncedSocialMedias}
+                    options={socialMedias}
                     onValue={(socialMedia) =>
                       setFilter({ ...filters, socialMedia })
                     }
@@ -613,7 +541,11 @@ const UsersPage = () => {
               )}
 
               <UsersPageFilterActions direction="horizontal">
-                <Button color="primary" variant="contained">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={applyFilters}
+                >
                   Filter
                 </Button>
                 <Button
