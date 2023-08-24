@@ -1,26 +1,26 @@
 const Project = {
-  name: 'Patients Influence',
+  name: 'Brotherhood House',
   version: '1.0.0',
   app: {
     // environment: 'production',
-    environment: 'staging',
-    // environment: 'development',
+    // environment: 'staging',
+    environment: 'development',
 
     baseUrl: 'http://localhost',
-    baseProdUrl: 'https://app.patientsinfluence.com',
-    baseStageUrl: 'https://app.staging.patientsinfluence.com',
+    baseProdUrl: 'https://app.brotherhoodhouse.com',
+    baseStageUrl: 'https://app.staging.brotherhoodhouse.com',
   },
   apis: {
     // Production
-    // v1: 'https://api.patientsinfluence.com',
+    // v1: 'https://api.brotherhoodhouse.com',
     // Staging
-    v1: 'https://api.staging.patientsinfluence.com',
+    // v1: 'https://api.staging.brotherhoodhouse.com',
     // Local/Dev
-    // v1: 'http://localhost:3000',
+    v1: 'http://localhost:3000',
   },
   title: {
     prefix: '',
-    sufix: ' | Patients Influence',
+    sufix: ' | Brotherhood House',
   },
 };
 

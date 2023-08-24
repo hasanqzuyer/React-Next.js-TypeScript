@@ -3,7 +3,7 @@ import { TNotification } from 'components/custom/notifications-card/types';
 export const DNotifications: Array<TNotification> = [
   //   Your account is now activated.
 
-  // Welcome to Patients Influence!
+  // Welcome to Brotherhood House!
   {
     id: 0,
     text: 'A connect with minhas Asif',

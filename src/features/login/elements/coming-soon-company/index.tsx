@@ -18,7 +18,7 @@ const ConfirmRegistrationModal = ({
     <Modal size="medium" onClose={onClose} {...props}>
       <MaintenanceMain>
         <MaintenanceTitle>
-          {t('Welcome to Patients Influence!')}
+          {t('Welcome to Brotherhood House!')}
         </MaintenanceTitle>
         <p>
           {t(

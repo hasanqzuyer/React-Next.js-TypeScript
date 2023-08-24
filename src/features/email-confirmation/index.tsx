@@ -20,11 +20,11 @@ const EmailConfirmation = () => {
     try {
       await AuthorizationAPI.emailConfirmation({ token: query.token as any });
       if (locale === 'de-DE') {
-        push('Willkommen bei Patients Influence!', { variant: 'success' });
-        setMessage('Willkommen bei Patients Influence!');
+        push('Willkommen bei Brotherhood House!', { variant: 'success' });
+        setMessage('Willkommen bei Brotherhood House!');
       } else {
-        push('Welcome to Patients Influence!', { variant: 'success' });
-        setMessage('Welcome to Patients Influence!');
+        push('Welcome to Brotherhood House!', { variant: 'success' });
+        setMessage('Welcome to Brotherhood House!');
       }
     } catch (e: any) {
       if (locale === 'de-DE') {

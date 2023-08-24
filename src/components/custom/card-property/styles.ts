@@ -99,7 +99,9 @@ export const CardAddress = styled.div`
   color: #7e839f;
   font-size: 16px;
 `;
-export const CardAddressSmall = styled.img``;
+export const CardAddressSmall = styled.img`
+  width: 30px;
+`;
 
 export const CardTitle = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `

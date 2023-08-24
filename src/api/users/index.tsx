@@ -8,8 +8,12 @@ const UsersAPI = {
     return data;
   },
 
-  getUsers: async () => {
-    const { data } = await client.get(`${Project.apis.v1}/users`);
+  getUsers: async (filters: any) => {
+    const { data } = await client.get(`${Project.apis.v1}/users`, {
+      params: {
+        ...filters,
+      },
+    });
     return data;
   },
 

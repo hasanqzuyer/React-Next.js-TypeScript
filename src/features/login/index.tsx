@@ -46,9 +46,8 @@ const Login = () => {
       if (e instanceof AxiosError && e.response) {
         if (
           e.response.data.message ===
-          'Please confirm your e-mail address in order to complete the sign-up process.'
+          'User not verified, please check your email inbox'
         ) {
-          setResendCount(JSON.parse(e.response.data.error));
           openCrModal();
         } else {
           if (router.locale === 'de-DE') {
@@ -120,7 +119,7 @@ const Login = () => {
       {lpModal && <LostPasswordModal onClose={closeLpModal} />}
       {crModal && (
         <ConfirmRegistrationModal
-          count={resendCount.emailResendTokens}
+          count={1}
           email={state.email}
           onClose={closeCrModal}
         />
