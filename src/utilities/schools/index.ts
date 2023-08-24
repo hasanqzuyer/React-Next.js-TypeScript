@@ -11,7 +11,7 @@ export const getSchoolsAndUniversities = (search: string) => {
     if (DSchoolAndUniversity.length > 10) {
       filters = DSchoolAndUniversity.slice(0, 10);
     } else {
-      filters = DSchoolAndUniversity
+      filters = DSchoolAndUniversity;
     }
   }
   filters.forEach((element) => {

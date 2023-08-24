@@ -11,7 +11,7 @@ export const getCompanys = (search: string) => {
     if (DCompany.length > 10) {
       filters = DCompany.slice(0, 10);
     } else {
-      filters = DCompany
+      filters = DCompany;
     }
   }
   filters.forEach((element) => {

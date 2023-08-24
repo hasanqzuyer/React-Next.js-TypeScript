@@ -11,7 +11,7 @@ export const getFieldOfStudies = (search: string) => {
     if (DFieldOfStudy.length > 10) {
       filters = DFieldOfStudy.slice(0, 10);
     } else {
-      filters = DFieldOfStudy
+      filters = DFieldOfStudy;
     }
   }
   filters.forEach((element) => {

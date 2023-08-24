@@ -11,7 +11,7 @@ export const getHouseTheme = (search: string) => {
     if (DHouseThemes.length > 10) {
       filters = DHouseThemes.slice(0, 10);
     } else {
-      filters = DHouseThemes
+      filters = DHouseThemes;
     }
   }
   filters.forEach((element) => {

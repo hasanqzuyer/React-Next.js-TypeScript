@@ -11,7 +11,7 @@ export const getDiets = (search: string) => {
     if (DDiet.length > 10) {
       filters = DDiet.slice(0, 10);
     } else {
-      filters = DDiet
+      filters = DDiet;
     }
   }
   filters.forEach((element) => {

@@ -11,7 +11,7 @@ export const getSkillsOfOthers = (search: string) => {
     if (DSkillsOfOthers.length > 10) {
       filters = DSkillsOfOthers.slice(0, 10);
     } else {
-      filters = DSkillsOfOthers
+      filters = DSkillsOfOthers;
     }
   }
   filters.forEach((element) => {

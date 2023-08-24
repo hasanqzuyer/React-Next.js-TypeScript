@@ -41,7 +41,9 @@ const UsersPage = () => {
   const [languages, setLanguages] = useState<any[]>([]);
   const [socialMedias, setSocialMedias] = useState<any[]>([]);
   const [companys, setCompanys] = useState<any[]>([]);
-  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>([]);
+  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
+    []
+  );
   const [degrees, setDegrees] = useState<any[]>([]);
   const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
@@ -379,7 +381,7 @@ const UsersPage = () => {
     getSchoolAndUniversityOptions();
     getFieldOfStudyOptions();
     getInterestsOptions();
-    getThemeOptions()
+    getThemeOptions();
     getSkillsOfOtherOptions();
   }, []);
 

@@ -11,7 +11,7 @@ export const getInterestsAndHobbies = (search: string) => {
     if (DInterestsAndHobbies.length > 10) {
       filters = DInterestsAndHobbies.slice(0, 10);
     } else {
-      filters = DInterestsAndHobbies
+      filters = DInterestsAndHobbies;
     }
   }
   filters.forEach((element) => {

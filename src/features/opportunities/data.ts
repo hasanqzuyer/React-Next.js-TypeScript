@@ -52,22 +52,21 @@ export const DMarketOffersHead = [
 
 export const DHouseThemes = [
   {
-    name: "Traditional"
+    name: 'Traditional',
   },
   {
-    name: "Mid-Century Modern"
+    name: 'Mid-Century Modern',
   },
   {
-    name: "Industrial"
+    name: 'Industrial',
   },
   {
-    name: "Bohemian"
+    name: 'Bohemian',
   },
   {
-    name: "Coastal/Cottage"
+    name: 'Coastal/Cottage',
   },
   {
-    name: "Contemporary"
-  }
-]
-
+    name: 'Contemporary',
+  },
+];

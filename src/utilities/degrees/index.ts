@@ -11,7 +11,7 @@ export const getDegrees = (search: string) => {
     if (DDegrees.length > 10) {
       filters = DDegrees.slice(0, 10);
     } else {
-      filters = DDegrees
+      filters = DDegrees;
     }
   }
   filters.forEach((element) => {
