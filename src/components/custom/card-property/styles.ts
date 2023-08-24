@@ -99,7 +99,9 @@ export const CardAddress = styled.div`
   color: #7e839f;
   font-size: 16px;
 `;
-export const CardAddressSmall = styled.img``;
+export const CardAddressSmall = styled.img`
+  width: 30px;
+`;
 
 export const CardTitle = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
@@ -189,7 +191,7 @@ export const CardProgressAvailableValue = styled.div`
   color: #6aa5d5;
 `;
 
-export const CardButton = styled(Link)<{ theme?: Theme }>`
+export const CardButton = styled(Link) <{ theme?: Theme }>`
   ${({ theme }) => `
     width: 100%;
     background: ${theme.palette.primary.main};
@@ -234,7 +236,7 @@ export const CardDropdown = styled.div`
   gap: 10px;
 `;
 
-export const TableMenu = styled(Menu)<{
+export const TableMenu = styled(Menu) <{
   position: { right: number; top: number };
 }>`
   ${({ position }) => `

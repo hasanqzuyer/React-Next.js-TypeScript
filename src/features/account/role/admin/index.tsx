@@ -10,30 +10,20 @@ import {
 } from 'features/account/style';
 import { Input } from 'components/ui';
 import { ChangePasswordModal } from 'features/account/role/investor/elements';
-import { useModal, useSnackbar } from 'hooks';
+import { useModal } from 'hooks';
 import { useAppContext } from 'context';
-// import { AuthorizationAPI } from 'api';
 
 const AccountPage = ({ ...props }) => {
+  const { user } = useAppContext();
   const [state, setState] = useState<any>({
-    firstName: null,
-    lastName: null,
-    email: null,
-    password: '',
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    password: "",
   });
 
   const [cpModal, openCpModal, closeCpModal] = useModal(false);
 
-  const { push } = useSnackbar();
-
-  // const resetPassword = async () => {
-  //   try {
-  //     await AuthorizationAPI.resetPassword(state.email, 'en');
-  //     push('Email for password reset has been sent.', { variant: 'success' });
-  //   } catch {
-  //     push('Email for password reset has not been sent.', { variant: 'error' });
-  //   }
-  // };
 
   return (
     <AccountMain {...props}>
@@ -67,7 +57,7 @@ const AccountPage = ({ ...props }) => {
           </AccountChange>
           <AccountChange>
             <Input
-              type="text"
+              type="password"
               label="Password"
               placeholder="**********"
               value={state.password}

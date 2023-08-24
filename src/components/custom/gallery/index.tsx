@@ -29,7 +29,7 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
     <SGallery {...props}>
       <SGalleryMainPhoto
         onClick={handleFullScreen}
-        src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        src="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
       />
       {fullscreen && (
         <SFullScreenGallery>

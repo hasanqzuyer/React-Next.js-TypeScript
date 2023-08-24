@@ -6,16 +6,11 @@ import { ExportInfluencersModalMain } from './styles';
 
 const ExportInfluencersModal = ({
   onClose,
+  onExport,
   ...props
 }: TExportInfluencersModalProps) => {
-  const [state, setState] = useState({
-    identified: false,
-    registered: false,
-    contacted: false,
-    callScheduled: false,
-  });
 
-  const [radioState, setRadioState] = useState('');
+  const [radioState, setRadioState] = useState('all');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRadioState(e.target.value);
@@ -30,7 +25,7 @@ const ExportInfluencersModal = ({
           color="primary"
           variant="contained"
           size="large"
-          onClick={onClose}
+          onClick={() => onExport(radioState)}
         >
           Export
         </Button>,

@@ -10,18 +10,27 @@ import { SlidersHorizontalIcon, VerticalDotsIcon } from 'components/svg';
 import { Button, Input, Pagination } from 'components/ui';
 import { Grid, Stack, Collapse } from 'components/system';
 import { TTableRenderItemObject } from 'components/custom/table/types';
+import * as XLSX from 'xlsx';
 import Link from 'next/link';
-import { useModal, usePagination, useSnackbar } from 'hooks';
+import { useDebounce, useModal, usePagination, useSnackbar } from 'hooks';
 import UsersAPI from 'api/users';
 import { IUser } from 'api/users/types';
-import { getAge } from 'utilities/birthday-age-converter';
+import { convertAgeToDate, getAge } from 'utilities/birthday-age-converter';
 import ExportUsersModal from './elements/export-influencers-modal';
+import { getLocations } from 'utilities/locations';
+import { getNationalities } from 'utilities/nationalities';
+import { getLanguages } from 'utilities/languages';
+import { getSocialMedias } from 'utilities/socialMedias';
 
 const UsersPage = () => {
   const [filters, setFilter] = useState<any>(DUsersFilters());
   const [eModal, openEModal, closeEModal] = useModal(false);
   const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
   const [checkedusers, setCheckedUsers] = useState<number[]>([]);
+  const [locations, setLocations] = useState<any[]>([]);
+  const [nationalities, setNationalities] = useState<any[]>([]);
+  const [languages, setLanguages] = useState<any[]>([]);
+  const [socialMedias, setSocialMedias] = useState<any[]>([]);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -77,9 +86,96 @@ const UsersPage = () => {
     }
   };
 
+  const getLocationOptions = async (searchTerm: string = '') => {
+    const result = getLocations(searchTerm);
+    setLocations(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getNationalityOptions = async (searchTerm: string = '') => {
+    const result = getNationalities(searchTerm);
+    setNationalities(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getLanguageOptions = async (searchTerm: string = '') => {
+    const result = getLanguages(searchTerm);
+    setLanguages(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getSocialMediaOptions = async (searchTerm: string = '') => {
+    const result = getSocialMedias(searchTerm);
+    setSocialMedias(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const debouncedLocation = useDebounce(getLocationOptions, 100);
+  const debouncedNationalities = useDebounce(getNationalityOptions, 100);
+  const debouncedLanguages = useDebounce(getLanguageOptions, 100);
+  const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
+
   const applyFilters = () => {
     getAllUsers()
-      .then((data) => setTotalColumnItems(data))
+      .then((data) => {
+        let users = data;
+        const { minDOB, maxDOB } = convertAgeToDate(filters.age.min, filters.age.max);
+        if (minDOB && maxDOB) {
+          users = users.filter((user: IUser) => new Date(user.dateOfBirth) >= minDOB && new Date(user.dateOfBirth) <= maxDOB);
+        } else if (minDOB && !maxDOB) {
+          users = users.filter((user: IUser) => new Date(user.dateOfBirth) >= minDOB)
+        } else if (!minDOB && maxDOB) {
+          users = users.filter((user: IUser) => new Date(user.dateOfBirth) <= maxDOB)
+        }
+
+        if (filters.applications.min && filters.applications.max) {
+          users = users.filter((user: IUser) => user.applications.length >= filters.applications.min && user.applications.length <= filters.applications.max)
+        }
+        else if (filters.applications.min && !filters.applications.max) {
+          users = users.filter((user: IUser) => user.applications.length >= filters.applications.min)
+        }
+        else if (!filters.applications.min && filters.applications.max) {
+          users = users.filter((user: IUser) => user.applications.length <= filters.applications.max)
+        }
+        if (filters.socialMedia) {
+          users = users.filter((user: IUser) => {
+            if (user.socialMedia.length > 0) {
+              const media: any = user.socialMedia[0];
+              if (media[filters.socialMedia.value.toLowerCase()]) {
+                return true
+              } else {
+                return false
+              }
+            } else {
+              return false
+            }
+          })
+        }
+
+        setTotalColumnItems(users);
+      })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   };
 
@@ -102,7 +198,7 @@ const UsersPage = () => {
     });
 
   useEffect(() => {
-    setTotalResults(totalColumnItems.length);
+    setTotalResults(totalColumnItems?.length);
   }, [totalColumnItems]);
 
   const currentTableData = useMemo(() => {
@@ -148,6 +244,32 @@ const UsersPage = () => {
     return '';
   };
 
+  useEffect(() => {
+    getLocationOptions();
+    getNationalityOptions();
+    getLanguageOptions();
+    getSocialMediaOptions();
+  }, []);
+
+  const handleExport = (type: string) => {
+    let data: any = totalColumnItems;
+    if (type !== "all") {
+      let selectedUsers: IUser[] = []
+      totalColumnItems.forEach((user: IUser) => {
+        if (checkedusers.includes(user.id)) {
+          selectedUsers.push(user);
+        }
+      });
+      data = selectedUsers;
+    }
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.writeFile(workbook, "Users.xlsx");
+
+    closeEModal();
+  }
+
   return (
     <UsersPageMain>
       <CardWithText
@@ -185,14 +307,18 @@ const UsersPage = () => {
                 <Input
                   type="select"
                   label="Location"
+                  onSearch={debouncedLocation}
                   placeholder="Please Select"
+                  options={locations}
                   value={filters.location}
                   onValue={(location) => setFilter({ ...filters, location })}
                 />
                 <Input
                   type="select"
                   label="Nationality"
+                  onSearch={debouncedNationalities}
                   placeholder="Please Select"
+                  options={nationalities}
                   value={filters.nationality}
                   onValue={(nationality) =>
                     setFilter({ ...filters, nationality })
@@ -208,7 +334,9 @@ const UsersPage = () => {
                 <Input
                   type="select"
                   label="Language"
+                  onSearch={debouncedLanguages}
                   placeholder="Please Select"
+                  options={languages}
                   value={filters.language}
                   onValue={(language) => setFilter({ ...filters, language })}
                 />
@@ -233,6 +361,8 @@ const UsersPage = () => {
                   label="Social Media"
                   placeholder="Please Select"
                   value={filters.socialMedia}
+                  onSearch={debouncedSocialMedias}
+                  options={socialMedias}
                   onValue={(socialMedia) =>
                     setFilter({ ...filters, socialMedia })
                   }
@@ -271,7 +401,7 @@ const UsersPage = () => {
           />
         </Stack>
       </CardWithText>
-      {eModal && <ExportUsersModal onClose={closeEModal} />}
+      {eModal && <ExportUsersModal onClose={closeEModal} onExport={handleExport} />}
     </UsersPageMain>
   );
 };

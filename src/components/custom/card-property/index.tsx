@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   CardMain,
@@ -23,6 +23,7 @@ import { CarretDownIcon, EditIcon, HouseIcon } from 'components/svg';
 import { Button } from 'components/ui';
 import { useMenu, useModal } from 'hooks';
 import { AddProjectModal } from './elements';
+import { convertLocationToFlag } from 'utilities/converters';
 
 const PropertyCard = ({
   image,
@@ -41,9 +42,13 @@ const PropertyCard = ({
 }: TPropertyCardProps) => {
   const [menu, open, handleMenu, buttonRef, position] = useMenu(false);
   const [editModal, openEditModal, closeEditModal] = useModal(false);
-
+  const [flagUrl, setFlagUrl] = useState<string>();
   const router = useRouter();
 
+  useEffect(() => {
+    const flag = convertLocationToFlag(address);
+    setFlagUrl(flag)
+  }, [address])
   return (
     <CardMain animation="zoom-in" {...props}>
       {completed && <CardCompletedMark>Filled</CardCompletedMark>}
@@ -64,7 +69,7 @@ const PropertyCard = ({
       </CardHead>
       <CardBody>
         <CardAddress>
-          <CardAddressSmall src="/static/assets/images/croatia.png" />
+          <CardAddressSmall src={flagUrl} />
           {address}
         </CardAddress>
         <CardTitle>{title}</CardTitle>

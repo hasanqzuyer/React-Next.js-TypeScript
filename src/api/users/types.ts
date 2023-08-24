@@ -1,4 +1,5 @@
 import { IApplication } from 'api/applications/types';
+import { ISocialMedia } from 'api/socialMedia/types';
 
 export type TCreateUser = {
   id: string;
@@ -36,6 +37,7 @@ export interface IUser {
   location: string;
   tokenBalance: number;
   applications: IApplication[];
+  socialMedia: ISocialMedia[];
   invested: number;
   createdAt: string;
   updatedAt: string;
