@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect,Children, useMemo } from 'react';
+import React, { useState, useEffect, Children, useMemo } from 'react';
 
 import {
   UsersPageMain,
@@ -318,7 +317,7 @@ const UsersPage = () => {
                 onValue={setTabs}
               />
 
-<!--               <Grid columns={4}>
+              {/* <Grid columns={4}>
                 <Input
                   type="text"
                   label="Search"
@@ -395,7 +394,7 @@ const UsersPage = () => {
                   color="primary"
                   variant="contained"
                   onClick={applyFilters}
-                > -->
+                >  */}
 
               {tabs === 0 && (
                 <Grid columns={4}>
@@ -403,62 +402,62 @@ const UsersPage = () => {
                     type="text"
                     label="Search"
                     placeholder="Please Select"
-                    value={filter.search}
-                    onValue={(search) => setFilter({ ...filter, search })}
+                    value={filters.search}
+                    onValue={(search) => setFilter({ ...filters, search })}
                   />
                   <Input
                     type="select"
                     label="Location"
                     placeholder="Please Select"
-                    value={filter.location}
-                    onValue={(location) => setFilter({ ...filter, location })}
+                    value={filters.location}
+                    onValue={(location) => setFilter({ ...filters, location })}
                   />
                   <Input
                     type="select"
                     label="Nationality"
                     placeholder="Please Select"
-                    value={filter.nationality}
+                    value={filters.nationality}
                     onValue={(nationality) =>
-                      setFilter({ ...filter, nationality })
+                      setFilter({ ...filters, nationality })
                     }
                   />
                   <Input
                     type="min-max"
                     label="Age"
                     placeholder="Please Select"
-                    value={filter.age}
-                    onValue={(age) => setFilter({ ...filter, age })}
+                    value={filters.age}
+                    onValue={(age) => setFilter({ ...filters, age })}
                   />
                   <Input
                     type="select"
                     label="Language"
                     placeholder="Please Select"
-                    value={filter.language}
-                    onValue={(language) => setFilter({ ...filter, language })}
+                    value={filters.language}
+                    onValue={(language) => setFilter({ ...filters, language })}
                   />
                   <Input
                     type="min-max"
                     label="Applications"
                     placeholder="Please Select"
-                    value={filter.applications}
+                    value={filters.applications}
                     onValue={(applications) =>
-                      setFilter({ ...filter, applications })
+                      setFilter({ ...filters, applications })
                     }
                   />
                   <Input
                     type="min-max"
                     label="Invested"
                     placeholder="Please Select"
-                    value={filter.invested}
-                    onValue={(invested) => setFilter({ ...filter, invested })}
+                    value={filters.invested}
+                    onValue={(invested) => setFilter({ ...filters, invested })}
                   />
                   <Input
                     type="select"
                     label="Social Media"
                     placeholder="Please Select"
-                    value={filter.socialMedia}
+                    value={filters.socialMedia}
                     onValue={(socialMedia) =>
-                      setFilter({ ...filter, socialMedia })
+                      setFilter({ ...filters, socialMedia })
                     }
                   />
                 </Grid>
@@ -469,32 +468,32 @@ const UsersPage = () => {
                     type="select"
                     label="Job Title"
                     placeholder="Please Select"
-                    value={filter.jobTitle}
-                    onValue={(jobTitle) => setFilter({ ...filter, jobTitle })}
+                    value={filters.jobTitle}
+                    onValue={(jobTitle) => setFilter({ ...filters, jobTitle })}
                   />
                   <Input
                     type="select"
                     label="Company"
                     placeholder="Please Select"
-                    value={filter.company}
-                    onValue={(company) => setFilter({ ...filter, company })}
+                    value={filters.company}
+                    onValue={(company) => setFilter({ ...filters, company })}
                   />
                   <Input
                     type="select"
                     label="Work Experience"
                     placeholder="Please Select"
-                    value={filter.workExperienceLocation}
+                    value={filters.workExperienceLocation}
                     onValue={(workExperienceLocation) =>
-                      setFilter({ ...filter, workExperienceLocation })
+                      setFilter({ ...filters, workExperienceLocation })
                     }
                   />
                   <Input
                     type="select"
                     label="Currently Employed"
                     placeholder="Please Select"
-                    value={filter.currentlyEmployed}
+                    value={filters.currentlyEmployed}
                     onValue={(currentlyEmployed) =>
-                      setFilter({ ...filter, currentlyEmployed })
+                      setFilter({ ...filters, currentlyEmployed })
                     }
                     options={[
                       {
@@ -515,23 +514,23 @@ const UsersPage = () => {
                     type="select"
                     label="School or University"
                     placeholder="Please Select"
-                    value={filter.school}
-                    onValue={(school) => setFilter({ ...filter, school })}
+                    value={filters.school}
+                    onValue={(school) => setFilter({ ...filters, school })}
                   />
                   <Input
                     type="select"
                     label="Degree"
                     placeholder="Please Select"
-                    value={filter.degree}
-                    onValue={(degree) => setFilter({ ...filter, degree })}
+                    value={filters.degree}
+                    onValue={(degree) => setFilter({ ...filters, degree })}
                   />
                   <Input
                     type="select"
                     label="Field of Study"
                     placeholder="Please Select"
-                    value={filter.fieldOfStudy}
+                    value={filters.fieldOfStudy}
                     onValue={(fieldOfStudy) =>
-                      setFilter({ ...filter, fieldOfStudy })
+                      setFilter({ ...filters, fieldOfStudy })
                     }
                   />
                 </Grid>
@@ -542,80 +541,79 @@ const UsersPage = () => {
                     type="select"
                     label="Theme"
                     placeholder="Please Select"
-                    value={filter.theme}
-                    onValue={(theme) => setFilter({ ...filter, theme })}
+                    value={filters.theme}
+                    onValue={(theme) => setFilter({ ...filters, theme })}
                   />
                   <Input
                     type="select"
                     label="Skills of Others"
                     placeholder="Please Select"
-                    value={filter.skillsOfOthers}
+                    value={filters.skillsOfOthers}
                     onValue={(skillsOfOthers) =>
-                      setFilter({ ...filter, skillsOfOthers })
+                      setFilter({ ...filters, skillsOfOthers })
                     }
                   />
                   <Input
                     type="select"
                     label="Location"
                     placeholder="Please Select"
-                    value={filter.houseLocation}
+                    value={filters.houseLocation}
                     onValue={(houseLocation) =>
-                      setFilter({ ...filter, houseLocation })
+                      setFilter({ ...filters, houseLocation })
                     }
                   />
                   <Input
                     type="select"
                     label="Language"
                     placeholder="Please Select"
-                    value={filter.houseLanguage}
+                    value={filters.houseLanguage}
                     onValue={(houseLanguage) =>
-                      setFilter({ ...filter, houseLanguage })
+                      setFilter({ ...filters, houseLanguage })
                     }
                   />
                   <Input
                     type="min-max"
                     label="Monthly Rent"
-                    value={filter.monthlyRent}
+                    value={filters.monthlyRent}
                     onValue={(monthlyRent) =>
-                      setFilter({ ...filter, monthlyRent })
+                      setFilter({ ...filters, monthlyRent })
                     }
                   />
                   <Input
                     type="min-max"
                     label="Field of Study"
-                    value={filter.houseAge}
-                    onValue={(houseAge) => setFilter({ ...filter, houseAge })}
+                    value={filters.houseAge}
+                    onValue={(houseAge) => setFilter({ ...filters, houseAge })}
                   />
                   <Input
                     type="min-max"
                     label="Tenants per House"
-                    value={filter.tenantsPerHouse}
+                    value={filters.tenantsPerHouse}
                     onValue={(tenantsPerHouse) =>
-                      setFilter({ ...filter, tenantsPerHouse })
+                      setFilter({ ...filters, tenantsPerHouse })
                     }
                   />
                   <Input
                     type="min-max"
                     label="Interests and Hobbies"
                     placeholder="Please Select"
-                    value={filter.interestsAndHobbies}
+                    value={filters.interestsAndHobbies}
                     onValue={(interestsAndHobbies) =>
-                      setFilter({ ...filter, interestsAndHobbies })
+                      setFilter({ ...filters, interestsAndHobbies })
                     }
                   />
                   <Input
                     type="select"
                     label="Diet"
                     placeholder="Please Select"
-                    value={filter.diet}
-                    onValue={(diet) => setFilter({ ...filter, diet })}
+                    value={filters.diet}
+                    onValue={(diet) => setFilter({ ...filters, diet })}
                   />
                 </Grid>
               )}
 
-              <FinancePageFilterActions direction="horizontal">
+              <UsersPageFilterActions direction="horizontal">
                 <Button color="primary" variant="contained">
-
                   Filter
                 </Button>
                 <Button
