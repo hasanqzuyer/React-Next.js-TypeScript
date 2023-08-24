@@ -3,7 +3,6 @@ import { TDocument, TDocumentId, TDocumentName } from 'api/documents/types';
 import { client } from 'api/api-client';
 
 const DocumentsAPI = {
-
   postDocument: async (body: TDocument) => {
     await client.post(`${Project.apis.v1}/documents`, body);
   },

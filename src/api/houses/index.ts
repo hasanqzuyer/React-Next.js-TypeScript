@@ -5,7 +5,10 @@ import { client } from 'api/api-client';
 
 const HouseAPI = {
   create: async (body: TCreateHouse) => {
-    const { data } = await client.post(`${Project.apis.v1}/house-projects`, body);
+    const { data } = await client.post(
+      `${Project.apis.v1}/house-projects`,
+      body
+    );
 
     return data;
   },
@@ -22,7 +25,9 @@ const HouseAPI = {
   },
 
   getOne: async (id: any) => {
-    const { data } = await client.get(`${Project.apis.v1}/house-projects/${id}`);
+    const { data } = await client.get(
+      `${Project.apis.v1}/house-projects/${id}`
+    );
 
     return data;
   },

@@ -4,8 +4,7 @@ import { TChangePasswordModalProps } from 'features/account/role/investor/elemen
 import { ChangePasswordModalMain } from 'features/account/role/investor/elements/change-password-modal/styles';
 import { Button, Input } from 'components/ui';
 import { Stack } from 'components/system';
-import { useAppContext } from 'context';
-import { ClientAPI } from 'api';
+// import { useAppContext } from 'context';
 import { useSnackbar } from 'hooks';
 
 const ChangePasswordModal = ({
@@ -16,17 +15,17 @@ const ChangePasswordModal = ({
     newPassword: '',
   });
 
-  const { user } = useAppContext();
+  // const { user } = useAppContext();
 
   const { push } = useSnackbar();
 
   const changePassword = async () => {
     try {
-      await ClientAPI.updateClient(
-        { password: state.newPassword },
-        user.client.id
-      );
-      push('Password successfully updated!', { variant: 'success' });
+      // await ClientAPI.updateClient(
+      //   { password: state.newPassword },
+      //   user.client.id
+      // );
+      // push('Password successfully updated!', { variant: 'success' });
     } catch {
       push('Password change failed', { variant: 'error' });
     }

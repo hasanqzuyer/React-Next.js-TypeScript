@@ -47,8 +47,8 @@ const PropertyCard = ({
 
   useEffect(() => {
     const flag = convertLocationToFlag(address);
-    setFlagUrl(flag)
-  }, [address])
+    setFlagUrl(flag);
+  }, [address]);
   return (
     <CardMain animation="zoom-in" {...props}>
       {completed && <CardCompletedMark>Filled</CardCompletedMark>}

@@ -1,6 +1,6 @@
-import { TDocument } from "api/documents/types";
-import { TImage } from "api/images/types";
-import { IUser } from "api/users/types";
+import { TDocument } from 'api/documents/types';
+import { TImage } from 'api/images/types';
+import { IUser } from 'api/users/types';
 
 export type TCreateHouse = {
   name: string;
@@ -18,9 +18,8 @@ export type TSingleHouse = {
   id: number;
 };
 
-
 export interface IHouse {
-  id: number
+  id: number;
   name: string;
   location: string;
   totalSpots: number;

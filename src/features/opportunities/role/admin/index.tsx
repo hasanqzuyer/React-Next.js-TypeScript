@@ -14,7 +14,8 @@ const AdminMarketPage = () => {
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
 
-  const [addProjectModal, openAddProjectModal, closeAddProjectModal] = useModal(false);
+  const [addProjectModal, openAddProjectModal, closeAddProjectModal] =
+    useModal(false);
 
   const [primaryHouses, setPrimaryHouses] = useState<IHouse[]>([]);
   const [secondaryHouses, setSecondaryHouses] = useState<IHouse[]>([]);
@@ -34,29 +35,28 @@ const AdminMarketPage = () => {
     }
   };
 
-
   useEffect(() => {
     const gethouses = async () => {
       switch (tab) {
         case 0:
-          const primary = await getAllHouses('PRIMARY')
+          const primary = await getAllHouses('PRIMARY');
           setPrimaryHouses(primary);
           break;
         case 1:
-          const secondary = await getAllHouses('SECONDARY')
+          const secondary = await getAllHouses('SECONDARY');
           setSecondaryHouses(secondary);
           break;
         case 2:
-          const completed = await getAllHouses('COMPLETED')
+          const completed = await getAllHouses('COMPLETED');
           setCompletedHouses(completed);
           break;
 
         default:
           break;
       }
-    }
+    };
     gethouses();
-  }, [tab])
+  }, [tab]);
 
   return (
     <ProjectsMain>
@@ -79,75 +79,69 @@ const AdminMarketPage = () => {
       </Stack>
       {tab === 0 && (
         <ProjectsGrid>
-          {
-            primaryHouses.map((house: IHouse) => {
-              return (
-                <PropertyCard
-                  key={house.id}
-                  link="/overview"
-                  address={house.location}
-                  title={house.name}
-                  image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                  spots={house.totalSpots}
-                  availableSpots={house.availableSpots}
-                  rent={house.rent}
-                  theme={house.theme}
-                  status={house.status}
-                  label="View"
-                  dropdown
-                />
-              )
-            })
-          }
+          {primaryHouses.map((house: IHouse) => {
+            return (
+              <PropertyCard
+                key={house.id}
+                link="/overview"
+                address={house.location}
+                title={house.name}
+                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
+                spots={house.totalSpots}
+                availableSpots={house.availableSpots}
+                rent={house.rent}
+                theme={house.theme}
+                status={house.status}
+                label="View"
+                dropdown
+              />
+            );
+          })}
         </ProjectsGrid>
       )}
       {tab === 1 && (
         <ProjectsGrid>
-          {
-            secondaryHouses.map((house: IHouse) => {
-              return (
-                <PropertyCard
-                  key={house.id}
-                  link="/overview"
-                  address={house.location}
-                  title={house.name}
-                  image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                  spots={house.totalSpots}
-                  availableSpots={house.availableSpots}
-                  rent={house.rent}
-                  theme={house.theme}
-                  status={house.status}
-                  label="View"
-                  dropdown
-                />
-              )
-            })
-          }
+          {secondaryHouses.map((house: IHouse) => {
+            return (
+              <PropertyCard
+                key={house.id}
+                link="/overview"
+                address={house.location}
+                title={house.name}
+                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
+                spots={house.totalSpots}
+                availableSpots={house.availableSpots}
+                rent={house.rent}
+                theme={house.theme}
+                status={house.status}
+                label="View"
+                dropdown
+              />
+            );
+          })}
         </ProjectsGrid>
       )}
 
       {tab === 2 && (
         <ProjectsGrid>
-          {
-            completedHouses.map((house: IHouse) => {
-              return (
-                <PropertyCard
-                  key={house.id}
-                  link="/overview"
-                  address={house.location}
-                  title={house.name}
-                  image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                  spots={house.totalSpots}
-                  availableSpots={house.availableSpots}
-                  rent={house.rent}
-                  theme={house.theme}
-                  status={house.status}
-                  label="View"
-                  dropdown
-                />
-              )
-            })
-          }
+          {completedHouses.map((house: IHouse) => {
+            return (
+              <PropertyCard
+                key={house.id}
+                link="/overview"
+                address={house.location}
+                title={house.name}
+                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
+                spots={house.totalSpots}
+                availableSpots={house.availableSpots}
+                rent={house.rent}
+                theme={house.theme}
+                status={house.status}
+                label="View"
+                dropdown
+              />
+            );
+          })}
         </ProjectsGrid>
       )}
       {addProjectModal && <AddProjectModal onClose={closeAddProjectModal} />}

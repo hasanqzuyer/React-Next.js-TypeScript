@@ -16,7 +16,7 @@ import { useDebounce, useModal, usePagination, useSnackbar } from 'hooks';
 import UsersAPI from 'api/users';
 import { IUser } from 'api/users/types';
 import { convertAgeToDate, getAge } from 'utilities/birthday-age-converter';
-import ExportUsersModal from './elements/export-influencers-modal';
+import ExportUsersModal from './elements/export-users-modal';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getLanguages } from 'utilities/languages';
@@ -141,37 +141,56 @@ const UsersPage = () => {
     getAllUsers()
       .then((data) => {
         let users = data;
-        const { minDOB, maxDOB } = convertAgeToDate(filters.age.min, filters.age.max);
+        const { minDOB, maxDOB } = convertAgeToDate(
+          filters.age.min,
+          filters.age.max
+        );
         if (minDOB && maxDOB) {
-          users = users.filter((user: IUser) => new Date(user.dateOfBirth) >= minDOB && new Date(user.dateOfBirth) <= maxDOB);
+          users = users.filter(
+            (user: IUser) =>
+              new Date(user.dateOfBirth) >= minDOB &&
+              new Date(user.dateOfBirth) <= maxDOB
+          );
         } else if (minDOB && !maxDOB) {
-          users = users.filter((user: IUser) => new Date(user.dateOfBirth) >= minDOB)
+          users = users.filter(
+            (user: IUser) => new Date(user.dateOfBirth) >= minDOB
+          );
         } else if (!minDOB && maxDOB) {
-          users = users.filter((user: IUser) => new Date(user.dateOfBirth) <= maxDOB)
+          users = users.filter(
+            (user: IUser) => new Date(user.dateOfBirth) <= maxDOB
+          );
         }
 
         if (filters.applications.min && filters.applications.max) {
-          users = users.filter((user: IUser) => user.applications.length >= filters.applications.min && user.applications.length <= filters.applications.max)
-        }
-        else if (filters.applications.min && !filters.applications.max) {
-          users = users.filter((user: IUser) => user.applications.length >= filters.applications.min)
-        }
-        else if (!filters.applications.min && filters.applications.max) {
-          users = users.filter((user: IUser) => user.applications.length <= filters.applications.max)
+          users = users.filter(
+            (user: IUser) =>
+              user.applications.length >= filters.applications.min &&
+              user.applications.length <= filters.applications.max
+          );
+        } else if (filters.applications.min && !filters.applications.max) {
+          users = users.filter(
+            (user: IUser) =>
+              user.applications.length >= filters.applications.min
+          );
+        } else if (!filters.applications.min && filters.applications.max) {
+          users = users.filter(
+            (user: IUser) =>
+              user.applications.length <= filters.applications.max
+          );
         }
         if (filters.socialMedia) {
           users = users.filter((user: IUser) => {
             if (user.socialMedia.length > 0) {
               const media: any = user.socialMedia[0];
               if (media[filters.socialMedia.value.toLowerCase()]) {
-                return true
+                return true;
               } else {
-                return false
+                return false;
               }
             } else {
-              return false
+              return false;
             }
-          })
+          });
         }
 
         setTotalColumnItems(users);
@@ -253,8 +272,8 @@ const UsersPage = () => {
 
   const handleExport = (type: string) => {
     let data: any = totalColumnItems;
-    if (type !== "all") {
-      let selectedUsers: IUser[] = []
+    if (type !== 'all') {
+      let selectedUsers: IUser[] = [];
       totalColumnItems.forEach((user: IUser) => {
         if (checkedusers.includes(user.id)) {
           selectedUsers.push(user);
@@ -264,11 +283,11 @@ const UsersPage = () => {
     }
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    XLSX.writeFile(workbook, "Users.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, 'Users.xlsx');
 
     closeEModal();
-  }
+  };
 
   return (
     <UsersPageMain>
@@ -401,7 +420,9 @@ const UsersPage = () => {
           />
         </Stack>
       </CardWithText>
-      {eModal && <ExportUsersModal onClose={closeEModal} onExport={handleExport} />}
+      {eModal && (
+        <ExportUsersModal onClose={closeEModal} onExport={handleExport} />
+      )}
     </UsersPageMain>
   );
 };

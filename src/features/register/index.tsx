@@ -12,7 +12,7 @@ import {
 import { ConfirmRegistrationModal } from 'features/register/elements';
 import { Button, Input } from 'components/ui';
 import { emailSchema, nameSchema, passwordSchema } from 'utilities/validators';
-import { AmbassadorAPI, AuthorizationAPI } from 'api';
+import { AuthorizationAPI } from 'api';
 import { useModal, useSnackbar } from 'hooks';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';

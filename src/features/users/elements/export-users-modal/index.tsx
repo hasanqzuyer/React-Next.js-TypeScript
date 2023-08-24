@@ -9,7 +9,6 @@ const ExportInfluencersModal = ({
   onExport,
   ...props
 }: TExportInfluencersModalProps) => {
-
   const [radioState, setRadioState] = useState('all');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

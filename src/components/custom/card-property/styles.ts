@@ -191,7 +191,7 @@ export const CardProgressAvailableValue = styled.div`
   color: #6aa5d5;
 `;
 
-export const CardButton = styled(Link) <{ theme?: Theme }>`
+export const CardButton = styled(Link)<{ theme?: Theme }>`
   ${({ theme }) => `
     width: 100%;
     background: ${theme.palette.primary.main};
@@ -236,7 +236,7 @@ export const CardDropdown = styled.div`
   gap: 10px;
 `;
 
-export const TableMenu = styled(Menu) <{
+export const TableMenu = styled(Menu)<{
   position: { right: number; top: number };
 }>`
   ${({ position }) => `

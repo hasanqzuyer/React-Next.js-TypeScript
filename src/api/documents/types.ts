@@ -1,4 +1,3 @@
-
 export type TDocumentName = {
   name: string;
 };

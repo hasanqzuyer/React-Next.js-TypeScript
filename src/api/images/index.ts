@@ -3,7 +3,6 @@ import { TImage, TImageId, TImageName } from 'api/images/types';
 import { client } from 'api/api-client';
 
 const ImagesAPI = {
-
   postImage: async (body: TImage) => {
     await client.post(`${Project.apis.v1}/images`, body);
   },

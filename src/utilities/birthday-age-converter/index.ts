@@ -12,8 +12,7 @@ export const getAge = (dateString: string) => {
   return '';
 };
 
-
-export const convertAgeToDate = (minAge?: number, maxAge?: number)  => {
+export const convertAgeToDate = (minAge?: number, maxAge?: number) => {
   const currentDate = new Date();
   const maxDOB =
     minAge &&

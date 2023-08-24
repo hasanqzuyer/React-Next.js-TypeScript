@@ -24,10 +24,10 @@ const ChangePasswordModal = ({
     try {
       await AuthorizationAPI.resetPassword(user.email, 'en');
       push('Password successfully updated!', { variant: 'success' });
-      onClose()
+      onClose();
     } catch {
       push('Password change failed', { variant: 'error' });
-      onClose()
+      onClose();
     }
   };
 

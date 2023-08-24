@@ -19,11 +19,10 @@ const AccountPage = ({ ...props }) => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    password: "",
+    password: '',
   });
 
   const [cpModal, openCpModal, closeCpModal] = useModal(false);
-
 
   return (
     <AccountMain {...props}>
