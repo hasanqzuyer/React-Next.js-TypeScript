@@ -1,27 +1,38 @@
 import Project from 'constants/project';
-import { TDocument, TDocumentId, TDocumentName } from 'api/documents/types';
 import { client } from 'api/api-client';
 
-const DocumentsAPI = {
-  postDocument: async (body: TDocument) => {
-    await client.post(`${Project.apis.v1}/documents`, body);
-  },
+const DocumentApi = {
+  fileUpload: async (file: File, houseId: number) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('houseId', houseId.toString());
 
-  getDocuments: async () => {
-    const { data } = await client.get(`${Project.apis.v1}/documents`);
+    const { data } = await client.post(
+      `${Project.apis.v1}/documents`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
 
     return data;
   },
 
-  getDocumentById: async (id: TDocumentId) => {
-    const { data } = await client.get(`${Project.apis.v1}/documents/${id}`);
-
-    return data;
+  updateFile: async (body: any, id: number) => {
+    await client.patch(`${Project.apis.v1}/documents/${id}`, body);
   },
 
-  deleteDocument: async (id: TDocumentId) => {
+  fileDelete: async (id: number) => {
     await client.delete(`${Project.apis.v1}/documents/${id}`);
+  },
+
+  fileDownload: async (id: string) => {
+    const res = await client.get(`${Project.apis.v1}/documents/${id}`);
+
+    return res;
   },
 };
 
-export default DocumentsAPI;
+export default DocumentApi;

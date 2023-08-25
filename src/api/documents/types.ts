@@ -8,7 +8,7 @@ export type TDocumentId = {
 
 export type TDocument = {
   id: number;
-  title: string;
+  name: string;
   fileUrl: string;
   houseId: number;
   createdAt: string;
