@@ -18,6 +18,8 @@ export const CUnprotectedRoutes = [
   '/email-confirmation',
 ];
 
+export const CProtectedDynamicRoutes = ['users/overview/'];
+
 export const CMiscRoutes = ['/_/code'];
 
 export const CAllRoutes = [

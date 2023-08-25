@@ -49,3 +49,24 @@ export const DMarketOffersHead = [
     visible: true,
   },
 ];
+
+export const DHouseThemes = [
+  {
+    name: 'Traditional',
+  },
+  {
+    name: 'Mid-Century Modern',
+  },
+  {
+    name: 'Industrial',
+  },
+  {
+    name: 'Bohemian',
+  },
+  {
+    name: 'Coastal/Cottage',
+  },
+  {
+    name: 'Contemporary',
+  },
+];

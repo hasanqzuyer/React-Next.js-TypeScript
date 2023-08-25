@@ -22,6 +22,14 @@ import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getLanguages } from 'utilities/languages';
 import { getSocialMedias } from 'utilities/socialMedias';
+import { getCompanys } from 'utilities/companys';
+import { getSchoolsAndUniversities } from 'utilities/schools';
+import { getDegrees } from 'utilities/degrees';
+import { getFieldOfStudies } from 'utilities/fieldOfStudy';
+import { getHouseTheme } from 'utilities/houseTheme';
+import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
+import { getInterestsAndHobbies } from 'utilities/interests';
+import { getDiets } from 'utilities/diets';
 
 const UsersPage = () => {
   const [filters, setFilter] = useState<any>(DUsersFilters());
@@ -32,6 +40,16 @@ const UsersPage = () => {
   const [nationalities, setNationalities] = useState<any[]>([]);
   const [languages, setLanguages] = useState<any[]>([]);
   const [socialMedias, setSocialMedias] = useState<any[]>([]);
+  const [companys, setCompanys] = useState<any[]>([]);
+  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
+    []
+  );
+  const [degrees, setDegrees] = useState<any[]>([]);
+  const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
+  const [themes, setThemes] = useState<any[]>([]);
+  const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
+  const [interests, setInterests] = useState<any[]>([]);
+  const [diets, setDiets] = useState<any[]>([]);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -40,10 +58,6 @@ const UsersPage = () => {
 
   const toggleFilter = () => {
     setFilterOpen(!filterOpen);
-  };
-
-  const clearFilters = () => {
-    setFilter(DUsersFilters());
   };
 
   const toggleUser = (rowId: number, checked: boolean) => {
@@ -133,10 +147,98 @@ const UsersPage = () => {
     );
   };
 
+  const getCompanyOptions = async (searchTerm: string = '') => {
+    const result = getCompanys(searchTerm);
+    setCompanys(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getSchoolAndUniversityOptions = async (searchTerm: string = '') => {
+    const result = getSchoolsAndUniversities(searchTerm);
+    setSchoolsAndUniverisities(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getDegreeOptions = async (searchTerm: string = '') => {
+    const result = getDegrees(searchTerm);
+    setDegrees(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getFieldOfStudyOptions = async (searchTerm: string = '') => {
+    const result = getFieldOfStudies(searchTerm);
+    setFieldOfStudy(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getThemeOptions = async (searchTerm: string = '') => {
+    const result = getHouseTheme(searchTerm);
+    setThemes(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getSkillsOfOtherOptions = async (searchTerm: string = '') => {
+    const result = getSkillsOfOthers(searchTerm);
+    setSkillsOfOthers(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getInterestsOptions = async (searchTerm: string = '') => {
+    const result = getInterestsAndHobbies(searchTerm);
+    setInterests(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getDietsOptions = async (searchTerm: string = '') => {
+    const result = getDiets(searchTerm);
+    setDiets(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
   const debouncedLocation = useDebounce(getLocationOptions, 100);
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
+  const debouncedCompanies = useDebounce(getCompanyOptions, 100);
+  const debouncedSchools = useDebounce(getSchoolAndUniversityOptions, 100);
+  const debouncedDegrees = useDebounce(getDegreeOptions, 100);
+  const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
+  const debouncedThemes = useDebounce(getThemeOptions, 100);
+  const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
+  const debouncedInterests = useDebounce(getInterestsOptions, 100);
+  const debouncedDiets = useDebounce(getDietsOptions, 100);
 
   const applyFilters = () => {
     getAllUsers()
@@ -162,38 +264,6 @@ const UsersPage = () => {
           );
         }
 
-        if (filters.applications.min && filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length >= filters.applications.min &&
-              user.applications.length <= filters.applications.max
-          );
-        } else if (filters.applications.min && !filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length >= filters.applications.min
-          );
-        } else if (!filters.applications.min && filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length <= filters.applications.max
-          );
-        }
-        if (filters.socialMedia) {
-          users = users.filter((user: IUser) => {
-            if (user.socialMedia.length > 0) {
-              const media: any = user.socialMedia[0];
-              if (media[filters.socialMedia.value.toLowerCase()]) {
-                return true;
-              } else {
-                return false;
-              }
-            } else {
-              return false;
-            }
-          });
-        }
-
         setTotalColumnItems(users);
       })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
@@ -204,6 +274,20 @@ const UsersPage = () => {
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   }, []);
+
+  const [clearing, setClearing] = useState<boolean>(false);
+  const clearFilters = () => {
+    setFilter(DUsersFilters());
+    setClearing(true);
+  };
+  useEffect(() => {
+    if (clearing) {
+      getAllUsers()
+        .then((data) => setTotalColumnItems(data))
+        .catch((error) => push('Something went wrong!', { variant: 'error' }));
+      setClearing(false);
+    }
+  }, [clearing]);
 
   const PageSize = 10;
 
@@ -233,7 +317,7 @@ const UsersPage = () => {
       return (
         <Link
           style={{ textDecoration: 'none', color: '#4f4f4f' }}
-          href="/users/overview"
+          href={`/users/overview?userId=${singleUser.id}`}
         >
           {singleUser.firstName} {singleUser.lastName}
         </Link>
@@ -248,8 +332,8 @@ const UsersPage = () => {
     if (headItem.reference === 'age') {
       return getAge(singleUser.dateOfBirth);
     }
-    if (headItem.reference === 'language') {
-      return singleUser.language;
+    if (headItem.reference === 'languages') {
+      return singleUser.languages;
     }
     if (headItem.reference === 'applications') {
       return singleUser.applications.length;
@@ -269,6 +353,14 @@ const UsersPage = () => {
     getNationalityOptions();
     getLanguageOptions();
     getSocialMediaOptions();
+    getCompanyOptions();
+    getDegreeOptions();
+    getDietsOptions();
+    getSchoolAndUniversityOptions();
+    getFieldOfStudyOptions();
+    getInterestsOptions();
+    getThemeOptions();
+    getSkillsOfOtherOptions();
   }, []);
 
   const handleExport = (type: string) => {
@@ -316,86 +408,6 @@ const UsersPage = () => {
                 value={tabs}
                 onValue={setTabs}
               />
-
-              {/* <Grid columns={4}>
-                <Input
-                  type="text"
-                  label="Search"
-                  placeholder="Please Select"
-                  value={filters.search}
-                  onValue={(search) => setFilter({ ...filters, search })}
-                />
-                <Input
-                  type="select"
-                  label="Location"
-                  onSearch={debouncedLocation}
-                  placeholder="Please Select"
-                  options={locations}
-                  value={filters.location}
-                  onValue={(location) => setFilter({ ...filters, location })}
-                />
-                <Input
-                  type="select"
-                  label="Nationality"
-                  onSearch={debouncedNationalities}
-                  placeholder="Please Select"
-                  options={nationalities}
-                  value={filters.nationality}
-                  onValue={(nationality) =>
-                    setFilter({ ...filters, nationality })
-                  }
-                />
-                <Input
-                  type="min-max"
-                  label="Age"
-                  placeholder="Please Select"
-                  value={filters.age}
-                  onValue={(age) => setFilter({ ...filters, age })}
-                />
-                <Input
-                  type="select"
-                  label="Language"
-                  onSearch={debouncedLanguages}
-                  placeholder="Please Select"
-                  options={languages}
-                  value={filters.language}
-                  onValue={(language) => setFilter({ ...filters, language })}
-                />
-                <Input
-                  type="min-max"
-                  label="Applications"
-                  placeholder="Please Select"
-                  value={filters.applications}
-                  onValue={(applications) =>
-                    setFilter({ ...filters, applications })
-                  }
-                />
-                <Input
-                  type="min-max"
-                  label="Invested"
-                  placeholder="Please Select"
-                  value={filters.invested}
-                  onValue={(invested) => setFilter({ ...filters, invested })}
-                />
-                <Input
-                  type="select"
-                  label="Social Media"
-                  placeholder="Please Select"
-                  value={filters.socialMedia}
-                  onSearch={debouncedSocialMedias}
-                  options={socialMedias}
-                  onValue={(socialMedia) =>
-                    setFilter({ ...filters, socialMedia })
-                  }
-                />
-              </Grid>
-              <UsersPageFilterActions direction="horizontal">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={applyFilters}
-                >  */}
-
               {tabs === 0 && (
                 <Grid columns={4}>
                   <Input
@@ -408,14 +420,18 @@ const UsersPage = () => {
                   <Input
                     type="select"
                     label="Location"
+                    onSearch={debouncedLocation}
                     placeholder="Please Select"
+                    options={locations}
                     value={filters.location}
                     onValue={(location) => setFilter({ ...filters, location })}
                   />
                   <Input
                     type="select"
                     label="Nationality"
+                    onSearch={debouncedNationalities}
                     placeholder="Please Select"
+                    options={nationalities}
                     value={filters.nationality}
                     onValue={(nationality) =>
                       setFilter({ ...filters, nationality })
@@ -431,7 +447,9 @@ const UsersPage = () => {
                   <Input
                     type="select"
                     label="Language"
+                    onSearch={debouncedLanguages}
                     placeholder="Please Select"
+                    options={languages}
                     value={filters.language}
                     onValue={(language) => setFilter({ ...filters, language })}
                   />
@@ -456,6 +474,8 @@ const UsersPage = () => {
                     label="Social Media"
                     placeholder="Please Select"
                     value={filters.socialMedia}
+                    onSearch={debouncedSocialMedias}
+                    options={socialMedias}
                     onValue={(socialMedia) =>
                       setFilter({ ...filters, socialMedia })
                     }
@@ -465,9 +485,9 @@ const UsersPage = () => {
               {tabs === 1 && (
                 <Grid columns={4}>
                   <Input
-                    type="select"
+                    type="text"
                     label="Job Title"
-                    placeholder="Please Select"
+                    placeholder="Please Enter"
                     value={filters.jobTitle}
                     onValue={(jobTitle) => setFilter({ ...filters, jobTitle })}
                   />
@@ -475,13 +495,17 @@ const UsersPage = () => {
                     type="select"
                     label="Company"
                     placeholder="Please Select"
+                    onSearch={debouncedCompanies}
+                    options={companys}
                     value={filters.company}
                     onValue={(company) => setFilter({ ...filters, company })}
                   />
                   <Input
                     type="select"
-                    label="Work Experience"
+                    label="Work Experience Location"
                     placeholder="Please Select"
+                    options={locations}
+                    onSearch={debouncedLocation}
                     value={filters.workExperienceLocation}
                     onValue={(workExperienceLocation) =>
                       setFilter({ ...filters, workExperienceLocation })
@@ -497,11 +521,11 @@ const UsersPage = () => {
                     }
                     options={[
                       {
-                        value: 0,
+                        value: 'true',
                         label: 'Yes',
                       },
                       {
-                        value: 1,
+                        value: 'false',
                         label: 'No',
                       },
                     ]}
@@ -514,6 +538,8 @@ const UsersPage = () => {
                     type="select"
                     label="School or University"
                     placeholder="Please Select"
+                    onSearch={debouncedSchools}
+                    options={schoolsAndUniversities}
                     value={filters.school}
                     onValue={(school) => setFilter({ ...filters, school })}
                   />
@@ -521,6 +547,8 @@ const UsersPage = () => {
                     type="select"
                     label="Degree"
                     placeholder="Please Select"
+                    onSearch={debouncedDegrees}
+                    options={degrees}
                     value={filters.degree}
                     onValue={(degree) => setFilter({ ...filters, degree })}
                   />
@@ -528,6 +556,8 @@ const UsersPage = () => {
                     type="select"
                     label="Field of Study"
                     placeholder="Please Select"
+                    onSearch={debouncedFieldOfStudy}
+                    options={fieldOfStudy}
                     value={filters.fieldOfStudy}
                     onValue={(fieldOfStudy) =>
                       setFilter({ ...filters, fieldOfStudy })
@@ -541,6 +571,8 @@ const UsersPage = () => {
                     type="select"
                     label="Theme"
                     placeholder="Please Select"
+                    onSearch={debouncedThemes}
+                    options={themes}
                     value={filters.theme}
                     onValue={(theme) => setFilter({ ...filters, theme })}
                   />
@@ -548,6 +580,8 @@ const UsersPage = () => {
                     type="select"
                     label="Skills of Others"
                     placeholder="Please Select"
+                    onSearch={debouncedSkillsOfOthers}
+                    options={skillsOfthers}
                     value={filters.skillsOfOthers}
                     onValue={(skillsOfOthers) =>
                       setFilter({ ...filters, skillsOfOthers })
@@ -557,6 +591,8 @@ const UsersPage = () => {
                     type="select"
                     label="Location"
                     placeholder="Please Select"
+                    onSearch={debouncedLocation}
+                    options={locations}
                     value={filters.houseLocation}
                     onValue={(houseLocation) =>
                       setFilter({ ...filters, houseLocation })
@@ -566,6 +602,8 @@ const UsersPage = () => {
                     type="select"
                     label="Language"
                     placeholder="Please Select"
+                    onSearch={debouncedLanguages}
+                    options={languages}
                     value={filters.houseLanguage}
                     onValue={(houseLanguage) =>
                       setFilter({ ...filters, houseLanguage })
@@ -581,7 +619,7 @@ const UsersPage = () => {
                   />
                   <Input
                     type="min-max"
-                    label="Field of Study"
+                    label="Age"
                     value={filters.houseAge}
                     onValue={(houseAge) => setFilter({ ...filters, houseAge })}
                   />
@@ -594,9 +632,11 @@ const UsersPage = () => {
                     }
                   />
                   <Input
-                    type="min-max"
+                    type="select"
                     label="Interests and Hobbies"
                     placeholder="Please Select"
+                    onSearch={debouncedInterests}
+                    options={interests}
                     value={filters.interestsAndHobbies}
                     onValue={(interestsAndHobbies) =>
                       setFilter({ ...filters, interestsAndHobbies })
@@ -606,6 +646,8 @@ const UsersPage = () => {
                     type="select"
                     label="Diet"
                     placeholder="Please Select"
+                    onSearch={debouncedDiets}
+                    options={diets}
                     value={filters.diet}
                     onValue={(diet) => setFilter({ ...filters, diet })}
                   />
@@ -613,7 +655,11 @@ const UsersPage = () => {
               )}
 
               <UsersPageFilterActions direction="horizontal">
-                <Button color="primary" variant="contained">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={applyFilters}
+                >
                   Filter
                 </Button>
                 <Button

@@ -10,7 +10,6 @@ import { createInitialState } from 'context/app/data';
 import { TAppContextState } from 'context/app/types';
 import { TLoginParams } from 'api/authorization/types';
 import { LoadingPage } from 'features';
-import { convertNumberToRole } from 'utilities/converters';
 import { IUser } from 'api/users/types';
 
 const AppContext = createContext(createInitialState());
