@@ -9,6 +9,7 @@ export const CProtectedRoutes = [
   '/finance',
   '/help',
   '/overview',
+  
 ];
 
 export const CUnprotectedRoutes = [
@@ -16,6 +17,10 @@ export const CUnprotectedRoutes = [
   '/register',
   '/reset-password',
   '/email-confirmation',
+];
+
+export const CProtectedDynamicRoutes = [
+  'users/overview/',
 ];
 
 export const CMiscRoutes = ['/_/code'];

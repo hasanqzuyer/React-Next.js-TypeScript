@@ -69,8 +69,8 @@ export const DUsersHead = [
     visible: true,
   },
   {
-    reference: 'language',
-    label: 'Language',
+    reference: 'languages',
+    label: 'Languages',
     visible: true,
   },
   {
@@ -104669,6 +104669,252 @@ export const DSkillsOfOthers = [
   {
     name: 'Drawing',
   },
+];
+
+export const DSkills = [
+  {
+    name: "Adobe Illustrator"
+  },
+  {
+    name: "Adobe InDesign"
+  },
+  {
+    name: "Adobe Photoshop"
+  },
+  {
+    name: "Analytics"
+  },
+  {
+    name: "Android"
+  },
+  {
+    name: "APIs"
+  },
+  {
+    name: "Art Design"
+  },
+  {
+    name: "AutoCAD"
+  },
+  {
+    name: "Backup Management"
+  },
+  {
+    name: "C"
+  },
+  {
+    name: "C++"
+  },
+  {
+    name: "Certifications"
+  },
+  {
+    name: "Client Server"
+  },
+  {
+    name: "Client Support"
+  },
+  {
+    name: "Configuration"
+  },
+  {
+    name: "Content Managment"
+  },
+  {
+    name: "Content Management Systems (CMS)"
+  },
+  {
+    name: "Corel Draw"
+  },
+  {
+    name: "Corel Word Perfect"
+  },
+  {
+    name: "CSS"
+  },
+  {
+    name: "Data Analytics"
+  },
+  {
+    name: "Desktop Publishing"
+  },
+  {
+    name: "Design"
+  },
+  {
+    name: "Diagnostics"
+  },
+  {
+    name: "Documentation"
+  },
+  {
+    name: "End User Support"
+  },
+  {
+    name: "Email"
+  },
+  {
+    name: "Engineering"
+  },
+  {
+    name: "Excel"
+  },
+  {
+    name: "FileMaker Pro"
+  },
+  {
+    name: "Fortran"
+  },
+  {
+    name: "Graphic Design"
+  },
+  {
+    name: "Hardware"
+  },
+  {
+    name: "Help Desk"
+  },
+  {
+    name: "HTML"
+  },
+  {
+    name: "Implementation"
+  },
+  {
+    name: "Installation"
+  },
+  {
+    name: "Internet"
+  },
+  {
+    name: "iOS"
+  },
+  {
+    name: "iPhone"
+  },
+  {
+    name: "Linux"
+  },
+  {
+    name: "Java"
+  },
+  {
+    name: "Javascript"
+  },
+  {
+    name: "Mac"
+  },
+  {
+    name: "Matlab"
+  },
+  {
+    name: "Maya"
+  },
+  {
+    name: "Microsoft Excel"
+  },
+  {
+    name: "Microsoft Office"
+  },
+  {
+    name: "Microsoft Outlook"
+  },
+  {
+    name: "Microsoft Publisher"
+  },
+  {
+    name: "Microsoft Word"
+  },
+  {
+    name: "Microsoft Visual"
+  },
+  {
+    name: "Mobile"
+  },
+  {
+    name: "MySQL"
+  },
+  {
+    name: "Networks"
+  },
+  {
+    name: "Open Source Software"
+  },
+  {
+    name: "Oracle"
+  },
+  {
+    name: "Perl"
+  },
+  {
+    name: "PHP"
+  },
+  {
+    name: "Presentations"
+  },
+  {
+    name: "Processing"
+  },
+  {
+    name: "Programming"
+  },
+  {
+    name: "PT Modeler"
+  },
+  {
+    name: "Python"
+  },
+  {
+    name: "QuickBooks"
+  },
+  {
+    name: "Ruby"
+  },
+  {
+    name: "Shade"
+  },
+  {
+    name: "Software"
+  },
+  {
+    name: "Spreadsheet"
+  },
+  {
+    name: "SQL"
+  },
+  {
+    name: "Support"
+  },
+  {
+    name: "Systems Administration"
+  },
+  {
+    name: "Tech Support"
+  },
+  {
+    name: "Troubleshooting"
+  },
+  {
+    name: "Unix"
+  },
+  {
+    name: "UI/UX"
+  },
+  {
+    name: "Web Page Design"
+  },
+  {
+    name: "Windows"
+  },
+  {
+    name: "Word Processing"
+  },
+  {
+    name: "XML"
+  },
+  {
+    name: "XHTML"
+  }
 ];
 
 export const DInterestsAndHobbies = [

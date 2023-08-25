@@ -4,6 +4,7 @@ import {
   CUnprotectedRoutes,
   CProtectedRoutes,
   CMiscRoutes,
+  CProtectedDynamicRoutes,
 } from 'constants/routes';
 import Project from 'constants/project';
 import { RequestCookie } from 'next/dist/server/web/spec-extension/cookies';
@@ -51,11 +52,15 @@ export const middleware = async (request: NextRequest) => {
   const withLocale = locale === defaultLocale ? '' : `/${locale}`;
 
   const isProtectedRoute = CProtectedRoutes.includes(pathname);
+  const isProtectedDynamicRoute = CProtectedDynamicRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
   const isUnprotectedRoute = CUnprotectedRoutes.includes(pathname);
   const isMiscRoute = CMiscRoutes.includes(pathname);
 
   if (loggedIn) {
-    if (!isProtectedRoute && !isMiscRoute) {
+    if (!isProtectedRoute && !isProtectedDynamicRoute && !isMiscRoute) {
       return NextResponse.redirect(new URL(`${withLocale}/`, request.url));
     }
   } else if (!isUnprotectedRoute && !isMiscRoute) {

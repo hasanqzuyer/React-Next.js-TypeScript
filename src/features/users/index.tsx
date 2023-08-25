@@ -60,9 +60,7 @@ const UsersPage = () => {
     setFilterOpen(!filterOpen);
   };
 
-  const clearFilters = () => {
-    setFilter(DUsersFilters());
-  };
+
 
   const toggleUser = (rowId: number, checked: boolean) => {
     if (checked) {
@@ -268,38 +266,6 @@ const UsersPage = () => {
           );
         }
 
-        if (filters.applications.min && filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length >= filters.applications.min &&
-              user.applications.length <= filters.applications.max
-          );
-        } else if (filters.applications.min && !filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length >= filters.applications.min
-          );
-        } else if (!filters.applications.min && filters.applications.max) {
-          users = users.filter(
-            (user: IUser) =>
-              user.applications.length <= filters.applications.max
-          );
-        }
-        if (filters.socialMedia) {
-          users = users.filter((user: IUser) => {
-            if (user.socialMedia.length > 0) {
-              const media: any = user.socialMedia[0];
-              if (media[filters.socialMedia.value.toLowerCase()]) {
-                return true;
-              } else {
-                return false;
-              }
-            } else {
-              return false;
-            }
-          });
-        }
-
         setTotalColumnItems(users);
       })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
@@ -310,6 +276,20 @@ const UsersPage = () => {
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   }, []);
+
+  const [clearing, setClearing] = useState<boolean>(false);
+  const clearFilters = () => {
+    setFilter(DUsersFilters());
+    setClearing(true);
+  };
+  useEffect(() => {
+    if (clearing) {
+      getAllUsers()
+        .then((data) => setTotalColumnItems(data))
+        .catch((error) => push('Something went wrong!', { variant: 'error' }));
+      setClearing(false)
+    }
+  }, [clearing])
 
   const PageSize = 10;
 
@@ -339,7 +319,7 @@ const UsersPage = () => {
       return (
         <Link
           style={{ textDecoration: 'none', color: '#4f4f4f' }}
-          href="/users/overview"
+          href={`/users/overview?userId=${singleUser.id}`}
         >
           {singleUser.firstName} {singleUser.lastName}
         </Link>
@@ -354,8 +334,8 @@ const UsersPage = () => {
     if (headItem.reference === 'age') {
       return getAge(singleUser.dateOfBirth);
     }
-    if (headItem.reference === 'language') {
-      return singleUser.language;
+    if (headItem.reference === 'languages') {
+      return singleUser.languages;
     }
     if (headItem.reference === 'applications') {
       return singleUser.applications.length;
@@ -543,11 +523,11 @@ const UsersPage = () => {
                     }
                     options={[
                       {
-                        value: 0,
+                        value: 'true',
                         label: 'Yes',
                       },
                       {
-                        value: 1,
+                        value: 'false',
                         label: 'No',
                       },
                     ]}

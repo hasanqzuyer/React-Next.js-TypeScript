@@ -12,7 +12,8 @@ export const getLanguages = (search: string) => {
   }
   filters.forEach((element) => {
     const language = element.language.name;
-    languages.push(language);
+    if (!languages.includes(language))
+      languages.push(language);
   });
   languages.sort();
   if (languages.length > 0) {
