@@ -240,7 +240,6 @@ const AccountPage = (props: any) => {
       const languages = info.languages.map((item: any) => item.value).join(',');
       const skills = info.skills.map((item: any) => item.value).join(',');
       let data = { ...info, languages, skills };
-      console.log(data);
       await UsersAPI.updateSingleUser(user.id, data).then(() => {});
       setInfoSaving(false);
       setInfoHasChanged(false);

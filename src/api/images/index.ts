@@ -1,27 +1,34 @@
 import Project from 'constants/project';
-import { TImage, TImageId, TImageName } from 'api/images/types';
 import { client } from 'api/api-client';
 
-const ImagesAPI = {
-  postImage: async (body: TImage) => {
-    await client.post(`${Project.apis.v1}/images`, body);
-  },
+const ImageApi = {
+  fileUpload: async (file: File, houseId: number) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('houseId', houseId.toString());
 
-  getImages: async () => {
-    const { data } = await client.get(`${Project.apis.v1}/images`);
-
-    return data;
-  },
-
-  getImageById: async (id: TImageId) => {
-    const { data } = await client.get(`${Project.apis.v1}/images/${id}`);
+    const { data } = await client.post(`${Project.apis.v1}/images`, formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
 
     return data;
   },
 
-  deleteImage: async (id: TImageId) => {
+  fileDelete: async (id: number) => {
     await client.delete(`${Project.apis.v1}/images/${id}`);
+  },
+
+  updateFile: async (body: any, id: number) => {
+    await client.patch(`${Project.apis.v1}/images/${id}`, body);
+  },
+
+  fileDownload: async (id: string) => {
+    const res = await client.get(`${Project.apis.v1}/images/${id}`);
+
+    return res;
   },
 };
 
-export default ImagesAPI;
+export default ImageApi;

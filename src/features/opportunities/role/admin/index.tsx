@@ -8,7 +8,6 @@ import { useModal, useSnackbar } from 'hooks';
 import { AddProjectModal } from './elements';
 import { IHouse } from 'api/houses/types';
 import HouseAPI from 'api/houses';
-import { convertLocationToFlag } from 'utilities/converters';
 
 const AdminMarketPage = () => {
   const [tab, setTab] = useState(0);

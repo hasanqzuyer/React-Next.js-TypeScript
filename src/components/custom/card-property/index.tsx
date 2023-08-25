@@ -49,6 +49,8 @@ const PropertyCard = ({
     const flag = convertLocationToFlag(address);
     setFlagUrl(flag);
   }, [address]);
+
+  const handleView = () => {};
   return (
     <CardMain animation="zoom-in" {...props}>
       {completed && <CardCompletedMark>Filled</CardCompletedMark>}

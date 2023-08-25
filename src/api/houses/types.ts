@@ -5,13 +5,14 @@ import { IUser } from 'api/users/types';
 export type TCreateHouse = {
   name: string;
   location: string;
-  totalSpots: number;
-  availableSpots: number;
-  rent: number;
+  totalSpots: number | null;
+  availableSpots: number | null;
+  rent: number | null;
   theme: string;
   info: string;
   status: string;
   marketType: string;
+  thumbnailId: number | null;
 };
 
 export type TSingleHouse = {
@@ -30,6 +31,7 @@ export interface IHouse {
   status: string;
   marketType: string;
   assignee: IUser;
+  thumbnail: TImage;
   images: TImage[];
   documents: TDocument[];
   createdAt: string;

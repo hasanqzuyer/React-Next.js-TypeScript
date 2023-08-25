@@ -17,11 +17,14 @@ const HouseAPI = {
     const { data } = await client.get(`${Project.apis.v1}/house-projects`, {
       params: {
         search,
-        limit: 10,
       },
     });
 
     return data;
+  },
+
+  updateHouse: async (body: any, id: number) => {
+    await client.patch(`${Project.apis.v1}/house-projects/${id}`, body);
   },
 
   getOne: async (id: any) => {
