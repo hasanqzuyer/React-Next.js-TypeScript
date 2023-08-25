@@ -4,9 +4,8 @@ import {
   AccountHeadline,
   AccountGrid,
 } from 'features/users-overview/styles';
-import { Button, Input, Checkbox, Card } from 'components/ui';
+import { Button, Input, Card } from 'components/ui';
 import { Stack } from 'components/system';
-import { AddIcon, DeleteIcon } from 'components/svg';
 import { Tabs } from 'components/custom';
 import UsersAPI from 'api/users';
 import { IUser } from 'api/users/types';
@@ -14,11 +13,6 @@ import { useDebounce, useSnackbar } from 'hooks';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getLanguages } from 'utilities/languages';
-import { getSocialMedias } from 'utilities/socialMedias';
-import { getCompanys } from 'utilities/companys';
-import { getSchoolsAndUniversities } from 'utilities/schools';
-import { getDegrees } from 'utilities/degrees';
-import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 import { getHouseTheme } from 'utilities/houseTheme';
 import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
 import { getInterestsAndHobbies } from 'utilities/interests';
@@ -385,14 +379,16 @@ const OverviewPage = (props: any) => {
                   label="First Name"
                   placeholder="John"
                   value={info?.firstName}
-                  onValue={(firstName) => setInfo({ ...info, firstName })}
+                  onValue={(firstName) =>
+                    handleChangeInfo('firstName', firstName)
+                  }
                 />
                 <Input
                   type="text"
                   label="Last Name"
                   placeholder="Doe"
                   value={info?.lastName}
-                  onValue={(lastName) => setInfo({ ...info, lastName })}
+                  onValue={(lastName) => handleChangeInfo('lastName', lastName)}
                 />
                 <Input
                   type="text"
