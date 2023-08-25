@@ -104673,248 +104673,248 @@ export const DSkillsOfOthers = [
 
 export const DSkills = [
   {
-    name: "Adobe Illustrator"
+    name: 'Adobe Illustrator',
   },
   {
-    name: "Adobe InDesign"
+    name: 'Adobe InDesign',
   },
   {
-    name: "Adobe Photoshop"
+    name: 'Adobe Photoshop',
   },
   {
-    name: "Analytics"
+    name: 'Analytics',
   },
   {
-    name: "Android"
+    name: 'Android',
   },
   {
-    name: "APIs"
+    name: 'APIs',
   },
   {
-    name: "Art Design"
+    name: 'Art Design',
   },
   {
-    name: "AutoCAD"
+    name: 'AutoCAD',
   },
   {
-    name: "Backup Management"
+    name: 'Backup Management',
   },
   {
-    name: "C"
+    name: 'C',
   },
   {
-    name: "C++"
+    name: 'C++',
   },
   {
-    name: "Certifications"
+    name: 'Certifications',
   },
   {
-    name: "Client Server"
+    name: 'Client Server',
   },
   {
-    name: "Client Support"
+    name: 'Client Support',
   },
   {
-    name: "Configuration"
+    name: 'Configuration',
   },
   {
-    name: "Content Managment"
+    name: 'Content Managment',
   },
   {
-    name: "Content Management Systems (CMS)"
+    name: 'Content Management Systems (CMS)',
   },
   {
-    name: "Corel Draw"
+    name: 'Corel Draw',
   },
   {
-    name: "Corel Word Perfect"
+    name: 'Corel Word Perfect',
   },
   {
-    name: "CSS"
+    name: 'CSS',
   },
   {
-    name: "Data Analytics"
+    name: 'Data Analytics',
   },
   {
-    name: "Desktop Publishing"
+    name: 'Desktop Publishing',
   },
   {
-    name: "Design"
+    name: 'Design',
   },
   {
-    name: "Diagnostics"
+    name: 'Diagnostics',
   },
   {
-    name: "Documentation"
+    name: 'Documentation',
   },
   {
-    name: "End User Support"
+    name: 'End User Support',
   },
   {
-    name: "Email"
+    name: 'Email',
   },
   {
-    name: "Engineering"
+    name: 'Engineering',
   },
   {
-    name: "Excel"
+    name: 'Excel',
   },
   {
-    name: "FileMaker Pro"
+    name: 'FileMaker Pro',
   },
   {
-    name: "Fortran"
+    name: 'Fortran',
   },
   {
-    name: "Graphic Design"
+    name: 'Graphic Design',
   },
   {
-    name: "Hardware"
+    name: 'Hardware',
   },
   {
-    name: "Help Desk"
+    name: 'Help Desk',
   },
   {
-    name: "HTML"
+    name: 'HTML',
   },
   {
-    name: "Implementation"
+    name: 'Implementation',
   },
   {
-    name: "Installation"
+    name: 'Installation',
   },
   {
-    name: "Internet"
+    name: 'Internet',
   },
   {
-    name: "iOS"
+    name: 'iOS',
   },
   {
-    name: "iPhone"
+    name: 'iPhone',
   },
   {
-    name: "Linux"
+    name: 'Linux',
   },
   {
-    name: "Java"
+    name: 'Java',
   },
   {
-    name: "Javascript"
+    name: 'Javascript',
   },
   {
-    name: "Mac"
+    name: 'Mac',
   },
   {
-    name: "Matlab"
+    name: 'Matlab',
   },
   {
-    name: "Maya"
+    name: 'Maya',
   },
   {
-    name: "Microsoft Excel"
+    name: 'Microsoft Excel',
   },
   {
-    name: "Microsoft Office"
+    name: 'Microsoft Office',
   },
   {
-    name: "Microsoft Outlook"
+    name: 'Microsoft Outlook',
   },
   {
-    name: "Microsoft Publisher"
+    name: 'Microsoft Publisher',
   },
   {
-    name: "Microsoft Word"
+    name: 'Microsoft Word',
   },
   {
-    name: "Microsoft Visual"
+    name: 'Microsoft Visual',
   },
   {
-    name: "Mobile"
+    name: 'Mobile',
   },
   {
-    name: "MySQL"
+    name: 'MySQL',
   },
   {
-    name: "Networks"
+    name: 'Networks',
   },
   {
-    name: "Open Source Software"
+    name: 'Open Source Software',
   },
   {
-    name: "Oracle"
+    name: 'Oracle',
   },
   {
-    name: "Perl"
+    name: 'Perl',
   },
   {
-    name: "PHP"
+    name: 'PHP',
   },
   {
-    name: "Presentations"
+    name: 'Presentations',
   },
   {
-    name: "Processing"
+    name: 'Processing',
   },
   {
-    name: "Programming"
+    name: 'Programming',
   },
   {
-    name: "PT Modeler"
+    name: 'PT Modeler',
   },
   {
-    name: "Python"
+    name: 'Python',
   },
   {
-    name: "QuickBooks"
+    name: 'QuickBooks',
   },
   {
-    name: "Ruby"
+    name: 'Ruby',
   },
   {
-    name: "Shade"
+    name: 'Shade',
   },
   {
-    name: "Software"
+    name: 'Software',
   },
   {
-    name: "Spreadsheet"
+    name: 'Spreadsheet',
   },
   {
-    name: "SQL"
+    name: 'SQL',
   },
   {
-    name: "Support"
+    name: 'Support',
   },
   {
-    name: "Systems Administration"
+    name: 'Systems Administration',
   },
   {
-    name: "Tech Support"
+    name: 'Tech Support',
   },
   {
-    name: "Troubleshooting"
+    name: 'Troubleshooting',
   },
   {
-    name: "Unix"
+    name: 'Unix',
   },
   {
-    name: "UI/UX"
+    name: 'UI/UX',
   },
   {
-    name: "Web Page Design"
+    name: 'Web Page Design',
   },
   {
-    name: "Windows"
+    name: 'Windows',
   },
   {
-    name: "Word Processing"
+    name: 'Word Processing',
   },
   {
-    name: "XML"
+    name: 'XML',
   },
   {
-    name: "XHTML"
-  }
+    name: 'XHTML',
+  },
 ];
 
 export const DInterestsAndHobbies = [

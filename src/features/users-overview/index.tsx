@@ -37,7 +37,8 @@ const OverviewPage = (props: any) => {
   const { push } = useSnackbar();
   const [infoHasChanged, setInfoHasChanged] = useState<boolean>(false);
   const [infoSaving, setInfoSaving] = useState<boolean>(false);
-  const [socialMediaHasChanged, setSocialMediaHasChanged] = useState<boolean>(false);
+  const [socialMediaHasChanged, setSocialMediaHasChanged] =
+    useState<boolean>(false);
   const [socialMediaSaving, setSocialMediaSaving] = useState<boolean>(false);
   const [expHasChanged, setExpHasChanged] = useState<boolean>(false);
   const [expSaving, setExpSaving] = useState<boolean>(false);
@@ -47,52 +48,51 @@ const OverviewPage = (props: any) => {
   const [hprefSaving, setHprefSaving] = useState<boolean>(false);
 
   const [info, setInfo] = useState<any>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    location: "",
-    nationality: "",
-    dateOfBirth: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    location: '',
+    nationality: '',
+    dateOfBirth: '',
     languages: [],
-    skills: []
-  })
+    skills: [],
+  });
 
-  const [workExperiences, setWorkExperiences] = useState<any[]>([])
-  const [educations, setEducations] = useState<any[]>([])
+  const [workExperiences, setWorkExperiences] = useState<any[]>([]);
+  const [educations, setEducations] = useState<any[]>([]);
   const [socialMedia, setSocialMedia] = useState<ISocialMedia>({
     id: -1,
-    linkedin: "",
-    tiktok: "",
-    instagram: "",
-    website: "",
+    linkedin: '',
+    tiktok: '',
+    instagram: '',
+    website: '',
     ownerId: userId,
-    createdAt: "",
-    updatedAt: ""
+    createdAt: '',
+    updatedAt: '',
   });
   const [housePreference, setHousePreference] = useState<THousePreference>({
     id: -1,
-    theme: "",
-    skillsOfOthers: "",
-    location: "",
-    language: "",
+    theme: '',
+    skillsOfOthers: '',
+    location: '',
+    language: '',
     monthlyRentMax: 0,
     monthlyRentMin: 0,
     ageMax: 0,
     ageMin: 0,
     tenantsMax: 0,
     tenantsMin: 0,
-    interestsHobbies: "",
+    interestsHobbies: '',
     ownerId: userId,
-    diet: "",
-    motivation: "",
-    createdAt: "",
-    updatedAt: ""
+    diet: '',
+    motivation: '',
+    createdAt: '',
+    updatedAt: '',
   });
   const getUserById = async (id: any) => {
-    if (!id)
-      return
+    if (!id) return;
     const data: IUser = await UsersAPI.getUser(id);
-    console.log("User", data);
+    console.log('User', data);
 
     setInfo((info: any) => ({
       firstName: data.firstName,
@@ -100,16 +100,20 @@ const OverviewPage = (props: any) => {
       email: data.email,
       nationality: data.nationality,
       dateOfBirth: data.dateOfBirth,
-      languages: data.languages ? data.languages.split(',').map((name: string) => ({
-        value: name,
-        label: name,
-      })) : [],
+      languages: data.languages
+        ? data.languages.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [],
       location: data.location,
-      skills: data.skills ? data.skills.split(',').map((name: string) => ({
-        value: name,
-        label: name,
-      })) : [],
-    }))
+      skills: data.skills
+        ? data.skills.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [],
+    }));
 
     setWorkExperiences(data.experiences);
     setEducations(data.educations);
@@ -120,7 +124,7 @@ const OverviewPage = (props: any) => {
     if (data.housePreference?.length > 0) {
       setHousePreference(data.housePreference[0]);
     }
-  }
+  };
 
   const [locations, setLocations] = useState<any[]>([]);
   const [nationalities, setNationalities] = useState<any[]>([]);
@@ -130,7 +134,6 @@ const OverviewPage = (props: any) => {
   const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
   const [interests, setInterests] = useState<any[]>([]);
   const [diets, setDiets] = useState<any[]>([]);
-
 
   const getLocationOptions = async (searchTerm: string = '') => {
     const result = getLocations(searchTerm);
@@ -167,7 +170,6 @@ const OverviewPage = (props: any) => {
       })
     );
   };
-
 
   const getThemeOptions = async (searchTerm: string = '') => {
     const result = getHouseTheme(searchTerm);
@@ -227,7 +229,6 @@ const OverviewPage = (props: any) => {
   const debouncedInterests = useDebounce(getInterestsOptions, 100);
   const debouncedDiets = useDebounce(getDietsOptions, 100);
 
-
   useEffect(() => {
     getLocationOptions();
     getNationalityOptions();
@@ -241,63 +242,68 @@ const OverviewPage = (props: any) => {
 
   const updateUserInfo = async () => {
     try {
-      const languages = info.languages.map((item: any) => item.value).join(',')
-      const skills = info.skills.map((item: any) => item.value).join(',')
-      let data = {...info, languages, skills}
-      console.log(data)
-      await UsersAPI.updateSingleUser(userId, data).then(() => {
-      });
-      setInfoSaving(false)
-      setInfoHasChanged(false)
-
+      const languages = info.languages.map((item: any) => item.value).join(',');
+      const skills = info.skills.map((item: any) => item.value).join(',');
+      let data = { ...info, languages, skills };
+      console.log(data);
+      await UsersAPI.updateSingleUser(userId, data).then(() => {});
+      setInfoSaving(false);
+      setInfoHasChanged(false);
     } catch {
       push('Something went wrong when update user info.', { variant: 'error' });
-      setInfoSaving(false)
+      setInfoSaving(false);
     }
-  }
+  };
 
   const saveSocialMedia = async () => {
     try {
       if (socialMedia.id === -1) {
-        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => {
-        });
+        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => {});
       } else {
-        await SocialMediaAPI.updateSocialMedia(socialMedia, socialMedia.id).then(() => {
-        });
+        await SocialMediaAPI.updateSocialMedia(
+          socialMedia,
+          socialMedia.id
+        ).then(() => {});
       }
-      setSocialMediaHasChanged(false)
-      setSocialMediaSaving(false)
-
+      setSocialMediaHasChanged(false);
+      setSocialMediaSaving(false);
     } catch {
-      push('Something went wrong when save social media.', { variant: 'error' });
-      setSocialMediaSaving(false)
+      push('Something went wrong when save social media.', {
+        variant: 'error',
+      });
+      setSocialMediaSaving(false);
     }
-  }
+  };
 
   const saveHousePreference = async () => {
     try {
       if (housePreference.id === -1) {
-        await HousePreferenceApi.createHousePreference(housePreference).then(() => {
-        });
+        await HousePreferenceApi.createHousePreference(housePreference).then(
+          () => {}
+        );
       } else {
-        await HousePreferenceApi.updateHousePreference(housePreference, housePreference.id).then(() => {
-        });
+        await HousePreferenceApi.updateHousePreference(
+          housePreference,
+          housePreference.id
+        ).then(() => {});
       }
-      setHprefHasChanged(false)
-      setHprefSaving(false)
+      setHprefHasChanged(false);
+      setHprefSaving(false);
     } catch {
-      push('Something went wrong when save house preference.', { variant: 'error' });
-      setHprefSaving(false)
+      push('Something went wrong when save house preference.', {
+        variant: 'error',
+      });
+      setHprefSaving(false);
     }
-  }
+  };
 
   const handleSave = () => {
     if (infoHasChanged) {
-      setInfoSaving(true)
+      setInfoSaving(true);
       updateUserInfo();
     }
     if (socialMediaHasChanged) {
-      setSocialMediaSaving(true)
+      setSocialMediaSaving(true);
       saveSocialMedia();
     }
     if (expHasChanged) {
@@ -310,38 +316,60 @@ const OverviewPage = (props: any) => {
       setHprefSaving(true);
       saveHousePreference();
     }
-  }
+  };
 
   let count = 0;
   useEffect(() => {
-    if (!expSaving && !infoSaving && !eduSaving && !hprefSaving && !socialMediaSaving && userId) {
+    if (
+      !expSaving &&
+      !infoSaving &&
+      !eduSaving &&
+      !hprefSaving &&
+      !socialMediaSaving &&
+      userId
+    ) {
       count++;
       getUserById(userId);
       if (count > 2) {
         push('Successfully updated User', { variant: 'success' });
       }
     }
-  }, [expSaving, infoSaving, eduSaving, hprefSaving, socialMediaSaving, userId])
+  }, [
+    expSaving,
+    infoSaving,
+    eduSaving,
+    hprefSaving,
+    socialMediaSaving,
+    userId,
+  ]);
 
   const handleChangeInfo = (name: string, value: any) => {
     setInfo({ ...info, [name]: value });
     setInfoHasChanged(true);
-  }
+  };
 
   const handleChangeSocialMedia = (name: string, value: string) => {
     setSocialMedia({ ...socialMedia, [name]: value });
     setSocialMediaHasChanged(true);
-  }
+  };
 
   const handleChangeHousePreference = (name: string, value: string) => {
     setHousePreference({ ...housePreference, [name]: value });
     setHprefHasChanged(true);
-  }
+  };
 
-  const handleChangeMinMaxHousePreference = (minName: string, maxName: string, value: any) => {
-    setHousePreference({ ...housePreference, [minName]: value.min, [maxName]: value.max });
+  const handleChangeMinMaxHousePreference = (
+    minName: string,
+    maxName: string,
+    value: any
+  ) => {
+    setHousePreference({
+      ...housePreference,
+      [minName]: value.min,
+      [maxName]: value.max,
+    });
     setHprefHasChanged(true);
-  }
+  };
 
   return (
     <Stack>
@@ -371,7 +399,7 @@ const OverviewPage = (props: any) => {
                   label="Email"
                   placeholder="johndio@gmail.com"
                   value={info?.email}
-                  onValue={() => { }}
+                  onValue={() => {}}
                   disabled
                 />
               </AccountGrid>
@@ -382,14 +410,20 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedLocation}
                   placeholder="Please Select"
                   options={locations}
-
                   value={
-                    info.location ? {
-                      label: info.location,
-                      value: info.location
-                    } : null
+                    info.location
+                      ? {
+                          label: info.location,
+                          value: info.location,
+                        }
+                      : null
                   }
-                  onValue={(location) => handleChangeInfo("location", location ? location.value : location)}
+                  onValue={(location) =>
+                    handleChangeInfo(
+                      'location',
+                      location ? location.value : location
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -398,19 +432,28 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={nationalities}
                   value={
-                    info.nationality ? {
-                      label: info.nationality,
-                      value: info.nationality
-                    } : null
+                    info.nationality
+                      ? {
+                          label: info.nationality,
+                          value: info.nationality,
+                        }
+                      : null
                   }
-                  onValue={(nationality) => handleChangeInfo("nationality", nationality ? nationality.value : nationality)}
+                  onValue={(nationality) =>
+                    handleChangeInfo(
+                      'nationality',
+                      nationality ? nationality.value : nationality
+                    )
+                  }
                 />
                 <Input
                   type="date"
                   label="Date of Birth"
                   placeholder="Please Select"
                   value={info?.dateOfBirth}
-                  onValue={(dateOfBirth) => handleChangeInfo("dateOfBirth", dateOfBirth)}
+                  onValue={(dateOfBirth) =>
+                    handleChangeInfo('dateOfBirth', dateOfBirth)
+                  }
                 />
                 <Input
                   type="multiselect"
@@ -420,7 +463,9 @@ const OverviewPage = (props: any) => {
                   options={languages}
                   isFilterActive
                   value={info.languages}
-                  onValue={(languages) => handleChangeInfo("languages", languages)}
+                  onValue={(languages) =>
+                    handleChangeInfo('languages', languages)
+                  }
                 />
               </AccountGrid>
             </Stack>
@@ -458,7 +503,7 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedSkills}
                   options={skills}
                   value={info.skills}
-                  onValue={(skills) => handleChangeInfo("skills", skills)}
+                  onValue={(skills) => handleChangeInfo('skills', skills)}
                 />
               </AccountGrid>
               <AccountHeadline>Social Media</AccountHeadline>
@@ -468,28 +513,36 @@ const OverviewPage = (props: any) => {
                   label="Instagram"
                   placeholder="Please Enter"
                   value={socialMedia?.instagram}
-                  onValue={(instagram) => handleChangeSocialMedia("instagram", instagram)}
+                  onValue={(instagram) =>
+                    handleChangeSocialMedia('instagram', instagram)
+                  }
                 />
                 <Input
                   type="text"
                   label="LinkedIn"
                   placeholder="Please Enter"
                   value={socialMedia?.linkedin}
-                  onValue={(linkedin) => handleChangeSocialMedia("linkedin", linkedin)}
+                  onValue={(linkedin) =>
+                    handleChangeSocialMedia('linkedin', linkedin)
+                  }
                 />
                 <Input
                   type="text"
                   label="TikTok"
                   placeholder="Please Enter"
                   value={socialMedia?.tiktok}
-                  onValue={(tiktok) => handleChangeSocialMedia("tiktok", tiktok)}
+                  onValue={(tiktok) =>
+                    handleChangeSocialMedia('tiktok', tiktok)
+                  }
                 />
                 <Input
                   type="text"
                   label="Website"
                   placeholder="Please Enter"
                   value={socialMedia?.website}
-                  onValue={(website) => handleChangeSocialMedia("website", website)}
+                  onValue={(website) =>
+                    handleChangeSocialMedia('website', website)
+                  }
                 />
               </AccountGrid>
               <AccountHeadline>House Preferences</AccountHeadline>
@@ -500,12 +553,19 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={themes}
                   value={
-                    housePreference.theme ? {
-                      label: housePreference.theme,
-                      value: housePreference.theme
-                    } : null
+                    housePreference.theme
+                      ? {
+                          label: housePreference.theme,
+                          value: housePreference.theme,
+                        }
+                      : null
                   }
-                  onValue={(theme) => handleChangeHousePreference("theme", theme ? theme.value : theme)}
+                  onValue={(theme) =>
+                    handleChangeHousePreference(
+                      'theme',
+                      theme ? theme.value : theme
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -514,12 +574,19 @@ const OverviewPage = (props: any) => {
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={
-                    housePreference.skillsOfOthers ? {
-                      label: housePreference.skillsOfOthers,
-                      value: housePreference.skillsOfOthers
-                    } : null
+                    housePreference.skillsOfOthers
+                      ? {
+                          label: housePreference.skillsOfOthers,
+                          value: housePreference.skillsOfOthers,
+                        }
+                      : null
                   }
-                  onValue={(skillsOfOthers) => handleChangeHousePreference("skillsOfOthers", skillsOfOthers ? skillsOfOthers.value : skillsOfOthers)}
+                  onValue={(skillsOfOthers) =>
+                    handleChangeHousePreference(
+                      'skillsOfOthers',
+                      skillsOfOthers ? skillsOfOthers.value : skillsOfOthers
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -528,12 +595,19 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedLocation}
                   options={locations}
                   value={
-                    housePreference.location ? {
-                      label: housePreference.location,
-                      value: housePreference.location
-                    } : null
+                    housePreference.location
+                      ? {
+                          label: housePreference.location,
+                          value: housePreference.location,
+                        }
+                      : null
                   }
-                  onValue={(location) => handleChangeHousePreference("location", location ? location.value : location)}
+                  onValue={(location) =>
+                    handleChangeHousePreference(
+                      'location',
+                      location ? location.value : location
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -542,30 +616,60 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedLanguages}
                   options={languages}
                   value={
-                    housePreference.language ? {
-                      label: housePreference.language,
-                      value: housePreference.language
-                    } : null
+                    housePreference.language
+                      ? {
+                          label: housePreference.language,
+                          value: housePreference.language,
+                        }
+                      : null
                   }
-                  onValue={(language) => handleChangeHousePreference("language", language ? language.value : language)}
+                  onValue={(language) =>
+                    handleChangeHousePreference(
+                      'language',
+                      language ? language.value : language
+                    )
+                  }
                 />
                 <Input
                   type="min-max"
                   label="Monthly Rent"
-                  value={{ min: housePreference.monthlyRentMin, max: housePreference.monthlyRentMax }}
-                  onValue={(monthlyRent) => handleChangeMinMaxHousePreference("monthlyRentMin", "monthlyRentMax", monthlyRent)}
+                  value={{
+                    min: housePreference.monthlyRentMin,
+                    max: housePreference.monthlyRentMax,
+                  }}
+                  onValue={(monthlyRent) =>
+                    handleChangeMinMaxHousePreference(
+                      'monthlyRentMin',
+                      'monthlyRentMax',
+                      monthlyRent
+                    )
+                  }
                 />
                 <Input
                   type="min-max"
                   label="Age"
-                  value={{ min: housePreference.ageMin, max: housePreference.ageMax }}
-                  onValue={(age) => handleChangeMinMaxHousePreference("ageMin", "ageMax", age)}
+                  value={{
+                    min: housePreference.ageMin,
+                    max: housePreference.ageMax,
+                  }}
+                  onValue={(age) =>
+                    handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
+                  }
                 />
                 <Input
                   type="min-max"
                   label="Tenants per House"
-                  value={{ min: housePreference.tenantsMin, max: housePreference.tenantsMax }}
-                  onValue={(tenants) => handleChangeMinMaxHousePreference("tenantsMin", "tenantsMax", tenants)}
+                  value={{
+                    min: housePreference.tenantsMin,
+                    max: housePreference.tenantsMax,
+                  }}
+                  onValue={(tenants) =>
+                    handleChangeMinMaxHousePreference(
+                      'tenantsMin',
+                      'tenantsMax',
+                      tenants
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -574,12 +678,21 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedInterests}
                   options={interests}
                   value={
-                    housePreference.interestsHobbies ? {
-                      label: housePreference.interestsHobbies,
-                      value: housePreference.interestsHobbies
-                    } : null
+                    housePreference.interestsHobbies
+                      ? {
+                          label: housePreference.interestsHobbies,
+                          value: housePreference.interestsHobbies,
+                        }
+                      : null
                   }
-                  onValue={(interestsHobbies) => handleChangeHousePreference("interestsHobbies", interestsHobbies ? interestsHobbies.value : interestsHobbies)}
+                  onValue={(interestsHobbies) =>
+                    handleChangeHousePreference(
+                      'interestsHobbies',
+                      interestsHobbies
+                        ? interestsHobbies.value
+                        : interestsHobbies
+                    )
+                  }
                 />
                 <Input
                   type="select"
@@ -588,12 +701,19 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedDiets}
                   options={diets}
                   value={
-                    housePreference.diet ? {
-                      label: housePreference.diet,
-                      value: housePreference.diet
-                    } : null
+                    housePreference.diet
+                      ? {
+                          label: housePreference.diet,
+                          value: housePreference.diet,
+                        }
+                      : null
                   }
-                  onValue={(diet) => handleChangeHousePreference("diet", diet ? diet.value : diet)}
+                  onValue={(diet) =>
+                    handleChangeHousePreference(
+                      'diet',
+                      diet ? diet.value : diet
+                    )
+                  }
                 />
               </AccountGrid>
               <AccountGrid>
@@ -602,32 +722,44 @@ const OverviewPage = (props: any) => {
                   label="Motivation"
                   placeholder="Please Enter"
                   value={housePreference?.motivation}
-                  onValue={(motivation) => handleChangeHousePreference("motivation", motivation)}
+                  onValue={(motivation) =>
+                    handleChangeHousePreference('motivation', motivation)
+                  }
                   style={{ gridColumn: '1/3' }}
                 />
               </AccountGrid>
-              {
-                !expSaving && !infoSaving && !eduSaving && !socialMediaSaving && !hprefSaving ?
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ width: '130px', alignSelf: 'flex-end' }}
-                    disabled={!expHasChanged && !infoHasChanged && !eduHasChanged && !socialMediaHasChanged && !hprefHasChanged ? true : false}
-                    onClick={handleSave}
-                  >
-                    Save
-                  </Button>
-                  :
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ width: '130px', alignSelf: 'flex-end' }}
-                    disabled
-                  >
-                    Saving...
-                  </Button>
-
-              }
+              {!expSaving &&
+              !infoSaving &&
+              !eduSaving &&
+              !socialMediaSaving &&
+              !hprefSaving ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled={
+                    !expHasChanged &&
+                    !infoHasChanged &&
+                    !eduHasChanged &&
+                    !socialMediaHasChanged &&
+                    !hprefHasChanged
+                      ? true
+                      : false
+                  }
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled
+                >
+                  Saving...
+                </Button>
+              )}
             </Stack>
           </ApplicationContainer>
         </Card>

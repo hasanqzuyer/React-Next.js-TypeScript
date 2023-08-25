@@ -17,7 +17,9 @@ const HouseWorkExperienceApi = {
   },
 
   getHouseWorkExperience: async (id: number) => {
-    const { data } = await client.get(`${Project.apis.v1}/work-experiences/${id}`);
+    const { data } = await client.get(
+      `${Project.apis.v1}/work-experiences/${id}`
+    );
 
     return data;
   },

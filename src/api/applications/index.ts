@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-named-as-default
 import Project from 'constants/project';
-import {
-  TSingleApplication,
-} from 'api/applications/types';
+import { TSingleApplication } from 'api/applications/types';
 
 import { client } from 'api/api-client';
 import { IUser } from 'api/users/types';
@@ -25,7 +23,9 @@ const ApplicationAPI = {
   },
 
   deleteApplication: async (id: TSingleApplication) => {
-    const { data } = await client.delete(`${Project.apis.v1}/applications/${id}`);
+    const { data } = await client.delete(
+      `${Project.apis.v1}/applications/${id}`
+    );
 
     return data;
   },

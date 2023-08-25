@@ -1,4 +1,4 @@
-import { IUser } from "api/users/types";
+import { IUser } from 'api/users/types';
 
 export type TCreateAsSkillParams = {
   tier: string;

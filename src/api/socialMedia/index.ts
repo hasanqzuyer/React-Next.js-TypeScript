@@ -1,14 +1,11 @@
 // eslint-disable-next-line import/no-named-as-default
 import Project from 'constants/project';
-import {
-  TSingleSocialMedia,
-} from 'api/socialMedia/types';
+import { TSingleSocialMedia } from 'api/socialMedia/types';
 
 import { client } from 'api/api-client';
 import { IUser } from 'api/users/types';
 
 const SocialMediaAPI = {
-
   createSocialMedia: async (body: any) => {
     await client.post(`${Project.apis.v1}/social-medias`, body);
   },
@@ -30,7 +27,9 @@ const SocialMediaAPI = {
   },
 
   deleteSocialMedia: async (id: TSingleSocialMedia) => {
-    const { data } = await client.delete(`${Project.apis.v1}/social-medias/${id}`);
+    const { data } = await client.delete(
+      `${Project.apis.v1}/social-medias/${id}`
+    );
 
     return data;
   },

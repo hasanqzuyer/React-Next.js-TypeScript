@@ -60,8 +60,6 @@ const UsersPage = () => {
     setFilterOpen(!filterOpen);
   };
 
-
-
   const toggleUser = (rowId: number, checked: boolean) => {
     if (checked) {
       setCheckedUsers([...checkedusers, rowId]);
@@ -287,9 +285,9 @@ const UsersPage = () => {
       getAllUsers()
         .then((data) => setTotalColumnItems(data))
         .catch((error) => push('Something went wrong!', { variant: 'error' }));
-      setClearing(false)
+      setClearing(false);
     }
-  }, [clearing])
+  }, [clearing]);
 
   const PageSize = 10;
 

@@ -17,7 +17,9 @@ const HousePreferenceApi = {
   },
 
   getHousePreference: async (id: number) => {
-    const { data } = await client.get(`${Project.apis.v1}/house-preferences/${id}`);
+    const { data } = await client.get(
+      `${Project.apis.v1}/house-preferences/${id}`
+    );
 
     return data;
   },

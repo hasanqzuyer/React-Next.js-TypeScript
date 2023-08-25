@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 const Overview = () => {
   const { setRouteName } = useAppContext();
-  const router = useRouter()
+  const router = useRouter();
   const { query } = router;
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Overview = () => {
   return (
     <>
       <Title>Overview</Title>
-      <UsersOverviewPage userId={query.userId}/>
+      <UsersOverviewPage userId={query.userId} />
     </>
   );
 };

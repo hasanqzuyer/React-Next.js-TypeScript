@@ -3,7 +3,6 @@ import { TSingleUser } from 'api/users/types';
 import { client } from 'api/api-client';
 
 const UsersAPI = {
-
   getUsers: async (filters: any) => {
     const { data } = await client.get(`${Project.apis.v1}/users`, {
       params: {
@@ -25,7 +24,6 @@ const UsersAPI = {
   updateSingleUser: async (id: number, body: any) => {
     await client.patch(`${Project.apis.v1}/users/${id}`, body);
   },
-
 };
 
 export default UsersAPI;
