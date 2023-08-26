@@ -6,7 +6,7 @@ const Project = {
     // environment: 'staging',
     environment: 'development',
 
-    baseUrl: 'http://localhost',
+    baseUrl: 'http://localhost:8080',
     baseProdUrl: 'https://app.brotherhoodhouse.com',
     baseStageUrl: 'https://app.staging.brotherhoodhouse.com',
   },
