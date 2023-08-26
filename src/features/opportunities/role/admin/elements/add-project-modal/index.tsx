@@ -57,20 +57,11 @@ const AddHouseProjectModal = ({
     try {
       await ImageApi.fileUpload(file, 1).then(async (data) => {
         const presignedUrl = await ImageApi.fileDownload(data.key);
-
-        if (
-          presignedUrl &&
-          presignedUrl.data &&
-          file &&
-          file.name &&
-          file.type &&
-          data &&
-          data.id
-        ) {
+        if (presignedUrl && file && file.name && file.type && data && data.id) {
           setPhotos((prev: THouseImage[]) => [
             ...prev,
             {
-              presignedUrl: presignedUrl.data,
+              presignedUrl: presignedUrl,
               name: file.name,
               type: file.type,
               id: data.id,
@@ -94,19 +85,11 @@ const AddHouseProjectModal = ({
       await DocumentApi.fileUpload(file, 1).then(async (data) => {
         const presignedUrl = await DocumentApi.fileDownload(data.key);
 
-        if (
-          presignedUrl &&
-          presignedUrl.data &&
-          file &&
-          file.name &&
-          file.type &&
-          data &&
-          data.id
-        ) {
+        if (presignedUrl && file && file.name && file.type && data && data.id) {
           setDocuments((prev: THouseImage[]) => [
             ...prev,
             {
-              presignedUrl: presignedUrl.data,
+              presignedUrl: presignedUrl,
               name: file.name,
               type: file.type,
               id: data.id,
@@ -443,8 +426,7 @@ const AddHouseProjectModal = ({
                     <AddProjectDocumentPlaceholder>
                       <ImageUploadButton
                         onClick={() => {
-                          docModalOpen();
-                          setActiveDocIdx(idx);
+                          window.open(presignedUrl, '_blank');
                         }}
                         key={id}
                       >

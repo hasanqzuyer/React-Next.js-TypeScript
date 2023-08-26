@@ -10,5 +10,5 @@ export type THouseImage = {
   type: string;
   name: string;
   id: number;
-  presignedUrl?: string;
+  presignedUrl?: any;
 };

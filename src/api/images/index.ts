@@ -24,8 +24,8 @@ const ImageApi = {
     await client.patch(`${Project.apis.v1}/images/${id}`, body);
   },
 
-  fileDownload: async (id: string) => {
-    const res = await client.get(`${Project.apis.v1}/images/${id}`);
+  fileDownload: async (imgpath: string) => {
+    const res = `${Project.apis.v1}/public/images/${imgpath}`;
 
     return res;
   },

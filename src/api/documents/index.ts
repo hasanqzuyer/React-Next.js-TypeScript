@@ -28,8 +28,8 @@ const DocumentApi = {
     await client.delete(`${Project.apis.v1}/documents/${id}`);
   },
 
-  fileDownload: async (id: string) => {
-    const res = await client.get(`${Project.apis.v1}/documents/${id}`);
+  fileDownload: async (imgpath: string) => {
+    const res = `${Project.apis.v1}/public/documents/${imgpath}`;
 
     return res;
   },
