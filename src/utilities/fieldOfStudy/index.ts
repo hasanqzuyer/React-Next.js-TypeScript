@@ -3,6 +3,7 @@ import { DFieldOfStudy } from 'features/users/data';
 export const getFieldOfStudies = (search: string) => {
   let fields: string[] = [];
   let filters: any[] = [];
+
   if (search) {
     filters = DFieldOfStudy.filter((field) =>
       field.name.toLowerCase().includes(search.toLowerCase())

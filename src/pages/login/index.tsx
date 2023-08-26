@@ -4,6 +4,7 @@ import { useAppContext } from 'context';
 import { LoginPage } from 'features';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 
 const Login = () => {
   const { setRouteName } = useAppContext();
