@@ -1,7 +1,9 @@
-import React, { Children, useState } from 'react';
+import React, { Children, useEffect, useMemo, useState } from 'react';
 import { CardWithText, NewCheckboxTable, Tabs } from 'components/custom';
 import { Collapse, Grid, Stack } from 'components/system';
-import { Button, Input, InputGroup, Label, Pagination } from 'components/ui';
+import { Button, Input, Label, Pagination } from 'components/ui';
+import Image from 'next/image';
+
 import {
   DAdminApplicationsHead,
   DApplicationsFilters,
@@ -10,44 +12,366 @@ import {
   MarketPageFilter,
   MarketPageFilterActions,
   ProjectsMain,
+  MarketTableItem,
+  MarketTableItemLabel,
 } from 'features/opportunities/styles';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon, VerticalDotsIcon } from 'components/svg';
+import { useDebounce, useModal, usePagination, useSnackbar } from 'hooks';
+import { ApplicationAPI } from 'api';
+import { getLocations } from 'utilities/locations';
+import { getNationalities } from 'utilities/nationalities';
+import { getDiets } from 'utilities/diets';
+import { convertAgeToDate, getAge } from 'utilities/birthday-age-converter';
+import { IUser } from 'api/users/types';
+import { getInterestsAndHobbies } from 'utilities/interests';
+import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
+import { getHouseTheme } from 'utilities/houseTheme';
+import { getFieldOfStudies } from 'utilities/fieldOfStudy';
+import { getDegrees } from 'utilities/degrees';
+import { getSchoolsAndUniversities } from 'utilities/schools';
+import { getCompanys } from 'utilities/companys';
+import { getSocialMedias } from 'utilities/socialMedias';
+import { getLanguages } from 'utilities/languages';
+import { IApplication } from 'api/applications/types';
+import Project from 'constants/project';
 
 const AdminApplicationsPage = () => {
   const [filter, setFilter] = useState<any>(DApplicationsFilters());
+  const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
+  const [checkedusers, setCheckedUsers] = useState<number[]>([]);
+  const [locations, setLocations] = useState<any[]>([]);
+  const [nationalities, setNationalities] = useState<any[]>([]);
+  const [languages, setLanguages] = useState<any[]>([]);
+  const [socialMedias, setSocialMedias] = useState<any[]>([]);
+  const [companys, setCompanys] = useState<any[]>([]);
+  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
+    []
+  );
+  const [degrees, setDegrees] = useState<any[]>([]);
+  const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
+  const [themes, setThemes] = useState<any[]>([]);
+  const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
+  const [interests, setInterests] = useState<any[]>([]);
+  const [diets, setDiets] = useState<any[]>([]);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [tabs, setTabs] = useState(0);
+  const { push } = useSnackbar();
 
   const toggleFilter = () => {
     setFilterOpen(!filterOpen);
   };
 
-  const clearFilters = () => {
-    setFilter(DApplicationsFilters());
+  const toggleUser = (rowId: number, checked: boolean) => {
+    if (checked) {
+      setCheckedUsers([...checkedusers, rowId]);
+    } else {
+      setCheckedUsers(checkedusers.filter((id) => id !== rowId));
+    }
   };
 
-  const renderItem = ({ headItem }: TTableRenderItemObject) => {
+  const toggleAllCheckedUsers = (checked: boolean) => {
+    if (checked) {
+      const currentPageIds = currentTableData.map((row) => row.id);
+      const newSelectedRows = Array.from(
+        new Set([...checkedusers, ...currentPageIds])
+      );
+      setCheckedUsers(newSelectedRows);
+    } else {
+      // Deselect all rows on the current page
+      const currentPageIds = currentTableData.map((row) => row.id);
+      const newSelectedRows = checkedusers.filter(
+        (rowId) => !currentPageIds.includes(rowId)
+      );
+      setCheckedUsers(newSelectedRows);
+    }
+  };
+
+  const getAllApplications = async (): Promise<any> => {
+    try {
+      const response = await ApplicationAPI.getApplications({
+        ...filter,
+      });
+
+      if (response) {
+        return response;
+      }
+
+      throw new Error('Error: Failed to fetch data!');
+    } catch (error) {
+      push('Something went wrong!', { variant: 'error' });
+    }
+  };
+
+  const getLocationOptions = async (searchTerm: string = '') => {
+    const result = getLocations(searchTerm);
+    setLocations(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getNationalityOptions = async (searchTerm: string = '') => {
+    const result = getNationalities(searchTerm);
+    setNationalities(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getLanguageOptions = async (searchTerm: string = '') => {
+    const result = getLanguages(searchTerm);
+    setLanguages(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  };
+
+  const getSocialMediaOptions = async (searchTerm: string = '') => {
+    const result = getSocialMedias(searchTerm);
+    setSocialMedias(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getCompanyOptions = async (searchTerm: string = '') => {
+    const result = getCompanys(searchTerm);
+    setCompanys(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getSchoolAndUniversityOptions = async (searchTerm: string = '') => {
+    const result = getSchoolsAndUniversities(searchTerm);
+    setSchoolsAndUniverisities(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getDegreeOptions = async (searchTerm: string = '') => {
+    const result = getDegrees(searchTerm);
+    setDegrees(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getFieldOfStudyOptions = async (searchTerm: string = '') => {
+    const result = getFieldOfStudies(searchTerm);
+    setFieldOfStudy(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getThemeOptions = async (searchTerm: string = '') => {
+    const result = getHouseTheme(searchTerm);
+    setThemes(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getSkillsOfOtherOptions = async (searchTerm: string = '') => {
+    const result = getSkillsOfOthers(searchTerm);
+    setSkillsOfOthers(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getInterestsOptions = async (searchTerm: string = '') => {
+    const result = getInterestsAndHobbies(searchTerm);
+    setInterests(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const getDietsOptions = async (searchTerm: string = '') => {
+    const result = getDiets(searchTerm);
+    setDiets(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
+  const debouncedLocation = useDebounce(getLocationOptions, 100);
+  const debouncedNationalities = useDebounce(getNationalityOptions, 100);
+  const debouncedLanguages = useDebounce(getLanguageOptions, 100);
+  const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
+  const debouncedCompanies = useDebounce(getCompanyOptions, 100);
+  const debouncedSchools = useDebounce(getSchoolAndUniversityOptions, 100);
+  const debouncedDegrees = useDebounce(getDegreeOptions, 100);
+  const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
+  const debouncedThemes = useDebounce(getThemeOptions, 100);
+  const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
+  const debouncedInterests = useDebounce(getInterestsOptions, 100);
+  const debouncedDiets = useDebounce(getDietsOptions, 100);
+
+  const applyFilters = () => {
+    getAllApplications()
+      .then((data) => {
+        let users = data;
+        const { minDOB, maxDOB } = convertAgeToDate(
+          filter.age.min,
+          filter.age.max
+        );
+        if (minDOB && maxDOB) {
+          users = users.filter(
+            (user: IUser) =>
+              new Date(user.dateOfBirth) >= minDOB &&
+              new Date(user.dateOfBirth) <= maxDOB
+          );
+        } else if (minDOB && !maxDOB) {
+          users = users.filter(
+            (user: IUser) => new Date(user.dateOfBirth) >= minDOB
+          );
+        } else if (!minDOB && maxDOB) {
+          users = users.filter(
+            (user: IUser) => new Date(user.dateOfBirth) <= maxDOB
+          );
+        }
+
+        setTotalColumnItems(users);
+      })
+      .catch((error) => push('Something went wrong!', { variant: 'error' }));
+  };
+
+  useEffect(() => {
+    getAllApplications()
+      .then((data) => setTotalColumnItems(data))
+      .catch((error) => push('Something went wrong!', { variant: 'error' }));
+  }, []);
+
+  const [clearing, setClearing] = useState<boolean>(false);
+  const clearFilters = () => {
+    setFilter(DApplicationsFilters());
+    setClearing(true);
+  };
+  useEffect(() => {
+    if (clearing) {
+      getAllApplications()
+        .then((data) => setTotalColumnItems(data))
+        .catch((error) => push('Something went wrong!', { variant: 'error' }));
+      setClearing(false);
+    }
+  }, [clearing]);
+
+  const PageSize = 10;
+
+  const { pagesCount, page, setTotalResults, handlePageChange, reload } =
+    usePagination({
+      limit: PageSize,
+      page: 1,
+      onChange: async (params, setPage) => {
+        setPage(params.page);
+        setTotalResults(totalColumnItems.length);
+      },
+    });
+
+  useEffect(() => {
+    setTotalResults(totalColumnItems?.length);
+  }, [totalColumnItems]);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (page - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return totalColumnItems?.slice(firstPageIndex, lastPageIndex);
+  }, [page, totalColumnItems, PageSize]);
+
+  const renderItem = ({ headItem, row }: TTableRenderItemObject) => {
+    const application = row.data as IApplication;
     if (headItem.reference === 'name') {
-      return 'Ivan Jurisic';
+      return `${application.owner.firstName} ${application.owner.lastName}`;
     }
     if (headItem.reference === 'location') {
-      return 'English';
+      return application.owner.location;
     }
     if (headItem.reference === 'nationality') {
-      return 'British';
+      return application.owner.nationality;
     }
     if (headItem.reference === 'age') {
-      return '25';
+      return getAge(application.owner.dateOfBirth);
     }
     if (headItem.reference === 'applications') {
-      return '12';
+      return application.owner.applicationCount;
     }
     if (headItem.reference === 'invested') {
-      return '€25';
+      return `€${application.owner.invested}`;
     }
+    if (headItem.reference === 'house') {
+      return (
+        <MarketTableItem>
+          {/* <Image
+            alt="house photo"
+            src={`${Project.apis.v1}/public/images/${application.house.images.find(
+              (item) => item.id === application.house.thumbnailId
+            )?.key}`}
+            width={100}
+            height={100}
+            style={{
+              height: '32px',
+              width: '32px',
+              borderRadius: '8px',
+              objectFit: 'cover',
+            }}
+          /> */}
+          <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
+        </MarketTableItem>
+      );
+    }
+    if (headItem.reference === 'theme') {
+      return application.house.theme;
+    }
+    if (headItem.reference === 'location') {
+      return application.house.location;
+    }
+    if (headItem.reference === 'type') {
+      return application.tier;
+    }
+    if (headItem.reference === 'rent') {
+      return `€${application.house.rent}`;
+    }
+    if (headItem.reference === 'status') {
+      return application.status;
+    }
+
     if (headItem.reference === 'actions') {
       return <VerticalDotsIcon />;
     }
@@ -347,41 +671,17 @@ const AdminApplicationsPage = () => {
           </Collapse>
           <NewCheckboxTable
             head={DAdminApplicationsHead}
-            items={[
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-              {
-                name: 'Detailed planning of the project',
-                published: '01.05.2023',
-                action: 'a',
-              },
-            ]}
+            items={currentTableData}
             renderItem={renderItem}
+            checkedRows={checkedusers}
+            onSingleSelect={toggleUser}
+            onSelectAll={toggleAllCheckedUsers}
           />
-          <Pagination count={32} />
+          <Pagination
+            onChange={(_e, x) => handlePageChange(x)}
+            page={page}
+            count={pagesCount}
+          />
         </Stack>
       </CardWithText>
     </ProjectsMain>

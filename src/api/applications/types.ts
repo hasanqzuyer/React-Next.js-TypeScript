@@ -1,3 +1,6 @@
+import { IHouse } from 'api/houses/types';
+import { IUser } from 'api/users/types';
+
 export type TCreateAsApplicationParams = {
   tier: string;
   houseId: number;
@@ -13,4 +16,8 @@ export interface IApplication {
   status: string;
   ownerId: number | null;
   houseId: number | null;
+  house: IHouse;
+  owner: IUser;
+  createdAt: string;
+  updatedAt: string;
 }

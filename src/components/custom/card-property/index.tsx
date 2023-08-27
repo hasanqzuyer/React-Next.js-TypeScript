@@ -49,8 +49,6 @@ const PropertyCard = ({
     setFlagUrl(flag);
   }, [house.location]);
 
-  const sendApplycation = () => {};
-
   return (
     <CardMain animation="zoom-in" {...props}>
       {completed && <CardCompletedMark>Filled</CardCompletedMark>}
@@ -162,10 +160,7 @@ const PropertyCard = ({
         />
       )}
       {applicationModal && (
-        <ApplicationModal
-          onApply={sendApplycation}
-          onClose={closeApplicationModal}
-        />
+        <ApplicationModal houseId={house.id} onClose={closeApplicationModal} />
       )}
     </CardMain>
   );

@@ -3,7 +3,6 @@ import { TGalleryProps } from 'components/custom/gallery/types';
 import {
   SGallery,
   SFullScreenGallery,
-  SGalleryMainPhoto,
   SExit,
   SplideItem,
   SplideMain,
