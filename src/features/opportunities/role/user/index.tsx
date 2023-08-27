@@ -7,14 +7,12 @@ import { ProjectsMain, ProjectsGrid } from 'features/opportunities/styles';
 import { useModal, useSnackbar } from 'hooks';
 import { IHouse } from 'api/houses/types';
 import HouseAPI from 'api/houses';
-import { ApplicationModal, PurchaseModal } from './elements';
+import { PurchaseModal } from './elements';
 
 const UserMarketPage = () => {
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
 
-  const [applicationModal, openApplicationModal, closeApplicationModal] =
-    useModal(false);
   const [purchaseModal, openPurchaseModal, closePurchaseModal] =
     useModal(false);
 
@@ -83,7 +81,7 @@ const UserMarketPage = () => {
                 )}
                 house={house}
                 refresh={refresh}
-                label="View"
+                label="Apply"
               />
             );
           })}
@@ -101,7 +99,7 @@ const UserMarketPage = () => {
                 )}
                 house={house}
                 refresh={refresh}
-                label="View"
+                label="Apply"
               />
             );
           })}
@@ -120,7 +118,7 @@ const UserMarketPage = () => {
                 )}
                 house={house}
                 refresh={refresh}
-                label="View"
+                label="Apply"
                 dropdown
                 completed
               />
@@ -129,19 +127,11 @@ const UserMarketPage = () => {
         </ProjectsGrid>
       )}
       <Stack direction="horizontal">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={openApplicationModal}
-        >
-          Application Modal
-        </Button>
         <Button variant="contained" color="primary" onClick={openPurchaseModal}>
           Purchase Modal
         </Button>
       </Stack>
 
-      {applicationModal && <ApplicationModal onClose={closeApplicationModal} />}
       {purchaseModal && <PurchaseModal onClose={closePurchaseModal} />}
     </ProjectsMain>
   );

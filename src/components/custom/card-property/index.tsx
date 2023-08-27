@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   CardMain,
-  CardImage,
   CardHead,
   CardPrice,
   CardPriceValue,
@@ -12,10 +11,10 @@ import {
   CardTitle,
   CardProgressValue,
   CardProgressItem,
-  CardButton,
   CardCompletedMark,
   TableMenu,
   ISpan,
+  CardLink,
 } from 'components/custom/card-property/styles';
 import Image from 'next/image';
 
@@ -24,7 +23,7 @@ import { formatNumber } from 'utilities/extended-proto';
 import { CarretDownIcon, EditIcon, HouseIcon } from 'components/svg';
 import { Button } from 'components/ui';
 import { useMenu, useModal } from 'hooks';
-import { EditProjectModal } from './elements';
+import { ApplicationModal, EditProjectModal } from './elements';
 import { convertLocationToFlag } from 'utilities/converters';
 import Project from 'constants/project';
 
@@ -40,12 +39,17 @@ const PropertyCard = ({
 }: TPropertyCardProps) => {
   const [menu, open, handleMenu, buttonRef, position] = useMenu(false);
   const [editModal, openEditModal, closeEditModal] = useModal(false);
+  const [applicationModal, openApplicationModal, closeApplicationModal] =
+    useModal(false);
+
   const [flagUrl, setFlagUrl] = useState<string>();
   const router = useRouter();
   useEffect(() => {
     const flag = convertLocationToFlag(house.location);
     setFlagUrl(flag);
   }, [house.location]);
+
+  const sendApplycation = () => {};
 
   return (
     <CardMain animation="zoom-in" {...props}>
@@ -62,6 +66,10 @@ const PropertyCard = ({
           maxHeight: '250px',
           borderTopRightRadius: 7,
           borderTopLeftRadius: 7,
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          router.push(link);
         }}
       />
       <CardHead>
@@ -79,26 +87,41 @@ const PropertyCard = ({
         )}
       </CardHead>
       <CardBody>
-        <CardAddress>
-          <CardAddressSmall src={flagUrl} />
-          {house.location}
-        </CardAddress>
-        <CardTitle>{house.name}</CardTitle>
-        {house.availableSpots && house.totalSpots && (
-          <CardProgressItem>
-            Available spots
-            <CardProgressValue>
-              {house.availableSpots}/{house.totalSpots}
-            </CardProgressValue>
-          </CardProgressItem>
+        <CardLink
+          onClick={() => {
+            router.push(link);
+          }}
+        >
+          <CardAddress>
+            <CardAddressSmall src={flagUrl} />
+            {house.location}
+          </CardAddress>
+          <CardTitle>{house.name}</CardTitle>
+          {house.availableSpots && house.totalSpots && (
+            <CardProgressItem>
+              Available spots
+              <CardProgressValue>
+                {house.availableSpots}/{house.totalSpots}
+              </CardProgressValue>
+            </CardProgressItem>
+          )}
+          {house.status && (
+            <CardProgressItem>
+              Status
+              <CardProgressValue>{house.status}</CardProgressValue>
+            </CardProgressItem>
+          )}
+        </CardLink>
+        {!dropdown && (
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={openApplicationModal}
+          >
+            {label}
+          </Button>
         )}
-        {house.status && (
-          <CardProgressItem>
-            Status
-            <CardProgressValue>{house.status}</CardProgressValue>
-          </CardProgressItem>
-        )}
-        {!dropdown && <CardButton href={link}>{label}</CardButton>}
         {dropdown && (
           <Button variant="contained" color="primary">
             <ISpan onClick={handleMenu} ref={buttonRef}>
@@ -113,12 +136,16 @@ const PropertyCard = ({
                     label: 'View',
                     action: () => {
                       router.push(link);
+                      handleMenu();
                     },
                   },
                   {
                     icon: <EditIcon />,
                     label: 'Edit',
-                    action: openEditModal,
+                    action: () => {
+                      handleMenu();
+                      openEditModal();
+                    },
                   },
                 ]}
                 ref={menu}
@@ -132,6 +159,12 @@ const PropertyCard = ({
           houseId={house.id}
           onClose={closeEditModal}
           refresh={refresh}
+        />
+      )}
+      {applicationModal && (
+        <ApplicationModal
+          onApply={sendApplycation}
+          onClose={closeApplicationModal}
         />
       )}
     </CardMain>

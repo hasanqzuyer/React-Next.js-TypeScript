@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { Modal } from 'components/custom';
-import { TExportFinanceModalProps } from 'features/finance/elements/export-finance-modal/types';
 import { AddProjectModalMain } from 'features/opportunities/role/admin/elements/add-project-modal/style';
 import { Button, Input } from 'components/ui';
+import { TApplyModalProps } from 'features/finance/elements/export-finance-modal/types';
 
-const ExportFinanceModal = ({
-  onClose,
-  ...props
-}: TExportFinanceModalProps) => {
-  const [state, setState] = useState();
+const ExportFinanceModal = ({ onClose, ...props }: TApplyModalProps) => {
+  const [state, setState] = useState<any>({
+    tier: null,
+  });
 
   return (
     <Modal
-      size="small"
-      title="Purchase"
+      title="Application"
       actions={[
         <Button
           color="primary"
@@ -21,47 +19,41 @@ const ExportFinanceModal = ({
           size="large"
           onClick={onClose}
         >
-          Add
+          Apply
         </Button>,
       ]}
       onClose={onClose}
       {...props}
     >
       <AddProjectModalMain columns={1}>
-        <Input
+        {/* <Input
           type="text"
-          label="Tokens"
+          label="Balance"
           value={null}
           onValue={() => {}}
           placeholder="Please Enter"
-        />
+        /> */}
         <Input
           type="select"
-          label="Payment Method"
-          value={null}
-          onValue={() => {}}
-          placeholder="Please Select"
+          label="Application Type"
+          value={state.tier}
           options={[
             {
-              value: 0,
-              label: 'Card',
-            },
-            {
               value: 1,
-              label: 'Ayden',
+              label: 'Base Tier(with 1 token)',
             },
             {
-              value: 2,
-              label: 'Stripe',
+              value: 10,
+              label: 'Middle Tier(with 10 token)',
             },
             {
-              value: 3,
-              label: 'Paypal',
+              value: 50,
+              label: 'High Tier(with 50 token)',
             },
           ]}
+          onValue={(tier) => setState({ ...state, tier })}
+          placeholder="Please Select"
         />
-
-        {/* BASED ON SELECT OPTION HERE WILL DISPLAY DIFFERENT PAYMENT METHOD API  */}
       </AddProjectModalMain>
     </Modal>
   );

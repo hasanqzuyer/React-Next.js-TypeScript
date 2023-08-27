@@ -209,7 +209,7 @@ const EditHouseProjectModal = ({
       <Stack>
         <Tabs tabs={['Overview', 'Documents']} value={tab} onValue={setTab} />
         {tab === 0 && (
-          <AddProjectModalMain columns={2}>
+          <AddProjectModalMain>
             <Input
               type="text"
               label="Name"
@@ -361,7 +361,7 @@ const EditHouseProjectModal = ({
           </AddProjectModalMain>
         )}
         {tab === 1 && (
-          <AddProjectModalMain columns={1}>
+          <AddProjectModalMain>
             <AddProjectHeadline>
               Images
               <ISpan onClick={handlePhotos}>
