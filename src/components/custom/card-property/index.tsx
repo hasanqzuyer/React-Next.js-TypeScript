@@ -17,76 +17,85 @@ import {
   TableMenu,
   ISpan,
 } from 'components/custom/card-property/styles';
+import Image from 'next/image';
+
 import { TPropertyCardProps } from 'components/custom/card-property/types';
 import { formatNumber } from 'utilities/extended-proto';
 import { CarretDownIcon, EditIcon, HouseIcon } from 'components/svg';
 import { Button } from 'components/ui';
 import { useMenu, useModal } from 'hooks';
-import { AddProjectModal } from './elements';
+import { EditProjectModal } from './elements';
 import { convertLocationToFlag } from 'utilities/converters';
+import Project from 'constants/project';
 
 const PropertyCard = ({
   image,
-  address,
-  title,
+  house,
   link,
-  spots,
-  availableSpots,
-  status,
-  rent,
-  theme,
-  completed,
   label = 'Apply',
+  completed = false,
   dropdown = false,
+  refresh,
   ...props
 }: TPropertyCardProps) => {
   const [menu, open, handleMenu, buttonRef, position] = useMenu(false);
   const [editModal, openEditModal, closeEditModal] = useModal(false);
   const [flagUrl, setFlagUrl] = useState<string>();
   const router = useRouter();
-
   useEffect(() => {
-    const flag = convertLocationToFlag(address);
+    const flag = convertLocationToFlag(house.location);
     setFlagUrl(flag);
-  }, [address]);
+  }, [house.location]);
 
-  const handleView = () => {};
   return (
     <CardMain animation="zoom-in" {...props}>
       {completed && <CardCompletedMark>Filled</CardCompletedMark>}
-      <CardImage src={image} />
+      <Image
+        src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
+        alt="House thumbnail"
+        width={500}
+        height={500}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          maxHeight: '250px',
+          borderTopRightRadius: 7,
+          borderTopLeftRadius: 7,
+        }}
+      />
       <CardHead>
-        {rent && (
+        {house.rent && (
           <CardPrice>
             Rent
-            <CardPriceValue>€{formatNumber(rent)}</CardPriceValue>
+            <CardPriceValue>€{formatNumber(house.rent)}</CardPriceValue>
           </CardPrice>
         )}
-        {theme && (
+        {house.theme && (
           <CardPrice>
             Theme
-            <CardPriceValue>Marketing</CardPriceValue>
+            <CardPriceValue>{house.theme}</CardPriceValue>
           </CardPrice>
         )}
       </CardHead>
       <CardBody>
         <CardAddress>
           <CardAddressSmall src={flagUrl} />
-          {address}
+          {house.location}
         </CardAddress>
-        <CardTitle>{title}</CardTitle>
-        {spots && availableSpots && (
+        <CardTitle>{house.name}</CardTitle>
+        {house.availableSpots && house.totalSpots && (
           <CardProgressItem>
             Available spots
             <CardProgressValue>
-              {availableSpots}/{spots}
+              {house.availableSpots}/{house.totalSpots}
             </CardProgressValue>
           </CardProgressItem>
         )}
-        {status && (
+        {house.status && (
           <CardProgressItem>
             Status
-            <CardProgressValue>{status}</CardProgressValue>
+            <CardProgressValue>{house.status}</CardProgressValue>
           </CardProgressItem>
         )}
         {!dropdown && <CardButton href={link}>{label}</CardButton>}
@@ -118,7 +127,13 @@ const PropertyCard = ({
           </Button>
         )}
       </CardBody>
-      {editModal && <AddProjectModal onClose={closeEditModal} />}
+      {editModal && (
+        <EditProjectModal
+          houseId={house.id}
+          onClose={closeEditModal}
+          refresh={refresh}
+        />
+      )}
     </CardMain>
   );
 };

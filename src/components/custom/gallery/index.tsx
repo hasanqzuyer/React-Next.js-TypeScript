@@ -8,11 +8,14 @@ import {
   SplideItem,
   SplideMain,
 } from 'components/custom/gallery/styles';
-import { Image } from 'components/custom';
+import Image from 'next/image';
+
+// import { Image } from 'components/custom';
 import '@splidejs/react-splide/dist/css/splide.min.css';
 import { CancelIcon } from 'components/svg';
+import Project from 'constants/project';
 
-const Gallery = ({ images, ...props }: TGalleryProps) => {
+const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
   const [fullscreen, setFullscreen] = useState(false);
 
   const handleFullScreen = () => {
@@ -27,9 +30,16 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
 
   return (
     <SGallery {...props}>
-      <SGalleryMainPhoto
-        onClick={handleFullScreen}
-        src="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
+      <Image
+        alt="House thumbnail"
+        src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
+        width={1000}
+        height={500}
+        style={{
+          height: '100%',
+          width: '100%',
+          objectFit: 'cover',
+        }}
       />
       {fullscreen && (
         <SFullScreenGallery>
@@ -50,9 +60,15 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
             {images.map((image: any, index: number) => (
               <SplideItem key={image + index}>
                 <Image
-                  fullscreen={fullscreen}
-                  alt="Beautifull"
-                  imageUrl={image}
+                  alt="house photo"
+                  src={`${Project.apis.v1}/public/images/${image?.key}`}
+                  width={500}
+                  height={500}
+                  style={{
+                    height: `${fullscreen ? '70%' : '200px'}`,
+                    width: `${fullscreen ? '70%' : '100%'}`,
+                    objectFit: 'cover',
+                  }}
                 />
               </SplideItem>
             ))}
@@ -80,7 +96,17 @@ const Gallery = ({ images, ...props }: TGalleryProps) => {
               handleStartIndex(index);
             }}
           >
-            <Image fullscreen={fullscreen} alt="Beautifull" imageUrl={image} />
+            <Image
+              alt="house photo"
+              src={`${Project.apis.v1}/public/images/${image?.key}`}
+              width={500}
+              height={500}
+              style={{
+                height: `${fullscreen ? '70%' : '200px'}`,
+                width: `${fullscreen ? '70%' : '100%'}`,
+                objectFit: 'cover',
+              }}
+            />
           </SplideItem>
         ))}
       </SplideMain>

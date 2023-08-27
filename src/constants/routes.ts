@@ -8,7 +8,7 @@ export const CProtectedRoutes = [
   '/houses',
   '/finance',
   '/help',
-  '/overview',
+  '/houses/overview',
 ];
 
 export const CUnprotectedRoutes = [

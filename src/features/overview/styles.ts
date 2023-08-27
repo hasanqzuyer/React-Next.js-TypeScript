@@ -138,7 +138,7 @@ export const OverviewPIRightDelete = styled.div`
   cursor: pointer;
 `;
 
-export const OverviewBackButton = styled(Link)<{ theme?: Theme }>`
+export const OverviewBackButton = styled.div<{ theme?: Theme }>`
   background: #f1f4ff;
   color: #7e839f;
   font-size: 12px;
@@ -147,6 +147,7 @@ export const OverviewBackButton = styled(Link)<{ theme?: Theme }>`
   place-items: center;
   text-decoration: none;
   padding: 7px 9px;
+  cursor: pointer;
 `;
 
 export const OverviewGridThree = styled.div`

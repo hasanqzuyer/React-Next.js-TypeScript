@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import {
   OverviewMain,
@@ -13,20 +13,71 @@ import { Button, Card, Pagination } from 'components/ui';
 import { DOverviewHead } from 'features/overview/data';
 import { Stack } from 'components/system';
 import { TTableRenderItemObject } from 'components/custom/table/types';
+import { IHouse } from 'api/houses/types';
+import { HouseAPI } from 'api';
+import { TDocument } from 'api/documents/types';
+import { format } from 'date-fns';
+import { saveAs } from 'file-saver';
+import Project from 'constants/project';
+import { usePagination } from 'hooks';
+import { useRouter } from 'next/router';
 
-const OverviewPage = () => {
+const OverviewPage = (props: any) => {
+  const { houseId } = props;
+  const router = useRouter();
+
   const [tab, setTab] = useState(0);
 
-  const renderItem = ({ headItem }: TTableRenderItemObject) => {
+  const [houseData, setHouseData] = useState<IHouse>({
+    id: -1,
+    name: '',
+    location: '',
+    totalSpots: null,
+    availableSpots: null,
+    rent: null,
+    theme: '',
+    info: '',
+    status: '',
+    marketType: '',
+    thumbnailId: null,
+    assignee: null,
+    images: [],
+    documents: [],
+    createdAt: '',
+    updatedAt: '',
+  });
+
+  const getHouseDataById = async () => {
+    if (houseId) {
+      const data = await HouseAPI.getOne(houseId);
+      setHouseData((house) => ({ ...house, ...data }));
+    }
+  };
+
+  useEffect(() => {
+    getHouseDataById();
+  }, [houseId]);
+
+  const download = async (doc: TDocument) => {
+    saveAs(`${Project.apis.v1}/public/documents/${doc?.key}`, doc.name);
+  };
+  const renderItem = ({ headItem, row }: TTableRenderItemObject) => {
+    const document = row.data as TDocument;
     if (headItem.reference === 'name') {
-      return 'Detailed planning of the project';
+      return document.name;
     }
     if (headItem.reference === 'published') {
-      return '01.05.2023';
+      return document.createdAt
+        ? format(new Date(document.createdAt), 'MMM dd, yyyy | h:mm a')
+        : '';
     }
     if (headItem.reference === 'action') {
       return (
-        <Button variant="contained" color="default">
+        <Button
+          variant="contained"
+          color="default"
+          onClick={() => download(document)}
+        >
           Download
         </Button>
       );
@@ -34,7 +85,26 @@ const OverviewPage = () => {
 
     return '';
   };
+  const PageSize = 5;
+  const { pagesCount, page, setTotalResults, handlePageChange, reload } =
+    usePagination({
+      limit: PageSize,
+      page: 1,
+      onChange: async (params, setPage) => {
+        setPage(params.page);
+        setTotalResults(houseData.documents.length);
+      },
+    });
 
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (page - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return houseData.documents?.slice(firstPageIndex, lastPageIndex);
+  }, [page, houseData.documents, PageSize]);
+
+  useEffect(() => {
+    setTotalResults(houseData.documents?.length);
+  }, [houseData.documents]);
   return (
     <OverviewMain>
       <Stack
@@ -46,67 +116,28 @@ const OverviewPage = () => {
           onValue={setTab}
           tabs={['Property Overview', 'Documents']}
         />
-        <OverviewBackButton href="/">Back</OverviewBackButton>
+        <OverviewBackButton onClick={() => router.back()}>
+          Back
+        </OverviewBackButton>
       </Stack>
 
       <Gallery
-        images={[
-          'https://www.investopedia.com/thmb/bfHtdFUQrl7jJ_z-utfh8w1TMNA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/houses_and_land-5bfc3326c9e77c0051812eb3.jpg',
-          'https://www.investopedia.com/thmb/bfHtdFUQrl7jJ_z-utfh8w1TMNA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/houses_and_land-5bfc3326c9e77c0051812eb3.jpg',
-          'https://www.investopedia.com/thmb/bfHtdFUQrl7jJ_z-utfh8w1TMNA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/houses_and_land-5bfc3326c9e77c0051812eb3.jpg',
-          'https://www.investopedia.com/thmb/bfHtdFUQrl7jJ_z-utfh8w1TMNA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/houses_and_land-5bfc3326c9e77c0051812eb3.jpg',
-          'https://www.investopedia.com/thmb/bfHtdFUQrl7jJ_z-utfh8w1TMNA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/houses_and_land-5bfc3326c9e77c0051812eb3.jpg',
-        ]}
+        images={houseData.images.filter(
+          (item) => item.id !== houseData.thumbnailId
+        )}
+        thumbnail={houseData.images.find(
+          (item) => item.id === houseData.thumbnailId
+        )}
       />
 
       {tab === 0 && (
         <OverviewText>
           <OverviewTextContainer>
-            <OverviewTextHeadline>The Area</OverviewTextHeadline>
-            <OverviewTextContent>
-              Jarun Lake Residential House is situated in a serene natural
-              setting, next to the picturesque Jarun Lake in Zagreb. The
-              development offers a tranquil lifestyle just a stone&apos;s throw
-              away from the hustle and bustle of the city center. With its
-              convenient location, the residential house is easily accessible
-              via the nearby highways, making it an ideal location for those who
-              value connectivity.
-            </OverviewTextContent>
-            <OverviewTextContent>
-              The beautiful Jarun Lake is a mere 100m away from the residential
-              premises, and the lake&apos;s sandy beach with volleyball courts
-              is just a 10-15min walk away. The municipality is also planning to
-              create a hiking trail around the lake, offering residents an
-              opportunity to explore the stunning natural surroundings.
-            </OverviewTextContent>
-            <OverviewTextContent>
-              The location of Jarun Lake Residential House provides easy access
-              to all essential amenities, with the city center just a short
-              drive away or a 10-minute ride on public transportation. This
-              makes it an excellent location for families who value privacy and
-              nature while still being close to the city&apos;s conveniences.
-            </OverviewTextContent>
-          </OverviewTextContainer>
-          <OverviewTextContainer>
-            <OverviewTextHeadline>The Property</OverviewTextHeadline>
-            <OverviewTextContent>
-              The upcoming Jarun Lake Residential House project will be built on
-              a plot of land with a cadaster number of 44605:001:1020. The total
-              area of the land is 10 hectares, out of which 8.2 hectares have
-              been approved for detailed planning as living area. The project
-              will include 30 single houses and 4 terraced houses, and the land
-              has already been pre-divided into separate plots. The development
-              of this massive project will be carried out in 4 separate stages.
-            </OverviewTextContent>
-            <OverviewTextContent>
-              The first stage of the project involves the construction of 7
-              single houses. Each house will be built on a separate plot of land
-              measuring approximately 1600 m2. The houses will have a total area
-              ranging from 150 to 200 m2. Currently, a high-voltage line runs
-              along the edge of the land, but it will be moved within the next
-              6-8 months according to a signed agreement with the electricity
-              network.
-            </OverviewTextContent>
+            {houseData?.info && (
+              <OverviewTextContent
+                dangerouslySetInnerHTML={{ __html: houseData.info }}
+              />
+            )}
           </OverviewTextContainer>
         </OverviewText>
       )}
@@ -116,41 +147,14 @@ const OverviewPage = () => {
             <OverviewTextHeadline>Documents</OverviewTextHeadline>
             <Table
               head={DOverviewHead}
-              items={[
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-                {
-                  name: 'Detailed planning of the project',
-                  published: '01.05.2023',
-                  action: 'a',
-                },
-              ]}
+              items={currentTableData}
               renderItem={renderItem}
             />
-            <Pagination count={32} />
+            <Pagination
+              onChange={(_e, x) => handlePageChange(x)}
+              page={page}
+              count={pagesCount}
+            />
           </Stack>
         </Card>
       )}

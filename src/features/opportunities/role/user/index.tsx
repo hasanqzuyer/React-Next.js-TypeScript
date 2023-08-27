@@ -5,15 +5,17 @@ import { Stack } from 'components/system';
 import { Button } from 'components/ui';
 import { ProjectsMain, ProjectsGrid } from 'features/opportunities/styles';
 import { useModal, useSnackbar } from 'hooks';
-import { AddProjectModal } from './elements';
 import { IHouse } from 'api/houses/types';
 import HouseAPI from 'api/houses';
+import { ApplicationModal, PurchaseModal } from './elements';
 
-const AdminMarketPage = () => {
+const UserMarketPage = () => {
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
 
-  const [addProjectModal, openAddProjectModal, closeAddProjectModal] =
+  const [applicationModal, openApplicationModal, closeApplicationModal] =
+    useModal(false);
+  const [purchaseModal, openPurchaseModal, closePurchaseModal] =
     useModal(false);
 
   const [primaryHouses, setPrimaryHouses] = useState<IHouse[]>([]);
@@ -68,13 +70,6 @@ const AdminMarketPage = () => {
           onValue={setTab}
           tabs={['Primary Market', 'Secondary Market', 'Completed']}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={openAddProjectModal}
-        >
-          Add Project
-        </Button>
       </Stack>
       {tab === 0 && (
         <ProjectsGrid>
@@ -89,7 +84,6 @@ const AdminMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="View"
-                dropdown
               />
             );
           })}
@@ -108,7 +102,6 @@ const AdminMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="View"
-                dropdown
               />
             );
           })}
@@ -135,11 +128,23 @@ const AdminMarketPage = () => {
           })}
         </ProjectsGrid>
       )}
-      {addProjectModal && (
-        <AddProjectModal onClose={closeAddProjectModal} refresh={refresh} />
-      )}
+      <Stack direction="horizontal">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={openApplicationModal}
+        >
+          Application Modal
+        </Button>
+        <Button variant="contained" color="primary" onClick={openPurchaseModal}>
+          Purchase Modal
+        </Button>
+      </Stack>
+
+      {applicationModal && <ApplicationModal onClose={closeApplicationModal} />}
+      {purchaseModal && <PurchaseModal onClose={closePurchaseModal} />}
     </ProjectsMain>
   );
 };
 
-export default AdminMarketPage;
+export default UserMarketPage;

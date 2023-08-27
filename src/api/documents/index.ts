@@ -2,10 +2,9 @@ import Project from 'constants/project';
 import { client } from 'api/api-client';
 
 const DocumentApi = {
-  fileUpload: async (file: File, houseId: number) => {
+  fileUpload: async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('houseId', houseId.toString());
 
     const { data } = await client.post(
       `${Project.apis.v1}/documents`,
@@ -29,8 +28,7 @@ const DocumentApi = {
   },
 
   fileDownload: async (imgpath: string) => {
-    const res = `${Project.apis.v1}/public/documents/${imgpath}`;
-
+    const res = await client.get(`${Project.apis.v1}/documents/url/${imgpath}`);
     return res;
   },
 };

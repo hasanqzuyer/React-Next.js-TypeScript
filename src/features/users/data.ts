@@ -23274,7 +23274,7 @@ export const DCountries = [
     isoCode: '784',
   },
   {
-    name: 'United Kingdom of Great Britain and Northern Ireland',
+    name: 'United Kingdom',
     code: 'GB',
     capital: 'London',
     region: 'EU',

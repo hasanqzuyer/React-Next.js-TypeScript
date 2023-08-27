@@ -2,10 +2,9 @@ import Project from 'constants/project';
 import { client } from 'api/api-client';
 
 const ImageApi = {
-  fileUpload: async (file: File, houseId: number) => {
+  fileUpload: async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('houseId', houseId.toString());
 
     const { data } = await client.post(`${Project.apis.v1}/images`, formData, {
       headers: {

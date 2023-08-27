@@ -11,24 +11,25 @@ import { Button, Checkbox, Input, Label } from 'components/ui';
 import { GridCell, Stack } from 'components/system';
 import { DeleteIcon, UploadIcon } from 'components/svg';
 import { pick } from '@costorgroup/file-manager';
-import { TAddHousesModalProps } from './types';
 import { useDebounce, useModal, useSnackbar } from 'hooks';
-import UploadedFileModal from '../uploaded-file-modal';
 import ImageApi from 'api/images';
 import DocumentApi from 'api/documents';
-import { TCreateHouse } from 'api/houses/types';
+import { IHouse } from 'api/houses/types';
 import { getLocations } from 'utilities/locations';
 import { getHouseTheme } from 'utilities/houseTheme';
 import { HouseAPI } from 'api';
-import { TImage } from 'api/images/types';
+import { TEditHousesModalProps } from 'features/opportunities/role/admin/elements/add-project-modal/types';
+import UploadedFileModal from 'features/opportunities/role/admin/elements/uploaded-file-modal';
 import { TDocument } from 'api/documents/types';
 import Project from 'constants/project';
+import { TImage } from 'api/images/types';
 
-const AddHouseProjectModal = ({
+const EditHouseProjectModal = ({
   onClose,
   refresh,
+  houseId,
   ...props
-}: TAddHousesModalProps) => {
+}: TEditHousesModalProps) => {
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
   const [photos, setPhotos] = useState<TImage[]>([]);
@@ -37,7 +38,8 @@ const AddHouseProjectModal = ({
   const [activePhotoIdx, setActivePhotoIdx] = useState<number>(0);
   const [locations, setLocations] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
-  const [houseData, setHouseData] = useState<TCreateHouse>({
+  const [houseData, setHouseData] = useState<IHouse>({
+    id: -1,
     name: '',
     location: '',
     totalSpots: null,
@@ -48,7 +50,23 @@ const AddHouseProjectModal = ({
     status: '',
     marketType: '',
     thumbnailId: null,
+    assignee: null,
+    images: [],
+    documents: [],
+    createdAt: '',
+    updatedAt: '',
   });
+
+  const getHouseDataById = async () => {
+    const data = await HouseAPI.getOne(houseId);
+    setHouseData((house) => ({ ...house, ...data }));
+    setDocuments([...data.documents]);
+    setPhotos([...data.images]);
+  };
+
+  useEffect(() => {
+    getHouseDataById();
+  }, [houseId]);
 
   const handlePhotos = async () => {
     const file: any = await pick({
@@ -143,7 +161,7 @@ const AddHouseProjectModal = ({
     getThemeOptions();
   }, []);
 
-  const handleAddProject = async () => {
+  const handleUpdateProject = async () => {
     try {
       let data = {
         ...houseData,
@@ -152,8 +170,8 @@ const AddHouseProjectModal = ({
           ? houseData.marketType.toUpperCase()
           : '',
       };
-      await HouseAPI.create(data).then((res) => {
-        const body = { houseId: res.id };
+      await HouseAPI.updateHouse(data, houseData.id).then((res) => {
+        const body = { houseId: houseData.id };
         photos.forEach(async (img: TImage) => {
           await ImageApi.updateFile(body, img.id);
         });
@@ -163,7 +181,7 @@ const AddHouseProjectModal = ({
       });
       onClose();
       refresh();
-      push('Successfully created house project.', { variant: 'success' });
+      push('Successfully updated house project.', { variant: 'error' });
     } catch {
       push('Something went wrong when create house project.', {
         variant: 'error',
@@ -174,15 +192,15 @@ const AddHouseProjectModal = ({
   return (
     <Modal
       size="medium"
-      title="Add Project"
+      title="Edit Project"
       actions={Children.toArray([
         <Button
           color="primary"
           variant="contained"
           size="large"
-          onClick={handleAddProject}
+          onClick={handleUpdateProject}
         >
-          Add
+          Save
         </Button>,
       ])}
       onClose={onClose}
@@ -436,4 +454,4 @@ const AddHouseProjectModal = ({
   );
 };
 
-export default AddHouseProjectModal;
+export default EditHouseProjectModal;
