@@ -327,6 +327,9 @@ const Education = (props: any) => {
                   education.id
                 )
               }
+              onNewTag={(university) =>
+                handleChange('university', university.value, education.id)
+              }
             />
 
             <Input
@@ -350,6 +353,9 @@ const Education = (props: any) => {
                   education.id
                 )
               }
+              onNewTag={(degree) =>
+                handleChange('degree', degree.value, education.id)
+              }
             />
             <Input
               type="select"
@@ -371,6 +377,9 @@ const Education = (props: any) => {
                   fieldOfStudy ? fieldOfStudy.value : fieldOfStudy,
                   education.id
                 )
+              }
+              onNewTag={(fieldOfStudy) =>
+                handleChange('fieldOfStudy', fieldOfStudy.value, education.id)
               }
             />
             <Stack direction="horizontal">

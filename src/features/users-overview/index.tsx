@@ -22,7 +22,6 @@ import Education from './educations';
 import { getSkills } from 'utilities/skills';
 import { ISocialMedia } from 'api/socialMedia/types';
 import SocialMediaAPI from 'api/socialMedia';
-import { THousePreference } from 'api/housePreference/types';
 import HousePreferenceApi from 'api/housePreference';
 
 const OverviewPage = (props: any) => {
@@ -64,10 +63,10 @@ const OverviewPage = (props: any) => {
     createdAt: '',
     updatedAt: '',
   });
-  const [housePreference, setHousePreference] = useState<THousePreference>({
+  const [housePreference, setHousePreference] = useState<any>({
     id: -1,
     theme: '',
-    skillsOfOthers: '',
+    skillsOfOthers: [],
     location: '',
     language: '',
     monthlyRentMax: 0,
@@ -76,7 +75,7 @@ const OverviewPage = (props: any) => {
     ageMin: 0,
     tenantsMax: 0,
     tenantsMin: 0,
-    interestsHobbies: '',
+    interestsHobbies: [],
     ownerId: userId,
     diet: '',
     motivation: '',
@@ -115,7 +114,20 @@ const OverviewPage = (props: any) => {
       setSocialMedia(data.socialMedia[0]);
     }
     if (data.housePreference?.length > 0) {
-      setHousePreference(data.housePreference[0]);
+      let houseprf: any = data.housePreference[0];
+      houseprf.skillsOfOthers = houseprf.skillsOfOthers
+        ? houseprf.skillsOfOthers.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
+      houseprf.interestsHobbies = houseprf.interestsHobbies
+        ? houseprf.interestsHobbies.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
+      setHousePreference(houseprf);
     }
   };
 
@@ -269,13 +281,18 @@ const OverviewPage = (props: any) => {
 
   const saveHousePreference = async () => {
     try {
+      const skillsOfOthers = housePreference.skillsOfOthers
+        .map((item: any) => item.value)
+        .join(',');
+      const interestsHobbies = housePreference.interestsHobbies
+        .map((item: any) => item.value)
+        .join(',');
+      let data = { ...housePreference, skillsOfOthers, interestsHobbies };
       if (housePreference.id === -1) {
-        await HousePreferenceApi.createHousePreference(housePreference).then(
-          () => {}
-        );
+        await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
         await HousePreferenceApi.updateHousePreference(
-          housePreference,
+          data,
           housePreference.id
         ).then(() => {});
       }
@@ -363,6 +380,19 @@ const OverviewPage = (props: any) => {
     setHprefHasChanged(true);
   };
 
+  const handleNewInfoTags = (name: string, newTag: any) => {
+    setInfo({ ...info, [name]: [...info[name], newTag] });
+    setInfoHasChanged(true);
+  };
+
+  const handleNewHousePrefTags = (name: string, newTag: any) => {
+    setHousePreference({
+      ...housePreference,
+      [name]: [...housePreference[name], newTag],
+    });
+    setHprefHasChanged(true);
+  };
+
   return (
     <Stack>
       <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
@@ -418,6 +448,9 @@ const OverviewPage = (props: any) => {
                       location ? location.value : location
                     )
                   }
+                  onNewTag={(location) =>
+                    handleChangeInfo('location', location.value)
+                  }
                 />
                 <Input
                   type="select"
@@ -460,6 +493,12 @@ const OverviewPage = (props: any) => {
                   onValue={(languages) =>
                     handleChangeInfo('languages', languages)
                   }
+                  onNewTag={(language) =>
+                    handleNewInfoTags('languages', {
+                      label: language.value,
+                      value: language.value,
+                    })
+                  }
                 />
               </AccountGrid>
             </Stack>
@@ -495,6 +534,13 @@ const OverviewPage = (props: any) => {
                   label="Type to Add Skills"
                   placeholder="Please Select"
                   onSearch={debouncedSkills}
+                  onNewTag={(skill) =>
+                    handleNewInfoTags('skills', {
+                      label: skill.value,
+                      value: skill.value,
+                    })
+                  }
+                  isFilterActive
                   options={skills}
                   value={info.skills}
                   onValue={(skills) => handleChangeInfo('skills', skills)}
@@ -562,24 +608,23 @@ const OverviewPage = (props: any) => {
                   }
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Skills of Others"
                   placeholder="Please Select"
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
-                  value={
-                    housePreference.skillsOfOthers
-                      ? {
-                          label: housePreference.skillsOfOthers,
-                          value: housePreference.skillsOfOthers,
-                        }
-                      : null
-                  }
+                  value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) =>
                     handleChangeHousePreference(
                       'skillsOfOthers',
-                      skillsOfOthers ? skillsOfOthers.value : skillsOfOthers
+                      skillsOfOthers
                     )
+                  }
+                  onNewTag={(skillsOfOther) =>
+                    handleNewHousePrefTags('skillsOfOthers', {
+                      label: skillsOfOther.value,
+                      value: skillsOfOther.value,
+                    })
                   }
                 />
                 <Input
@@ -602,6 +647,9 @@ const OverviewPage = (props: any) => {
                       location ? location.value : location
                     )
                   }
+                  onNewTag={(location) =>
+                    handleChangeHousePreference('location', location.value)
+                  }
                 />
                 <Input
                   type="select"
@@ -622,6 +670,9 @@ const OverviewPage = (props: any) => {
                       'language',
                       language ? language.value : language
                     )
+                  }
+                  onNewTag={(language) =>
+                    handleChangeHousePreference('language', language.value)
                   }
                 />
                 <Input
@@ -666,26 +717,23 @@ const OverviewPage = (props: any) => {
                   }
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Interests and Hobbies"
                   placeholder="Please Select"
                   onSearch={debouncedInterests}
                   options={interests}
-                  value={
-                    housePreference.interestsHobbies
-                      ? {
-                          label: housePreference.interestsHobbies,
-                          value: housePreference.interestsHobbies,
-                        }
-                      : null
-                  }
+                  value={housePreference.interestsHobbies}
                   onValue={(interestsHobbies) =>
                     handleChangeHousePreference(
                       'interestsHobbies',
                       interestsHobbies
-                        ? interestsHobbies.value
-                        : interestsHobbies
                     )
+                  }
+                  onNewTag={(interestsHobbie) =>
+                    handleNewHousePrefTags('interestsHobbies', {
+                      label: interestsHobbie.value,
+                      value: interestsHobbie.value,
+                    })
                   }
                 />
                 <Input
@@ -707,6 +755,9 @@ const OverviewPage = (props: any) => {
                       'diet',
                       diet ? diet.value : diet
                     )
+                  }
+                  onNewTag={(diet) =>
+                    handleChangeHousePreference('diet', diet.value)
                   }
                 />
               </AccountGrid>

@@ -425,6 +425,9 @@ const UsersPage = () => {
                     options={locations}
                     value={filters.location}
                     onValue={(location) => setFilter({ ...filters, location })}
+                    onNewTag={(location) =>
+                      setFilter({ ...filters, location: location })
+                    }
                   />
                   <Input
                     type="select"
@@ -435,6 +438,9 @@ const UsersPage = () => {
                     value={filters.nationality}
                     onValue={(nationality) =>
                       setFilter({ ...filters, nationality })
+                    }
+                    onNewTag={(nationality) =>
+                      setFilter({ ...filters, nationality: nationality })
                     }
                   />
                   <Input
@@ -452,6 +458,9 @@ const UsersPage = () => {
                     options={languages}
                     value={filters.language}
                     onValue={(language) => setFilter({ ...filters, language })}
+                    onNewTag={(language) =>
+                      setFilter({ ...filters, language: language })
+                    }
                   />
                   <Input
                     type="min-max"
@@ -479,6 +488,9 @@ const UsersPage = () => {
                     onValue={(socialMedia) =>
                       setFilter({ ...filters, socialMedia })
                     }
+                    onNewTag={(socialMedia) =>
+                      setFilter({ ...filters, socialMedia: socialMedia })
+                    }
                   />
                 </Grid>
               )}
@@ -499,6 +511,9 @@ const UsersPage = () => {
                     options={companys}
                     value={filters.company}
                     onValue={(company) => setFilter({ ...filters, company })}
+                    onNewTag={(company) =>
+                      setFilter({ ...filters, company: company })
+                    }
                   />
                   <Input
                     type="select"
@@ -509,6 +524,12 @@ const UsersPage = () => {
                     value={filters.workExperienceLocation}
                     onValue={(workExperienceLocation) =>
                       setFilter({ ...filters, workExperienceLocation })
+                    }
+                    onNewTag={(workExperienceLocation) =>
+                      setFilter({
+                        ...filters,
+                        workExperienceLocation: workExperienceLocation,
+                      })
                     }
                   />
                   <Input
@@ -542,6 +563,9 @@ const UsersPage = () => {
                     options={schoolsAndUniversities}
                     value={filters.school}
                     onValue={(school) => setFilter({ ...filters, school })}
+                    onNewTag={(school) =>
+                      setFilter({ ...filters, school: school })
+                    }
                   />
                   <Input
                     type="select"
@@ -551,6 +575,9 @@ const UsersPage = () => {
                     options={degrees}
                     value={filters.degree}
                     onValue={(degree) => setFilter({ ...filters, degree })}
+                    onNewTag={(degree) =>
+                      setFilter({ ...filters, degree: degree })
+                    }
                   />
                   <Input
                     type="select"
@@ -561,6 +588,9 @@ const UsersPage = () => {
                     value={filters.fieldOfStudy}
                     onValue={(fieldOfStudy) =>
                       setFilter({ ...filters, fieldOfStudy })
+                    }
+                    onNewTag={(fieldOfStudy) =>
+                      setFilter({ ...filters, fieldOfStudy: fieldOfStudy })
                     }
                   />
                 </Grid>
@@ -575,6 +605,9 @@ const UsersPage = () => {
                     options={themes}
                     value={filters.theme}
                     onValue={(theme) => setFilter({ ...filters, theme })}
+                    onNewTag={(theme) =>
+                      setFilter({ ...filters, theme: theme })
+                    }
                   />
                   <Input
                     type="select"
@@ -585,6 +618,9 @@ const UsersPage = () => {
                     value={filters.skillsOfOthers}
                     onValue={(skillsOfOthers) =>
                       setFilter({ ...filters, skillsOfOthers })
+                    }
+                    onNewTag={(skillsOfOthers) =>
+                      setFilter({ ...filters, skillsOfOthers: skillsOfOthers })
                     }
                   />
                   <Input
@@ -597,6 +633,9 @@ const UsersPage = () => {
                     onValue={(houseLocation) =>
                       setFilter({ ...filters, houseLocation })
                     }
+                    onNewTag={(houseLocation) =>
+                      setFilter({ ...filters, houseLocation: houseLocation })
+                    }
                   />
                   <Input
                     type="select"
@@ -607,6 +646,9 @@ const UsersPage = () => {
                     value={filters.houseLanguage}
                     onValue={(houseLanguage) =>
                       setFilter({ ...filters, houseLanguage })
+                    }
+                    onNewTag={(houseLanguage) =>
+                      setFilter({ ...filters, houseLanguage: houseLanguage })
                     }
                   />
                   <Input
@@ -641,6 +683,12 @@ const UsersPage = () => {
                     onValue={(interestsAndHobbies) =>
                       setFilter({ ...filters, interestsAndHobbies })
                     }
+                    onNewTag={(interestsAndHobbies) =>
+                      setFilter({
+                        ...filters,
+                        interestsAndHobbies: interestsAndHobbies,
+                      })
+                    }
                   />
                   <Input
                     type="select"
@@ -650,6 +698,7 @@ const UsersPage = () => {
                     options={diets}
                     value={filters.diet}
                     onValue={(diet) => setFilter({ ...filters, diet })}
+                    onNewTag={(diet) => setFilter({ ...filters, diet: diet })}
                   />
                 </Grid>
               )}

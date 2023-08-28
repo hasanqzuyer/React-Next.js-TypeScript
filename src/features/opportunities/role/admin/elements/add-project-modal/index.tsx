@@ -219,6 +219,9 @@ const AddHouseProjectModal = ({
                   location: location ? location.value : location,
                 })
               }
+              onNewTag={(location) =>
+                setHouseData({ ...houseData, location: location.value })
+              }
             />
             <Input
               type="number"
@@ -264,6 +267,9 @@ const AddHouseProjectModal = ({
                   ...houseData,
                   theme: theme ? theme.value : theme,
                 })
+              }
+              onNewTag={(theme) =>
+                setHouseData({ ...houseData, theme: theme.value })
               }
             />
             <Input
