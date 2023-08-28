@@ -34,27 +34,27 @@ const AdminMarketPage = () => {
     }
   };
 
-  useEffect(() => {
-    const gethouses = async () => {
-      switch (tab) {
-        case 0:
-          const primary = await getAllHouses('PRIMARY');
-          setPrimaryHouses(primary);
-          break;
-        case 1:
-          const secondary = await getAllHouses('SECONDARY');
-          setSecondaryHouses(secondary);
-          break;
-        case 2:
-          const completed = await getAllHouses('COMPLETED');
-          setCompletedHouses(completed);
-          break;
+  const refresh = async () => {
+    switch (tab) {
+      case 0:
+        const primary = await getAllHouses('PRIMARY');
+        setPrimaryHouses(primary);
+        break;
+      case 1:
+        const secondary = await getAllHouses('SECONDARY');
+        setSecondaryHouses(secondary);
+        break;
+      case 2:
+        const completed = await getAllHouses('COMPLETED');
+        setCompletedHouses(completed);
+        break;
 
-        default:
-          break;
-      }
-    };
-    gethouses();
+      default:
+        break;
+    }
+  };
+  useEffect(() => {
+    refresh();
   }, [tab]);
 
   return (
@@ -82,15 +82,12 @@ const AdminMarketPage = () => {
             return (
               <PropertyCard
                 key={house.id}
-                link="/overview"
-                address={house.location}
-                title={house.name}
-                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                spots={house.totalSpots}
-                availableSpots={house.availableSpots}
-                rent={house.rent}
-                theme={house.theme}
-                status={house.status}
+                link={`/houses/overview?houseId=${house.id}`}
+                image={house.images.find(
+                  (item) => item.id === house.thumbnailId
+                )}
+                house={house}
+                refresh={refresh}
                 label="View"
                 dropdown
               />
@@ -104,15 +101,12 @@ const AdminMarketPage = () => {
             return (
               <PropertyCard
                 key={house.id}
-                link="/overview"
-                address={house.location}
-                title={house.name}
-                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                spots={house.totalSpots}
-                availableSpots={house.availableSpots}
-                rent={house.rent}
-                theme={house.theme}
-                status={house.status}
+                link={`/houses/overview?houseId=${house.id}`}
+                image={house.images.find(
+                  (item) => item.id === house.thumbnailId
+                )}
+                house={house}
+                refresh={refresh}
                 label="View"
                 dropdown
               />
@@ -127,23 +121,23 @@ const AdminMarketPage = () => {
             return (
               <PropertyCard
                 key={house.id}
-                link="/overview"
-                address={house.location}
-                title={house.name}
-                image="https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg"
-                spots={house.totalSpots}
-                availableSpots={house.availableSpots}
-                rent={house.rent}
-                theme={house.theme}
-                status={house.status}
+                link={`/houses/overview?houseId=${house.id}`}
+                image={house.images.find(
+                  (item) => item.id === house.thumbnailId
+                )}
+                house={house}
+                refresh={refresh}
                 label="View"
                 dropdown
+                completed
               />
             );
           })}
         </ProjectsGrid>
       )}
-      {addProjectModal && <AddProjectModal onClose={closeAddProjectModal} />}
+      {addProjectModal && (
+        <AddProjectModal onClose={closeAddProjectModal} refresh={refresh} />
+      )}
     </ProjectsMain>
   );
 };

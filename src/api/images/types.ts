@@ -9,7 +9,7 @@ export type TImageId = {
 export type TImage = {
   id: number;
   name: string;
-  fileUrl: string;
+  key: string;
   houseId: number;
   createdAt: string;
   updatedAt: string;

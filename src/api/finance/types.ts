@@ -1,8 +1,11 @@
 import { IUser } from 'api/users/types';
 
-export type TCreateAsSkillParams = {
-  tier: string;
-  houseId: number;
+export type TCreateCheckoutSession = {
+  quantity: number;
+};
+
+export type TConfirmTokenTransaction = {
+  sessionId: string;
 };
 
 export type TSingleSkill = {

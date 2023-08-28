@@ -2,10 +2,9 @@ import Project from 'constants/project';
 import { client } from 'api/api-client';
 
 const ImageApi = {
-  fileUpload: async (file: File, houseId: number) => {
+  fileUpload: async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('houseId', houseId.toString());
 
     const { data } = await client.post(`${Project.apis.v1}/images`, formData, {
       headers: {
@@ -24,8 +23,8 @@ const ImageApi = {
     await client.patch(`${Project.apis.v1}/images/${id}`, body);
   },
 
-  fileDownload: async (id: string) => {
-    const res = await client.get(`${Project.apis.v1}/images/${id}`);
+  fileDownload: async (imgpath: string) => {
+    const res = `${Project.apis.v1}/public/images/${imgpath}`;
 
     return res;
   },

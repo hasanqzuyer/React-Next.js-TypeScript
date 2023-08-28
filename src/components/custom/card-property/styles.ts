@@ -191,7 +191,7 @@ export const CardProgressAvailableValue = styled.div`
   color: #6aa5d5;
 `;
 
-export const CardButton = styled(Link)<{ theme?: Theme }>`
+export const CardButton = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
     width: 100%;
     background: ${theme.palette.primary.main};
@@ -203,6 +203,12 @@ export const CardButton = styled(Link)<{ theme?: Theme }>`
     text-align: center;
     cursor: pointer;
     text-decoration: none;
+  `}
+`;
+
+export const CardLink = styled.div<{ theme?: Theme }>`
+  ${({ theme }) => `
+  cursor: pointer;
   `}
 `;
 

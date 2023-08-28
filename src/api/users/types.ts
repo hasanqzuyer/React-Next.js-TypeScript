@@ -41,6 +41,7 @@ export interface IUser {
   skills: string;
   location: string;
   tokenBalance: number;
+  applicationCount: number;
   applications: IApplication[];
   educations: TEducation[];
   experiences: TWorkExperience[];

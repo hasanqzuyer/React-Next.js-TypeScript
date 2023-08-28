@@ -336,7 +336,7 @@ const UsersPage = () => {
       return singleUser.languages;
     }
     if (headItem.reference === 'applications') {
-      return singleUser.applications.length;
+      return singleUser.applicationCount;
     }
     if (headItem.reference === 'invested') {
       return `€${singleUser.invested ? singleUser.invested : 0}`;

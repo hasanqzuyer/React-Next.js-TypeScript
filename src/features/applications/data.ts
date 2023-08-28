@@ -119,6 +119,21 @@ export const DAdminApplicationsHead = [
     visible: true,
   },
   {
+    reference: 'house',
+    label: 'House',
+    visible: true,
+  },
+  {
+    reference: 'rent',
+    label: 'Rent',
+    visible: true,
+  },
+  {
+    reference: 'status',
+    label: 'Status',
+    visible: true,
+  },
+  {
     reference: 'actions',
     label: '',
     visible: true,

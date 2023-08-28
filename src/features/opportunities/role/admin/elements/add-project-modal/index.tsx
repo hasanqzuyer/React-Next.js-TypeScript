@@ -1,6 +1,5 @@
 import React, { Children, useEffect, useState } from 'react';
 import { Modal, RichTextEditor, Tabs } from 'components/custom';
-import { TExportFinanceModalProps } from 'features/finance/elements/export-finance-modal/types';
 import {
   AddProjectModalMain,
   AddProjectHeadline,
@@ -12,28 +11,30 @@ import { Button, Checkbox, Input, Label } from 'components/ui';
 import { GridCell, Stack } from 'components/system';
 import { DeleteIcon, UploadIcon } from 'components/svg';
 import { pick } from '@costorgroup/file-manager';
-import { THouseImage } from './types';
+import { TAddHousesModalProps } from './types';
 import { useDebounce, useModal, useSnackbar } from 'hooks';
 import UploadedFileModal from '../uploaded-file-modal';
 import ImageApi from 'api/images';
 import DocumentApi from 'api/documents';
-import { IHouse, TCreateHouse } from 'api/houses/types';
+import { TCreateHouse } from 'api/houses/types';
 import { getLocations } from 'utilities/locations';
 import { getHouseTheme } from 'utilities/houseTheme';
 import { HouseAPI } from 'api';
+import { TImage } from 'api/images/types';
+import { TDocument } from 'api/documents/types';
+import Project from 'constants/project';
 
 const AddHouseProjectModal = ({
   onClose,
+  refresh,
   ...props
-}: TExportFinanceModalProps) => {
+}: TAddHousesModalProps) => {
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
-  const [photos, setPhotos] = useState<THouseImage[]>([]);
-  const [documents, setDocuments] = useState<any[]>([]);
+  const [photos, setPhotos] = useState<TImage[]>([]);
+  const [documents, setDocuments] = useState<TDocument[]>([]);
   const [modal, modalOpen, modalClose] = useModal(false);
-  const [docModal, docModalOpen, docModalClose] = useModal(false);
   const [activePhotoIdx, setActivePhotoIdx] = useState<number>(0);
-  const [activeDocIdx, setActiveDocIdx] = useState<number>(0);
   const [locations, setLocations] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
   const [houseData, setHouseData] = useState<TCreateHouse>({
@@ -55,30 +56,9 @@ const AddHouseProjectModal = ({
     });
 
     try {
-      await ImageApi.fileUpload(file, 1).then(async (data) => {
-        const presignedUrl = await ImageApi.fileDownload(data.key);
-
-        if (
-          presignedUrl &&
-          presignedUrl.data &&
-          file &&
-          file.name &&
-          file.type &&
-          data &&
-          data.id
-        ) {
-          setPhotos((prev: THouseImage[]) => [
-            ...prev,
-            {
-              presignedUrl: presignedUrl.data,
-              name: file.name,
-              type: file.type,
-              id: data.id,
-              url: data.url,
-            },
-          ]);
-          push('File successfully uploaded.', { variant: 'success' });
-        }
+      await ImageApi.fileUpload(file).then(async (data) => {
+        setPhotos((prev: TImage[]) => [...prev, { ...data }]);
+        push('File successfully uploaded.', { variant: 'success' });
       });
     } catch (error: any) {
       push('File upload failed.', { variant: 'error' });
@@ -91,26 +71,12 @@ const AddHouseProjectModal = ({
     });
 
     try {
-      await DocumentApi.fileUpload(file, 1).then(async (data) => {
-        const presignedUrl = await DocumentApi.fileDownload(data.key);
-
-        if (
-          presignedUrl &&
-          presignedUrl.data &&
-          file &&
-          file.name &&
-          file.type &&
-          data &&
-          data.id
-        ) {
-          setDocuments((prev: THouseImage[]) => [
+      await DocumentApi.fileUpload(file).then(async (data) => {
+        if (data && file && file.name && file.type && data && data.id) {
+          setDocuments((prev: TDocument[]) => [
             ...prev,
             {
-              presignedUrl: presignedUrl.data,
-              name: file.name,
-              type: file.type,
-              id: data.id,
-              url: data.url,
+              ...data,
             },
           ]);
           push('File successfully uploaded.', { variant: 'success' });
@@ -124,8 +90,8 @@ const AddHouseProjectModal = ({
   const handleDeletePhoto = (id: number) => {
     try {
       ImageApi.fileDelete(id).then(() => {
-        setPhotos((prev: THouseImage[]) =>
-          prev.filter((item: THouseImage) => item.id !== id)
+        setPhotos((prev: TImage[]) =>
+          prev.filter((item: TImage) => item.id !== id)
         );
         push('File successfully deleted.', { variant: 'success' });
       });
@@ -136,9 +102,9 @@ const AddHouseProjectModal = ({
 
   const handleDeleteDocument = (id: number) => {
     try {
-      ImageApi.fileDelete(id).then(() => {
-        setDocuments((prev: THouseImage[]) =>
-          prev.filter((item: THouseImage) => item.id !== id)
+      DocumentApi.fileDelete(id).then(() => {
+        setDocuments((prev: TDocument[]) =>
+          prev.filter((item: TDocument) => item.id !== id)
         );
         push('File successfully deleted.', { variant: 'success' });
       });
@@ -188,15 +154,16 @@ const AddHouseProjectModal = ({
       };
       await HouseAPI.create(data).then((res) => {
         const body = { houseId: res.id };
-        photos.forEach(async (img: THouseImage) => {
+        photos.forEach(async (img: TImage) => {
           await ImageApi.updateFile(body, img.id);
         });
-        documents.forEach(async (dic: THouseImage) => {
+        documents.forEach(async (dic: TDocument) => {
           await DocumentApi.updateFile(body, dic.id);
         });
       });
       onClose();
-      push('Successfully created house project.', { variant: 'error' });
+      refresh();
+      push('Successfully created house project.', { variant: 'success' });
     } catch {
       push('Something went wrong when create house project.', {
         variant: 'error',
@@ -385,8 +352,8 @@ const AddHouseProjectModal = ({
             </AddProjectHeadline>
 
             {photos && photos.length ? (
-              photos.map((item: THouseImage, idx: number) => {
-                const { presignedUrl, name, type, id } = item;
+              photos.map((item: TImage, idx: number) => {
+                const { key, name, id } = item;
                 return (
                   <>
                     <AddProjectDocumentPlaceholder>
@@ -413,12 +380,12 @@ const AddHouseProjectModal = ({
                         <DeleteIcon />
                       </ISpan>
                     </AddProjectDocumentPlaceholder>
-                    {modal && presignedUrl && activePhotoIdx === idx && (
+                    {modal && key && activePhotoIdx === idx && (
                       <UploadedFileModal
                         onClose={modalClose}
                         name={name}
-                        url={presignedUrl}
-                        type={type}
+                        url={`${Project.apis.v1}/public/images/${key}`}
+                        type={'image'}
                       />
                     )}
                   </>
@@ -436,15 +403,17 @@ const AddHouseProjectModal = ({
             </AddProjectHeadline>
 
             {documents && documents.length ? (
-              documents.map((item: THouseImage, idx: number) => {
-                const { presignedUrl, name, type, id } = item;
+              documents.map((item: TDocument, idx: number) => {
+                const { key, name, id } = item;
                 return (
                   <>
                     <AddProjectDocumentPlaceholder>
                       <ImageUploadButton
                         onClick={() => {
-                          docModalOpen();
-                          setActiveDocIdx(idx);
+                          window.open(
+                            `${Project.apis.v1}/public/documents/${key}`,
+                            '_blank'
+                          );
                         }}
                         key={id}
                       >
@@ -454,14 +423,6 @@ const AddHouseProjectModal = ({
                         <DeleteIcon />
                       </ISpan>
                     </AddProjectDocumentPlaceholder>
-                    {docModal && presignedUrl && activeDocIdx === idx && (
-                      <UploadedFileModal
-                        onClose={docModalClose}
-                        name={name}
-                        url={presignedUrl}
-                        type={type}
-                      />
-                    )}
                   </>
                 );
               })

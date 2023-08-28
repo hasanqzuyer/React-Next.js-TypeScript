@@ -1,11 +1,20 @@
 // eslint-disable-next-line import/no-named-as-default
 import Project from 'constants/project';
-import { TSingleApplication } from 'api/applications/types';
+import {
+  TCreateAsApplicationParams,
+  TSingleApplication,
+} from 'api/applications/types';
 
 import { client } from 'api/api-client';
 import { IUser } from 'api/users/types';
 
 const ApplicationAPI = {
+  apply: async (body: TCreateAsApplicationParams) => {
+    const { data } = await client.post(`${Project.apis.v1}/applications`, body);
+
+    return data;
+  },
+
   getApplications: async (filters: any) => {
     const { data } = await client.get(`${Project.apis.v1}/applications`, {
       params: {

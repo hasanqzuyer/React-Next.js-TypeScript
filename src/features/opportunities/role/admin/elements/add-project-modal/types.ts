@@ -1,8 +1,15 @@
+import { IHouse } from 'api/houses/types';
 import React from 'react';
 
-export type TAddCampaignsModalProps = React.HTMLAttributes<HTMLDivElement> & {
+export type TAddHousesModalProps = React.HTMLAttributes<HTMLDivElement> & {
   onClose: () => void;
   refresh: () => void;
+};
+
+export type TEditHousesModalProps = React.HTMLAttributes<HTMLDivElement> & {
+  onClose: () => void;
+  refresh: () => void;
+  houseId: number;
 };
 
 export type THouseImage = {
@@ -10,5 +17,5 @@ export type THouseImage = {
   type: string;
   name: string;
   id: number;
-  presignedUrl?: string;
+  presignedUrl?: any;
 };

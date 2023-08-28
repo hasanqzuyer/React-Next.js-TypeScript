@@ -1,19 +1,16 @@
+import { IHouse } from 'api/houses/types';
+import { TImage } from 'api/images/types';
 import React from 'react';
 
 export type TPropertyCardProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'title'
 > & {
-  image: string;
-  address: string;
-  title: string;
+  image: TImage | undefined;
   link: string;
-  spots: number;
-  availableSpots: number;
-  status: string;
-  rent: number;
-  theme: string;
-  completed?: boolean;
+  house: IHouse;
   label?: string;
   dropdown?: boolean;
+  completed?: boolean;
+  refresh: () => void;
 };
