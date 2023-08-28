@@ -5,10 +5,11 @@ export const CProtectedRoutes = [
   '/applications',
   '/users',
   '/users/overview',
-  '/houses',
   '/finance',
   '/help',
+  '/houses',
   '/houses/overview',
+  '/purchase-token-success',
 ];
 
 export const CUnprotectedRoutes = [
@@ -18,7 +19,7 @@ export const CUnprotectedRoutes = [
   '/email-confirmation',
 ];
 
-export const CProtectedDynamicRoutes = ['users/overview/'];
+export const CProtectedDynamicRoutes = ['/purchase-token-success'];
 
 export const CMiscRoutes = ['/_/code'];
 

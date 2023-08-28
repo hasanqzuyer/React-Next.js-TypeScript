@@ -1,1 +1,1 @@
-export { default as ChangePasswordModal } from 'features/account/role/investor/elements/change-password-modal';
+export { default as ChangePasswordModal } from 'features/account/role/user/elements/change-password-modal';

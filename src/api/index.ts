@@ -5,3 +5,6 @@ export { default as HouseAPI } from 'api/houses';
 export { default as HousePreferenceAPI } from 'api/housePreference';
 export { default as ImagesAPI } from 'api/images';
 export { default as DocumentsAPI } from 'api/documents';
+export { default as SocialMediaAPI } from 'api/socialMedia';
+export { default as UsersAPI } from 'api/users';
+export { default as WorkExperienceAPI } from 'api/workExperience';
