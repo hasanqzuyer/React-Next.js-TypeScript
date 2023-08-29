@@ -18,7 +18,7 @@ import { IApplication } from 'api/applications/types';
 import Project from 'constants/project';
 
 const UserApplicationsPage = () => {
-  const { user } = useAppContext();
+  const { user, applicationStatus } = useAppContext();
   const { push } = useSnackbar();
   const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
   const getAllApplications = async (): Promise<any> => {
@@ -41,7 +41,7 @@ const UserApplicationsPage = () => {
     getAllApplications()
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
-  }, []);
+  }, [applicationStatus]);
 
   const [clearing, setClearing] = useState<boolean>(false);
 

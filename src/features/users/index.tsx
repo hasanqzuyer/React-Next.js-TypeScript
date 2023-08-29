@@ -30,8 +30,10 @@ import { getHouseTheme } from 'utilities/houseTheme';
 import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { getDiets } from 'utilities/diets';
+import { useAppContext } from 'context';
 
 const UsersPage = () => {
+  const { userStatus } = useAppContext();
   const [filters, setFilter] = useState<any>(DUsersFilters());
   const [eModal, openEModal, closeEModal] = useModal(false);
   const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
@@ -273,7 +275,7 @@ const UsersPage = () => {
     getAllUsers()
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
-  }, []);
+  }, [userStatus]);
 
   const [clearing, setClearing] = useState<boolean>(false);
   const clearFilters = () => {

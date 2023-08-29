@@ -25,6 +25,9 @@ const AppContextProvider = ({ ...props }) => {
     showMobileMenu: true,
     currency: 'CHF',
     influencer: null,
+    houseStatus: 0,
+    userStatus: 0,
+    applicationStatus: 0,
   });
 
   const handleMobileMenu = (value: boolean) => {
@@ -41,6 +44,18 @@ const AppContextProvider = ({ ...props }) => {
 
   const handleInfluencer = (body: IUser) => {
     setState((x) => ({ ...x, influencer: body }));
+  };
+
+  const handleHouseStatus = (value: number) => {
+    setState((x) => ({ ...x, houseStatus: value }));
+  };
+
+  const handleUserStatus = (value: number) => {
+    setState((x) => ({ ...x, userStatus: value }));
+  };
+
+  const handleApplicationStatus = (value: number) => {
+    setState((x) => ({ ...x, applicationStatus: value }));
   };
 
   const logout = async () => {
@@ -104,6 +119,9 @@ const AppContextProvider = ({ ...props }) => {
       handleMobileMenu,
       handleCurrencyChange,
       handleInfluencer,
+      handleUserStatus,
+      handleHouseStatus,
+      handleApplicationStatus,
     }),
     [
       state,
@@ -114,6 +132,9 @@ const AppContextProvider = ({ ...props }) => {
       handleMobileMenu,
       handleCurrencyChange,
       handleInfluencer,
+      handleUserStatus,
+      handleHouseStatus,
+      handleApplicationStatus,
     ]
   );
   return state.initialLoading ? (

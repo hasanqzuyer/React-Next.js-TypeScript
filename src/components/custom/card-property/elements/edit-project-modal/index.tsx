@@ -181,7 +181,7 @@ const EditHouseProjectModal = ({
       });
       onClose();
       refresh();
-      push('Successfully updated house project.', { variant: 'error' });
+      push('Successfully updated house project.', { variant: 'success' });
     } catch {
       push('Something went wrong when create house project.', {
         variant: 'error',

@@ -10,6 +10,9 @@ export type TAppContextState = {
   showMobileMenu: boolean;
   currency: string;
   influencer: null | IUser;
+  houseStatus: number;
+  applicationStatus: number;
+  userStatus: number;
 };
 
 export type TAppContext = TAppContextState & {
@@ -20,4 +23,7 @@ export type TAppContext = TAppContextState & {
   handleCurrencyChange: (value: string) => void;
   handleInfluencer: (value: IUser) => void;
   getMeData: () => Promise<any>;
+  handleHouseStatus: (value: number) => void;
+  handleApplicationStatus: (value: number) => void;
+  handleUserStatus: (value: number) => void;
 };

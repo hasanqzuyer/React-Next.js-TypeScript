@@ -8,8 +8,10 @@ import { useModal, useSnackbar } from 'hooks';
 import { IHouse } from 'api/houses/types';
 import HouseAPI from 'api/houses';
 import { PurchaseModal } from './elements';
+import { useAppContext } from 'context';
 
 const UserMarketPage = () => {
+  const { houseStatus } = useAppContext();
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
 
@@ -55,7 +57,7 @@ const UserMarketPage = () => {
   };
   useEffect(() => {
     refresh();
-  }, [tab]);
+  }, [tab, houseStatus]);
 
   return (
     <ProjectsMain>

@@ -1,7 +1,13 @@
 import React from 'react';
 
 export type TNotificationStatus = 'seen' | 'unseen';
-export type TNotificationVariantType = 'error' | 'success' | 'info';
+export type TNotificationVariantType =
+  | 'error'
+  | 'success'
+  | 'info'
+  | 'primary'
+  | 'secondary'
+  | 'warning';
 
 export type TNotificationData = {
   id: number;

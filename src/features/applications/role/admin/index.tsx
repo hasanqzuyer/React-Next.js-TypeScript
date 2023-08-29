@@ -34,9 +34,10 @@ import { getCompanys } from 'utilities/companys';
 import { getSocialMedias } from 'utilities/socialMedias';
 import { getLanguages } from 'utilities/languages';
 import { IApplication } from 'api/applications/types';
-import Project from 'constants/project';
+import { useAppContext } from 'context';
 
 const AdminApplicationsPage = () => {
+  const { applicationStatus } = useAppContext();
   const [filter, setFilter] = useState<any>(DApplicationsFilters());
   const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
   const [checkedusers, setCheckedUsers] = useState<number[]>([]);
@@ -277,7 +278,7 @@ const AdminApplicationsPage = () => {
     getAllApplications()
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
-  }, []);
+  }, [applicationStatus]);
 
   const [clearing, setClearing] = useState<boolean>(false);
   const clearFilters = () => {

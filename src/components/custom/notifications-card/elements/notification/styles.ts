@@ -29,9 +29,12 @@ export const NotificationStatus = styled.div<{
     float: left;
     margin: 7.5px 5px 0 0;
     background-color: ${
-      (variant === 'error' && theme.palette.error.light,
-      variant === 'success' && theme.palette.success.main,
-      variant === 'info' && theme.palette.info.main)
+      (variant === 'error' && theme.palette.error.main) ||
+      (variant === 'success' && theme.palette.success.main) ||
+      (variant === 'info' && theme.palette.info.main) ||
+      (variant === 'primary' && theme.palette.primary.main) ||
+      (variant === 'secondary' && theme.palette.secondary.main) ||
+      (variant === 'warning' && theme.palette.warning.main)
     };
 `}
 `;
