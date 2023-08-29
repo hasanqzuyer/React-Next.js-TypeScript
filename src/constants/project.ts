@@ -18,6 +18,14 @@ const Project = {
     // Local/Dev
     v1: 'http://localhost:3000',
   },
+  websocketApi: {
+    // Production
+    // v1: 'https://api.brotherhoodhouse.com',
+    // Staging
+    // v1: 'https://api.staging.brotherhoodhouse.com',
+    // Local/Dev
+    v1: 'http://localhost:3001',
+  },
   title: {
     prefix: '',
     sufix: ' | Brotherhood House',

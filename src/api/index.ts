@@ -1,5 +1,5 @@
 export { default as AuthorizationAPI } from 'api/authorization';
-export { default as AdminAPI } from 'api/admin';
+export { default as NotificationAPI } from 'api/notification';
 export { default as ApplicationAPI } from 'api/applications';
 export { default as HouseAPI } from 'api/houses';
 export { default as HousePreferenceAPI } from 'api/housePreference';

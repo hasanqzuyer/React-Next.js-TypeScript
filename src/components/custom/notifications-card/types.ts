@@ -1,12 +1,19 @@
 import React from 'react';
 
 export type TNotificationStatus = 'seen' | 'unseen';
+export type TNotificationVariantType = 'error' | 'success' | 'info';
+
+export type TNotificationData = {
+  id: number;
+  description: string;
+  title: string;
+  variant: TNotificationVariantType;
+};
 
 export type TNotification = {
-  id: string | number;
-  text: string;
+  id: number;
+  notification: TNotificationData;
   createdAt?: string;
-  status: TNotificationStatus;
 };
 
 export type TNotificationsCardProps = React.HTMLAttributes<HTMLDivElement> & {};
