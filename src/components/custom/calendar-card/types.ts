@@ -25,7 +25,7 @@ export type TNotificationPayload = {
 
 export type TCalendarEvents = {
   title: string;
-  descripton: string;
+  description: string;
   variant: TNotificationVariantType;
   createdAt: string;
   notificationPayload: TNotificationPayload[];

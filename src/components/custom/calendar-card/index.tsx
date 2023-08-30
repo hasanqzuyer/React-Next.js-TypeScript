@@ -118,12 +118,14 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
                 {format(x.date, 'd')}
               </CalendarCardCellDate>
               <CalendarEventContainer>
-                {todayEvents.map((event) => {
+                {todayEvents.map((event, index: any) => {
                   return (
-                    <CalendarEventStatus
-                      variant={event.variant}
-                      href={`/house/overview?houseId=${event.notificationPayload[0].houseId}`}
-                    />
+                    <Tooltip key={index} title={event.description}>
+                      <CalendarEventStatus
+                        variant={event.variant}
+                        href={`/house/overview?houseId=${event.notificationPayload[0].houseId}`}
+                      />
+                    </Tooltip>
                   );
                 })}
               </CalendarEventContainer>
