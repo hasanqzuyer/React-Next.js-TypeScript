@@ -145,14 +145,7 @@ const AddHouseProjectModal = ({
 
   const handleAddProject = async () => {
     try {
-      let data = {
-        ...houseData,
-        status: houseData.status ? houseData.status.toUpperCase() : '',
-        marketType: houseData.marketType
-          ? houseData.marketType.toUpperCase()
-          : '',
-      };
-      await HouseAPI.create(data).then((res) => {
+      await HouseAPI.create(houseData).then((res) => {
         const body = { houseId: res.id };
         photos.forEach(async (img: TImage) => {
           await ImageApi.updateFile(body, img.id);

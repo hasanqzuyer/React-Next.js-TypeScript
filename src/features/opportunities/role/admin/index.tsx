@@ -22,9 +22,13 @@ const AdminMarketPage = () => {
   const [secondaryHouses, setSecondaryHouses] = useState<IHouse[]>([]);
   const [completedHouses, setCompletedHouses] = useState<IHouse[]>([]);
 
-  const getAllHouses = async (search: string): Promise<any> => {
+  const getAllHouses = async (
+    search: string,
+    marketType: string,
+    status: string
+  ): Promise<any> => {
     try {
-      const response = await HouseAPI.getAll(search);
+      const response = await HouseAPI.getAll(search, marketType, status);
 
       if (response) {
         return response;
@@ -39,15 +43,15 @@ const AdminMarketPage = () => {
   const refresh = async () => {
     switch (tab) {
       case 0:
-        const primary = await getAllHouses('PRIMARY');
+        const primary = await getAllHouses('', 'Primary', '');
         setPrimaryHouses(primary);
         break;
       case 1:
-        const secondary = await getAllHouses('SECONDARY');
+        const secondary = await getAllHouses('', 'Secondary', '');
         setSecondaryHouses(secondary);
         break;
       case 2:
-        const completed = await getAllHouses('COMPLETED');
+        const completed = await getAllHouses('', '', 'Completed');
         setCompletedHouses(completed);
         break;
 

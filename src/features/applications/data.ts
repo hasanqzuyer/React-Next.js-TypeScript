@@ -129,6 +129,11 @@ export const DAdminApplicationsHead = [
     visible: true,
   },
   {
+    reference: 'tier',
+    label: 'Tier',
+    visible: true,
+  },
+  {
     reference: 'status',
     label: 'Status',
     visible: true,
