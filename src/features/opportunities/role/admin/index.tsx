@@ -84,7 +84,7 @@ const AdminMarketPage = () => {
       </Stack>
       {tab === 0 && (
         <ProjectsGrid>
-          {primaryHouses.map((house: IHouse) => {
+          {primaryHouses?.map((house: IHouse) => {
             return (
               <PropertyCard
                 key={house.id}

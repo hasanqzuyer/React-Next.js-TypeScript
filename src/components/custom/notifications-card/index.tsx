@@ -25,13 +25,16 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
     handleApplicationStatus,
     notificationStatus,
     handleNotificationStatus,
+    getMeData,
   } = useAppContext();
   const [notifications, setNotifications] = useState<TNotification[]>([]);
   const [connected, setConnected] = useState<boolean>(false);
 
   const getNotifications = async () => {
-    const notificationData = await NotificationAPI.getNotificationsForMe();
-    setNotifications([...notificationData]);
+    try {
+      const notificationData = await NotificationAPI.getNotificationsForMe();
+      setNotifications([...notificationData]);
+    } catch (error) {}
   };
 
   let socket;
@@ -60,6 +63,10 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
     getNotifications();
   };
 
+  const handleTokenBalance = () => {
+    getMeData();
+  };
+
   const socketInitializer = async () => {
     if (connected) return;
     try {
@@ -77,6 +84,7 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
 
       socket.on('UserTokenBalanceChanged', (msg) => {
         changeNotificationStatus();
+        handleTokenBalance();
       });
 
       socket.on('UserNewHouseListed', (msg) => {
