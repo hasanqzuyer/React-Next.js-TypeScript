@@ -13,6 +13,7 @@ export type TAppContextState = {
   houseStatus: number;
   applicationStatus: number;
   userStatus: number;
+  notificationStatus: number;
 };
 
 export type TAppContext = TAppContextState & {
@@ -26,4 +27,5 @@ export type TAppContext = TAppContextState & {
   handleHouseStatus: (value: number) => void;
   handleApplicationStatus: (value: number) => void;
   handleUserStatus: (value: number) => void;
+  handleNotificationStatus: (value: number) => void;
 };

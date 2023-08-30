@@ -7,7 +7,12 @@ import { ApplicationAPI } from 'api';
 import { useSnackbar } from 'hooks';
 import { AxiosError } from 'axios';
 
-const ApplicationModal = ({ onClose, houseId, ...props }: TApplyModalProps) => {
+const ApplicationModal = ({
+  onClose,
+  houseId,
+  houseName,
+  ...props
+}: TApplyModalProps) => {
   const [state, setState] = useState<any>({
     tier: null,
   });
@@ -16,12 +21,14 @@ const ApplicationModal = ({ onClose, houseId, ...props }: TApplyModalProps) => {
   const handleApply = async () => {
     if (state.tier) {
       try {
-        await ApplicationAPI.apply({ tier: state.tier.value, houseId }).then(
-          async (data) => {
-            push('Applied succesfully.', { variant: 'success' });
-            onClose();
-          }
-        );
+        await ApplicationAPI.apply({
+          tier: state.tier.value,
+          houseId,
+          houseName,
+        }).then(async (data) => {
+          push('Applied succesfully.', { variant: 'success' });
+          onClose();
+        });
       } catch (e: any) {
         if (e instanceof AxiosError && e.response) {
           push(`Apply Failed!. ${e.response.data.message}`, {
@@ -50,28 +57,21 @@ const ApplicationModal = ({ onClose, houseId, ...props }: TApplyModalProps) => {
       {...props}
     >
       <AddProjectModalMain columns={1}>
-        {/* <Input
-          type="text"
-          label="Balance"
-          value={null}
-          onValue={() => {}}
-          placeholder="Please Enter"
-        /> */}
         <Input
           type="select"
           label="Application Type"
           value={state.tier}
           options={[
             {
-              value: 'BASIC',
+              value: 'Basic',
               label: 'Basic Tier (with 1 token)',
             },
             {
-              value: 'MID',
+              value: 'Middle',
               label: 'Middle Tier (with 10 token)',
             },
             {
-              value: 'HIGH',
+              value: 'High',
               label: 'High Tier (with 50 token)',
             },
           ]}
