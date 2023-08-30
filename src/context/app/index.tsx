@@ -28,6 +28,7 @@ const AppContextProvider = ({ ...props }) => {
     houseStatus: 0,
     userStatus: 0,
     applicationStatus: 0,
+    notificationStatus: 0,
   });
 
   const handleMobileMenu = (value: boolean) => {
@@ -56,6 +57,10 @@ const AppContextProvider = ({ ...props }) => {
 
   const handleApplicationStatus = (value: number) => {
     setState((x) => ({ ...x, applicationStatus: value }));
+  };
+
+  const handleNotificationStatus = (value: number) => {
+    setState((x) => ({ ...x, notificationStatus: value }));
   };
 
   const logout = async () => {
@@ -122,6 +127,7 @@ const AppContextProvider = ({ ...props }) => {
       handleUserStatus,
       handleHouseStatus,
       handleApplicationStatus,
+      handleNotificationStatus,
     }),
     [
       state,
@@ -135,6 +141,7 @@ const AppContextProvider = ({ ...props }) => {
       handleUserStatus,
       handleHouseStatus,
       handleApplicationStatus,
+      handleNotificationStatus,
     ]
   );
   return state.initialLoading ? (

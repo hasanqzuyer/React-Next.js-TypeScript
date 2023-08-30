@@ -8,6 +8,8 @@ import {
   CalendarCardDays,
   CalendarReset,
   CalendarTitle,
+  CalendarEventStatus,
+  CalendarEventContainer,
 } from 'components/custom/calendar-card/styles';
 import {
   TCalendarCardProps,
@@ -31,7 +33,7 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
 
   const handleClick = (x: TCalendarDate) => () => {
     setDate(x.date);
-    scModalOpen();
+    // scModalOpen();
   };
 
   const handleDate = (v: Date) => {
@@ -89,6 +91,11 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
               >
                 {format(x.date, 'd')}
               </CalendarCardCellDate>
+              <CalendarEventContainer>
+                <CalendarEventStatus variant="info" href="/" />
+                <CalendarEventStatus variant="error" href="/" />
+                <CalendarEventStatus variant="success" href="/" />
+              </CalendarEventContainer>
             </CalendarCardCell>
           );
         })}

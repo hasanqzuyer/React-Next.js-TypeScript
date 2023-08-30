@@ -160,7 +160,11 @@ const PropertyCard = ({
         />
       )}
       {applicationModal && (
-        <ApplicationModal houseId={house.id} onClose={closeApplicationModal} />
+        <ApplicationModal
+          houseId={house.id}
+          onClose={closeApplicationModal}
+          houseName={house.name}
+        />
       )}
     </CardMain>
   );

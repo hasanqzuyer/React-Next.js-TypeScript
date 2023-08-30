@@ -23,25 +23,20 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
     handleUserStatus,
     applicationStatus,
     handleApplicationStatus,
+    notificationStatus,
+    handleNotificationStatus,
   } = useAppContext();
   const [notifications, setNotifications] = useState<TNotification[]>([]);
+  const [connected, setConnected] = useState<boolean>(false);
 
   const getNotifications = async () => {
     const notificationData = await NotificationAPI.getNotificationsForMe();
-    setNotifications(notificationData);
+    setNotifications([...notificationData]);
   };
 
   let socket;
   const connectionObject = {
     withCredentials: true,
-  };
-  const AddNotification = (msg: any) => {
-    const newNotification = {
-      id: msg.id,
-      notification: msg,
-      createdAt: msg.createdAt,
-    };
-    setNotifications((data: any) => [newNotification, ...data]);
   };
 
   const changeHouseStatus = () => {
@@ -59,33 +54,42 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
     handleUserStatus(newStatus);
   };
 
+  const changeNotificationStatus = () => {
+    const newStatus = notificationStatus + 1;
+    handleNotificationStatus(newStatus);
+    getNotifications();
+  };
+
   const socketInitializer = async () => {
+    if (connected) return;
     try {
       socket = io(`${Project.websocketApi.v1}/`, connectionObject);
-      socket.on('connect', () => {});
+      socket.on('connect', () => {
+        setConnected(true);
+      });
       socket.on('UserWelcomeRegistered', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('UserAccountActivated', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('UserTokenBalanceChanged', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('UserNewHouseListed', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
         changeHouseStatus();
       });
 
       socket.on('UserHouseStatusChanged', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('UserHouseMarketTypeChanged', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('UserHouseInfoChanged', (msg) => {
@@ -93,31 +97,39 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
       });
 
       socket.on('UserApplicationReceived', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
         changeApplicationStatus();
       });
 
       socket.on('UserApplicationAccepted', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
+        changeApplicationStatus();
+      });
+      socket.on('UserApplicationInReview', (msg) => {
+        changeNotificationStatus();
+        changeApplicationStatus();
+      });
+      socket.on('UserApplicationDeclined', (msg) => {
+        changeNotificationStatus();
         changeApplicationStatus();
       });
 
       socket.on('AdminUserRegistered', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
         changeUserStatus();
       });
 
       socket.on('AdminUserVerified', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
         changeUserStatus();
       });
 
       socket.on('AdminUserTokenPurchased', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
       });
 
       socket.on('AdminUserApplicationSent', (msg) => {
-        AddNotification(msg);
+        changeNotificationStatus();
         changeApplicationStatus();
       });
     } catch (error) {
@@ -126,8 +138,8 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
   };
 
   useEffect(() => {
-    getNotifications();
     socketInitializer();
+    getNotifications();
   }, []);
 
   return (

@@ -4,6 +4,7 @@ import { IUser } from 'api/users/types';
 export type TCreateAsApplicationParams = {
   tier: string;
   houseId: number;
+  houseName: string;
 };
 
 export type TSingleApplication = {

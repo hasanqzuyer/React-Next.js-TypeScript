@@ -13,6 +13,7 @@ export const createInitialState = (): TAppContext => ({
   showMobileMenu: false,
   houseStatus: 0,
   applicationStatus: 0,
+  notificationStatus: 0,
   userStatus: 0,
   handleMobileMenu: () => {},
   handleCurrencyChange: () => {},
@@ -21,4 +22,5 @@ export const createInitialState = (): TAppContext => ({
   handleUserStatus: () => {},
   handleHouseStatus: () => {},
   handleApplicationStatus: () => {},
+  handleNotificationStatus: () => {},
 });
