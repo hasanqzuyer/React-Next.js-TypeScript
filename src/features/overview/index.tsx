@@ -21,11 +21,12 @@ import { saveAs } from 'file-saver';
 import Project from 'constants/project';
 import { usePagination } from 'hooks';
 import { useRouter } from 'next/router';
+import { useAppContext } from 'context';
 
 const OverviewPage = (props: any) => {
   const { houseId } = props;
   const router = useRouter();
-
+  const { houseStatus } = useAppContext();
   const [tab, setTab] = useState(0);
 
   const [houseData, setHouseData] = useState<IHouse>({
@@ -55,8 +56,10 @@ const OverviewPage = (props: any) => {
   };
 
   useEffect(() => {
-    getHouseDataById();
-  }, [houseId]);
+    if (houseId) {
+      getHouseDataById();
+    }
+  }, [houseId, houseStatus]);
 
   const download = async (doc: TDocument) => {
     saveAs(`${Project.apis.v1}/public/documents/${doc?.key}`, doc.name);

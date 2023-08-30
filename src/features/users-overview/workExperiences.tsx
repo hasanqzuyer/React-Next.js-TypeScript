@@ -321,6 +321,9 @@ const WorkExperience = (props: any) => {
                   experience.id
                 )
               }
+              onNewTag={(company) =>
+                handleChange('company', company.value, experience.id)
+              }
             />
             <Input
               type="select"
@@ -342,6 +345,9 @@ const WorkExperience = (props: any) => {
                   location ? location.value : location,
                   experience.id
                 )
+              }
+              onNewTag={(location) =>
+                handleChange('location', location.value, experience.id)
               }
             />
             <Stack direction="horizontal" style={{ position: 'relative' }}>

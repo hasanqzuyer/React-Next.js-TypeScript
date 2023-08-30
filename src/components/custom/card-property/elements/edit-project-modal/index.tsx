@@ -163,14 +163,7 @@ const EditHouseProjectModal = ({
 
   const handleUpdateProject = async () => {
     try {
-      let data = {
-        ...houseData,
-        status: houseData.status ? houseData.status.toUpperCase() : '',
-        marketType: houseData.marketType
-          ? houseData.marketType.toUpperCase()
-          : '',
-      };
-      await HouseAPI.updateHouse(data, houseData.id).then((res) => {
+      await HouseAPI.updateHouse(houseData, houseData.id).then((res) => {
         const body = { houseId: houseData.id };
         photos.forEach(async (img: TImage) => {
           await ImageApi.updateFile(body, img.id);
@@ -181,7 +174,7 @@ const EditHouseProjectModal = ({
       });
       onClose();
       refresh();
-      push('Successfully updated house project.', { variant: 'error' });
+      push('Successfully updated house project.', { variant: 'success' });
     } catch {
       push('Something went wrong when create house project.', {
         variant: 'error',

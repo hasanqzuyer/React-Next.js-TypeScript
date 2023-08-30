@@ -17,7 +17,13 @@ import {
 } from 'features/opportunities/styles';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon, VerticalDotsIcon } from 'components/svg';
-import { useDebounce, useModal, usePagination, useSnackbar } from 'hooks';
+import {
+  useDebounce,
+  useMenu,
+  useModal,
+  usePagination,
+  useSnackbar,
+} from 'hooks';
 import { ApplicationAPI } from 'api';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
@@ -34,9 +40,15 @@ import { getCompanys } from 'utilities/companys';
 import { getSocialMedias } from 'utilities/socialMedias';
 import { getLanguages } from 'utilities/languages';
 import { IApplication } from 'api/applications/types';
-import Project from 'constants/project';
+import { useAppContext } from 'context';
+import {
+  ApplicationStatusActionsMenu,
+  ISpan,
+} from './elements/application-status-modal/styles';
+import ApplicationStatusActions from './elements/application-status-modal';
 
 const AdminApplicationsPage = () => {
+  const { applicationStatus } = useAppContext();
   const [filter, setFilter] = useState<any>(DApplicationsFilters());
   const [totalColumnItems, setTotalColumnItems] = useState<any[]>([]);
   const [checkedusers, setCheckedUsers] = useState<number[]>([]);
@@ -59,6 +71,12 @@ const AdminApplicationsPage = () => {
 
   const [tabs, setTabs] = useState(0);
   const { push } = useSnackbar();
+
+  const [menu, open, setOpen, buttonRegRef, position] = useMenu(false);
+
+  const handleMenu = () => {
+    setOpen(!open);
+  };
 
   const toggleFilter = () => {
     setFilterOpen(!filterOpen);
@@ -248,25 +266,25 @@ const AdminApplicationsPage = () => {
     getAllApplications()
       .then((data) => {
         let users = data;
-        const { minDOB, maxDOB } = convertAgeToDate(
-          filter.age.min,
-          filter.age.max
-        );
-        if (minDOB && maxDOB) {
-          users = users.filter(
-            (user: IUser) =>
-              new Date(user.dateOfBirth) >= minDOB &&
-              new Date(user.dateOfBirth) <= maxDOB
-          );
-        } else if (minDOB && !maxDOB) {
-          users = users.filter(
-            (user: IUser) => new Date(user.dateOfBirth) >= minDOB
-          );
-        } else if (!minDOB && maxDOB) {
-          users = users.filter(
-            (user: IUser) => new Date(user.dateOfBirth) <= maxDOB
-          );
-        }
+        // const { minDOB, maxDOB } = convertAgeToDate(
+        //   filter.age.min,
+        //   filter.age.max
+        // );
+        // if (minDOB && maxDOB) {
+        //   users = users.filter(
+        //     (user: IUser) =>
+        //       new Date(user.dateOfBirth) >= minDOB &&
+        //       new Date(user.dateOfBirth) <= maxDOB
+        //   );
+        // } else if (minDOB && !maxDOB) {
+        //   users = users.filter(
+        //     (user: IUser) => new Date(user.dateOfBirth) >= minDOB
+        //   );
+        // } else if (!minDOB && maxDOB) {
+        //   users = users.filter(
+        //     (user: IUser) => new Date(user.dateOfBirth) <= maxDOB
+        //   );
+        // }
 
         setTotalColumnItems(users);
       })
@@ -277,7 +295,7 @@ const AdminApplicationsPage = () => {
     getAllApplications()
       .then((data) => setTotalColumnItems(data))
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
-  }, []);
+  }, [applicationStatus]);
 
   const [clearing, setClearing] = useState<boolean>(false);
   const clearFilters = () => {
@@ -371,9 +389,17 @@ const AdminApplicationsPage = () => {
     if (headItem.reference === 'status') {
       return application.status;
     }
+    if (headItem.reference === 'tier') {
+      return application.tier;
+    }
 
     if (headItem.reference === 'actions') {
-      return <VerticalDotsIcon />;
+      return (
+        <ApplicationStatusActions
+          applicationId={application.id}
+          reload={applyFilters}
+        />
+      );
     }
 
     return '';

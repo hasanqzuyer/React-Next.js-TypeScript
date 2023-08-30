@@ -145,14 +145,7 @@ const AddHouseProjectModal = ({
 
   const handleAddProject = async () => {
     try {
-      let data = {
-        ...houseData,
-        status: houseData.status ? houseData.status.toUpperCase() : '',
-        marketType: houseData.marketType
-          ? houseData.marketType.toUpperCase()
-          : '',
-      };
-      await HouseAPI.create(data).then((res) => {
+      await HouseAPI.create(houseData).then((res) => {
         const body = { houseId: res.id };
         photos.forEach(async (img: TImage) => {
           await ImageApi.updateFile(body, img.id);
@@ -219,6 +212,9 @@ const AddHouseProjectModal = ({
                   location: location ? location.value : location,
                 })
               }
+              onNewTag={(location) =>
+                setHouseData({ ...houseData, location: location.value })
+              }
             />
             <Input
               type="number"
@@ -264,6 +260,9 @@ const AddHouseProjectModal = ({
                   ...houseData,
                   theme: theme ? theme.value : theme,
                 })
+              }
+              onNewTag={(theme) =>
+                setHouseData({ ...houseData, theme: theme.value })
               }
             />
             <Input

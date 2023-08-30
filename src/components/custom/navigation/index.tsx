@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   NavigationMain,
   NavigationRouteName,
@@ -11,6 +11,7 @@ import {
   NavigationMenu,
   NavigationMenuButton,
   NavigationNotification,
+  NavigationCurrency,
 } from 'components/custom/navigation/styles';
 import { NotificationModal } from 'components/custom/navigation/elements';
 import { TNavigationProps } from 'components/custom/navigation/types';
@@ -25,6 +26,7 @@ const Navigation = ({ ...props }: TNavigationProps) => {
   const [nModal, openNModal, closeNModal] = useModal(false);
 
   const router = useRouter();
+  const [formattedBalance, setFormattedBalance] = useState(0);
 
   const { logout, routeName, role, user, handleMobileMenu, showMobileMenu } =
     useAppContext();
@@ -52,6 +54,12 @@ const Navigation = ({ ...props }: TNavigationProps) => {
         <NavigationRouteName>{routeName}</NavigationRouteName>
       </NavigationMenu>
       <NavigationItems>
+        {['USER'].includes(role) && (
+          <NavigationCurrency onClick={() => {}}>
+            Balance: {user?.tokenBalance}
+            {/* &nbsp;<ArrowDownIcon /> */}
+          </NavigationCurrency>
+        )}
         <NavigationNotification onClick={openNModal}>
           <BellIcon />
         </NavigationNotification>

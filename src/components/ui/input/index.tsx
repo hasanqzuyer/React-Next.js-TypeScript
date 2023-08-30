@@ -117,7 +117,7 @@ const Input = ({
       }
       onNewTag({
         label: e.target.value,
-        value: newValue,
+        value: e.target.value,
       });
       setSearch('');
     } else if (['ArrowDown', 'ArrowUp'].includes(e.key) && !disabledNewTag) {
@@ -265,7 +265,7 @@ const Input = ({
               // onBlur={handleBlur}
               // onFocus={handleFocus}
               disabled={disabled}
-              // onKeyDown={handleKeyDown}
+              onKeyDown={handleKeyDown}
               InputProps={{
                 ...InputProps,
                 startAdornment,
