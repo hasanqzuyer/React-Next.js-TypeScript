@@ -65,12 +65,12 @@ export const CalendarEventStatus = styled(Link)<{
     margin: 1.2px;
     float: left;
     background-color: ${
-      (variant === 'error' && theme.palette.error.main) ||
-      (variant === 'success' && theme.palette.success.main) ||
-      (variant === 'info' && theme.palette.info.main) ||
-      (variant === 'primary' && theme.palette.primary.main) ||
-      (variant === 'secondary' && theme.palette.secondary.main) ||
-      (variant === 'warning' && theme.palette.warning.main)
+      (variant === 'error' && theme.palette.error.light) ||
+      (variant === 'success' && theme.palette.success.light) ||
+      (variant === 'info' && theme.palette.info.light) ||
+      (variant === 'primary' && theme.palette.primary.light) ||
+      (variant === 'secondary' && theme.palette.secondary.light) ||
+      (variant === 'warning' && theme.palette.warning.light)
     };
 `}
 `;

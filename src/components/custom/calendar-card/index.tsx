@@ -1,4 +1,4 @@
-import React, { Children, useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import {
   CalendarCardMain,
   CalendarCardGrid,
@@ -14,35 +14,56 @@ import {
 import {
   TCalendarCardProps,
   TCalendarDate,
+  TCalendarEvents,
 } from 'components/custom/calendar-card/types';
 import { getCalendarDates } from 'utilities/calendar';
 import { format } from 'date-fns';
-import { useModal } from 'hooks';
+// import { useModal } from 'hooks';
 import {
   CalendarControls,
-  Scheduler,
+  // Scheduler,
 } from 'components/custom/calendar-card/elements';
 import { RestartAlt } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
+import { NotificationAPI } from 'api';
+import { useAppContext } from 'context';
 
 const CalendarCard = ({ ...props }: TCalendarCardProps) => {
-  const [scModal, scModalOpen, scModalClose] = useModal(false);
+  const { houseStatus } = useAppContext();
   const [date, setDate] = useState(new Date());
 
   const days: TCalendarDate[] = getCalendarDates(date);
+  const [events, setEvents] = useState<TCalendarEvents[]>([]);
 
   const handleClick = (x: TCalendarDate) => () => {
     setDate(x.date);
+    getCalendarEvents();
     // scModalOpen();
   };
 
   const handleDate = (v: Date) => {
     setDate(v);
+    getCalendarEvents();
   };
 
   const handleToday = () => {
     setDate(new Date());
+    getCalendarEvents();
   };
+
+  const getCalendarEvents = async () => {
+    let lastElement = days.pop();
+    let firstElement = days[0];
+    const startDate = new Date(firstElement.date).toISOString();
+    //@ts-ignore
+    const endDate = new Date(lastElement?.date).toISOString();
+    const events = await NotificationAPI.getAll('', startDate, endDate);
+    setEvents([...events]);
+  };
+
+  useEffect(() => {
+    getCalendarEvents();
+  }, [houseStatus]);
 
   return (
     <CalendarCardMain
@@ -77,7 +98,12 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
       <CalendarCardGrid columns={7}>
         {days.map((x, index) => {
           const isHighlighted = x.date.toISOString() === date.toISOString();
-
+          const todayEvents = events.filter(
+            (event) =>
+              format(new Date(event.createdAt), 'MM/dd/yyyy') ===
+                format(x.date, 'MM/dd/yyyy') &&
+              event?.notificationPayload[0]?.houseId !== null
+          );
           return (
             <CalendarCardCell
               // eslint-disable-next-line react/no-array-index-key
@@ -92,15 +118,20 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
                 {format(x.date, 'd')}
               </CalendarCardCellDate>
               <CalendarEventContainer>
-                <CalendarEventStatus variant="info" href="/" />
-                <CalendarEventStatus variant="error" href="/" />
-                <CalendarEventStatus variant="success" href="/" />
+                {todayEvents.map((event) => {
+                  return (
+                    <CalendarEventStatus
+                      variant={event.variant}
+                      href={`/house/overview?houseId=${event.notificationPayload[0].houseId}`}
+                    />
+                  );
+                })}
               </CalendarEventContainer>
             </CalendarCardCell>
           );
         })}
       </CalendarCardGrid>
-      {scModal && <Scheduler onClose={scModalClose} date={date} />}
+      {/* {scModal && <Scheduler onClose={scModalClose} date={date} />} */}
     </CalendarCardMain>
   );
 };
