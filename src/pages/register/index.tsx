@@ -3,7 +3,7 @@ import { Title } from 'components/core';
 import { useAppContext } from 'context';
 import { RegisterAmbassadorPage } from 'features';
 import { useRouter } from 'next/router';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'react-i18next';
 
 const Login = () => {
@@ -24,12 +24,12 @@ const Login = () => {
   );
 };
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['register', 'common'])),
-    },
-  };
-}
+// export async function getStaticProps({ locale }: { locale: string }) {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale, ['register', 'common'])),
+//     },
+//   };
+// }
 
 export default Login;
