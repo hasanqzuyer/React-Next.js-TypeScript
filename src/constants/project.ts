@@ -6,9 +6,9 @@ const Project = {
     // environment: 'staging',
     environment: 'development',
 
-    baseUrl: 'http://localhost:8080',
-    baseProdUrl: 'https://app.brotherhoodhouse.com',
-    baseStageUrl: 'https://app.staging.brotherhoodhouse.com',
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    // baseProdUrl: 'https://app.brotherhoodhouse.com',
+    // baseStageUrl: 'https://app.staging.brotherhoodhouse.com',
   },
   apis: {
     // Production
@@ -16,7 +16,7 @@ const Project = {
     // Staging
     // v1: 'https://api.staging.brotherhoodhouse.com',
     // Local/Dev
-    v1: 'http://localhost:3000',
+    v1: process.env.NEXT_PUBLIC_API,
   },
   websocketApi: {
     // Production
@@ -24,7 +24,7 @@ const Project = {
     // Staging
     // v1: 'https://api.staging.brotherhoodhouse.com',
     // Local/Dev
-    v1: 'http://localhost:3001',
+    v1: process.env.NEXT_PUBLIC_WEBSOCKET,
   },
   title: {
     prefix: '',

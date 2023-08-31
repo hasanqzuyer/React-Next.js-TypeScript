@@ -18,12 +18,7 @@ import {
 } from 'features/opportunities/styles';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon } from 'components/svg';
-import {
-  useDebounce,
-  // useMenu,
-  usePagination,
-  useSnackbar,
-} from 'hooks';
+import { useDebounce, usePagination, useSnackbar } from 'hooks';
 import { ApplicationAPI } from 'api';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
@@ -33,7 +28,6 @@ import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
 import { getHouseTheme } from 'utilities/houseTheme';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 import { getDegrees } from 'utilities/degrees';
-// import { getSchoolsAndUniversities } from 'utilities/schools';
 import { getSocialMedias } from 'utilities/socialMedias';
 import { getLanguages } from 'utilities/languages';
 import { IApplication } from 'api/applications/types';
@@ -55,10 +49,6 @@ const AdminApplicationsPage = () => {
   const [language, setLanguages] = useState<any[]>([]);
   const [socialMedias, setSocialMedias] = useState<any[]>([]);
   const [interests, setInterests] = useState<any[]>([]);
-
-  // const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
-  //   []
-  // );
   const [degrees, setDegrees] = useState<any[]>([]);
   const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
@@ -160,16 +150,6 @@ const AdminApplicationsPage = () => {
       }))
     );
   };
-
-  // const getSchoolAndUniversityOptions = async (searchTerm: string = '') => {
-  //   const result = getSchoolsAndUniversities(searchTerm);
-  //   setSchoolsAndUniverisities(
-  //     result.map((name: any) => ({
-  //       value: name,
-  //       label: name,
-  //     }))
-  //   );
-  // };
 
   const getDegreeOptions = async (searchTerm: string = '') => {
     const result = getDegrees(searchTerm);

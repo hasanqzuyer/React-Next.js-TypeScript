@@ -22,8 +22,6 @@ import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getLanguages } from 'utilities/languages';
 import { getSocialMedias } from 'utilities/socialMedias';
-import { getCompanys } from 'utilities/companys';
-import { getSchoolsAndUniversities } from 'utilities/schools';
 import { getDegrees } from 'utilities/degrees';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 import { getHouseTheme } from 'utilities/houseTheme';
