@@ -35,8 +35,7 @@ const checkLoggedIn = async (authCookie?: RequestCookie | undefined) => {
 };
 
 export const middleware = async (request: NextRequest) => {
-  const { pathname, locale, defaultLocale } = request.nextUrl;
-
+  const { pathname } = request.nextUrl;
   if (
     pathname.startsWith('/_next') || // exclude Next.js internals
     pathname.startsWith('/api') || //  exclude all API routes
@@ -49,7 +48,7 @@ export const middleware = async (request: NextRequest) => {
   const authCookie = request.cookies.get('auth');
   const loggedIn = await checkLoggedIn(authCookie);
 
-  const withLocale = locale === defaultLocale ? '' : `/${locale}`;
+  const withLocale = '';
 
   const isProtectedRoute = CProtectedRoutes.includes(pathname);
   const isProtectedDynamicRoute = CProtectedDynamicRoutes.some((route) =>
