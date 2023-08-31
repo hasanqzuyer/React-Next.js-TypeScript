@@ -1,17 +1,17 @@
-import { DSkillsOfOthers } from 'features/users/data';
+import { DSkills } from 'features/users/data';
 
 export const getSkillsOfOthers = (search: string) => {
   let skills: string[] = [];
   let filters: any[] = [];
   if (search) {
-    filters = DSkillsOfOthers.filter((skill) =>
+    filters = DSkills.filter((skill) =>
       skill.name.toLowerCase().includes(search.toLowerCase())
     );
   } else {
-    if (DSkillsOfOthers.length > 10) {
-      filters = DSkillsOfOthers.slice(0, 10);
+    if (DSkills.length > 10) {
+      filters = DSkills.slice(0, 10);
     } else {
-      filters = DSkillsOfOthers;
+      filters = DSkills;
     }
   }
   filters.forEach((element) => {

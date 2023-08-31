@@ -19,9 +19,6 @@ const Education = (props: any) => {
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
 
-  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
-    []
-  );
   const [degrees, setDegrees] = useState<any[]>([]);
   const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
 
@@ -100,7 +97,6 @@ const Education = (props: any) => {
       setInsertedArray(Array);
     }
     getDegreeOptions();
-    getSchoolAndUniversityOptions();
     getFieldOfStudyOptions();
   };
 
@@ -228,19 +224,6 @@ const Education = (props: any) => {
     setTotalData(() => [...tempTotalData]);
   };
 
-  const [locations, setLocations] = useState<any[]>([]);
-  const [companys, setCompanys] = useState<any[]>([]);
-
-  const getSchoolAndUniversityOptions = async (searchTerm: string = '') => {
-    const result = getSchoolsAndUniversities(searchTerm);
-    setSchoolsAndUniverisities(
-      result.map((name: any) => ({
-        value: name,
-        label: name,
-      }))
-    );
-  };
-
   const getDegreeOptions = async (searchTerm: string = '') => {
     const result = getDegrees(searchTerm);
     setDegrees(
@@ -260,13 +243,11 @@ const Education = (props: any) => {
       }))
     );
   };
-  const debouncedSchools = useDebounce(getSchoolAndUniversityOptions, 100);
   const debouncedDegrees = useDebounce(getDegreeOptions, 100);
   const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
 
   useEffect(() => {
     getDegreeOptions();
-    getSchoolAndUniversityOptions();
     getFieldOfStudyOptions();
   }, []);
 
@@ -296,7 +277,6 @@ const Education = (props: any) => {
         setInsertedArray(Array);
       }
       getDegreeOptions();
-      getSchoolAndUniversityOptions();
       getFieldOfStudyOptions();
     }
   }, [totalData]);
@@ -307,28 +287,12 @@ const Education = (props: any) => {
         return (
           <AccountGrid style={{ position: 'relative', marginBottom: '20px' }}>
             <Input
-              type="select"
+              type="text"
               label="School or University"
               placeholder="Please Select"
-              onSearch={debouncedSchools}
-              options={schoolsAndUniversities}
-              value={
-                education.university
-                  ? {
-                      label: education.university,
-                      value: education.university,
-                    }
-                  : null
-              }
+              value={education.university}
               onValue={(university) =>
-                handleChange(
-                  'university',
-                  university ? university.value : university,
-                  education.id
-                )
-              }
-              onNewTag={(university) =>
-                handleChange('university', university.value, education.id)
+                handleChange('university', university, education.id)
               }
             />
 

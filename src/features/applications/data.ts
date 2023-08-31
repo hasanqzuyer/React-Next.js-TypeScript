@@ -1,40 +1,40 @@
 export const DApplicationsFilters = () => ({
   search: '',
-  applicationType: null,
-  nationality: null,
+  applicationType: [],
+  nationality: [],
   age: {
     min: '',
     max: '',
   },
-  language: null,
-  location: null,
+  language: [],
+  location: [],
   invested: {
     min: '',
     max: '',
   },
-  socialMedia: null,
+  socialMedia: [],
   applications: {
     min: '',
     max: '',
   },
-  status: null,
+  status: [],
   dateFrom: null,
   dateTo: null,
 
-  jobTitle: null,
-  company: null,
-  workExperienceLocation: null,
+  jobTitle: [],
+  company: '',
+  workExperienceLocation: [],
   currentlyEmployed: null,
-  skills: null,
+  skills: [],
 
-  school: null,
-  degree: null,
-  fieldOfStudy: null,
+  school: '',
+  degree: [],
+  fieldOfStudy: [],
 
-  theme: null,
-  skillsOfOthers: null,
-  houseLocation: null,
-  houseLanguage: null,
+  theme: [],
+  skillsOfOthers: [],
+  houseLocation: [],
+  houseLanguage: [],
   monthlyRent: {
     min: '',
     max: '',
@@ -47,11 +47,8 @@ export const DApplicationsFilters = () => ({
     min: '',
     max: '',
   },
-  interestsAndHobbies: {
-    min: '',
-    max: '',
-  },
-  diet: null,
+  interestsAndHobbies: [],
+  diet: [],
 });
 
 export const DApplicationsHead = [
@@ -142,5 +139,36 @@ export const DAdminApplicationsHead = [
     reference: 'actions',
     label: '',
     visible: true,
+  },
+];
+
+export const DApplicationType = [
+  {
+    value: 'Basic',
+    name: 'Basic Application',
+  },
+  {
+    name: 'Priority Application',
+    value: 'Priority',
+  },
+  {
+    name: 'Premium Application',
+    value: 'Premium',
+  },
+  {
+    name: 'Elite Application',
+    value: 'Elite',
+  },
+];
+
+export const DApplicationStatues = [
+  {
+    name: 'Pending',
+  },
+  {
+    name: 'Approved',
+  },
+  {
+    name: 'Rejected',
   },
 ];
