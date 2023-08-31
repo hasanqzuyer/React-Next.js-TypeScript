@@ -23,6 +23,7 @@ import { HouseAPI } from 'api';
 import { TImage } from 'api/images/types';
 import { TDocument } from 'api/documents/types';
 import Project from 'constants/project';
+import { nameSchema } from 'utilities/validators';
 
 const AddHouseProjectModal = ({
   onClose,
@@ -191,6 +192,16 @@ const AddHouseProjectModal = ({
               placeholder="Please Enter"
               value={houseData?.name}
               onValue={(name) => setHouseData({ ...houseData, name })}
+              validators={[
+                {
+                  message: 'Name is required',
+                  validator: (name) => {
+                    const v = name as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"

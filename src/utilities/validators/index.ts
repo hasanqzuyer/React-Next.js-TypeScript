@@ -25,32 +25,8 @@ export const locationSchema = object().shape({
   location: object(),
 });
 
-export const genderSchema = object().shape({
-  gender: object(),
-});
-
 export const experienceAsSchema = object().shape({
   experienceAs: object(),
-});
-
-export const diseaseAreaSchema = object().shape({
-  diseaseArea: array(),
-});
-
-export const ethnicitySchema = object().shape({
-  ethnicity: object(),
-});
-
-export const instagramPostSchema = object().shape({
-  instaP: string(),
-});
-
-export const instagramStorySchema = object().shape({
-  instaS: string(),
-});
-
-export const instagramReelSchema = object().shape({
-  instaR: string(),
 });
 
 export const birthDateSchema = object().shape({
@@ -60,11 +36,4 @@ export const birthDateSchema = object().shape({
 export const nameSchema = object().shape({
   length: string().min(2).max(15),
   pattern: string().matches(/^[a-zA-Z]+$/),
-});
-
-export const usernameSchema = object().shape({
-  username: string()
-    .min(6)
-    .matches(/[a-z0-9.]/)
-    .matches(/^\S*$/),
 });

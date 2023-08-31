@@ -5,7 +5,6 @@ import { Stack } from 'components/system';
 import { AddIcon, DeleteIcon } from 'components/svg';
 import { useDebounce, useSnackbar } from 'hooks';
 import { getLocations } from 'utilities/locations';
-import { getCompanys } from 'utilities/companys';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
