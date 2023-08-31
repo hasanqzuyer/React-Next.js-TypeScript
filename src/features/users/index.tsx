@@ -31,6 +31,7 @@ import { getSkillsOfOthers } from 'utilities/skillsOfOthers';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { getDiets } from 'utilities/diets';
 import { useAppContext } from 'context';
+import { getJobTitles } from 'utilities/jobTitles';
 
 const UsersPage = () => {
   const { userStatus } = useAppContext();
@@ -42,16 +43,13 @@ const UsersPage = () => {
   const [nationalities, setNationalities] = useState<any[]>([]);
   const [languages, setLanguages] = useState<any[]>([]);
   const [socialMedias, setSocialMedias] = useState<any[]>([]);
-  const [companys, setCompanys] = useState<any[]>([]);
-  const [schoolsAndUniversities, setSchoolsAndUniverisities] = useState<any[]>(
-    []
-  );
   const [degrees, setDegrees] = useState<any[]>([]);
   const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
   const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
   const [interests, setInterests] = useState<any[]>([]);
   const [diets, setDiets] = useState<any[]>([]);
+  const [jobTitles, setJobTitles] = useState<any[]>([]);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -149,26 +147,6 @@ const UsersPage = () => {
     );
   };
 
-  const getCompanyOptions = async (searchTerm: string = '') => {
-    const result = getCompanys(searchTerm);
-    setCompanys(
-      result.map((name: any) => ({
-        value: name,
-        label: name,
-      }))
-    );
-  };
-
-  const getSchoolAndUniversityOptions = async (searchTerm: string = '') => {
-    const result = getSchoolsAndUniversities(searchTerm);
-    setSchoolsAndUniverisities(
-      result.map((name: any) => ({
-        value: name,
-        label: name,
-      }))
-    );
-  };
-
   const getDegreeOptions = async (searchTerm: string = '') => {
     const result = getDegrees(searchTerm);
     setDegrees(
@@ -229,12 +207,22 @@ const UsersPage = () => {
     );
   };
 
+  const getJObTitleOptions = async (searchTerm: string = '') => {
+    const result = getJobTitles(searchTerm);
+    setJobTitles(
+      result.map((name: any) => ({
+        value: name,
+        label: name,
+      }))
+    );
+  };
+
   const debouncedLocation = useDebounce(getLocationOptions, 100);
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
-  const debouncedCompanies = useDebounce(getCompanyOptions, 100);
-  const debouncedSchools = useDebounce(getSchoolAndUniversityOptions, 100);
+  const debouncedJobTitles = useDebounce(getJObTitleOptions, 100);
+
   const debouncedDegrees = useDebounce(getDegreeOptions, 100);
   const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
   const debouncedThemes = useDebounce(getThemeOptions, 100);
@@ -334,8 +322,8 @@ const UsersPage = () => {
     if (headItem.reference === 'age') {
       return getAge(singleUser.dateOfBirth);
     }
-    if (headItem.reference === 'languages') {
-      return singleUser.languages;
+    if (headItem.reference === 'language') {
+      return singleUser.language;
     }
     if (headItem.reference === 'applications') {
       return singleUser.applicationCount;
@@ -355,10 +343,8 @@ const UsersPage = () => {
     getNationalityOptions();
     getLanguageOptions();
     getSocialMediaOptions();
-    getCompanyOptions();
     getDegreeOptions();
     getDietsOptions();
-    getSchoolAndUniversityOptions();
     getFieldOfStudyOptions();
     getInterestsOptions();
     getThemeOptions();
@@ -415,12 +401,12 @@ const UsersPage = () => {
                   <Input
                     type="text"
                     label="Search"
-                    placeholder="Please Select"
+                    placeholder="Please Enter"
                     value={filters.search}
                     onValue={(search) => setFilter({ ...filters, search })}
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Location"
                     onSearch={debouncedLocation}
                     placeholder="Please Select"
@@ -428,11 +414,14 @@ const UsersPage = () => {
                     value={filters.location}
                     onValue={(location) => setFilter({ ...filters, location })}
                     onNewTag={(location) =>
-                      setFilter({ ...filters, location: location })
+                      setFilter({
+                        ...filters,
+                        location: [...filters.location, location],
+                      })
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Nationality"
                     onSearch={debouncedNationalities}
                     placeholder="Please Select"
@@ -442,7 +431,10 @@ const UsersPage = () => {
                       setFilter({ ...filters, nationality })
                     }
                     onNewTag={(nationality) =>
-                      setFilter({ ...filters, nationality: nationality })
+                      setFilter({
+                        ...filters,
+                        nationality: [...filters.nationality, nationality],
+                      })
                     }
                   />
                   <Input
@@ -453,15 +445,18 @@ const UsersPage = () => {
                     onValue={(age) => setFilter({ ...filters, age })}
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Language"
-                    onSearch={debouncedLanguages}
                     placeholder="Please Select"
+                    onSearch={debouncedLanguages}
                     options={languages}
                     value={filters.language}
                     onValue={(language) => setFilter({ ...filters, language })}
                     onNewTag={(language) =>
-                      setFilter({ ...filters, language: language })
+                      setFilter({
+                        ...filters,
+                        language: [...filters.language, language],
+                      })
                     }
                   />
                   <Input
@@ -481,17 +476,14 @@ const UsersPage = () => {
                     onValue={(invested) => setFilter({ ...filters, invested })}
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Social Media"
                     placeholder="Please Select"
-                    value={filters.socialMedia}
                     onSearch={debouncedSocialMedias}
+                    value={filters.socialMedia}
                     options={socialMedias}
                     onValue={(socialMedia) =>
                       setFilter({ ...filters, socialMedia })
-                    }
-                    onNewTag={(socialMedia) =>
-                      setFilter({ ...filters, socialMedia: socialMedia })
                     }
                   />
                 </Grid>
@@ -499,38 +491,44 @@ const UsersPage = () => {
               {tabs === 1 && (
                 <Grid columns={4}>
                   <Input
-                    type="text"
+                    type="multiselect"
                     label="Job Title"
-                    placeholder="Please Enter"
+                    placeholder="Please Select"
+                    onSearch={debouncedJobTitles}
+                    options={jobTitles}
                     value={filters.jobTitle}
                     onValue={(jobTitle) => setFilter({ ...filters, jobTitle })}
-                  />
-                  <Input
-                    type="select"
-                    label="Company"
-                    placeholder="Please Select"
-                    onSearch={debouncedCompanies}
-                    options={companys}
-                    value={filters.company}
-                    onValue={(company) => setFilter({ ...filters, company })}
-                    onNewTag={(company) =>
-                      setFilter({ ...filters, company: company })
+                    onNewTag={(jobTitle) =>
+                      setFilter({
+                        ...filters,
+                        jobTitle: [...filters.jobTitle, jobTitle],
+                      })
                     }
                   />
                   <Input
-                    type="select"
-                    label="Work Experience Location"
+                    type="text"
+                    label="Company"
+                    placeholder="Please Enter"
+                    value={filters.company}
+                    onValue={(company) => setFilter({ ...filters, company })}
+                  />
+                  <Input
+                    type="multiselect"
+                    label="Location"
                     placeholder="Please Select"
-                    options={locations}
                     onSearch={debouncedLocation}
                     value={filters.workExperienceLocation}
+                    options={locations}
                     onValue={(workExperienceLocation) =>
                       setFilter({ ...filters, workExperienceLocation })
                     }
                     onNewTag={(workExperienceLocation) =>
                       setFilter({
                         ...filters,
-                        workExperienceLocation: workExperienceLocation,
+                        workExperienceLocation: [
+                          ...filters.workExperienceLocation,
+                          workExperienceLocation,
+                        ],
                       })
                     }
                   />
@@ -558,19 +556,14 @@ const UsersPage = () => {
               {tabs === 2 && (
                 <Grid columns={4}>
                   <Input
-                    type="select"
+                    type="text"
                     label="School or University"
-                    placeholder="Please Select"
-                    onSearch={debouncedSchools}
-                    options={schoolsAndUniversities}
+                    placeholder="Please Enter"
                     value={filters.school}
                     onValue={(school) => setFilter({ ...filters, school })}
-                    onNewTag={(school) =>
-                      setFilter({ ...filters, school: school })
-                    }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Degree"
                     placeholder="Please Select"
                     onSearch={debouncedDegrees}
@@ -578,21 +571,27 @@ const UsersPage = () => {
                     value={filters.degree}
                     onValue={(degree) => setFilter({ ...filters, degree })}
                     onNewTag={(degree) =>
-                      setFilter({ ...filters, degree: degree })
+                      setFilter({
+                        ...filters,
+                        degree: [...filters.degree, degree],
+                      })
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Field of Study"
-                    placeholder="Please Select"
-                    onSearch={debouncedFieldOfStudy}
                     options={fieldOfStudy}
+                    onSearch={debouncedFieldOfStudy}
+                    placeholder="Please Select"
                     value={filters.fieldOfStudy}
                     onValue={(fieldOfStudy) =>
                       setFilter({ ...filters, fieldOfStudy })
                     }
                     onNewTag={(fieldOfStudy) =>
-                      setFilter({ ...filters, fieldOfStudy: fieldOfStudy })
+                      setFilter({
+                        ...filters,
+                        fieldOfStudy: [...filters.fieldOfStudy, fieldOfStudy],
+                      })
                     }
                   />
                 </Grid>
@@ -600,33 +599,42 @@ const UsersPage = () => {
               {tabs === 3 && (
                 <Grid columns={4}>
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Theme"
-                    placeholder="Please Select"
                     onSearch={debouncedThemes}
+                    placeholder="Please Select"
                     options={themes}
                     value={filters.theme}
                     onValue={(theme) => setFilter({ ...filters, theme })}
                     onNewTag={(theme) =>
-                      setFilter({ ...filters, theme: theme })
+                      setFilter({
+                        ...filters,
+                        theme: [...filters.theme, theme],
+                      })
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Skills of Others"
                     placeholder="Please Select"
                     onSearch={debouncedSkillsOfOthers}
-                    options={skillsOfthers}
                     value={filters.skillsOfOthers}
+                    options={skillsOfthers}
                     onValue={(skillsOfOthers) =>
                       setFilter({ ...filters, skillsOfOthers })
                     }
                     onNewTag={(skillsOfOthers) =>
-                      setFilter({ ...filters, skillsOfOthers: skillsOfOthers })
+                      setFilter({
+                        ...filters,
+                        skillsOfOthers: [
+                          ...filters.skillsOfOthers,
+                          skillsOfOthers,
+                        ],
+                      })
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Location"
                     placeholder="Please Select"
                     onSearch={debouncedLocation}
@@ -636,11 +644,17 @@ const UsersPage = () => {
                       setFilter({ ...filters, houseLocation })
                     }
                     onNewTag={(houseLocation) =>
-                      setFilter({ ...filters, houseLocation: houseLocation })
+                      setFilter({
+                        ...filters,
+                        houseLocation: [
+                          ...filters.houseLocation,
+                          houseLocation,
+                        ],
+                      })
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Language"
                     placeholder="Please Select"
                     onSearch={debouncedLanguages}
@@ -648,9 +662,6 @@ const UsersPage = () => {
                     value={filters.houseLanguage}
                     onValue={(houseLanguage) =>
                       setFilter({ ...filters, houseLanguage })
-                    }
-                    onNewTag={(houseLanguage) =>
-                      setFilter({ ...filters, houseLanguage: houseLanguage })
                     }
                   />
                   <Input
@@ -676,7 +687,7 @@ const UsersPage = () => {
                     }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Interests and Hobbies"
                     placeholder="Please Select"
                     onSearch={debouncedInterests}
@@ -685,22 +696,15 @@ const UsersPage = () => {
                     onValue={(interestsAndHobbies) =>
                       setFilter({ ...filters, interestsAndHobbies })
                     }
-                    onNewTag={(interestsAndHobbies) =>
-                      setFilter({
-                        ...filters,
-                        interestsAndHobbies: interestsAndHobbies,
-                      })
-                    }
                   />
                   <Input
-                    type="select"
+                    type="multiselect"
                     label="Diet"
+                    options={diets}
                     placeholder="Please Select"
                     onSearch={debouncedDiets}
-                    options={diets}
                     value={filters.diet}
                     onValue={(diet) => setFilter({ ...filters, diet })}
-                    onNewTag={(diet) => setFilter({ ...filters, diet: diet })}
                   />
                 </Grid>
               )}

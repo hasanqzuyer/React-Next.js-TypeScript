@@ -37,7 +37,7 @@ export interface IUser {
   dateOfBirth: string;
   nationality: string;
   profileImageUrl: string;
-  languages: string;
+  language: string;
   skills: string;
   location: string;
   tokenBalance: number;

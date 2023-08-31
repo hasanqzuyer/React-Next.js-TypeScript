@@ -22,7 +22,6 @@ import Education from './educations';
 import { getSkills } from 'utilities/skills';
 import { ISocialMedia } from 'api/socialMedia/types';
 import SocialMediaAPI from 'api/socialMedia';
-import { THousePreference } from 'api/housePreference/types';
 import HousePreferenceApi from 'api/housePreference';
 import { useAppContext } from 'context';
 
@@ -49,7 +48,7 @@ const AccountPage = (props: any) => {
     location: '',
     nationality: '',
     dateOfBirth: '',
-    languages: [],
+    language: [],
     skills: [],
   });
 
@@ -94,8 +93,8 @@ const AccountPage = (props: any) => {
       email: data.email,
       nationality: data.nationality,
       dateOfBirth: data.dateOfBirth,
-      languages: data.languages
-        ? data.languages.split(',').map((name: string) => ({
+      language: data.language
+        ? data.language.split(',').map((name: string) => ({
             value: name,
             label: name,
           }))
@@ -135,7 +134,7 @@ const AccountPage = (props: any) => {
 
   const [locations, setLocations] = useState<any[]>([]);
   const [nationalities, setNationalities] = useState<any[]>([]);
-  const [languages, setLanguages] = useState<any[]>([]);
+  const [language, setLanguages] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
   const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
@@ -249,9 +248,9 @@ const AccountPage = (props: any) => {
 
   const updateUserInfo = async () => {
     try {
-      const languages = info.languages.map((item: any) => item.value).join(',');
+      const language = info.language.map((item: any) => item.value).join(',');
       const skills = info.skills.map((item: any) => item.value).join(',');
-      let data = { ...info, languages, skills };
+      let data = { ...info, language, skills };
       await UsersAPI.updateSingleUser(user.id, data).then(() => {});
       setInfoSaving(false);
       setInfoHasChanged(false);
@@ -485,14 +484,12 @@ const AccountPage = (props: any) => {
                   label="Languages"
                   onSearch={debouncedLanguages}
                   placeholder="Please Select"
-                  options={languages}
+                  options={language}
                   isFilterActive
-                  value={info.languages}
-                  onValue={(languages) =>
-                    handleChangeInfo('languages', languages)
-                  }
+                  value={info.language}
+                  onValue={(language) => handleChangeInfo('language', language)}
                   onNewTag={(language) =>
-                    handleNewInfoTags('languages', {
+                    handleNewInfoTags('language', {
                       label: language.value,
                       value: language.value,
                     })
@@ -532,16 +529,33 @@ const AccountPage = (props: any) => {
                   label="Type to Add Skills"
                   placeholder="Please Select"
                   onSearch={debouncedSkills}
-                  onNewTag={(skill) =>
-                    handleNewInfoTags('skills', {
-                      label: skill.value,
-                      value: skill.value,
-                    })
-                  }
                   isFilterActive
                   options={skills}
                   value={info.skills}
-                  onValue={(skills) => handleChangeInfo('skills', skills)}
+                  onValue={(skills) => {
+                    if (info.skills) {
+                      if (info.skills.length < 5) {
+                        handleChangeInfo('skills', skills);
+                      }
+                    } else {
+                      handleChangeInfo('skills', skills);
+                    }
+                  }}
+                  onNewTag={(skills) => {
+                    if (info.skills) {
+                      if (info.skills.length < 5) {
+                        handleNewInfoTags('skills', {
+                          label: skills.value,
+                          value: skills.value,
+                        });
+                      }
+                    } else {
+                      handleNewInfoTags('skills', {
+                        label: skills.value,
+                        value: skills.value,
+                      });
+                    }
+                  }}
                 />
               </AccountGrid>
               <AccountHeadline>Social Media</AccountHeadline>
@@ -612,18 +626,36 @@ const AccountPage = (props: any) => {
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
-                  onValue={(skillsOfOthers) =>
-                    handleChangeHousePreference(
-                      'skillsOfOthers',
-                      skillsOfOthers
-                    )
-                  }
-                  onNewTag={(skillsOfOther) =>
-                    handleNewHousePrefTags('skillsOfOthers', {
-                      label: skillsOfOther.value,
-                      value: skillsOfOther.value,
-                    })
-                  }
+                  onValue={(skillsOfOthers) => {
+                    if (housePreference.skillsOfOthers) {
+                      if (housePreference.skillsOfOthers.length < 5) {
+                        handleChangeHousePreference(
+                          'skillsOfOthers',
+                          skillsOfOthers
+                        );
+                      }
+                    } else {
+                      handleChangeHousePreference(
+                        'skillsOfOthers',
+                        skillsOfOthers
+                      );
+                    }
+                  }}
+                  onNewTag={(skillsOfOther) => {
+                    if (housePreference.skillsOfOthers) {
+                      if (housePreference.skillsOfOthers.length < 5) {
+                        handleNewHousePrefTags('skillsOfOthers', {
+                          label: skillsOfOther.value,
+                          value: skillsOfOther.value,
+                        });
+                      }
+                    } else {
+                      handleNewHousePrefTags('skillsOfOthers', {
+                        label: skillsOfOther.value,
+                        value: skillsOfOther.value,
+                      });
+                    }
+                  }}
                 />
                 <Input
                   type="select"
@@ -654,7 +686,7 @@ const AccountPage = (props: any) => {
                   label="Language"
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
-                  options={languages}
+                  options={language}
                   value={
                     housePreference.language
                       ? {
