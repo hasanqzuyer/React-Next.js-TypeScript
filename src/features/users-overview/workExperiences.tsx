@@ -8,6 +8,7 @@ import { getLocations } from 'utilities/locations';
 import { getCompanys } from 'utilities/companys';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
+import { getJobTitles } from 'utilities/jobTitles';
 
 const WorkExperience = (props: any) => {
   const { totalData, setTotalData, setHasChanged, saving, setSaving, userId } =
@@ -96,7 +97,7 @@ const WorkExperience = (props: any) => {
       setInsertedArray(Array);
     }
     getLocationOptions();
-    getCompanyOptions();
+    getJobTitleOptions();
   };
 
   const handleEdit = (id: any) => {
@@ -238,8 +239,8 @@ const WorkExperience = (props: any) => {
     );
   };
 
-  const getCompanyOptions = async (searchTerm: string = '') => {
-    const result = getCompanys(searchTerm);
+  const getJobTitleOptions = async (searchTerm: string = '') => {
+    const result = getJobTitles(searchTerm);
     setCompanys(
       result.map((name: any) => ({
         value: name,
@@ -249,11 +250,11 @@ const WorkExperience = (props: any) => {
   };
 
   const debouncedLocation = useDebounce(getLocationOptions, 100);
-  const debouncedCompanies = useDebounce(getCompanyOptions, 100);
+  const debouncedJobTitles = useDebounce(getJobTitleOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
-    getCompanyOptions();
+    getJobTitleOptions();
   }, []);
 
   useEffect(() => {
@@ -283,7 +284,7 @@ const WorkExperience = (props: any) => {
         setInsertedArray(Array);
       }
       getLocationOptions();
-      getCompanyOptions();
+      getJobTitleOptions();
     }
   }, [totalData]);
   return (
@@ -292,37 +293,37 @@ const WorkExperience = (props: any) => {
         return (
           <AccountGrid style={{ position: 'relative', marginBottom: '20px' }}>
             <Input
-              type="text"
-              label="Job Title"
-              placeholder="Please Enter"
-              value={experience.jobTitle}
-              onValue={(jobTitle) =>
-                handleChange('jobTitle', jobTitle, experience.id)
-              }
-            />
-            <Input
               type="select"
-              label="Company"
+              label="Job Title"
               placeholder="Please Select"
-              onSearch={debouncedCompanies}
+              onSearch={debouncedJobTitles}
               options={companys}
               value={
-                experience.company
+                experience.jobTitle
                   ? {
-                      label: experience.company,
-                      value: experience.company,
+                      label: experience.jobTitle,
+                      value: experience.jobTitle,
                     }
                   : null
               }
-              onValue={(company) =>
+              onValue={(jobTitle) =>
                 handleChange(
-                  'company',
-                  company ? company.value : company,
+                  'jobTitle',
+                  jobTitle ? jobTitle.value : jobTitle,
                   experience.id
                 )
               }
-              onNewTag={(company) =>
-                handleChange('company', company.value, experience.id)
+              onNewTag={(jobTitle) =>
+                handleChange('jobTitle', jobTitle.value, experience.id)
+              }
+            />
+            <Input
+              type="text"
+              label="Company"
+              placeholder="Please Enter"
+              value={experience.company}
+              onValue={(company) =>
+                handleChange('company', company, experience.id)
               }
             />
             <Input

@@ -47,7 +47,7 @@ const OverviewPage = (props: any) => {
     location: '',
     nationality: '',
     dateOfBirth: '',
-    languages: [],
+    language: [],
     skills: [],
   });
 
@@ -92,8 +92,8 @@ const OverviewPage = (props: any) => {
       email: data.email,
       nationality: data.nationality,
       dateOfBirth: data.dateOfBirth,
-      languages: data.languages
-        ? data.languages.split(',').map((name: string) => ({
+      language: data.language
+        ? data.language.split(',').map((name: string) => ({
             value: name,
             label: name,
           }))
@@ -133,7 +133,7 @@ const OverviewPage = (props: any) => {
 
   const [locations, setLocations] = useState<any[]>([]);
   const [nationalities, setNationalities] = useState<any[]>([]);
-  const [languages, setLanguages] = useState<any[]>([]);
+  const [language, setLanguages] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
   const [themes, setThemes] = useState<any[]>([]);
   const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
@@ -247,9 +247,9 @@ const OverviewPage = (props: any) => {
 
   const updateUserInfo = async () => {
     try {
-      const languages = info.languages.map((item: any) => item.value).join(',');
+      const language = info.language.map((item: any) => item.value).join(',');
       const skills = info.skills.map((item: any) => item.value).join(',');
-      let data = { ...info, languages, skills };
+      let data = { ...info, language, skills };
       await UsersAPI.updateSingleUser(userId, data).then(() => {});
       setInfoSaving(false);
       setInfoHasChanged(false);
@@ -487,14 +487,12 @@ const OverviewPage = (props: any) => {
                   label="Languages"
                   onSearch={debouncedLanguages}
                   placeholder="Please Select"
-                  options={languages}
+                  options={language}
                   isFilterActive
-                  value={info.languages}
-                  onValue={(languages) =>
-                    handleChangeInfo('languages', languages)
-                  }
+                  value={info.language}
+                  onValue={(language) => handleChangeInfo('language', language)}
                   onNewTag={(language) =>
-                    handleNewInfoTags('languages', {
+                    handleNewInfoTags('language', {
                       label: language.value,
                       value: language.value,
                     })
@@ -656,7 +654,7 @@ const OverviewPage = (props: any) => {
                   label="Language"
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
-                  options={languages}
+                  options={language}
                   value={
                     housePreference.language
                       ? {

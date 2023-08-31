@@ -6,7 +6,6 @@ import { AddIcon, DeleteIcon } from 'components/svg';
 import { useDebounce, useSnackbar } from 'hooks';
 import EducationApi from 'api/education';
 import { TEducation } from 'api/education/types';
-import { getSchoolsAndUniversities } from 'utilities/schools';
 import { getDegrees } from 'utilities/degrees';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 

@@ -100,7 +100,6 @@ const AdminApplicationsPage = () => {
   };
 
   const getAllApplications = async (): Promise<any> => {
-    console.log(filter);
     try {
       const response = await ApplicationAPI.getApplications({
         ...filter,
@@ -293,25 +292,25 @@ const AdminApplicationsPage = () => {
     getAllApplications()
       .then((data) => {
         let applications = data;
-        // const { minDOB, maxDOB } = convertAgeToDate(
-        //   filter.age.min,
-        //   filter.age.max
-        // );
-        // if (minDOB && maxDOB) {
-        //   applications = applications.filter(
-        //     (user: IUser) =>
-        //       new Date(user.dateOfBirth) >= minDOB &&
-        //       new Date(user.dateOfBirth) <= maxDOB
-        //   );
-        // } else if (minDOB && !maxDOB) {
-        //   applications = applications.filter(
-        //     (user: IUser) => new Date(user.dateOfBirth) >= minDOB
-        //   );
-        // } else if (!minDOB && maxDOB) {
-        //   applications = applications.filter(
-        //     (user: IUser) => new Date(user.dateOfBirth) <= maxDOB
-        //   );
-        // }
+        console.log(applications);
+        const max = filter.applications.max;
+        const min = filter.applications.min;
+
+        if (max && min) {
+          applications = applications.filter(
+            (item: IApplication) =>
+              item.owner.applicationCount >= min &&
+              item.owner.applicationCount <= max
+          );
+        } else if (min && !max) {
+          applications = applications.filter(
+            (item: IApplication) => item.owner.applicationCount >= min
+          );
+        } else if (!min && max) {
+          applications = applications.filter(
+            (item: IApplication) => item.owner.applicationCount <= max
+          );
+        }
 
         setTotalColumnItems(applications);
       })
@@ -486,7 +485,10 @@ const AdminApplicationsPage = () => {
                         setFilter({ ...filter, nationality })
                       }
                       onNewTag={(nationality) =>
-                        setFilter({ ...filter, nationality: nationality })
+                        setFilter({
+                          ...filter,
+                          nationality: [...filter.nationality, nationality],
+                        })
                       }
                     />
                     <Input
@@ -504,7 +506,10 @@ const AdminApplicationsPage = () => {
                       value={filter.language}
                       onValue={(language) => setFilter({ ...filter, language })}
                       onNewTag={(language) =>
-                        setFilter({ ...filter, language: language })
+                        setFilter({
+                          ...filter,
+                          language: [...filter.language, language],
+                        })
                       }
                     />
                     <Input
@@ -516,7 +521,10 @@ const AdminApplicationsPage = () => {
                       options={locations}
                       onValue={(location) => setFilter({ ...filter, location })}
                       onNewTag={(location) =>
-                        setFilter({ ...filter, location: location })
+                        setFilter({
+                          ...filter,
+                          location: [...filter.location, location],
+                        })
                       }
                     />
                     <Input
@@ -588,7 +596,10 @@ const AdminApplicationsPage = () => {
                       value={filter.jobTitle}
                       onValue={(jobTitle) => setFilter({ ...filter, jobTitle })}
                       onNewTag={(jobTitle) =>
-                        setFilter({ ...filter, jobTitle: jobTitle })
+                        setFilter({
+                          ...filter,
+                          jobTitle: [...filter.jobTitle, jobTitle],
+                        })
                       }
                     />
                     <Input
@@ -611,7 +622,10 @@ const AdminApplicationsPage = () => {
                       onNewTag={(workExperienceLocation) =>
                         setFilter({
                           ...filter,
-                          workExperienceLocation: workExperienceLocation,
+                          workExperienceLocation: [
+                            ...filter.workExperienceLocation,
+                            workExperienceLocation,
+                          ],
                         })
                       }
                     />
@@ -625,11 +639,11 @@ const AdminApplicationsPage = () => {
                       }
                       options={[
                         {
-                          value: 'Yes',
+                          value: 'true',
                           label: 'Yes',
                         },
                         {
-                          value: 'No',
+                          value: 'false',
                           label: 'No',
                         },
                       ]}
@@ -653,8 +667,11 @@ const AdminApplicationsPage = () => {
                       options={degrees}
                       value={filter.degree}
                       onValue={(degree) => setFilter({ ...filter, degree })}
-                      onNewTag={(school) =>
-                        setFilter({ ...filter, school: school })
+                      onNewTag={(degree) =>
+                        setFilter({
+                          ...filter,
+                          degree: [...filter.degree, degree],
+                        })
                       }
                     />
                     <Input
@@ -668,7 +685,10 @@ const AdminApplicationsPage = () => {
                         setFilter({ ...filter, fieldOfStudy })
                       }
                       onNewTag={(fieldOfStudy) =>
-                        setFilter({ ...filter, fieldOfStudy: fieldOfStudy })
+                        setFilter({
+                          ...filter,
+                          fieldOfStudy: [...filter.fieldOfStudy, fieldOfStudy],
+                        })
                       }
                     />
                   </Grid>
@@ -684,7 +704,10 @@ const AdminApplicationsPage = () => {
                       value={filter.theme}
                       onValue={(theme) => setFilter({ ...filter, theme })}
                       onNewTag={(theme) =>
-                        setFilter({ ...filter, theme: theme })
+                        setFilter({
+                          ...filter,
+                          theme: [...filter.theme, theme],
+                        })
                       }
                     />
                     <Input
@@ -698,7 +721,13 @@ const AdminApplicationsPage = () => {
                         setFilter({ ...filter, skillsOfOthers })
                       }
                       onNewTag={(skillsOfOthers) =>
-                        setFilter({ ...filter, skillsOfOthers: skillsOfOthers })
+                        setFilter({
+                          ...filter,
+                          skillsOfOthers: [
+                            ...filter.skillsOfOthers,
+                            skillsOfOthers,
+                          ],
+                        })
                       }
                     />
                     <Input
@@ -711,8 +740,14 @@ const AdminApplicationsPage = () => {
                       onValue={(houseLocation) =>
                         setFilter({ ...filter, houseLocation })
                       }
-                      onNewTag={(skillsOfOthers) =>
-                        setFilter({ ...filter, skillsOfOthers: skillsOfOthers })
+                      onNewTag={(houseLocation) =>
+                        setFilter({
+                          ...filter,
+                          houseLocation: [
+                            ...filter.houseLocation,
+                            houseLocation,
+                          ],
+                        })
                       }
                     />
                     <Input
@@ -725,9 +760,6 @@ const AdminApplicationsPage = () => {
                       onValue={(houseLanguage) =>
                         setFilter({ ...filter, houseLanguage })
                       }
-                      onNewTag={(houseLanguage) =>
-                        setFilter({ ...filter, houseLanguage: houseLanguage })
-                      }
                     />
                     <Input
                       type="min-max"
@@ -739,7 +771,7 @@ const AdminApplicationsPage = () => {
                     />
                     <Input
                       type="min-max"
-                      label="Field of Study"
+                      label="Age"
                       value={filter.houseAge}
                       onValue={(houseAge) => setFilter({ ...filter, houseAge })}
                     />
@@ -761,12 +793,6 @@ const AdminApplicationsPage = () => {
                       onValue={(interestsAndHobbies) =>
                         setFilter({ ...filter, interestsAndHobbies })
                       }
-                      onNewTag={(interestsAndHobbies) =>
-                        setFilter({
-                          ...filter,
-                          interestsAndHobbies: interestsAndHobbies,
-                        })
-                      }
                     />
                     <Input
                       type="multiselect"
@@ -776,7 +802,6 @@ const AdminApplicationsPage = () => {
                       onSearch={debouncedDiets}
                       value={filter.diet}
                       onValue={(diet) => setFilter({ ...filter, diet })}
-                      onNewTag={(diet) => setFilter({ ...filter, diet: diet })}
                     />
                   </Grid>
                 )}

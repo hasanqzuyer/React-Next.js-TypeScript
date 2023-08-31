@@ -1,12 +1,12 @@
 export const DUsersFilters = () => ({
   search: '',
-  location: null,
-  nationality: null,
+  location: [],
+  nationality: [],
   age: {
     min: '',
     max: '',
   },
-  language: null,
+  language: [],
   applications: {
     min: '',
     max: '',
@@ -15,22 +15,22 @@ export const DUsersFilters = () => ({
     min: '',
     max: '',
   },
-  socialMedia: null,
+  socialMedia: [],
 
-  jobTitle: '',
-  company: null,
-  workExperienceLocation: null,
-  currentlyEmployed: null,
-  skills: null,
+  jobTitle: [],
+  company: '',
+  workExperienceLocation: [],
+  currentlyEmployed: [],
+  skills: [],
 
-  school: null,
-  degree: null,
-  fieldOfStudy: null,
+  school: '',
+  degree: [],
+  fieldOfStudy: [],
 
-  theme: null,
-  skillsOfOthers: null,
-  houseLocation: null,
-  houseLanguage: null,
+  theme: [],
+  skillsOfOthers: [],
+  houseLocation: [],
+  houseLanguage: [],
   monthlyRent: {
     min: '',
     max: '',
@@ -43,8 +43,8 @@ export const DUsersFilters = () => ({
     min: '',
     max: '',
   },
-  interestsAndHobbies: null,
-  diet: null,
+  interestsAndHobbies: [],
+  diet: [],
 });
 
 export const DUsersHead = [
