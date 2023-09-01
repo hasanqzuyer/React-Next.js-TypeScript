@@ -9,9 +9,9 @@ import {
   AccountStack,
 } from 'features/account/style';
 import { Input } from 'components/ui';
-import { ChangePasswordModal } from 'features/account/role/user/elements';
 import { useModal } from 'hooks';
 import { useAppContext } from 'context';
+import ChangePasswordModal from './elements/change-password-modal';
 
 const AccountPage = ({ ...props }) => {
   const { user } = useAppContext();

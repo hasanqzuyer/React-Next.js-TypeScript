@@ -52,6 +52,13 @@ const AuthorizationAPI = {
     );
   },
 
+  adminResetPassword: async (oldPassword: string, newPassword: string) => {
+    await client.post(`/auth/admin/reset-password`, {
+      oldPassword,
+      newPassword,
+    });
+  },
+
   confirmResetPassword: async (body: TConfirmResetPassword) => {
     await client.post(`/auth/reset-password`, body);
   },

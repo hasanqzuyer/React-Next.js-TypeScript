@@ -13,7 +13,9 @@ const ChangePasswordModal = ({
   ...props
 }: TChangePasswordModalProps) => {
   const [state, setState] = useState({
+    oldPassword: '',
     newPassword: '',
+    repeatNewPassword: '',
   });
 
   const { user } = useAppContext();
@@ -22,11 +24,14 @@ const ChangePasswordModal = ({
 
   const changePassword = async () => {
     try {
-      await AuthorizationAPI.resetPassword(user.email, 'en');
+      await AuthorizationAPI.adminResetPassword(
+        state.oldPassword,
+        state.newPassword
+      );
       push('Password successfully updated!', { variant: 'success' });
       onClose();
-    } catch {
-      push('Password change failed', { variant: 'error' });
+    } catch (e: any) {
+      push(e.response.data.message, { variant: 'error' });
       onClose();
     }
   };
@@ -40,9 +45,7 @@ const ChangePasswordModal = ({
           color="primary"
           variant="contained"
           size="large"
-          onClick={() => {
-            changePassword();
-          }}
+          onClick={changePassword}
         >
           Change password
         </Button>,
@@ -54,10 +57,26 @@ const ChangePasswordModal = ({
         <ChangePasswordModalMain columns={1}>
           <Input
             type="text"
+            label="Enter old password"
+            placeholder="Please Enter"
+            value={state.oldPassword}
+            onValue={(oldPassword) => setState({ ...state, oldPassword })}
+          />
+          <Input
+            type="text"
             label="Enter new password"
             placeholder="Please Enter"
             value={state.newPassword}
             onValue={(newPassword) => setState({ ...state, newPassword })}
+          />
+          <Input
+            type="text"
+            label="Repeat new password"
+            placeholder="Please Enter"
+            value={state.repeatNewPassword}
+            onValue={(repeatNewPassword) =>
+              setState({ ...state, repeatNewPassword })
+            }
           />
         </ChangePasswordModalMain>
       </Stack>
