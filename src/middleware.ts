@@ -35,7 +35,7 @@ const checkLoggedIn = async (authCookie?: RequestCookie | undefined) => {
 };
 
 export const middleware = async (request: NextRequest) => {
-  const { pathname } = request.nextUrl;
+  const { pathname, locale, defaultLocale } = request.nextUrl;
   if (
     pathname.startsWith('/_next') || // exclude Next.js internals
     pathname.startsWith('/api') || //  exclude all API routes

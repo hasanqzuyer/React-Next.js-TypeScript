@@ -51,22 +51,12 @@ export const DMarketOffersHead = [
 ];
 
 export const DHouseThemes = [
-  {
-    name: 'Traditional',
-  },
-  {
-    name: 'Mid-Century Modern',
-  },
-  {
-    name: 'Industrial',
-  },
-  {
-    name: 'Bohemian',
-  },
-  {
-    name: 'Coastal/Cottage',
-  },
-  {
-    name: 'Contemporary',
-  },
+  { name: 'E-commerce House' },
+  { name: 'Fitness House' },
+  { name: 'Influencer House' },
+  { name: 'Marketing House' },
+  { name: 'Real Estate House' },
+  { name: 'Software Development House' },
+  { name: 'Startup House' },
+  { name: 'Trading House' },
 ];
