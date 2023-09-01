@@ -39,6 +39,12 @@ const OverviewPage = (props: any) => {
   const [eduSaving, setEduSaving] = useState<boolean>(false);
   const [hprefHasChanged, setHprefHasChanged] = useState<boolean>(false);
   const [hprefSaving, setHprefSaving] = useState<boolean>(false);
+  // Viktor
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
 
   const [info, setInfo] = useState<any>({
     firstName: '',
@@ -396,6 +402,15 @@ const OverviewPage = (props: any) => {
   return (
     <Stack>
       <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ width: '130px', alignSelf: 'flex-end' }}
+        onClick={handleEditClick}
+      >
+        {/* {isEditing ? 'Save' : 'Edit'} */}
+        Edit
+      </Button>
       {tabs === 0 && (
         <Card>
           <ApplicationContainer>
@@ -515,6 +530,7 @@ const OverviewPage = (props: any) => {
                 setHasChanged={setExpHasChanged}
                 saving={expSaving}
                 setSaving={setExpSaving}
+                disabled={!isEditing}
               />
               <AccountHeadline>Education</AccountHeadline>
               <Education
@@ -524,6 +540,7 @@ const OverviewPage = (props: any) => {
                 setHasChanged={setEduHasChanged}
                 saving={eduSaving}
                 setSaving={setEduSaving}
+                disabled={!isEditing}
               />
               <AccountHeadline>Skills</AccountHeadline>
               <AccountGrid>
@@ -542,6 +559,7 @@ const OverviewPage = (props: any) => {
                   options={skills}
                   value={info.skills}
                   onValue={(skills) => handleChangeInfo('skills', skills)}
+                  disabled={!isEditing}
                 />
               </AccountGrid>
               <AccountHeadline>Social Media</AccountHeadline>
@@ -554,6 +572,7 @@ const OverviewPage = (props: any) => {
                   onValue={(instagram) =>
                     handleChangeSocialMedia('instagram', instagram)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="text"
@@ -563,6 +582,7 @@ const OverviewPage = (props: any) => {
                   onValue={(linkedin) =>
                     handleChangeSocialMedia('linkedin', linkedin)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="text"
@@ -572,6 +592,7 @@ const OverviewPage = (props: any) => {
                   onValue={(tiktok) =>
                     handleChangeSocialMedia('tiktok', tiktok)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="text"
@@ -581,6 +602,7 @@ const OverviewPage = (props: any) => {
                   onValue={(website) =>
                     handleChangeSocialMedia('website', website)
                   }
+                  disabled={!isEditing}
                 />
               </AccountGrid>
               <AccountHeadline>House Preferences</AccountHeadline>
@@ -604,6 +626,7 @@ const OverviewPage = (props: any) => {
                       theme ? theme.value : theme
                     )
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="multiselect"
@@ -624,6 +647,7 @@ const OverviewPage = (props: any) => {
                       value: skillsOfOther.value,
                     })
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="select"
@@ -648,6 +672,7 @@ const OverviewPage = (props: any) => {
                   onNewTag={(location) =>
                     handleChangeHousePreference('location', location.value)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="select"
@@ -672,6 +697,7 @@ const OverviewPage = (props: any) => {
                   onNewTag={(language) =>
                     handleChangeHousePreference('language', language.value)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="min-max"
@@ -687,6 +713,7 @@ const OverviewPage = (props: any) => {
                       monthlyRent
                     )
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="min-max"
@@ -698,6 +725,7 @@ const OverviewPage = (props: any) => {
                   onValue={(age) =>
                     handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="min-max"
@@ -713,6 +741,7 @@ const OverviewPage = (props: any) => {
                       tenants
                     )
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="multiselect"
@@ -733,6 +762,7 @@ const OverviewPage = (props: any) => {
                       value: interestsHobbie.value,
                     })
                   }
+                  disabled={!isEditing}
                 />
                 <Input
                   type="select"
@@ -757,6 +787,7 @@ const OverviewPage = (props: any) => {
                   onNewTag={(diet) =>
                     handleChangeHousePreference('diet', diet.value)
                   }
+                  disabled={!isEditing}
                 />
               </AccountGrid>
               <AccountGrid>
@@ -769,6 +800,7 @@ const OverviewPage = (props: any) => {
                     handleChangeHousePreference('motivation', motivation)
                   }
                   style={{ gridColumn: '1/3' }}
+                  disabled={!isEditing}
                 />
               </AccountGrid>
               {!expSaving &&
