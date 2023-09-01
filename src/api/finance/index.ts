@@ -30,8 +30,12 @@ const FinaceAPI = {
     return data;
   },
 
-  getConfig: async () => {
-    const { data } = await client.get(`${Project.apis.v1}/finance/config`);
+  getConfig: async (quantity: string) => {
+    const { data } = await client.get(`${Project.apis.v1}/finance/config`, {
+      params: {
+        quantity,
+      },
+    });
 
     return data;
   },

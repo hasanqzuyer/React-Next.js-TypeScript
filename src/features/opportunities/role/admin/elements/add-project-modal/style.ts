@@ -20,6 +20,18 @@ export const AddProjectHeadline = styled.div`
   }
 `;
 
+export const PaymentImage = styled.img<{ theme?: Theme }>`
+  ${({ theme }) => `
+      width:100%;
+      object-fit: cover;
+
+      ${theme.breakpoints.down('md')} {
+        width: 100%;
+        height: 100%;
+      }
+    `}
+`;
+
 export const AddProjectDocumentPlaceholder = styled.div`
   display: flex;
   align-items: center;
