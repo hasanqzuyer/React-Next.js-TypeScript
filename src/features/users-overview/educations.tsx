@@ -10,8 +10,17 @@ import { getDegrees } from 'utilities/degrees';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 
 const Education = (props: any) => {
-  const { totalData, setTotalData, setHasChanged, saving, setSaving, userId } =
-    props;
+  const {
+    totalData,
+    setTotalData,
+    setHasChanged,
+    saving,
+    setSaving,
+    userId,
+    disabled,
+    eduIssuedArrays,
+    setEduIssuedArrays,
+  } = props;
   const { push } = useSnackbar();
 
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
@@ -38,6 +47,20 @@ const Education = (props: any) => {
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
+    }
+  };
+
+  const handleErrors = (id: string) => (value: boolean) => {
+    if (value) {
+      const exist = eduIssuedArrays.includes(id);
+      if (!exist) {
+        let Array = eduIssuedArrays;
+        Array.push(id);
+        setEduIssuedArrays([...Array]);
+      }
+    } else {
+      const tempData = eduIssuedArrays.filter((item: any) => item !== id);
+      setEduIssuedArrays([...tempData]);
     }
   };
 
@@ -282,17 +305,32 @@ const Education = (props: any) => {
 
   return (
     <>
-      {totalData?.map((education: TEducation) => {
+      {totalData?.map((education: TEducation, index: any) => {
         return (
           <AccountGrid style={{ position: 'relative', marginBottom: '20px' }}>
             <Input
               type="text"
               label="School or University"
               placeholder="Please Select"
+              required
               value={education.university}
               onValue={(university) =>
                 handleChange('university', university, education.id)
               }
+              disabled={disabled}
+              errorCallback={handleErrors(
+                `${education.id}_${index}_university`
+              )}
+              validators={[
+                {
+                  message: 'School or University is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
 
             <Input
@@ -301,6 +339,7 @@ const Education = (props: any) => {
               placeholder="Please Select"
               onSearch={debouncedDegrees}
               options={degrees}
+              disabled={disabled}
               value={
                 education.degree
                   ? {
@@ -319,6 +358,17 @@ const Education = (props: any) => {
               onNewTag={(degree) =>
                 handleChange('degree', degree.value, education.id)
               }
+              errorCallback={handleErrors(`${education.id}_${index}_degree`)}
+              validators={[
+                {
+                  message: 'Degree is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"
@@ -326,6 +376,7 @@ const Education = (props: any) => {
               placeholder="Please Select"
               onSearch={debouncedFieldOfStudy}
               options={fieldOfStudy}
+              disabled={disabled}
               value={
                 education.fieldOfStudy
                   ? {
@@ -344,52 +395,105 @@ const Education = (props: any) => {
               onNewTag={(fieldOfStudy) =>
                 handleChange('fieldOfStudy', fieldOfStudy.value, education.id)
               }
+              errorCallback={handleErrors(
+                `${education.id}_${index}_fieldOfStudy`
+              )}
+              validators={[
+                {
+                  message: 'Field of Study is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Stack direction="horizontal">
               <Input
                 type="date"
                 label="From"
                 placeholder="Please Select"
+                disabled={disabled}
                 value={education.from}
                 onValue={(from) => handleChange('from', from, education.id)}
+                errorCallback={handleErrors(`${education.id}_${index}_from`)}
+                validators={[
+                  {
+                    message: 'From date is required',
+                    validator: (value) => {
+                      const v = value as string;
+                      if (v) return true;
+                      return false;
+                    },
+                  },
+                ]}
               />
               <Input
                 type="date"
                 label="To"
                 placeholder="Please Select"
+                disabled={disabled}
                 value={education.to}
                 onValue={(to) => handleChange('to', to, education.id)}
+                errorCallback={handleErrors(`${education.id}_${index}_to`)}
+                validators={[
+                  {
+                    message: 'To date is required',
+                    validator: (value) => {
+                      const v = value as string;
+                      if (v) return true;
+                      return false;
+                    },
+                  },
+                ]}
               />
             </Stack>
             <Input
               type="number"
               label="Overall GPA"
               placeholder="Please Enter"
+              disabled={disabled}
               value={education.overAllGPA}
               onValue={(overAllGPA) =>
                 handleChange('overAllGPA', overAllGPA, education.id)
               }
+              errorCallback={handleErrors(
+                `${education.id}_${index}_overAllGPA`
+              )}
+              validators={[
+                {
+                  message: 'Overall GPA is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
-            <Stack
-              style={{
-                position: 'absolute',
-                right: '36px',
-                top: '90px',
-                width: 'fit-content',
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
+            {!disabled && (
               <Stack
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleDelete(education.id)}
+                style={{
+                  position: 'absolute',
+                  right: '36px',
+                  top: '90px',
+                  width: 'fit-content',
+                  display: 'grid',
+                  placeItems: 'center',
+                }}
               >
-                <DeleteIcon style={{ color: '#9F9FB0' }} />
+                <Stack
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleDelete(education.id)}
+                >
+                  <DeleteIcon style={{ color: '#9F9FB0' }} />
+                </Stack>
+                <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+                  <AddIcon style={{ color: '#9F9FB0' }} />
+                </Stack>
               </Stack>
-              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
-                <AddIcon style={{ color: '#9F9FB0' }} />
-              </Stack>
-            </Stack>
+            )}
           </AccountGrid>
         );
       })}

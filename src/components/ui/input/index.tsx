@@ -183,6 +183,8 @@ const Input = ({
           minRows={minRows}
           maxRows={maxRows}
           variant="outlined"
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           error={error}
           disabled={disabled}
           InputProps={{
@@ -262,8 +264,8 @@ const Input = ({
               variant="outlined"
               placeholder={placeholder}
               error={error}
-              // onBlur={handleBlur}
-              // onFocus={handleFocus}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
               disabled={disabled}
               onKeyDown={handleKeyDown}
               InputProps={{
@@ -289,8 +291,8 @@ const Input = ({
                 {...x}
                 variant="outlined"
                 error={error}
-                // onBlur={handleBlur}
-                // onFocus={handleFocus}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 disabled={disabled}
                 inputProps={{ ...inputProps, placeholder }}
               />
@@ -310,8 +312,8 @@ const Input = ({
                 {...x}
                 variant="outlined"
                 error={error}
-                // onBlur={handleBlur}
-                // onFocus={handleFocus}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 inputProps={{ ...inputProps, placeholder }}
               />
             )}
@@ -370,8 +372,8 @@ const Input = ({
                 variant="outlined"
                 placeholder={options ? placeholder : ''}
                 error={error}
-                // onBlur={handleBlur}
-                // onFocus={handleFocus}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
                 disabled={disabled}
                 onKeyDown={handleKeyDown}
                 InputProps={{

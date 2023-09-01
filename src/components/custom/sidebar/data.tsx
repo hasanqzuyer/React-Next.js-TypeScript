@@ -44,14 +44,14 @@ export const DSidebarItems: Array<TSidebarItem> = [
     location: '/applications',
     roles: ['ADMIN', 'USER'],
   },
-  {
-    id: 5,
-    type: 'route',
-    icon: <FinanceIcon />,
-    label: 'Finance',
-    location: '/finance',
-    roles: ['ADMIN'],
-  },
+  // {
+  //   id: 5,
+  //   type: 'route',
+  //   icon: <FinanceIcon />,
+  //   label: 'Finance',
+  //   location: '/finance',
+  //   roles: ['ADMIN'],
+  // },
   {
     id: 6,
     type: 'route',

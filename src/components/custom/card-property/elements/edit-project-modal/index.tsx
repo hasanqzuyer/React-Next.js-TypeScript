@@ -68,6 +68,16 @@ const EditHouseProjectModal = ({
     getHouseDataById();
   }, [houseId]);
 
+  const isDisabled =
+    !houseData.name ||
+    !houseData.location ||
+    !houseData.totalSpots ||
+    !houseData.availableSpots ||
+    !houseData.theme ||
+    !houseData.rent ||
+    !houseData.thumbnailId ||
+    photos.length === 0;
+
   const handlePhotos = async () => {
     const file: any = await pick({
       accept: 'image/jpg, image/jpeg, image/png',
@@ -191,6 +201,7 @@ const EditHouseProjectModal = ({
           color="primary"
           variant="contained"
           size="large"
+          disabled={isDisabled}
           onClick={handleUpdateProject}
         >
           Save
@@ -202,19 +213,31 @@ const EditHouseProjectModal = ({
       <Stack>
         <Tabs tabs={['Overview', 'Documents']} value={tab} onValue={setTab} />
         {tab === 0 && (
-          <AddProjectModalMain>
+          <AddProjectModalMain columns={2}>
             <Input
               type="text"
               label="Name"
+              required
               placeholder="Please Enter"
               value={houseData?.name}
               onValue={(name) => setHouseData({ ...houseData, name })}
+              validators={[
+                {
+                  message: 'Name is required',
+                  validator: (name) => {
+                    const v = name as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"
               label="Location"
               placeholder="Please Select"
               onSearch={debouncedLocation}
+              required
               options={locations}
               value={
                 houseData.location
@@ -230,34 +253,81 @@ const EditHouseProjectModal = ({
                   location: location ? location.value : location,
                 })
               }
+              onNewTag={(location) =>
+                setHouseData({ ...houseData, location: location.value })
+              }
+              validators={[
+                {
+                  message: 'Location is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="number"
               label="Total Spots"
+              required
               placeholder="Please Enter"
               value={houseData?.totalSpots}
               onValue={(totalSpots) =>
                 setHouseData({ ...houseData, totalSpots })
               }
+              validators={[
+                {
+                  message: 'Total Spots is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="number"
+              required
               label="Available Spots"
               placeholder="Please Enter"
               value={houseData?.availableSpots}
               onValue={(availableSpots) =>
                 setHouseData({ ...houseData, availableSpots })
               }
+              validators={[
+                {
+                  message: 'Available Spots is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="number"
               label="Rent"
+              required
               placeholder="Please Enter"
               value={houseData?.rent}
               onValue={(rent) => setHouseData({ ...houseData, rent })}
+              validators={[
+                {
+                  message: 'Rent is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"
+              required
               label="Theme"
               placeholder="Please Select"
               onSearch={debouncedTheme}
@@ -276,6 +346,19 @@ const EditHouseProjectModal = ({
                   theme: theme ? theme.value : theme,
                 })
               }
+              onNewTag={(theme) =>
+                setHouseData({ ...houseData, theme: theme.value })
+              }
+              validators={[
+                {
+                  message: 'Theme required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"
@@ -354,7 +437,7 @@ const EditHouseProjectModal = ({
           </AddProjectModalMain>
         )}
         {tab === 1 && (
-          <AddProjectModalMain>
+          <AddProjectModalMain columns={1}>
             <AddProjectHeadline>
               Images
               <ISpan onClick={handlePhotos}>
