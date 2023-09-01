@@ -64,19 +64,19 @@ const ApplicationModal = ({
           options={[
             {
               value: 'Basic',
-              label: 'Basic Application',
+              label: 'Basic Application (1 Token)',
             },
             {
               value: 'Priority',
-              label: 'Priority Application',
+              label: 'Priority Application (5 Tokens)',
             },
             {
               value: 'Premium',
-              label: 'Premium Application',
+              label: 'Premium Application (10 Tokens)',
             },
             {
               value: 'Elite',
-              label: 'Elite Application',
+              label: 'Elite Application (15 Tokens)',
             },
           ]}
           onValue={(tier) => setState({ ...state, tier })}
