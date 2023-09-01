@@ -125,7 +125,6 @@ const UserMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="Apply"
-                dropdown
                 completed
               />
             );

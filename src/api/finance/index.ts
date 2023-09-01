@@ -38,7 +38,7 @@ const FinaceAPI = {
 
   confirmTokenTransaction: async (body: TConfirmTokenTransaction) => {
     const { data } = await client.post(
-      `${Project.apis.v1}/finance/confirm-transaction`,
+      `${Project.apis.v1}/users/confirm-transaction`,
       body
     );
 

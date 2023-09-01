@@ -17,7 +17,7 @@ const UsersAPI = {
     return data;
   },
 
-  deleteUser: async (id: TSingleUser) => {
+  deleteUser: async (id: number) => {
     await client.delete(`${Project.apis.v1}/users/${id}`);
   },
 

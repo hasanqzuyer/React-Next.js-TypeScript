@@ -30,6 +30,7 @@ import { getInterestsAndHobbies } from 'utilities/interests';
 import { getDiets } from 'utilities/diets';
 import { useAppContext } from 'context';
 import { getJobTitles } from 'utilities/jobTitles';
+import { UserActionMenu } from './elements';
 
 const UsersPage = () => {
   const { userStatus } = useAppContext();
@@ -330,7 +331,7 @@ const UsersPage = () => {
       return `€${singleUser.invested ? singleUser.invested : 0}`;
     }
     if (headItem.reference === 'actions') {
-      return <VerticalDotsIcon />;
+      return <UserActionMenu userId={singleUser.id} reload={applyFilters} />;
     }
 
     return '';
