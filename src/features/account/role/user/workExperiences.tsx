@@ -489,6 +489,26 @@ const WorkExperience = (props: any) => {
                 },
               ]}
             />
+            <Stack
+              style={{
+                position: 'absolute',
+                right: '36px',
+                top: '90px',
+                width: 'fit-content',
+                display: 'grid',
+                placeItems: 'center',
+              }}
+            >
+              <Stack
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleDelete(experience.id)}
+              >
+                <DeleteIcon style={{ color: '#9F9FB0' }} />
+              </Stack>
+              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+                <AddIcon style={{ color: '#9F9FB0' }} />
+              </Stack>
+            </Stack>
           </AccountGrid>
         );
       })}
