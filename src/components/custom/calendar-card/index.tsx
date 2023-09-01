@@ -123,7 +123,7 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
                     <Tooltip key={index} title={event.description}>
                       <CalendarEventStatus
                         variant={event.variant}
-                        href={`/house/overview?houseId=${event?.notificationPayload[0]?.houseId}`}
+                        href={`/houses/overview?houseId=${event?.notificationPayload[0]?.houseId}`}
                       />
                     </Tooltip>
                   );
