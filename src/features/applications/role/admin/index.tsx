@@ -403,6 +403,8 @@ const AdminApplicationsPage = () => {
       return (
         <ApplicationStatusActions
           applicationId={application.id}
+          userId={application.ownerId}
+          status={application.status}
           reload={applyFilters}
         />
       );

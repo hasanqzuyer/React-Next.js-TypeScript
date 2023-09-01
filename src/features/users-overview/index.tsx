@@ -575,6 +575,30 @@ const OverviewPage = (props: any) => {
                   }
                 />
               </AccountGrid>
+              {!expSaving &&
+              !infoSaving &&
+              !eduSaving &&
+              !socialMediaSaving &&
+              !hprefSaving ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled={isDisabled}
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled
+                >
+                  Saving...
+                </Button>
+              )}
             </Stack>
           </ApplicationContainer>
         </Card>
