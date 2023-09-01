@@ -15,6 +15,7 @@ const ApplicationModal = ({
 }: TApplyModalProps) => {
   const [state, setState] = useState<any>({
     tier: null,
+    balance: null,
   });
   const { push } = useSnackbar();
 
@@ -39,8 +40,45 @@ const ApplicationModal = ({
     }
   };
 
+  const handleChangeTier = (tier: any) => {
+    switch (tier.value) {
+      case 'Basic':
+        setState((data: any) => ({
+          ...data,
+          tier,
+          balance: 1,
+        }));
+        break;
+      case 'Priority':
+        setState((data: any) => ({
+          ...data,
+          tier,
+          balance: 5,
+        }));
+        break;
+      case 'Premium':
+        setState((data: any) => ({
+          ...data,
+          tier,
+          balance: 10,
+        }));
+        break;
+      case 'Elite':
+        setState((data: any) => ({
+          ...data,
+          tier,
+          balance: 50,
+        }));
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <Modal
+      size="medium"
       title="Application"
       actions={[
         <Button
@@ -56,7 +94,14 @@ const ApplicationModal = ({
       onClose={onClose}
       {...props}
     >
-      <AddProjectModalMain columns={1}>
+      <AddProjectModalMain columns={2}>
+        <Input
+          type="text"
+          label="Balance"
+          value={state.balance}
+          onValue={() => {}}
+          placeholder="Please Enter"
+        />
         <Input
           type="select"
           label="Application Type"
@@ -64,22 +109,22 @@ const ApplicationModal = ({
           options={[
             {
               value: 'Basic',
-              label: 'Basic Application (1 Token)',
+              label: 'Basic Application',
             },
             {
               value: 'Priority',
-              label: 'Priority Application (5 Tokens)',
+              label: 'Priority Application',
             },
             {
               value: 'Premium',
-              label: 'Premium Application (10 Tokens)',
+              label: 'Premium Application',
             },
             {
               value: 'Elite',
-              label: 'Elite Application (15 Tokens)',
+              label: 'Elite Application',
             },
           ]}
-          onValue={(tier) => setState({ ...state, tier })}
+          onValue={(tier) => handleChangeTier(tier)}
           placeholder="Please Select"
         />
       </AddProjectModalMain>

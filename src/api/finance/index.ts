@@ -30,15 +30,19 @@ const FinaceAPI = {
     return data;
   },
 
-  getConfig: async () => {
-    const { data } = await client.get(`${Project.apis.v1}/finance/config`);
+  getConfig: async (quantity: string) => {
+    const { data } = await client.get(`${Project.apis.v1}/finance/config`, {
+      params: {
+        quantity,
+      },
+    });
 
     return data;
   },
 
   confirmTokenTransaction: async (body: TConfirmTokenTransaction) => {
     const { data } = await client.post(
-      `${Project.apis.v1}/finance/confirm-transaction`,
+      `${Project.apis.v1}/users/confirm-transaction`,
       body
     );
 

@@ -18,7 +18,7 @@ export const ApplicationStatusActionsMenu = styled(Menu)<{
   ${({ position }) => `
   position: fixed;
   z-index: 200;
-  width: 150px;
+  width: 180px;
   right: ${position?.right}px;
   top: ${position?.top}px;
   `}

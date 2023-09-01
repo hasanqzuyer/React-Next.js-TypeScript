@@ -10,8 +10,17 @@ import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
 
 const WorkExperience = (props: any) => {
-  const { totalData, setTotalData, setHasChanged, saving, setSaving, userId } =
-    props;
+  const {
+    totalData,
+    setTotalData,
+    setHasChanged,
+    saving,
+    setSaving,
+    userId,
+    disabled,
+    workIssuedArrays,
+    setWorkIssuedArrays,
+  } = props;
   const { push } = useSnackbar();
 
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
@@ -97,6 +106,20 @@ const WorkExperience = (props: any) => {
     }
     getLocationOptions();
     getJobTitleOptions();
+  };
+
+  const handleErrors = (id: string) => (value: boolean) => {
+    if (value) {
+      const exist = workIssuedArrays.includes(id);
+      if (!exist) {
+        let Array = workIssuedArrays;
+        Array.push(id);
+        setWorkIssuedArrays([...Array]);
+      }
+    } else {
+      const tempData = workIssuedArrays.filter((item: any) => item !== id);
+      setWorkIssuedArrays([...tempData]);
+    }
   };
 
   const handleEdit = (id: any) => {
@@ -288,7 +311,7 @@ const WorkExperience = (props: any) => {
   }, [totalData]);
   return (
     <>
-      {totalData?.map((experience: TWorkExperience) => {
+      {totalData?.map((experience: TWorkExperience, index: any) => {
         return (
           <AccountGrid style={{ position: 'relative', marginBottom: '20px' }}>
             <Input
@@ -297,6 +320,8 @@ const WorkExperience = (props: any) => {
               placeholder="Please Select"
               onSearch={debouncedJobTitles}
               options={companys}
+              required
+              disabled={disabled}
               value={
                 experience.jobTitle
                   ? {
@@ -315,22 +340,48 @@ const WorkExperience = (props: any) => {
               onNewTag={(jobTitle) =>
                 handleChange('jobTitle', jobTitle.value, experience.id)
               }
+              errorCallback={handleErrors(`${experience.id}_${index}_jobTitle`)}
+              validators={[
+                {
+                  message: 'Job Title is required',
+                  validator: (value) => {
+                    const v = experience.jobTitle as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="text"
               label="Company"
+              required
               placeholder="Please Enter"
               value={experience.company}
+              disabled={disabled}
               onValue={(company) =>
                 handleChange('company', company, experience.id)
               }
+              errorCallback={handleErrors(`${experience.id}_${index}_company`)}
+              validators={[
+                {
+                  message: 'Company is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Input
               type="select"
               label="Location"
               onSearch={debouncedLocation}
               placeholder="Please Select"
+              required
               options={locations}
+              disabled={disabled}
               value={
                 experience.location
                   ? {
@@ -346,22 +397,47 @@ const WorkExperience = (props: any) => {
                   experience.id
                 )
               }
+              errorCallback={handleErrors(`${experience.id}_${index}_location`)}
               onNewTag={(location) =>
                 handleChange('location', location.value, experience.id)
               }
+              validators={[
+                {
+                  message: 'Location is required',
+                  validator: (value) => {
+                    const v = experience.location as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <Stack direction="horizontal" style={{ position: 'relative' }}>
               <Input
                 type="date"
                 label="From"
+                required
                 placeholder="Please Select"
+                disabled={disabled}
                 value={experience.from}
                 onValue={(from) => handleChange('from', from, experience.id)}
+                errorCallback={handleErrors(`${experience.id}_${index}_from`)}
+                validators={[
+                  {
+                    message: 'From Date is required',
+                    validator: (value) => {
+                      const v = experience.from as string;
+                      if (v) return true;
+                      return false;
+                    },
+                  },
+                ]}
               />
               <Input
                 type="date"
                 label="To"
                 placeholder="Please Select"
+                required
                 value={
                   experience.stillWorkHere
                     ? new Date().toISOString()
@@ -369,6 +445,17 @@ const WorkExperience = (props: any) => {
                 }
                 disabled={experience.stillWorkHere}
                 onValue={(to) => handleChange('to', to, experience.id)}
+                errorCallback={handleErrors(`${experience.id}_${index}_to`)}
+                validators={[
+                  {
+                    message: 'To Date is required',
+                    validator: (value) => {
+                      const v = value as string;
+                      if (v) return true;
+                      return false;
+                    },
+                  },
+                ]}
               />
               <Checkbox
                 label="I still work here."
@@ -378,41 +465,59 @@ const WorkExperience = (props: any) => {
                   bottom: '-25px',
                 }}
                 value={experience.stillWorkHere}
-                onValue={(stillWorkHere) =>
-                  handleChange('stillWorkHere', stillWorkHere, experience.id)
-                }
+                disabled={disabled}
+                onValue={(stillWorkHere) => {
+                  handleChange('stillWorkHere', stillWorkHere, experience.id);
+                }}
               />
             </Stack>
             <Input
               type="text"
               label="Role Description"
+              required
               placeholder="Please Enter"
               style={{ gridColumn: '1/3' }}
               value={experience.roleDescription}
+              disabled={disabled}
               onValue={(roleDescription) =>
                 handleChange('roleDescription', roleDescription, experience.id)
               }
+              errorCallback={handleErrors(
+                `${experience.id}_${index}_roleDescription`
+              )}
+              validators={[
+                {
+                  message: 'Role Description is required',
+                  validator: (value) => {
+                    const v = value as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
-            <Stack
-              style={{
-                position: 'absolute',
-                right: '36px',
-                top: '90px',
-                width: 'fit-content',
-                display: 'grid',
-                placeItems: 'center',
-              }}
-            >
+            {!disabled && (
               <Stack
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleDelete(experience.id)}
+                style={{
+                  position: 'absolute',
+                  right: '36px',
+                  top: '90px',
+                  width: 'fit-content',
+                  display: 'grid',
+                  placeItems: 'center',
+                }}
               >
-                <DeleteIcon style={{ color: '#9F9FB0' }} />
+                <Stack
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleDelete(experience.id)}
+                >
+                  <DeleteIcon style={{ color: '#9F9FB0' }} />
+                </Stack>
+                <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+                  <AddIcon style={{ color: '#9F9FB0' }} />
+                </Stack>
               </Stack>
-              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
-                <AddIcon style={{ color: '#9F9FB0' }} />
-              </Stack>
-            </Stack>
+            )}
           </AccountGrid>
         );
       })}

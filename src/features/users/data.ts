@@ -20,7 +20,7 @@ export const DUsersFilters = () => ({
   jobTitle: [],
   company: '',
   workExperienceLocation: [],
-  currentlyEmployed: [],
+  currentlyEmployed: '',
   skills: [],
 
   school: '',

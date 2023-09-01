@@ -39,6 +39,8 @@ const OverviewPage = (props: any) => {
   const [eduSaving, setEduSaving] = useState<boolean>(false);
   const [hprefHasChanged, setHprefHasChanged] = useState<boolean>(false);
   const [hprefSaving, setHprefSaving] = useState<boolean>(false);
+  const [workIssuedArrays, setWorkIssuedArrays] = useState<any[]>([]);
+  const [eduIssuedArrays, setEduIssuedArrays] = useState<any[]>([]);
   // Viktor
   const [isEditing, setIsEditing] = useState(false);
 
@@ -88,6 +90,44 @@ const OverviewPage = (props: any) => {
     createdAt: '',
     updatedAt: '',
   });
+
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isDisable =
+      !info.firstName ||
+      !info.lastName ||
+      !housePreference.theme ||
+      !housePreference.skillsOfOthers ||
+      !housePreference.location ||
+      !housePreference.language ||
+      workIssuedArrays.length > 0 ||
+      eduIssuedArrays.length > 0;
+
+    const isUnDisabled =
+      eduHasChanged ||
+      expHasChanged ||
+      infoHasChanged ||
+      socialMediaHasChanged ||
+      hprefHasChanged;
+
+    if (isUnDisabled && !isDisable) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [
+    workIssuedArrays,
+    info,
+    eduIssuedArrays,
+    housePreference,
+    expHasChanged,
+    infoHasChanged,
+    eduHasChanged,
+    socialMediaHasChanged,
+    hprefHasChanged,
+  ]);
+
   const getUserById = async (id: any) => {
     if (!id) return;
     const data: IUser = await UsersAPI.getUser(id);
@@ -408,8 +448,7 @@ const OverviewPage = (props: any) => {
         style={{ width: '130px', alignSelf: 'flex-end' }}
         onClick={handleEditClick}
       >
-        {/* {isEditing ? 'Save' : 'Edit'} */}
-        Edit
+        {isEditing ? 'Disable' : 'Edit'}
       </Button>
       {tabs === 0 && (
         <Card>
@@ -420,18 +459,40 @@ const OverviewPage = (props: any) => {
                 <Input
                   type="text"
                   label="First Name"
+                  required
                   placeholder="John"
                   value={info?.firstName}
                   onValue={(firstName) =>
                     handleChangeInfo('firstName', firstName)
                   }
+                  validators={[
+                    {
+                      message: 'First Name is required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="text"
                   label="Last Name"
+                  required
                   placeholder="Doe"
                   value={info?.lastName}
                   onValue={(lastName) => handleChangeInfo('lastName', lastName)}
+                  validators={[
+                    {
+                      message: 'Last Name is required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="text"
@@ -514,6 +575,30 @@ const OverviewPage = (props: any) => {
                   }
                 />
               </AccountGrid>
+              {!expSaving &&
+              !infoSaving &&
+              !eduSaving &&
+              !socialMediaSaving &&
+              !hprefSaving ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled={isDisabled}
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: '130px', alignSelf: 'flex-end' }}
+                  disabled
+                >
+                  Saving...
+                </Button>
+              )}
             </Stack>
           </ApplicationContainer>
         </Card>
@@ -531,6 +616,8 @@ const OverviewPage = (props: any) => {
                 saving={expSaving}
                 setSaving={setExpSaving}
                 disabled={!isEditing}
+                workIssuedArrays={workIssuedArrays}
+                setWorkIssuedArrays={setWorkIssuedArrays}
               />
               <AccountHeadline>Education</AccountHeadline>
               <Education
@@ -541,6 +628,8 @@ const OverviewPage = (props: any) => {
                 saving={eduSaving}
                 setSaving={setEduSaving}
                 disabled={!isEditing}
+                eduIssuedArrays={eduIssuedArrays}
+                setEduIssuedArrays={setEduIssuedArrays}
               />
               <AccountHeadline>Skills</AccountHeadline>
               <AccountGrid>
@@ -611,6 +700,7 @@ const OverviewPage = (props: any) => {
                   type="select"
                   label="Theme"
                   placeholder="Please Select"
+                  required
                   options={themes}
                   value={
                     housePreference.theme
@@ -627,11 +717,22 @@ const OverviewPage = (props: any) => {
                     )
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Theme is required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="multiselect"
                   label="Skills of Others"
                   placeholder="Please Select"
+                  required
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
@@ -648,10 +749,21 @@ const OverviewPage = (props: any) => {
                     })
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Skills of others are required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="select"
                   label="Location"
+                  required
                   placeholder="Please Select"
                   onSearch={debouncedLocation}
                   options={locations}
@@ -673,10 +785,21 @@ const OverviewPage = (props: any) => {
                     handleChangeHousePreference('location', location.value)
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Location is required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="select"
                   label="Language"
+                  required
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
                   options={language}
@@ -698,6 +821,16 @@ const OverviewPage = (props: any) => {
                     handleChangeHousePreference('language', language.value)
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Language is required',
+                      validator: (value) => {
+                        const v = value as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="min-max"
@@ -812,15 +945,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={
-                    !expHasChanged &&
-                    !infoHasChanged &&
-                    !eduHasChanged &&
-                    !socialMediaHasChanged &&
-                    !hprefHasChanged
-                      ? true
-                      : false
-                  }
+                  disabled={isDisabled}
                   onClick={handleSave}
                 >
                   Save
