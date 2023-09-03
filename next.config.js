@@ -7,7 +7,7 @@ module.exports = withFonts({
   reactStrictMode: false,
   i18n,
   images: {
-    domains: ['localhost'],
+    domains: ['devapi.brotherhoodhouse.com'],
     // loader: 'custom',
   },
 });
