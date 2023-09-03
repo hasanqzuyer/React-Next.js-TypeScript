@@ -23,7 +23,7 @@ jobs:
     - name: Push the Docker image
       run: docker push harbor.kafana.dev/ptin/bhfe:test
 
-    - name: Executing remote ssh commands
+    - name: Executing remote ssh command
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
