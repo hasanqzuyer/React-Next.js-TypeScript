@@ -28,7 +28,7 @@ jobs:
     - name: Executing Deploy
       run:  |
         free -m
-        bash /webapps/brotherhood/frontend/deploy.sh
+        cd /webapps/brotherhood/frontend && ./deploy.sh
 
     # - name: Executing remote ssh command
     #   uses: appleboy/ssh-action@master
