@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Title } from 'components/core';
 import { useAppContext } from 'context';
 import { HousesPage } from 'features';
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Houses = () => {
   const { setRouteName } = useAppContext();
@@ -19,12 +19,12 @@ const Houses = () => {
   );
 };
 
-// export async function getStaticProps({ locale }: { locale: string }) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['account', 'common'])),
-//     },
-//   };
-// }
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['account', 'common'])),
+    },
+  };
+}
 
 export default Houses;
