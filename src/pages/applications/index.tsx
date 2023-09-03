@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Title } from 'components/core';
 import { useAppContext } from 'context';
 import { AdminApplicationsPage, UserApplicationsPage } from 'features';
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Applications = () => {
   const { role, setRouteName } = useAppContext();
@@ -20,12 +20,12 @@ const Applications = () => {
   );
 };
 
-// export async function getStaticProps({ locale }: { locale: string }) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ['account', 'common'])),
-//     },
-//   };
-// }
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['account', 'common'])),
+    },
+  };
+}
 
 export default Applications;
