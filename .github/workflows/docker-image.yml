@@ -20,7 +20,7 @@ jobs:
       # run: echo $ENV_FILE | base64 -d > .env
       run: |
         echo $ENV_FILE > env
-        cat env | base64 -d > .env
+        cat env | base64 -di > .env
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag harbor.kafana.dev/ptin/bhfe:test || echo "docker build failed"
     - name: Push the Docker image
