@@ -1,12 +1,12 @@
 {
-  "name": "patients-influence",
-  "version": "0.1.0",
+  "name": "brotherhood-house-fe",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
     "export": "next export",
-    "start": "next start",
+    "start": "next start -p 80",
     "lint": "next lint",
     "prepare": "husky install",
     "check-types": "tsc --pretty --noEmit",
