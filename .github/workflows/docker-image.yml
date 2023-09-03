@@ -33,5 +33,5 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-                    ls -la
-                    # bash /opt/git/my-repository/update.sh
+                    free -m
+                    bash /webapps/brotherhood/frontend/deploy.sh
