@@ -14,11 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Secret
       run: echo $ENV_FILE | base64 -d > .env
       env:
         ENV_FILE: ${{ secrets.ENV_FILE }}
+    - name: Build the Docker image
       run: docker build . --file Dockerfile --tag harbor.kafana.dev/ptin/bhfe:test || echo "docker build failed"
+    - name: Push the Docker image
       run: docker push harbor.kafana.dev/ptin/bhfe:test
 
     - name: Executing remote ssh commands
