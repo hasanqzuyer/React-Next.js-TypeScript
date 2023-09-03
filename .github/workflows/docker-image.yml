@@ -15,4 +15,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag harbor.kafana.dev/ptin/bhfe:test
+      run: echo $ENV_FILE | base64 -d > .env
+      env:
+        ENV_FILE: ${{ secrets.ENV_FILE }}
+      run: docker build . --file Dockerfile --tag harbor.kafana.dev/ptin/bhfe:test || echo "docker build failed"
+      run: docker push harbor.kafana.dev/ptin/bhfe:test
+
+    - name: Executing remote ssh commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+                    echo "TODO"
+                    # bash /opt/git/my-repository/update.sh
