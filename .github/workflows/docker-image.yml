@@ -25,13 +25,17 @@ jobs:
       run: docker build . --file Dockerfile --tag harbor.kafana.dev/ptin/bhfe:test || echo "docker build failed"
     - name: Push the Docker image
       run: docker push harbor.kafana.dev/ptin/bhfe:test
+    - name: Executing Deploy
+      run:  |
+        free -m
+        bash /webapps/brotherhood/frontend/deploy.sh
 
-    - name: Executing remote ssh command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-                    free -m
-                    bash /webapps/brotherhood/frontend/deploy.sh
+    # - name: Executing remote ssh command
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.SSH_HOST }}
+    #     username: ${{ secrets.SSH_USER }}
+    #     key: ${{ secrets.SSH_KEY }}
+    #     script: |
+    #                 free -m
+    #                 bash /webapps/brotherhood/frontend/deploy.sh
