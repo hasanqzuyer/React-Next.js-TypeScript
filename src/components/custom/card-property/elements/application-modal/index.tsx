@@ -6,6 +6,7 @@ import { TApplyModalProps } from 'features/finance/elements/export-finance-modal
 import { ApplicationAPI } from 'api';
 import { useSnackbar } from 'hooks';
 import { AxiosError } from 'axios';
+import { useAppContext } from 'context';
 
 const ApplicationModal = ({
   onClose,
@@ -13,9 +14,13 @@ const ApplicationModal = ({
   houseName,
   ...props
 }: TApplyModalProps) => {
+  const { user } = useAppContext();
   const [state, setState] = useState<any>({
-    tier: null,
-    balance: null,
+    tier: {
+      label: 'Basic',
+      value: 'Basic',
+    },
+    balance: 1,
   });
   const { push } = useSnackbar();
 
@@ -67,7 +72,7 @@ const ApplicationModal = ({
         setState((data: any) => ({
           ...data,
           tier,
-          balance: 50,
+          balance: 15,
         }));
         break;
 
@@ -98,7 +103,9 @@ const ApplicationModal = ({
         <Input
           type="text"
           label="Balance"
-          value={state.balance}
+          value={`Current Balance: ${user.tokenBalance}, Application Cost: ${
+            state.balance ? state.balance : 0
+          }`}
           onValue={() => {}}
           placeholder="Please Enter"
         />
