@@ -445,10 +445,10 @@ const OverviewPage = (props: any) => {
       <Button
         variant="contained"
         color="primary"
-        style={{ width: '130px', alignSelf: 'flex-end' }}
+        style={{ width: '150px', alignSelf: 'flex-end' }}
         onClick={handleEditClick}
       >
-        {isEditing ? 'Disable' : 'Edit'}
+        {isEditing ? 'Disable Editing' : 'Enable Editing'}
       </Button>
       {tabs === 0 && (
         <Card>
@@ -461,6 +461,7 @@ const OverviewPage = (props: any) => {
                   label="First Name"
                   required
                   placeholder="John"
+                  disabled={!isEditing}
                   value={info?.firstName}
                   onValue={(firstName) =>
                     handleChangeInfo('firstName', firstName)
@@ -482,6 +483,7 @@ const OverviewPage = (props: any) => {
                   required
                   placeholder="Doe"
                   value={info?.lastName}
+                  disabled={!isEditing}
                   onValue={(lastName) => handleChangeInfo('lastName', lastName)}
                   validators={[
                     {
@@ -509,6 +511,7 @@ const OverviewPage = (props: any) => {
                   label="Country of Residence"
                   onSearch={debouncedLocation}
                   placeholder="Please Select"
+                  disabled={!isEditing}
                   options={locations}
                   value={
                     info.location
@@ -533,6 +536,7 @@ const OverviewPage = (props: any) => {
                   label="Nationality"
                   onSearch={debouncedNationalities}
                   placeholder="Please Select"
+                  disabled={!isEditing}
                   options={nationalities}
                   value={
                     info.nationality
@@ -552,6 +556,7 @@ const OverviewPage = (props: any) => {
                 <Input
                   type="date"
                   label="Date of Birth"
+                  disabled={!isEditing}
                   placeholder="Please Select"
                   value={info?.dateOfBirth}
                   onValue={(dateOfBirth) =>
@@ -563,6 +568,7 @@ const OverviewPage = (props: any) => {
                   label="Languages"
                   onSearch={debouncedLanguages}
                   placeholder="Please Select"
+                  disabled={!isEditing}
                   options={language}
                   isFilterActive
                   value={info.language}
@@ -584,7 +590,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={isDisabled}
+                  disabled={!isEditing}
                   onClick={handleSave}
                 >
                   Save
@@ -945,7 +951,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={isDisabled}
+                  disabled={!isEditing}
                   onClick={handleSave}
                 >
                   Save

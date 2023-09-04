@@ -3,6 +3,9 @@
 # enviroment variables
 .env
 
+# next.config.js
+next.config.js
+
 # dependencies
 /node_modules
 /.pnp
