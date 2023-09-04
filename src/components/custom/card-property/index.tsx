@@ -115,6 +115,7 @@ const PropertyCard = ({
             color="primary"
             variant="contained"
             size="large"
+            disabled={completed}
             onClick={openApplicationModal}
           >
             {label}

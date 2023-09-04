@@ -14,6 +14,7 @@ import {
   NavigationCurrency,
 } from 'components/custom/navigation/styles';
 import { NotificationModal } from 'components/custom/navigation/elements';
+import { PurchaseModal } from 'features/opportunities/role/user/elements';
 import { TNavigationProps } from 'components/custom/navigation/types';
 import { useAppContext } from 'context';
 import { ArrowDownIcon, BellIcon, LogoutIcon, MenuIcon } from 'components/svg';
@@ -24,6 +25,9 @@ const Navigation = ({ ...props }: TNavigationProps) => {
   const [menuRef, open, setOpen, buttonRef] = useMenu(false);
 
   const [nModal, openNModal, closeNModal] = useModal(false);
+
+  const [purchaseModal, openPurchaseModal, closePurchaseModal] =
+    useModal(false);
 
   const router = useRouter();
   const [formattedBalance, setFormattedBalance] = useState(0);
@@ -55,7 +59,7 @@ const Navigation = ({ ...props }: TNavigationProps) => {
       </NavigationMenu>
       <NavigationItems>
         {['USER'].includes(role) && (
-          <NavigationCurrency onClick={() => {}}>
+          <NavigationCurrency onClick={openPurchaseModal}>
             Balance: {user?.tokenBalance}
             {/* &nbsp;<ArrowDownIcon /> */}
           </NavigationCurrency>
@@ -85,6 +89,7 @@ const Navigation = ({ ...props }: TNavigationProps) => {
         </NavigationProfileOuter>
       </NavigationItems>
       {nModal && <NotificationModal onClose={closeNModal} />}
+      {purchaseModal && <PurchaseModal onClose={closePurchaseModal} />}
     </NavigationMain>
   );
 };

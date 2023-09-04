@@ -131,11 +131,11 @@ const UserMarketPage = () => {
           })}
         </ProjectsGrid>
       )}
-      <Stack direction="horizontal">
+      {/* <Stack direction="horizontal">
         <Button variant="contained" color="primary" onClick={openPurchaseModal}>
           Purchase Modal
         </Button>
-      </Stack>
+      </Stack> */}
 
       {purchaseModal && <PurchaseModal onClose={closePurchaseModal} />}
     </ProjectsMain>
