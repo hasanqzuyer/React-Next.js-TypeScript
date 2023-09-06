@@ -14,13 +14,13 @@ export const getDegrees = (search: string) => {
       filters = DDegrees;
     }
   }
-  filters.forEach((element) => {
+  DDegrees.forEach((element) => {
     const degree = element.name;
     degrees.push(degree);
   });
   degrees.sort();
-  if (degrees.length > 0) {
-    degrees = degrees.slice(0, 10);
-  }
+  // if (degrees.length > 0) {
+  //   degrees = degrees.slice(0, 10);
+  // }
   return degrees;
 };

@@ -15,13 +15,13 @@ export const getFieldOfStudies = (search: string) => {
       filters = DFieldOfStudy;
     }
   }
-  filters.forEach((element) => {
+  DFieldOfStudy.forEach((element) => {
     const field = element.name;
     fields.push(field);
   });
   fields.sort();
-  if (fields.length > 0) {
-    fields = fields.slice(0, 10);
-  }
+  // if (fields.length > 0) {
+  //   fields = fields.slice(0, 10);
+  // }
   return fields;
 };

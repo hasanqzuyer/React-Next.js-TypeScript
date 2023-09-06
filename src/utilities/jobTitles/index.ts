@@ -14,13 +14,13 @@ export const getJobTitles = (search: string) => {
       filters = DJobTitle;
     }
   }
-  filters.forEach((element) => {
+  DJobTitle.forEach((element) => {
     const title = element.name;
     jobTitles.push(title);
   });
   jobTitles.sort();
-  if (jobTitles.length > 0) {
-    jobTitles = jobTitles.slice(0, 10);
-  }
+  // if (jobTitles.length > 0) {
+  //   jobTitles = jobTitles.slice(0, 10);
+  // }
   return jobTitles;
 };

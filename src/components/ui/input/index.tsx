@@ -69,6 +69,9 @@ const Input = ({
 
   const handleDate = (newValue: any) => {
     if (onValue) onValue(newValue);
+    if (errorCallback) errorCallback(false);
+    setErrorMessage('');
+    setError(false);
   };
 
   const handleMinMax = (key: 'min' | 'max') => (e: React.ChangeEvent<any>) => {

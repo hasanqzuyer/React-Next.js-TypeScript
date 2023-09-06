@@ -14,13 +14,13 @@ export const getInterestsAndHobbies = (search: string) => {
       filters = DInterestsAndHobbies;
     }
   }
-  filters.forEach((element) => {
+  DInterestsAndHobbies.forEach((element) => {
     const interest = element.name;
     interests.push(interest);
   });
   interests.sort();
-  if (interests.length > 0) {
-    interests = interests.slice(0, 10);
-  }
+  // if (interests.length > 0) {
+  //   interests = interests.slice(0, 10);
+  // }
   return interests;
 };

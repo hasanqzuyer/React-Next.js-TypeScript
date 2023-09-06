@@ -23508,9 +23508,6 @@ export const DSocialMedia = [
   {
     name: 'Website',
   },
-  {
-    name: 'Other',
-  },
 ];
 
 export const DDegrees = [

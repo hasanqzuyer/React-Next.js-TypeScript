@@ -236,9 +236,6 @@ const AddHouseProjectModal = ({
                   location: location ? location.value : location,
                 })
               }
-              onNewTag={(location) =>
-                setHouseData({ ...houseData, location: location.value })
-              }
               validators={[
                 {
                   message: 'Location is required',
@@ -313,7 +310,6 @@ const AddHouseProjectModal = ({
               required
               label="Theme"
               placeholder="Please Select"
-              onSearch={debouncedTheme}
               options={themes}
               value={
                 houseData.theme
@@ -328,9 +324,6 @@ const AddHouseProjectModal = ({
                   ...houseData,
                   theme: theme ? theme.value : theme,
                 })
-              }
-              onNewTag={(theme) =>
-                setHouseData({ ...houseData, theme: theme.value })
               }
               validators={[
                 {

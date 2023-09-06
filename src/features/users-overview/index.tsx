@@ -3,6 +3,7 @@ import {
   ApplicationContainer,
   AccountHeadline,
   AccountGrid,
+  SkillGrid,
 } from 'features/users-overview/styles';
 import { Button, Input, Card } from 'components/ui';
 import { Stack } from 'components/system';
@@ -23,6 +24,7 @@ import { getSkills } from 'utilities/skills';
 import { ISocialMedia } from 'api/socialMedia/types';
 import SocialMediaAPI from 'api/socialMedia';
 import HousePreferenceApi from 'api/housePreference';
+import { birthDateSchema } from 'utilities/validators';
 
 const OverviewPage = (props: any) => {
   const { userId } = props;
@@ -73,7 +75,7 @@ const OverviewPage = (props: any) => {
   });
   const [housePreference, setHousePreference] = useState<any>({
     id: -1,
-    theme: '',
+    theme: [],
     skillsOfOthers: [],
     location: '',
     language: '',
@@ -91,8 +93,13 @@ const OverviewPage = (props: any) => {
     updatedAt: '',
   });
 
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [errors, setErrors] = useState([false]);
 
+  const handleErrors = (index: number) => (value: boolean) => {
+    setErrors((x) => x.map((a, b) => (b === index ? value : a)));
+  };
+
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   useEffect(() => {
     const isDisable =
       !info.firstName ||
@@ -100,6 +107,7 @@ const OverviewPage = (props: any) => {
       !housePreference.theme ||
       !housePreference.skillsOfOthers ||
       !housePreference.location ||
+      !!errors.find((x) => x) ||
       !housePreference.language ||
       workIssuedArrays.length > 0 ||
       eduIssuedArrays.length > 0;
@@ -126,6 +134,7 @@ const OverviewPage = (props: any) => {
     eduHasChanged,
     socialMediaHasChanged,
     hprefHasChanged,
+    errors,
   ]);
 
   const getUserById = async (id: any) => {
@@ -169,6 +178,12 @@ const OverviewPage = (props: any) => {
         : [];
       houseprf.interestsHobbies = houseprf.interestsHobbies
         ? houseprf.interestsHobbies.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
+      houseprf.theme = houseprf.theme
+        ? houseprf.theme.split(',').map((name: string) => ({
             value: name,
             label: name,
           }))
@@ -333,7 +348,15 @@ const OverviewPage = (props: any) => {
       const interestsHobbies = housePreference.interestsHobbies
         .map((item: any) => item.value)
         .join(',');
-      let data = { ...housePreference, skillsOfOthers, interestsHobbies };
+      const theme = housePreference.theme
+        .map((item: any) => item.value)
+        .join(',');
+      let data = {
+        ...housePreference,
+        skillsOfOthers,
+        interestsHobbies,
+        theme,
+      };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
@@ -508,7 +531,7 @@ const OverviewPage = (props: any) => {
               <AccountGrid>
                 <Input
                   type="select"
-                  label="Country of Residence"
+                  label="Location"
                   onSearch={debouncedLocation}
                   placeholder="Please Select"
                   disabled={!isEditing}
@@ -526,9 +549,6 @@ const OverviewPage = (props: any) => {
                       'location',
                       location ? location.value : location
                     )
-                  }
-                  onNewTag={(location) =>
-                    handleChangeInfo('location', location.value)
                   }
                 />
                 <Input
@@ -558,10 +578,32 @@ const OverviewPage = (props: any) => {
                   label="Date of Birth"
                   disabled={!isEditing}
                   placeholder="Please Select"
+                  errorCallback={handleErrors(0)}
                   value={info?.dateOfBirth}
                   onValue={(dateOfBirth) =>
                     handleChangeInfo('dateOfBirth', dateOfBirth)
                   }
+                  validators={[
+                    {
+                      message: 'Birth date is required',
+                      validator: (birthDate) => {
+                        const v = birthDate as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                    {
+                      message: 'Please add date of birth!',
+                      validator: (birthDate) => {
+                        try {
+                          birthDateSchema.validateSync({ birthDate });
+                          return true;
+                        } catch {
+                          return false;
+                        }
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="multiselect"
@@ -573,12 +615,6 @@ const OverviewPage = (props: any) => {
                   isFilterActive
                   value={info.language}
                   onValue={(language) => handleChangeInfo('language', language)}
-                  onNewTag={(language) =>
-                    handleNewInfoTags('language', {
-                      label: language.value,
-                      value: language.value,
-                    })
-                  }
                 />
               </AccountGrid>
               {!expSaving &&
@@ -590,7 +626,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing}
+                  disabled={!isEditing || isDisabled}
                   onClick={handleSave}
                 >
                   Save
@@ -638,25 +674,23 @@ const OverviewPage = (props: any) => {
                 setEduIssuedArrays={setEduIssuedArrays}
               />
               <AccountHeadline>Skills</AccountHeadline>
-              <AccountGrid>
+              <SkillGrid>
                 <Input
                   type="multiselect"
                   label="Type to Add Skills"
                   placeholder="Please Select"
                   onSearch={debouncedSkills}
-                  onNewTag={(skill) =>
-                    handleNewInfoTags('skills', {
-                      label: skill.value,
-                      value: skill.value,
-                    })
-                  }
                   isFilterActive
                   options={skills}
                   value={info.skills}
-                  onValue={(skills) => handleChangeInfo('skills', skills)}
+                  onValue={(skills) => {
+                    if (skills.length <= 5) {
+                      handleChangeInfo('skills', skills);
+                    }
+                  }}
                   disabled={!isEditing}
                 />
-              </AccountGrid>
+              </SkillGrid>
               <AccountHeadline>Social Media</AccountHeadline>
               <AccountGrid>
                 <Input
@@ -703,25 +737,17 @@ const OverviewPage = (props: any) => {
               <AccountHeadline>House Preferences</AccountHeadline>
               <AccountGrid>
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Theme"
                   placeholder="Please Select"
                   required
                   options={themes}
-                  value={
-                    housePreference.theme
-                      ? {
-                          label: housePreference.theme,
-                          value: housePreference.theme,
-                        }
-                      : null
-                  }
-                  onValue={(theme) =>
-                    handleChangeHousePreference(
-                      'theme',
-                      theme ? theme.value : theme
-                    )
-                  }
+                  value={housePreference.theme}
+                  onValue={(theme) => {
+                    if (theme.length <= 3) {
+                      handleChangeHousePreference('theme', theme);
+                    }
+                  }}
                   disabled={!isEditing}
                   validators={[
                     {
@@ -742,18 +768,14 @@ const OverviewPage = (props: any) => {
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
-                  onValue={(skillsOfOthers) =>
-                    handleChangeHousePreference(
-                      'skillsOfOthers',
-                      skillsOfOthers
-                    )
-                  }
-                  onNewTag={(skillsOfOther) =>
-                    handleNewHousePrefTags('skillsOfOthers', {
-                      label: skillsOfOther.value,
-                      value: skillsOfOther.value,
-                    })
-                  }
+                  onValue={(skillsOfOthers) => {
+                    if (skillsOfOthers.length <= 5) {
+                      handleChangeHousePreference(
+                        'skillsOfOthers',
+                        skillsOfOthers
+                      );
+                    }
+                  }}
                   disabled={!isEditing}
                   validators={[
                     {
@@ -787,9 +809,6 @@ const OverviewPage = (props: any) => {
                       location ? location.value : location
                     )
                   }
-                  onNewTag={(location) =>
-                    handleChangeHousePreference('location', location.value)
-                  }
                   disabled={!isEditing}
                   validators={[
                     {
@@ -822,9 +841,6 @@ const OverviewPage = (props: any) => {
                       'language',
                       language ? language.value : language
                     )
-                  }
-                  onNewTag={(language) =>
-                    handleChangeHousePreference('language', language.value)
                   }
                   disabled={!isEditing}
                   validators={[
@@ -886,28 +902,22 @@ const OverviewPage = (props: any) => {
                   type="multiselect"
                   label="Interests and Hobbies"
                   placeholder="Please Select"
-                  onSearch={debouncedInterests}
                   options={interests}
                   value={housePreference.interestsHobbies}
-                  onValue={(interestsHobbies) =>
-                    handleChangeHousePreference(
-                      'interestsHobbies',
-                      interestsHobbies
-                    )
-                  }
-                  onNewTag={(interestsHobbie) =>
-                    handleNewHousePrefTags('interestsHobbies', {
-                      label: interestsHobbie.value,
-                      value: interestsHobbie.value,
-                    })
-                  }
+                  onValue={(interestsHobbies) => {
+                    if (interestsHobbies.length <= 3) {
+                      handleChangeHousePreference(
+                        'interestsHobbies',
+                        interestsHobbies
+                      );
+                    }
+                  }}
                   disabled={!isEditing}
                 />
                 <Input
                   type="select"
                   label="Diet"
                   placeholder="Please Select"
-                  onSearch={debouncedDiets}
                   options={diets}
                   value={
                     housePreference.diet
@@ -922,9 +932,6 @@ const OverviewPage = (props: any) => {
                       'diet',
                       diet ? diet.value : diet
                     )
-                  }
-                  onNewTag={(diet) =>
-                    handleChangeHousePreference('diet', diet.value)
                   }
                   disabled={!isEditing}
                 />
@@ -951,7 +958,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing}
+                  disabled={!isEditing || isDisabled}
                   onClick={handleSave}
                 >
                   Save
