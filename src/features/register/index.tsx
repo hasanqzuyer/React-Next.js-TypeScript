@@ -36,11 +36,7 @@ const RegisterPage = () => {
     role: 'USER',
   });
 
-  const [counter, setCounter] = useState(0);
-
   const router = useRouter();
-
-  const { token } = router.query;
 
   const { push } = useSnackbar();
 
@@ -51,8 +47,6 @@ const RegisterPage = () => {
   const handleErrors = (index: number) => (value: boolean) => {
     setErrors((x) => x.map((a, b) => (b === index ? value : a)));
   };
-
-  const timeoutTime = 10000;
 
   const [crModal, openCrModal, closeCrModal] = useModal(false);
 
@@ -78,13 +72,7 @@ const RegisterPage = () => {
         await AuthorizationAPI.register(formData);
         openCrModal();
       } catch (e: any) {
-        let step = 0;
-        step += 1;
-        setCounter(step);
         push(e.response.data.message, { variant: 'error' });
-        setTimeout(() => {
-          setCounter(0);
-        }, timeoutTime);
       }
     }
   };
@@ -131,17 +119,6 @@ const RegisterPage = () => {
                 }
               },
             },
-            {
-              message: t('First name must contain only letters'),
-              validator: (firstName) => {
-                try {
-                  nameSchema.validateSync({ pattern: firstName });
-                  return true;
-                } catch {
-                  return false;
-                }
-              },
-            },
           ]}
         />
         <RegisterCompanyLName
@@ -168,17 +145,6 @@ const RegisterPage = () => {
               validator: (lastName) => {
                 try {
                   nameSchema.validateSync({ length: lastName });
-                  return true;
-                } catch {
-                  return false;
-                }
-              },
-            },
-            {
-              message: t('Last name must contain only letters'),
-              validator: (lastName) => {
-                try {
-                  nameSchema.validateSync({ pattern: lastName });
                   return true;
                 } catch {
                   return false;

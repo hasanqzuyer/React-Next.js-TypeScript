@@ -30,7 +30,6 @@ const Navigation = ({ ...props }: TNavigationProps) => {
     useModal(false);
 
   const router = useRouter();
-  const [formattedBalance, setFormattedBalance] = useState(0);
 
   const { logout, routeName, role, user, handleMobileMenu, showMobileMenu } =
     useAppContext();
