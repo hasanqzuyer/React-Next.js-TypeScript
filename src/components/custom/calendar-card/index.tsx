@@ -10,6 +10,7 @@ import {
   CalendarTitle,
   CalendarEventStatus,
   CalendarEventContainer,
+  Events,
 } from 'components/custom/calendar-card/styles';
 import {
   TCalendarCardProps,
@@ -125,10 +126,12 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
                 {todayEvents.map((event, index: any) => {
                   return (
                     <Tooltip key={index} title={event.description}>
-                      <CalendarEventStatus
-                        variant={event.variant}
-                        href={`/houses/overview?houseId=${event?.notificationPayload[0]?.houseId}`}
-                      />
+                      <Events>
+                        <CalendarEventStatus
+                          variant={event.variant}
+                          href={`/houses/overview?houseId=${event?.notificationPayload[0]?.houseId}`}
+                        />
+                      </Events>
                     </Tooltip>
                   );
                 })}
