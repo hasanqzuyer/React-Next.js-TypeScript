@@ -95,7 +95,7 @@ const UserMarketPage = () => {
       )}
       {tab === 1 && (
         <ProjectsGrid>
-          {secondaryHouses.map((house: IHouse) => {
+          {secondaryHouses?.map((house: IHouse) => {
             return (
               <PropertyCard
                 key={house.id}
