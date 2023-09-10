@@ -8,6 +8,7 @@ import EducationApi from 'api/education';
 import { TEducation } from 'api/education/types';
 import { getDegrees } from 'utilities/degrees';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
+import { birthDateSchema } from 'utilities/validators';
 
 const Education = (props: any) => {
   const {
@@ -337,7 +338,6 @@ const Education = (props: any) => {
               type="select"
               label="Degree"
               placeholder="Please Select"
-              onSearch={debouncedDegrees}
               options={degrees}
               disabled={disabled}
               value={
@@ -355,9 +355,6 @@ const Education = (props: any) => {
                   education.id
                 )
               }
-              onNewTag={(degree) =>
-                handleChange('degree', degree.value, education.id)
-              }
               errorCallback={handleErrors(`${education.id}_${index}_degree`)}
               validators={[
                 {
@@ -374,7 +371,6 @@ const Education = (props: any) => {
               type="select"
               label="Field of Study"
               placeholder="Please Select"
-              onSearch={debouncedFieldOfStudy}
               options={fieldOfStudy}
               disabled={disabled}
               value={
@@ -391,9 +387,6 @@ const Education = (props: any) => {
                   fieldOfStudy ? fieldOfStudy.value : fieldOfStudy,
                   education.id
                 )
-              }
-              onNewTag={(fieldOfStudy) =>
-                handleChange('fieldOfStudy', fieldOfStudy.value, education.id)
               }
               errorCallback={handleErrors(
                 `${education.id}_${index}_fieldOfStudy`
@@ -421,10 +414,21 @@ const Education = (props: any) => {
                 validators={[
                   {
                     message: 'From date is required',
-                    validator: (value) => {
-                      const v = value as string;
+                    validator: (date) => {
+                      const v = date as string;
                       if (v) return true;
                       return false;
+                    },
+                  },
+                  {
+                    message: 'Invalid Date!',
+                    validator: (birthDate) => {
+                      try {
+                        birthDateSchema.validateSync({ birthDate });
+                        return true;
+                      } catch {
+                        return false;
+                      }
                     },
                   },
                 ]}
@@ -440,10 +444,21 @@ const Education = (props: any) => {
                 validators={[
                   {
                     message: 'To date is required',
-                    validator: (value) => {
-                      const v = value as string;
+                    validator: (date) => {
+                      const v = date as string;
                       if (v) return true;
                       return false;
+                    },
+                  },
+                  {
+                    message: 'Invalid Date!',
+                    validator: (birthDate) => {
+                      try {
+                        birthDateSchema.validateSync({ birthDate });
+                        return true;
+                      } catch {
+                        return false;
+                      }
                     },
                   },
                 ]}

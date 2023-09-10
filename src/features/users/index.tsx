@@ -412,12 +412,6 @@ const UsersPage = () => {
                     options={locations}
                     value={filters.location}
                     onValue={(location) => setFilter({ ...filters, location })}
-                    onNewTag={(location) =>
-                      setFilter({
-                        ...filters,
-                        location: [...filters.location, location],
-                      })
-                    }
                   />
                   <Input
                     type="multiselect"
@@ -428,12 +422,6 @@ const UsersPage = () => {
                     value={filters.nationality}
                     onValue={(nationality) =>
                       setFilter({ ...filters, nationality })
-                    }
-                    onNewTag={(nationality) =>
-                      setFilter({
-                        ...filters,
-                        nationality: [...filters.nationality, nationality],
-                      })
                     }
                   />
                   <Input
@@ -451,12 +439,6 @@ const UsersPage = () => {
                     options={languages}
                     value={filters.language}
                     onValue={(language) => setFilter({ ...filters, language })}
-                    onNewTag={(language) =>
-                      setFilter({
-                        ...filters,
-                        language: [...filters.language, language],
-                      })
-                    }
                   />
                   <Input
                     type="min-max"
@@ -493,16 +475,9 @@ const UsersPage = () => {
                     type="multiselect"
                     label="Job Title"
                     placeholder="Please Select"
-                    onSearch={debouncedJobTitles}
                     options={jobTitles}
                     value={filters.jobTitle}
                     onValue={(jobTitle) => setFilter({ ...filters, jobTitle })}
-                    onNewTag={(jobTitle) =>
-                      setFilter({
-                        ...filters,
-                        jobTitle: [...filters.jobTitle, jobTitle],
-                      })
-                    }
                   />
                   <Input
                     type="text"
@@ -520,15 +495,6 @@ const UsersPage = () => {
                     options={locations}
                     onValue={(workExperienceLocation) =>
                       setFilter({ ...filters, workExperienceLocation })
-                    }
-                    onNewTag={(workExperienceLocation) =>
-                      setFilter({
-                        ...filters,
-                        workExperienceLocation: [
-                          ...filters.workExperienceLocation,
-                          workExperienceLocation,
-                        ],
-                      })
                     }
                   />
                   <Input
@@ -565,32 +531,18 @@ const UsersPage = () => {
                     type="multiselect"
                     label="Degree"
                     placeholder="Please Select"
-                    onSearch={debouncedDegrees}
                     options={degrees}
                     value={filters.degree}
                     onValue={(degree) => setFilter({ ...filters, degree })}
-                    onNewTag={(degree) =>
-                      setFilter({
-                        ...filters,
-                        degree: [...filters.degree, degree],
-                      })
-                    }
                   />
                   <Input
                     type="multiselect"
                     label="Field of Study"
                     options={fieldOfStudy}
-                    onSearch={debouncedFieldOfStudy}
                     placeholder="Please Select"
                     value={filters.fieldOfStudy}
                     onValue={(fieldOfStudy) =>
                       setFilter({ ...filters, fieldOfStudy })
-                    }
-                    onNewTag={(fieldOfStudy) =>
-                      setFilter({
-                        ...filters,
-                        fieldOfStudy: [...filters.fieldOfStudy, fieldOfStudy],
-                      })
                     }
                   />
                 </Grid>
@@ -605,12 +557,6 @@ const UsersPage = () => {
                     options={themes}
                     value={filters.theme}
                     onValue={(theme) => setFilter({ ...filters, theme })}
-                    onNewTag={(theme) =>
-                      setFilter({
-                        ...filters,
-                        theme: [...filters.theme, theme],
-                      })
-                    }
                   />
                   <Input
                     type="multiselect"
@@ -622,15 +568,6 @@ const UsersPage = () => {
                     onValue={(skillsOfOthers) =>
                       setFilter({ ...filters, skillsOfOthers })
                     }
-                    onNewTag={(skillsOfOthers) =>
-                      setFilter({
-                        ...filters,
-                        skillsOfOthers: [
-                          ...filters.skillsOfOthers,
-                          skillsOfOthers,
-                        ],
-                      })
-                    }
                   />
                   <Input
                     type="multiselect"
@@ -641,15 +578,6 @@ const UsersPage = () => {
                     value={filters.houseLocation}
                     onValue={(houseLocation) =>
                       setFilter({ ...filters, houseLocation })
-                    }
-                    onNewTag={(houseLocation) =>
-                      setFilter({
-                        ...filters,
-                        houseLocation: [
-                          ...filters.houseLocation,
-                          houseLocation,
-                        ],
-                      })
                     }
                   />
                   <Input

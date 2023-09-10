@@ -15,6 +15,7 @@ import {
   TableMenu,
   ISpan,
   CardLink,
+  IDownArrow,
 } from 'components/custom/card-property/styles';
 import Image from 'next/image';
 
@@ -55,8 +56,8 @@ const PropertyCard = ({
       <Image
         src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
         alt="House thumbnail"
-        width={500}
-        height={500}
+        width={200}
+        height={200}
         style={{
           width: '100%',
           height: '100%',
@@ -124,7 +125,10 @@ const PropertyCard = ({
         {dropdown && (
           <Button variant="contained" color="primary">
             <ISpan onClick={handleMenu} ref={buttonRef}>
-              {label} <CarretDownIcon style={{ marginLeft: '10px' }} />
+              {label}
+              <IDownArrow>
+                <CarretDownIcon style={{ marginLeft: '10px' }} />
+              </IDownArrow>
             </ISpan>
             {open && (
               <TableMenu

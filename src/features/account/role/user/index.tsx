@@ -3,13 +3,14 @@ import {
   ApplicationContainer,
   AccountHeadline,
   AccountGrid,
+  SkillGrid,
 } from 'features/users-overview/styles';
 import { Button, Input, Card } from 'components/ui';
 import { Stack } from 'components/system';
 import { Tabs } from 'components/custom';
 import UsersAPI from 'api/users';
 import { IUser } from 'api/users/types';
-import { useDebounce, useSnackbar } from 'hooks';
+import { useDebounce, useModal, useSnackbar } from 'hooks';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getLanguages } from 'utilities/languages';
@@ -24,6 +25,9 @@ import { ISocialMedia } from 'api/socialMedia/types';
 import SocialMediaAPI from 'api/socialMedia';
 import HousePreferenceApi from 'api/housePreference';
 import { useAppContext } from 'context';
+import { birthDateSchema } from 'utilities/validators';
+import { AccountChange, AccountSpan } from 'features/account/style';
+import { ChangePasswordModal } from './elements';
 
 const AccountPage = (props: any) => {
   const { user, getMeData } = useAppContext();
@@ -46,6 +50,7 @@ const AccountPage = (props: any) => {
   const [info, setInfo] = useState<any>({
     firstName: '',
     lastName: '',
+    password: '',
     email: '',
     location: '',
     nationality: '',
@@ -68,7 +73,7 @@ const AccountPage = (props: any) => {
   });
   const [housePreference, setHousePreference] = useState<any>({
     id: -1,
-    theme: '',
+    theme: [],
     skillsOfOthers: [],
     location: '',
     language: '',
@@ -85,6 +90,11 @@ const AccountPage = (props: any) => {
     createdAt: '',
     updatedAt: '',
   });
+  const [errors, setErrors] = useState([false]);
+
+  const handleErrors = (index: number) => (value: boolean) => {
+    setErrors((x) => x.map((a, b) => (b === index ? value : a)));
+  };
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
@@ -95,6 +105,7 @@ const AccountPage = (props: any) => {
       !housePreference.theme ||
       !housePreference.skillsOfOthers ||
       !housePreference.location ||
+      !!errors.find((x) => x) ||
       !housePreference.language ||
       workIssuedArrays.length > 0 ||
       eduIssuedArrays.length > 0;
@@ -121,6 +132,7 @@ const AccountPage = (props: any) => {
     eduHasChanged,
     socialMediaHasChanged,
     hprefHasChanged,
+    errors,
   ]);
 
   const getUserById = async (id: any) => {
@@ -163,6 +175,12 @@ const AccountPage = (props: any) => {
         : [];
       houseprf.interestsHobbies = houseprf.interestsHobbies
         ? houseprf.interestsHobbies.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
+      houseprf.theme = houseprf.theme
+        ? houseprf.theme.split(',').map((name: string) => ({
             value: name,
             label: name,
           }))
@@ -429,6 +447,8 @@ const AccountPage = (props: any) => {
     setHprefHasChanged(true);
   };
 
+  const [cpModal, openCpModal, closeCpModal] = useModal(false);
+
   return (
     <Stack>
       <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
@@ -441,7 +461,7 @@ const AccountPage = (props: any) => {
                 <Input
                   type="text"
                   label="First Name"
-                  required
+                  disabled
                   placeholder="John"
                   value={info?.firstName}
                   onValue={(firstName) =>
@@ -461,7 +481,7 @@ const AccountPage = (props: any) => {
                 <Input
                   type="text"
                   label="Last Name"
-                  required
+                  disabled
                   placeholder="Doe"
                   value={info?.lastName}
                   onValue={(lastName) => handleChangeInfo('lastName', lastName)}
@@ -484,11 +504,25 @@ const AccountPage = (props: any) => {
                   onValue={() => {}}
                   disabled
                 />
+                <AccountChange>
+                  <Input
+                    type="password"
+                    label="Password"
+                    placeholder="**********"
+                    value={info.password}
+                    onValue={() => {}}
+                    disabled
+                  />
+                  <AccountSpan onClick={openCpModal}>
+                    Change Password
+                  </AccountSpan>
+                </AccountChange>
               </AccountGrid>
+              {cpModal && <ChangePasswordModal onClose={closeCpModal} />}
               <AccountGrid>
                 <Input
                   type="select"
-                  label="Country of Residence"
+                  label="Location"
                   onSearch={debouncedLocation}
                   placeholder="Please Select"
                   options={locations}
@@ -505,9 +539,6 @@ const AccountPage = (props: any) => {
                       'location',
                       location ? location.value : location
                     )
-                  }
-                  onNewTag={(location) =>
-                    handleChangeInfo('location', location.value)
                   }
                 />
                 <Input
@@ -536,9 +567,31 @@ const AccountPage = (props: any) => {
                   label="Date of Birth"
                   placeholder="Please Select"
                   value={info?.dateOfBirth}
+                  errorCallback={handleErrors(0)}
                   onValue={(dateOfBirth) =>
                     handleChangeInfo('dateOfBirth', dateOfBirth)
                   }
+                  validators={[
+                    {
+                      message: 'Birth date is required',
+                      validator: (birthDate) => {
+                        const v = birthDate as string;
+                        if (v) return true;
+                        return false;
+                      },
+                    },
+                    {
+                      message: 'Please add date of birth!',
+                      validator: (birthDate) => {
+                        try {
+                          birthDateSchema.validateSync({ birthDate });
+                          return true;
+                        } catch {
+                          return false;
+                        }
+                      },
+                    },
+                  ]}
                 />
                 <Input
                   type="multiselect"
@@ -549,12 +602,6 @@ const AccountPage = (props: any) => {
                   isFilterActive
                   value={info.language}
                   onValue={(language) => handleChangeInfo('language', language)}
-                  onNewTag={(language) =>
-                    handleNewInfoTags('language', {
-                      label: language.value,
-                      value: language.value,
-                    })
-                  }
                 />
               </AccountGrid>
               {!expSaving &&
@@ -612,24 +659,22 @@ const AccountPage = (props: any) => {
                 setEduIssuedArrays={setEduIssuedArrays}
               />
               <AccountHeadline>Skills</AccountHeadline>
-              <AccountGrid>
+              <SkillGrid>
                 <Input
                   type="multiselect"
                   label="Type to Add Skills"
                   placeholder="Please Select"
                   onSearch={debouncedSkills}
-                  onNewTag={(skill) =>
-                    handleNewInfoTags('skills', {
-                      label: skill.value,
-                      value: skill.value,
-                    })
-                  }
                   isFilterActive
                   options={skills}
                   value={info.skills}
-                  onValue={(skills) => handleChangeInfo('skills', skills)}
+                  onValue={(skills) => {
+                    if (skills.length <= 5) {
+                      handleChangeInfo('skills', skills);
+                    }
+                  }}
                 />
-              </AccountGrid>
+              </SkillGrid>
               <AccountHeadline>Social Media</AccountHeadline>
               <AccountGrid>
                 <Input
@@ -672,25 +717,17 @@ const AccountPage = (props: any) => {
               <AccountHeadline>House Preferences</AccountHeadline>
               <AccountGrid>
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Theme"
                   placeholder="Please Select"
                   required
                   options={themes}
-                  value={
-                    housePreference.theme
-                      ? {
-                          label: housePreference.theme,
-                          value: housePreference.theme,
-                        }
-                      : null
-                  }
-                  onValue={(theme) =>
-                    handleChangeHousePreference(
-                      'theme',
-                      theme ? theme.value : theme
-                    )
-                  }
+                  value={housePreference.theme}
+                  onValue={(theme) => {
+                    if (theme.length <= 3) {
+                      handleChangeHousePreference('theme', theme);
+                    }
+                  }}
                   validators={[
                     {
                       message: 'Theme is required',
@@ -710,18 +747,14 @@ const AccountPage = (props: any) => {
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
-                  onValue={(skillsOfOthers) =>
-                    handleChangeHousePreference(
-                      'skillsOfOthers',
-                      skillsOfOthers
-                    )
-                  }
-                  onNewTag={(skillsOfOther) =>
-                    handleNewHousePrefTags('skillsOfOthers', {
-                      label: skillsOfOther.value,
-                      value: skillsOfOther.value,
-                    })
-                  }
+                  onValue={(skillsOfOthers) => {
+                    if (skillsOfOthers.length <= 5) {
+                      handleChangeHousePreference(
+                        'skillsOfOthers',
+                        skillsOfOthers
+                      );
+                    }
+                  }}
                   validators={[
                     {
                       message: 'Skills of others are required',
@@ -754,9 +787,6 @@ const AccountPage = (props: any) => {
                       location ? location.value : location
                     )
                   }
-                  onNewTag={(location) =>
-                    handleChangeHousePreference('location', location.value)
-                  }
                   validators={[
                     {
                       message: 'Location is required',
@@ -788,9 +818,6 @@ const AccountPage = (props: any) => {
                       'language',
                       language ? language.value : language
                     )
-                  }
-                  onNewTag={(language) =>
-                    handleChangeHousePreference('language', language.value)
                   }
                   validators={[
                     {
@@ -848,27 +875,21 @@ const AccountPage = (props: any) => {
                   type="multiselect"
                   label="Interests and Hobbies"
                   placeholder="Please Select"
-                  onSearch={debouncedInterests}
                   options={interests}
                   value={housePreference.interestsHobbies}
-                  onValue={(interestsHobbies) =>
-                    handleChangeHousePreference(
-                      'interestsHobbies',
-                      interestsHobbies
-                    )
-                  }
-                  onNewTag={(interestsHobbie) =>
-                    handleNewHousePrefTags('interestsHobbies', {
-                      label: interestsHobbie.value,
-                      value: interestsHobbie.value,
-                    })
-                  }
+                  onValue={(interestsHobbies) => {
+                    if (interestsHobbies.length <= 3) {
+                      handleChangeHousePreference(
+                        'interestsHobbies',
+                        interestsHobbies
+                      );
+                    }
+                  }}
                 />
                 <Input
                   type="select"
                   label="Diet"
                   placeholder="Please Select"
-                  onSearch={debouncedDiets}
                   options={diets}
                   value={
                     housePreference.diet
@@ -883,9 +904,6 @@ const AccountPage = (props: any) => {
                       'diet',
                       diet ? diet.value : diet
                     )
-                  }
-                  onNewTag={(diet) =>
-                    handleChangeHousePreference('diet', diet.value)
                   }
                 />
               </AccountGrid>

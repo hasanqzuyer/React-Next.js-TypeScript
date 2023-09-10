@@ -12,6 +12,10 @@ const UsersAPI = {
     return data;
   },
 
+  contactAdmin: async (body: any) => {
+    await client.post(`${Project.apis.v1}/users/contact-admins`, body);
+  },
+
   getUser: async (id: any) => {
     const { data } = await client.get(`${Project.apis.v1}/users/${id}`);
     return data;

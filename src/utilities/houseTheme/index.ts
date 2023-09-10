@@ -14,13 +14,13 @@ export const getHouseTheme = (search: string) => {
       filters = DHouseThemes;
     }
   }
-  filters.forEach((element) => {
+  DHouseThemes.forEach((element) => {
     const theme = element.name;
     themes.push(theme);
   });
   themes.sort();
-  if (themes.length > 0) {
-    themes = themes.slice(0, 10);
-  }
+  // if (themes.length > 0) {
+  //   themes = themes.slice(0, 10);
+  // }
   return themes;
 };

@@ -51,6 +51,15 @@ export const CalendarEventContainer = styled.div<{
   ${({ theme }) => `
     display: flex;
     flex-direction: row;
+    max-width: 40px;
+    overflow: auto
+  `}
+`;
+
+export const Events = styled.div<{ theme?: Theme }>`
+  ${({ theme }) => `
+    display: flex;
+   
   `}
 `;
 

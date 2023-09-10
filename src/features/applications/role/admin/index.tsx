@@ -466,12 +466,6 @@ const AdminApplicationsPage = () => {
                       onValue={(nationality) =>
                         setFilter({ ...filter, nationality })
                       }
-                      onNewTag={(nationality) =>
-                        setFilter({
-                          ...filter,
-                          nationality: [...filter.nationality, nationality],
-                        })
-                      }
                     />
                     <Input
                       type="min-max"
@@ -487,12 +481,6 @@ const AdminApplicationsPage = () => {
                       options={language}
                       value={filter.language}
                       onValue={(language) => setFilter({ ...filter, language })}
-                      onNewTag={(language) =>
-                        setFilter({
-                          ...filter,
-                          language: [...filter.language, language],
-                        })
-                      }
                     />
                     <Input
                       type="multiselect"
@@ -502,12 +490,6 @@ const AdminApplicationsPage = () => {
                       value={filter.location}
                       options={locations}
                       onValue={(location) => setFilter({ ...filter, location })}
-                      onNewTag={(location) =>
-                        setFilter({
-                          ...filter,
-                          location: [...filter.location, location],
-                        })
-                      }
                     />
                     <Input
                       type="min-max"
@@ -573,16 +555,9 @@ const AdminApplicationsPage = () => {
                       type="multiselect"
                       label="Job Title"
                       placeholder="Please Select"
-                      onSearch={debouncedJobTitles}
                       options={jobTitles}
                       value={filter.jobTitle}
                       onValue={(jobTitle) => setFilter({ ...filter, jobTitle })}
-                      onNewTag={(jobTitle) =>
-                        setFilter({
-                          ...filter,
-                          jobTitle: [...filter.jobTitle, jobTitle],
-                        })
-                      }
                     />
                     <Input
                       type="text"
@@ -600,15 +575,6 @@ const AdminApplicationsPage = () => {
                       options={locations}
                       onValue={(workExperienceLocation) =>
                         setFilter({ ...filter, workExperienceLocation })
-                      }
-                      onNewTag={(workExperienceLocation) =>
-                        setFilter({
-                          ...filter,
-                          workExperienceLocation: [
-                            ...filter.workExperienceLocation,
-                            workExperienceLocation,
-                          ],
-                        })
                       }
                     />
                     <Input
@@ -645,32 +611,18 @@ const AdminApplicationsPage = () => {
                       type="multiselect"
                       label="Degree"
                       placeholder="Please Select"
-                      onSearch={debouncedDegrees}
                       options={degrees}
                       value={filter.degree}
                       onValue={(degree) => setFilter({ ...filter, degree })}
-                      onNewTag={(degree) =>
-                        setFilter({
-                          ...filter,
-                          degree: [...filter.degree, degree],
-                        })
-                      }
                     />
                     <Input
                       type="multiselect"
                       label="Field of Study"
                       options={fieldOfStudy}
-                      onSearch={debouncedFieldOfStudy}
                       placeholder="Please Select"
                       value={filter.fieldOfStudy}
                       onValue={(fieldOfStudy) =>
                         setFilter({ ...filter, fieldOfStudy })
-                      }
-                      onNewTag={(fieldOfStudy) =>
-                        setFilter({
-                          ...filter,
-                          fieldOfStudy: [...filter.fieldOfStudy, fieldOfStudy],
-                        })
                       }
                     />
                   </Grid>
@@ -685,12 +637,6 @@ const AdminApplicationsPage = () => {
                       options={themes}
                       value={filter.theme}
                       onValue={(theme) => setFilter({ ...filter, theme })}
-                      onNewTag={(theme) =>
-                        setFilter({
-                          ...filter,
-                          theme: [...filter.theme, theme],
-                        })
-                      }
                     />
                     <Input
                       type="multiselect"
@@ -702,15 +648,6 @@ const AdminApplicationsPage = () => {
                       onValue={(skillsOfOthers) =>
                         setFilter({ ...filter, skillsOfOthers })
                       }
-                      onNewTag={(skillsOfOthers) =>
-                        setFilter({
-                          ...filter,
-                          skillsOfOthers: [
-                            ...filter.skillsOfOthers,
-                            skillsOfOthers,
-                          ],
-                        })
-                      }
                     />
                     <Input
                       type="multiselect"
@@ -721,15 +658,6 @@ const AdminApplicationsPage = () => {
                       value={filter.houseLocation}
                       onValue={(houseLocation) =>
                         setFilter({ ...filter, houseLocation })
-                      }
-                      onNewTag={(houseLocation) =>
-                        setFilter({
-                          ...filter,
-                          houseLocation: [
-                            ...filter.houseLocation,
-                            houseLocation,
-                          ],
-                        })
                       }
                     />
                     <Input

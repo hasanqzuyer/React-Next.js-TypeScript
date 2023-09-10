@@ -14,13 +14,13 @@ export const getDiets = (search: string) => {
       filters = DDiet;
     }
   }
-  filters.forEach((element) => {
+  DDiet.forEach((element) => {
     const diet = element.name;
     diets.push(diet);
   });
   diets.sort();
-  if (diets.length > 0) {
-    diets = diets.slice(0, 10);
-  }
+  // if (diets.length > 0) {
+  //   diets = diets.slice(0, 10);
+  // }
   return diets;
 };

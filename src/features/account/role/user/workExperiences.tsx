@@ -8,6 +8,7 @@ import { getLocations } from 'utilities/locations';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
+import { birthDateSchema } from 'utilities/validators';
 
 const WorkExperience = (props: any) => {
   const {
@@ -317,7 +318,6 @@ const WorkExperience = (props: any) => {
               type="select"
               label="Job Title"
               placeholder="Please Select"
-              onSearch={debouncedJobTitles}
               options={companys}
               required
               value={
@@ -334,9 +334,6 @@ const WorkExperience = (props: any) => {
                   jobTitle ? jobTitle.value : jobTitle,
                   experience.id
                 )
-              }
-              onNewTag={(jobTitle) =>
-                handleChange('jobTitle', jobTitle.value, experience.id)
               }
               errorCallback={handleErrors(`${experience.id}_${index}_jobTitle`)}
               validators={[
@@ -394,9 +391,6 @@ const WorkExperience = (props: any) => {
                 )
               }
               errorCallback={handleErrors(`${experience.id}_${index}_location`)}
-              onNewTag={(location) =>
-                handleChange('location', location.value, experience.id)
-              }
               validators={[
                 {
                   message: 'Location is required',
@@ -419,11 +413,22 @@ const WorkExperience = (props: any) => {
                 errorCallback={handleErrors(`${experience.id}_${index}_from`)}
                 validators={[
                   {
-                    message: 'From Date is required',
-                    validator: (value) => {
-                      const v = experience.from as string;
+                    message: 'From date is required',
+                    validator: (date) => {
+                      const v = date as string;
                       if (v) return true;
                       return false;
+                    },
+                  },
+                  {
+                    message: 'Invalid Date!',
+                    validator: (birthDate) => {
+                      try {
+                        birthDateSchema.validateSync({ birthDate });
+                        return true;
+                      } catch {
+                        return false;
+                      }
                     },
                   },
                 ]}
@@ -443,11 +448,22 @@ const WorkExperience = (props: any) => {
                 errorCallback={handleErrors(`${experience.id}_${index}_to`)}
                 validators={[
                   {
-                    message: 'To Date is required',
-                    validator: (value) => {
-                      const v = value as string;
+                    message: 'To date is required',
+                    validator: (date) => {
+                      const v = date as string;
                       if (v) return true;
                       return false;
+                    },
+                  },
+                  {
+                    message: 'Invalid Date!',
+                    validator: (birthDate) => {
+                      try {
+                        birthDateSchema.validateSync({ birthDate });
+                        return true;
+                      } catch {
+                        return false;
+                      }
                     },
                   },
                 ]}
