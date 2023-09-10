@@ -17,7 +17,6 @@ export const DUsersFilters = () => ({
   },
   socialMedia: [],
 
-  jobTitle: [],
   company: '',
   workExperienceLocation: [],
   currentlyEmployed: '',

@@ -97,8 +97,9 @@ const RegisterPage = () => {
     <RegisterCompanyMain>
       <RegisterTitle>Sign Up</RegisterTitle>
       <RegisterSubtitle>
-        Lead the revolution to empower patients and transform healthcare for the
-        better by leveraging your expertise and network with us.
+        Don't walk your ambitious path alone. Join Brotherhood House to find
+        your tribe—those who will not only understand but amplify your
+        aspirations.
       </RegisterSubtitle>
       <RegisterCompanyTopStack>
         <RegisterCompanyFName
