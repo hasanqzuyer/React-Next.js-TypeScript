@@ -50,6 +50,7 @@ const EditHouseProjectModal = ({
     status: 'Primary',
     thumbnailId: null,
     assignee: null,
+    applications: [],
     images: [],
     documents: [],
     createdAt: '',
