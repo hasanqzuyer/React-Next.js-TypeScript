@@ -20,11 +20,11 @@ const Header = ({ ...props }) => {
         <HeaderLogo src="/static/assets/images/Brotherhood.svg" />
       </HeaderLogoLink>
       <HeaderActions>
-        <HeaderAction href="/login">
-          <Button variant="text" size="large">
+        <Button variant="contained" color="primary" size="large">
+          <HeaderAction style={{ color: '#fff' }} href="/login">
             {t('Login')}
-          </Button>
-        </HeaderAction>
+          </HeaderAction>
+        </Button>
         <Button variant="contained" color="secondary" size="large">
           <HeaderAction style={{ color: '#fff' }} href="/register">
             {t('SIGN UP')}

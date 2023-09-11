@@ -119,24 +119,6 @@ const OverviewPage = (props: any) => {
           onValue={setTab}
           tabs={['Property Overview', 'Documents']}
         />
-        <Button
-          color="secondary"
-          style={{
-            background: '#f1f4ff',
-            color: '#7e839f',
-            fontSize: '12px',
-            fontWeight: 600,
-            display: 'grid',
-            placeItems: 'center',
-            textDecoration: 'none',
-            padding: '7px 9px',
-          }}
-          variant="contained"
-          size="small"
-          onClick={() => router.back()}
-        >
-          Back
-        </Button>
       </Stack>
 
       <Gallery

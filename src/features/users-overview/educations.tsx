@@ -313,25 +313,11 @@ const Education = (props: any) => {
               type="text"
               label="School or University"
               placeholder="Please Select"
-              required
               value={education.university}
               onValue={(university) =>
                 handleChange('university', university, education.id)
               }
               disabled={disabled}
-              errorCallback={handleErrors(
-                `${education.id}_${index}_university`
-              )}
-              validators={[
-                {
-                  message: 'School or University is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
 
             <Input
@@ -355,17 +341,6 @@ const Education = (props: any) => {
                   education.id
                 )
               }
-              errorCallback={handleErrors(`${education.id}_${index}_degree`)}
-              validators={[
-                {
-                  message: 'Degree is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             <Input
               type="select"
@@ -388,19 +363,6 @@ const Education = (props: any) => {
                   education.id
                 )
               }
-              errorCallback={handleErrors(
-                `${education.id}_${index}_fieldOfStudy`
-              )}
-              validators={[
-                {
-                  message: 'Field of Study is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             <Stack direction="horizontal">
               <Input
@@ -412,14 +374,6 @@ const Education = (props: any) => {
                 onValue={(from) => handleChange('from', from, education.id)}
                 errorCallback={handleErrors(`${education.id}_${index}_from`)}
                 validators={[
-                  {
-                    message: 'From date is required',
-                    validator: (date) => {
-                      const v = date as string;
-                      if (v) return true;
-                      return false;
-                    },
-                  },
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
@@ -443,14 +397,6 @@ const Education = (props: any) => {
                 errorCallback={handleErrors(`${education.id}_${index}_to`)}
                 validators={[
                   {
-                    message: 'To date is required',
-                    validator: (date) => {
-                      const v = date as string;
-                      if (v) return true;
-                      return false;
-                    },
-                  },
-                  {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
                       try {
@@ -473,19 +419,6 @@ const Education = (props: any) => {
               onValue={(overAllGPA) =>
                 handleChange('overAllGPA', overAllGPA, education.id)
               }
-              errorCallback={handleErrors(
-                `${education.id}_${index}_overAllGPA`
-              )}
-              validators={[
-                {
-                  message: 'Overall GPA is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             {!disabled && (
               <Stack

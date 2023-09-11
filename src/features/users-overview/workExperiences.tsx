@@ -273,7 +273,6 @@ const WorkExperience = (props: any) => {
   };
 
   const debouncedLocation = useDebounce(getLocationOptions, 100);
-  const debouncedJobTitles = useDebounce(getJobTitleOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
@@ -320,7 +319,6 @@ const WorkExperience = (props: any) => {
               label="Job Title"
               placeholder="Please Select"
               options={companys}
-              required
               disabled={disabled}
               value={
                 experience.jobTitle
@@ -337,22 +335,10 @@ const WorkExperience = (props: any) => {
                   experience.id
                 )
               }
-              errorCallback={handleErrors(`${experience.id}_${index}_jobTitle`)}
-              validators={[
-                {
-                  message: 'Job Title is required',
-                  validator: (value) => {
-                    const v = experience.jobTitle as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             <Input
               type="text"
               label="Company"
-              required
               placeholder="Please Enter"
               value={experience.company}
               disabled={disabled}
@@ -360,23 +346,12 @@ const WorkExperience = (props: any) => {
                 handleChange('company', company, experience.id)
               }
               errorCallback={handleErrors(`${experience.id}_${index}_company`)}
-              validators={[
-                {
-                  message: 'Company is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             <Input
               type="select"
               label="Location"
               onSearch={debouncedLocation}
               placeholder="Please Select"
-              required
               options={locations}
               disabled={disabled}
               value={
@@ -395,36 +370,17 @@ const WorkExperience = (props: any) => {
                 )
               }
               errorCallback={handleErrors(`${experience.id}_${index}_location`)}
-              validators={[
-                {
-                  message: 'Location is required',
-                  validator: (value) => {
-                    const v = experience.location as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             <Stack direction="horizontal" style={{ position: 'relative' }}>
               <Input
                 type="date"
                 label="From"
-                required
                 placeholder="Please Select"
                 disabled={disabled}
                 value={experience.from}
                 onValue={(from) => handleChange('from', from, experience.id)}
                 errorCallback={handleErrors(`${experience.id}_${index}_from`)}
                 validators={[
-                  {
-                    message: 'From date is required',
-                    validator: (date) => {
-                      const v = date as string;
-                      if (v) return true;
-                      return false;
-                    },
-                  },
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
@@ -442,7 +398,6 @@ const WorkExperience = (props: any) => {
                 type="date"
                 label="To"
                 placeholder="Please Select"
-                required
                 value={
                   experience.stillWorkHere
                     ? new Date().toISOString()
@@ -452,14 +407,6 @@ const WorkExperience = (props: any) => {
                 onValue={(to) => handleChange('to', to, experience.id)}
                 errorCallback={handleErrors(`${experience.id}_${index}_to`)}
                 validators={[
-                  {
-                    message: 'To date is required',
-                    validator: (date) => {
-                      const v = date as string;
-                      if (v) return true;
-                      return false;
-                    },
-                  },
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
@@ -490,7 +437,6 @@ const WorkExperience = (props: any) => {
             <Input
               type="text"
               label="Role Description"
-              required
               placeholder="Please Enter"
               style={{ gridColumn: '1/3' }}
               value={experience.roleDescription}
@@ -501,16 +447,6 @@ const WorkExperience = (props: any) => {
               errorCallback={handleErrors(
                 `${experience.id}_${index}_roleDescription`
               )}
-              validators={[
-                {
-                  message: 'Role Description is required',
-                  validator: (value) => {
-                    const v = value as string;
-                    if (v) return true;
-                    return false;
-                  },
-                },
-              ]}
             />
             {!disabled && (
               <Stack

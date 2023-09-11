@@ -47,6 +47,16 @@ const AccountPage = (props: any) => {
   const [workIssuedArrays, setWorkIssuedArrays] = useState<any[]>([]);
   const [eduIssuedArrays, setEduIssuedArrays] = useState<any[]>([]);
 
+  const [saveCount, setCount] = useState<number>(0);
+
+  // Viktor
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+    setCount(1);
+  };
+
   const [info, setInfo] = useState<any>({
     firstName: '',
     lastName: '',
@@ -102,11 +112,7 @@ const AccountPage = (props: any) => {
     const isDisable =
       !info.firstName ||
       !info.lastName ||
-      !housePreference.theme ||
-      !housePreference.skillsOfOthers ||
-      !housePreference.location ||
       !!errors.find((x) => x) ||
-      !housePreference.language ||
       workIssuedArrays.length > 0 ||
       eduIssuedArrays.length > 0;
 
@@ -289,8 +295,6 @@ const AccountPage = (props: any) => {
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
   const debouncedSkills = useDebounce(getSkillsOptions, 100);
-  const debouncedInterests = useDebounce(getInterestsOptions, 100);
-  const debouncedDiets = useDebounce(getDietsOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
@@ -386,6 +390,11 @@ const AccountPage = (props: any) => {
   };
 
   useEffect(() => {
+    if (saveCount > 1) {
+      push('Successfully updated', { variant: 'success' });
+    }
+  }, [saveCount]);
+  useEffect(() => {
     if (
       !expSaving &&
       !infoSaving &&
@@ -394,8 +403,8 @@ const AccountPage = (props: any) => {
       !socialMediaSaving &&
       user.id
     ) {
+      setCount((count) => count + 1);
       getUserById(user.id);
-      getMeData();
     }
   }, [
     expSaving,
@@ -467,16 +476,6 @@ const AccountPage = (props: any) => {
                   onValue={(firstName) =>
                     handleChangeInfo('firstName', firstName)
                   }
-                  validators={[
-                    {
-                      message: 'First Name is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -485,16 +484,6 @@ const AccountPage = (props: any) => {
                   placeholder="Doe"
                   value={info?.lastName}
                   onValue={(lastName) => handleChangeInfo('lastName', lastName)}
-                  validators={[
-                    {
-                      message: 'Last Name is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -572,14 +561,6 @@ const AccountPage = (props: any) => {
                     handleChangeInfo('dateOfBirth', dateOfBirth)
                   }
                   validators={[
-                    {
-                      message: 'Birth date is required',
-                      validator: (birthDate) => {
-                        const v = birthDate as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
                     {
                       message: 'Please add date of birth!',
                       validator: (birthDate) => {
@@ -720,7 +701,6 @@ const AccountPage = (props: any) => {
                   type="multiselect"
                   label="Theme"
                   placeholder="Please Select"
-                  required
                   options={themes}
                   value={housePreference.theme}
                   onValue={(theme) => {
@@ -728,22 +708,11 @@ const AccountPage = (props: any) => {
                       handleChangeHousePreference('theme', theme);
                     }
                   }}
-                  validators={[
-                    {
-                      message: 'Theme is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="multiselect"
                   label="Skills of Others"
                   placeholder="Please Select"
-                  required
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
@@ -755,21 +724,10 @@ const AccountPage = (props: any) => {
                       );
                     }
                   }}
-                  validators={[
-                    {
-                      message: 'Skills of others are required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="select"
                   label="Location"
-                  required
                   placeholder="Please Select"
                   onSearch={debouncedLocation}
                   options={locations}
@@ -787,21 +745,10 @@ const AccountPage = (props: any) => {
                       location ? location.value : location
                     )
                   }
-                  validators={[
-                    {
-                      message: 'Location is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="select"
                   label="Language"
-                  required
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
                   options={language}
@@ -819,16 +766,6 @@ const AccountPage = (props: any) => {
                       language ? language.value : language
                     )
                   }
-                  validators={[
-                    {
-                      message: 'Language is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="min-max"

@@ -4,6 +4,8 @@ import {
   AccountHeadline,
   AccountGrid,
   SkillGrid,
+  PreferenceEditButton,
+  PreferenceHeadline,
 } from 'features/users-overview/styles';
 import { Button, Input, Card } from 'components/ui';
 import { Stack } from 'components/system';
@@ -25,6 +27,7 @@ import { ISocialMedia } from 'api/socialMedia/types';
 import SocialMediaAPI from 'api/socialMedia';
 import HousePreferenceApi from 'api/housePreference';
 import { birthDateSchema } from 'utilities/validators';
+import { EditIcon } from 'components/svg';
 
 const OverviewPage = (props: any) => {
   const { userId } = props;
@@ -43,11 +46,14 @@ const OverviewPage = (props: any) => {
   const [hprefSaving, setHprefSaving] = useState<boolean>(false);
   const [workIssuedArrays, setWorkIssuedArrays] = useState<any[]>([]);
   const [eduIssuedArrays, setEduIssuedArrays] = useState<any[]>([]);
+  const [saveCount, setCount] = useState<number>(0);
+
   // Viktor
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
+    setCount(1);
   };
 
   const [info, setInfo] = useState<any>({
@@ -104,11 +110,7 @@ const OverviewPage = (props: any) => {
     const isDisable =
       !info.firstName ||
       !info.lastName ||
-      !housePreference.theme ||
-      !housePreference.skillsOfOthers ||
-      !housePreference.location ||
       !!errors.find((x) => x) ||
-      !housePreference.language ||
       workIssuedArrays.length > 0 ||
       eduIssuedArrays.length > 0;
 
@@ -168,6 +170,7 @@ const OverviewPage = (props: any) => {
     if (data.socialMedia?.length > 0) {
       setSocialMedia(data.socialMedia[0]);
     }
+
     if (data.housePreference?.length > 0) {
       let houseprf: any = data.housePreference[0];
       houseprf.skillsOfOthers = houseprf.skillsOfOthers
@@ -292,8 +295,6 @@ const OverviewPage = (props: any) => {
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
   const debouncedSkills = useDebounce(getSkillsOptions, 100);
-  const debouncedInterests = useDebounce(getInterestsOptions, 100);
-  const debouncedDiets = useDebounce(getDietsOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
@@ -332,6 +333,9 @@ const OverviewPage = (props: any) => {
       }
       setSocialMediaHasChanged(false);
       setSocialMediaSaving(false);
+      push('Updated user info successfully', {
+        variant: 'success',
+      });
     } catch {
       push('Something went wrong when save social media.', {
         variant: 'error',
@@ -396,7 +400,11 @@ const OverviewPage = (props: any) => {
     }
   };
 
-  let count = 0;
+  useEffect(() => {
+    if (saveCount > 1) {
+      push('Successfully updated', { variant: 'success' });
+    }
+  }, [saveCount]);
   useEffect(() => {
     if (
       !expSaving &&
@@ -406,11 +414,8 @@ const OverviewPage = (props: any) => {
       !socialMediaSaving &&
       userId
     ) {
-      count++;
+      setCount((count) => count + 1);
       getUserById(userId);
-      if (count > 2) {
-        push('Successfully updated User', { variant: 'success' });
-      }
     }
   }, [
     expSaving,
@@ -449,75 +454,37 @@ const OverviewPage = (props: any) => {
     setHprefHasChanged(true);
   };
 
-  const handleNewInfoTags = (name: string, newTag: any) => {
-    setInfo({ ...info, [name]: [...info[name], newTag] });
-    setInfoHasChanged(true);
-  };
-
-  const handleNewHousePrefTags = (name: string, newTag: any) => {
-    setHousePreference({
-      ...housePreference,
-      [name]: [...housePreference[name], newTag],
-    });
-    setHprefHasChanged(true);
-  };
-
   return (
     <Stack>
       <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ width: '150px', alignSelf: 'flex-end' }}
-        onClick={handleEditClick}
-      >
-        {isEditing ? 'Disable Editing' : 'Enable Editing'}
-      </Button>
       {tabs === 0 && (
         <Card>
           <ApplicationContainer>
             <Stack>
-              <AccountHeadline>Info</AccountHeadline>
+              <PreferenceHeadline>
+                Info
+                <PreferenceEditButton>
+                  <EditIcon onClick={handleEditClick} />
+                </PreferenceEditButton>
+              </PreferenceHeadline>
               <AccountGrid style={{ marginBottom: '36px' }}>
                 <Input
                   type="text"
                   label="First Name"
-                  required
                   placeholder="John"
-                  disabled={!isEditing}
+                  disabled
                   value={info?.firstName}
                   onValue={(firstName) =>
                     handleChangeInfo('firstName', firstName)
                   }
-                  validators={[
-                    {
-                      message: 'First Name is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
                   label="Last Name"
-                  required
                   placeholder="Doe"
                   value={info?.lastName}
-                  disabled={!isEditing}
+                  disabled
                   onValue={(lastName) => handleChangeInfo('lastName', lastName)}
-                  validators={[
-                    {
-                      message: 'Last Name is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -585,14 +552,6 @@ const OverviewPage = (props: any) => {
                   }
                   validators={[
                     {
-                      message: 'Birth date is required',
-                      validator: (birthDate) => {
-                        const v = birthDate as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                    {
                       message: 'Please add date of birth!',
                       validator: (birthDate) => {
                         try {
@@ -649,7 +608,12 @@ const OverviewPage = (props: any) => {
         <Card>
           <ApplicationContainer>
             <Stack>
-              <AccountHeadline>Work Experience</AccountHeadline>
+              <PreferenceHeadline>
+                Work Experience
+                <PreferenceEditButton>
+                  <EditIcon onClick={handleEditClick} />
+                </PreferenceEditButton>
+              </PreferenceHeadline>
               <WorkExperience
                 userId={userId}
                 totalData={workExperiences}
@@ -740,7 +704,6 @@ const OverviewPage = (props: any) => {
                   type="multiselect"
                   label="Theme"
                   placeholder="Please Select"
-                  required
                   options={themes}
                   value={housePreference.theme}
                   onValue={(theme) => {
@@ -749,22 +712,11 @@ const OverviewPage = (props: any) => {
                     }
                   }}
                   disabled={!isEditing}
-                  validators={[
-                    {
-                      message: 'Theme is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="multiselect"
                   label="Skills of Others"
                   placeholder="Please Select"
-                  required
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
@@ -777,21 +729,10 @@ const OverviewPage = (props: any) => {
                     }
                   }}
                   disabled={!isEditing}
-                  validators={[
-                    {
-                      message: 'Skills of others are required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="select"
                   label="Location"
-                  required
                   placeholder="Please Select"
                   onSearch={debouncedLocation}
                   options={locations}
@@ -810,21 +751,10 @@ const OverviewPage = (props: any) => {
                     )
                   }
                   disabled={!isEditing}
-                  validators={[
-                    {
-                      message: 'Location is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="select"
                   label="Language"
-                  required
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
                   options={language}
@@ -843,16 +773,6 @@ const OverviewPage = (props: any) => {
                     )
                   }
                   disabled={!isEditing}
-                  validators={[
-                    {
-                      message: 'Language is required',
-                      validator: (value) => {
-                        const v = value as string;
-                        if (v) return true;
-                        return false;
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="min-max"
