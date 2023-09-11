@@ -90,7 +90,7 @@ const Login = () => {
       <LoginTitle>{t('Login Now')}</LoginTitle>
       <LoginSubtitle>
         {t(
-          'Access updates, new opportunities, and messages all in one place by logging in below.'
+          'Access tailored living experiences and new opportunities. Log in below.'
         )}
       </LoginSubtitle>
       <Input

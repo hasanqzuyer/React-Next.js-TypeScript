@@ -37,7 +37,7 @@ const ApplicationModal = ({
         });
       } catch (e: any) {
         if (e instanceof AxiosError && e.response) {
-          push(`Apply Failed!. ${e.response.data.message}`, {
+          push(`Application Unsuccessful: ${e.response.data.message}`, {
             variant: 'error',
           });
         }
