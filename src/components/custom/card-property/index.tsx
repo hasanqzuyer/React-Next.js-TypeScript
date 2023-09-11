@@ -57,8 +57,8 @@ const PropertyCard = ({
       <Image
         src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
         alt="House thumbnail"
-        width={200}
-        height={200}
+        width={300}
+        height={300}
         priority={true}
         style={{
           width: '100%',

@@ -32,8 +32,8 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
       <Image
         alt="House thumbnail"
         src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
-        width={500}
-        height={500}
+        width={600}
+        height={600}
         priority={true}
         style={{
           height: '100%',
