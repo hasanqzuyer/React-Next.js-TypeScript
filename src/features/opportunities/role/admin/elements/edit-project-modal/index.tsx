@@ -47,8 +47,7 @@ const EditHouseProjectModal = ({
     rent: null,
     theme: '',
     info: '',
-    status: '',
-    marketType: '',
+    status: 'Primary',
     thumbnailId: null,
     assignee: null,
     images: [],
@@ -359,12 +358,12 @@ const EditHouseProjectModal = ({
               placeholder="Please Select"
               options={[
                 {
-                  value: 'Initiated',
-                  label: 'Initiated',
+                  value: 'Primary',
+                  label: 'Primary',
                 },
                 {
-                  value: 'Live',
-                  label: 'Live',
+                  value: 'Secondary',
+                  label: 'Secondary',
                 },
                 {
                   value: 'Completed',
@@ -383,35 +382,6 @@ const EditHouseProjectModal = ({
                 setHouseData({
                   ...houseData,
                   status: status ? status.value : status,
-                })
-              }
-            />
-            <Input
-              type="select"
-              label="Market Type"
-              placeholder="Please Select"
-              options={[
-                {
-                  value: 'Primary',
-                  label: 'Primary',
-                },
-                {
-                  value: 'Secondary',
-                  label: 'Secondary',
-                },
-              ]}
-              value={
-                houseData.marketType
-                  ? {
-                      label: houseData.marketType,
-                      value: houseData.marketType,
-                    }
-                  : null
-              }
-              onValue={(marketType) =>
-                setHouseData({
-                  ...houseData,
-                  marketType: marketType ? marketType.value : marketType,
                 })
               }
             />

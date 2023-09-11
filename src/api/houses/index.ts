@@ -13,11 +13,10 @@ const HouseAPI = {
     return data;
   },
 
-  getAll: async (search?: string, marketType?: string, status?: string) => {
+  getAll: async (search?: string, status?: string) => {
     const { data } = await client.get(`${Project.apis.v1}/house-projects`, {
       params: {
         search,
-        marketType,
         status,
       },
     });

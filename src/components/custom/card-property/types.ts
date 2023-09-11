@@ -12,5 +12,6 @@ export type TPropertyCardProps = Omit<
   label?: string;
   dropdown?: boolean;
   completed?: boolean;
+  applied?: string;
   refresh: () => void;
 };

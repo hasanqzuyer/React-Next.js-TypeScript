@@ -34,8 +34,9 @@ const UploadedFileModal = ({
         <Image
           src={url}
           alt={name}
-          width={300}
-          height={300}
+          width={200}
+          priority={true}
+          height={200}
           style={{ width: '100%', height: '100%' }}
         />
       )}

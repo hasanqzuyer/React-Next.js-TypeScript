@@ -90,6 +90,7 @@ const UserApplicationsPage = () => {
               )?.key
             }`}
             width={100}
+            priority={true}
             height={100}
             style={{
               height: '32px',

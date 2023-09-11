@@ -1,3 +1,4 @@
+import { IApplication } from 'api/applications/types';
 import { TDocument } from 'api/documents/types';
 import { TImage } from 'api/images/types';
 import { IUser } from 'api/users/types';
@@ -11,7 +12,6 @@ export type TCreateHouse = {
   theme: string;
   info: string;
   status: string;
-  marketType: string;
   thumbnailId: number | null;
 };
 
@@ -29,11 +29,11 @@ export interface IHouse {
   theme: string;
   info: any;
   status: string;
-  marketType: string;
   assignee: IUser | null;
   thumbnailId: number | null;
   images: TImage[];
   documents: TDocument[];
+  applications: IApplication[];
   createdAt: string;
   updatedAt: string;
 }

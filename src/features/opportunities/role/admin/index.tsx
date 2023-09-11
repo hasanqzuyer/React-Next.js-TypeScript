@@ -11,7 +11,7 @@ import HouseAPI from 'api/houses';
 import { useAppContext } from 'context';
 
 const AdminMarketPage = () => {
-  const { houseStatus } = useAppContext();
+  const { houseStatus, user } = useAppContext();
   const [tab, setTab] = useState(0);
   const { push } = useSnackbar();
 
@@ -22,13 +22,9 @@ const AdminMarketPage = () => {
   const [secondaryHouses, setSecondaryHouses] = useState<IHouse[]>([]);
   const [completedHouses, setCompletedHouses] = useState<IHouse[]>([]);
 
-  const getAllHouses = async (
-    search: string,
-    marketType: string,
-    status: string
-  ): Promise<any> => {
+  const getAllHouses = async (search: string, status: string): Promise<any> => {
     try {
-      const response = await HouseAPI.getAll(search, marketType, status);
+      const response = await HouseAPI.getAll(search, status);
 
       if (response) {
         return response;
@@ -43,15 +39,15 @@ const AdminMarketPage = () => {
   const refresh = async () => {
     switch (tab) {
       case 0:
-        const primary = await getAllHouses('', 'Primary', '');
+        const primary = await getAllHouses('', 'Primary');
         setPrimaryHouses(primary);
         break;
       case 1:
-        const secondary = await getAllHouses('', 'Secondary', '');
+        const secondary = await getAllHouses('', 'Secondary');
         setSecondaryHouses(secondary);
         break;
       case 2:
-        const completed = await getAllHouses('', '', 'Completed');
+        const completed = await getAllHouses('', 'Completed');
         setCompletedHouses(completed);
         break;
 

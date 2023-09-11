@@ -36,6 +36,7 @@ const PropertyCard = ({
   completed = false,
   dropdown = false,
   refresh,
+  applied,
   ...props
 }: TPropertyCardProps) => {
   const [menu, open, handleMenu, buttonRef, position] = useMenu(false);
@@ -52,12 +53,13 @@ const PropertyCard = ({
 
   return (
     <CardMain animation="zoom-in" {...props}>
-      {completed && <CardCompletedMark>Filled</CardCompletedMark>}
+      {completed && <CardCompletedMark>Completed</CardCompletedMark>}
       <Image
         src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
         alt="House thumbnail"
         width={200}
         height={200}
+        priority={true}
         style={{
           width: '100%',
           height: '100%',
@@ -104,10 +106,10 @@ const PropertyCard = ({
               </CardProgressValue>
             </CardProgressItem>
           )}
-          {house.status && (
+          {applied && (
             <CardProgressItem>
               Status
-              <CardProgressValue>{house.status}</CardProgressValue>
+              <CardProgressValue>{applied}</CardProgressValue>
             </CardProgressItem>
           )}
         </CardLink>
