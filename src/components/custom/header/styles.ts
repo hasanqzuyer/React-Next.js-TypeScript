@@ -33,12 +33,10 @@ export const HeaderMain = styled.header<{ theme?: Theme }>`
 export const HeaderLogo = styled.img<{ theme?: Theme }>`
   ${({ theme }) => `
     ${theme.breakpoints.down('sm')} {
-      width: 194px;
-      height: 148px;
+      width: 70px;
     }
     ${theme.breakpoints.up('sm')} {
-      width: 170px;
-      height: 102px;
+      width: 70px;
     }
   `}
 `;

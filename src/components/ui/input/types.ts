@@ -19,6 +19,7 @@ export type TInputProps = React.HTMLAttributes<HTMLDivElement> & {
     | 'multiselect'
     | 'date'
     | 'time'
+    | 'min-max-currency'
     | 'min-max';
   value: any;
   onValue: (v: any) => void;
