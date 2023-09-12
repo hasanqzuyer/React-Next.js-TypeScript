@@ -31,6 +31,7 @@ import { getDiets } from 'utilities/diets';
 import { useAppContext } from 'context';
 import { getJobTitles } from 'utilities/jobTitles';
 import { UserActionMenu } from './elements';
+import { format } from 'date-fns';
 
 const UsersPage = () => {
   const { userStatus } = useAppContext();
@@ -220,10 +221,6 @@ const UsersPage = () => {
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
-  const debouncedJobTitles = useDebounce(getJObTitleOptions, 100);
-
-  const debouncedDegrees = useDebounce(getDegreeOptions, 100);
-  const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
   const debouncedThemes = useDebounce(getThemeOptions, 100);
   const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
   const debouncedInterests = useDebounce(getInterestsOptions, 100);
@@ -330,6 +327,9 @@ const UsersPage = () => {
     if (headItem.reference === 'invested') {
       return `€${singleUser.invested ? singleUser.invested : 0}`;
     }
+    if (headItem.reference === 'register_date') {
+      return format(new Date(singleUser.createdAt), 'MM/dd/yyyy');
+    }
     if (headItem.reference === 'actions') {
       return <UserActionMenu userId={singleUser.id} reload={applyFilters} />;
     }
@@ -348,6 +348,7 @@ const UsersPage = () => {
     getInterestsOptions();
     getThemeOptions();
     getSkillsOfOtherOptions();
+    getJObTitleOptions();
   }, []);
 
   const handleExport = (type: string) => {

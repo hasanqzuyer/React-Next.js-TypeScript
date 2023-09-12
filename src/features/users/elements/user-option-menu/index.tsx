@@ -40,7 +40,7 @@ const UserMenuActions = ({ reload, userId, ...props }: TUserOptionMenu) => {
   const ApplicationStatusActions = [
     {
       icon: <ReceivedIcon />,
-      label: 'View Profile',
+      label: 'View',
       action: () => {
         router.push(`/users/overview?userId=${userId}`);
         handleMenu();

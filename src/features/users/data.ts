@@ -83,6 +83,11 @@ export const DUsersHead = [
     visible: true,
   },
   {
+    reference: 'register_date',
+    label: 'Register Date',
+    visible: true,
+  },
+  {
     reference: 'actions',
     label: 'Actions',
     visible: true,
