@@ -6,6 +6,8 @@ import {
   AddProjectDocumentPlaceholder,
   ISpan,
   ImageUploadButton,
+  ImageLinkContainer,
+  ThumbnailContainer,
 } from 'features/opportunities/role/admin/elements/add-project-modal/style';
 import { Button, Checkbox, Input, Label } from 'components/ui';
 import { GridCell, Stack } from 'components/system';
@@ -415,28 +417,32 @@ const EditHouseProjectModal = ({
                 return (
                   <>
                     <AddProjectDocumentPlaceholder>
-                      <ImageUploadButton
-                        onClick={() => {
-                          modalOpen();
-                          setActivePhotoIdx(idx);
-                        }}
-                        key={id}
-                      >
-                        {name}
-                      </ImageUploadButton>
-                      <Checkbox
-                        label="Mark as Thumbnail"
-                        value={houseData.thumbnailId === id}
-                        onValue={(value) =>
-                          setHouseData((data: any) => ({
-                            ...data,
-                            thumbnailId: value ? id : null,
-                          }))
-                        }
-                      />
-                      <ISpan onClick={() => handleDeletePhoto(id)}>
-                        <DeleteIcon />
-                      </ISpan>
+                      <ImageLinkContainer>
+                        <ImageUploadButton
+                          onClick={() => {
+                            modalOpen();
+                            setActivePhotoIdx(idx);
+                          }}
+                          key={id}
+                        >
+                          {name}
+                        </ImageUploadButton>
+                      </ImageLinkContainer>
+                      <ThumbnailContainer>
+                        <Checkbox
+                          label="Mark as Thumbnail"
+                          value={houseData.thumbnailId === id}
+                          onValue={(value) =>
+                            setHouseData((data: any) => ({
+                              ...data,
+                              thumbnailId: value ? id : null,
+                            }))
+                          }
+                        />
+                        <ISpan onClick={() => handleDeletePhoto(id)}>
+                          <DeleteIcon />
+                        </ISpan>
+                      </ThumbnailContainer>
                     </AddProjectDocumentPlaceholder>
                     {modal && key && activePhotoIdx === idx && (
                       <UploadedFileModal

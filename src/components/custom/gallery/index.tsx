@@ -29,18 +29,20 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
 
   return (
     <SGallery {...props}>
-      <Image
-        alt="House thumbnail"
-        src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
-        width={600}
-        height={600}
-        priority={true}
-        style={{
-          height: '100%',
-          width: '100%',
-          objectFit: 'cover',
-        }}
-      />
+      <div style={{ overflow: 'hidden', objectFit: 'cover' }}>
+        <Image
+          alt="House thumbnail"
+          src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
+          width={1000}
+          height={1000}
+          priority={true}
+          style={{
+            height: '100%',
+            width: '100%',
+            objectFit: 'cover',
+          }}
+        />
+      </div>
       {fullscreen && (
         <SFullScreenGallery>
           <SExit onClick={handleFullScreen}>
@@ -62,9 +64,9 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                 <Image
                   alt="house photo"
                   src={`${Project.apis.v1}/public/images/${image?.key}`}
-                  width={250}
+                  width={1000}
                   priority={true}
-                  height={250}
+                  height={1000}
                   style={{
                     height: `${fullscreen ? '70%' : '200px'}`,
                     width: `${fullscreen ? '70%' : '100%'}`,
@@ -84,7 +86,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           drag: true,
           pagination: false,
           gap: '16px',
-          height: '640px',
+          height: '750px',
           direction: 'ttb',
           breakpoints: {
             1536: {

@@ -45,6 +45,15 @@ export const ISpan = styled.div`
   cursor: pointer;
 `;
 
+export const ImageLinkContainer = styled.div`
+  width: 50%;
+`;
+export const ThumbnailContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const ToBeApprovedActionsMenu = styled(Menu)<{
   position: { right: number; top: number };
 }>`
