@@ -19,7 +19,7 @@ import {
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon } from 'components/svg';
 import { useDebounce, usePagination, useSnackbar } from 'hooks';
-import { ApplicationAPI } from 'api';
+import { ApplicationAPI, HouseAPI } from 'api';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
 import { getDiets } from 'utilities/diets';
@@ -35,6 +35,7 @@ import { useAppContext } from 'context';
 import ApplicationStatusActions from './elements/application-status-modal';
 import { getJobTitles } from 'utilities/jobTitles';
 import { getInterestsAndHobbies } from 'utilities/interests';
+import { format } from 'date-fns';
 
 const AdminApplicationsPage = () => {
   const { applicationStatus } = useAppContext();
@@ -54,6 +55,7 @@ const AdminApplicationsPage = () => {
   const [themes, setThemes] = useState<any[]>([]);
   const [skillsOfthers, setSkillsOfOthers] = useState<any[]>([]);
   const [diets, setDiets] = useState<any[]>([]);
+  const [houseNames, setHouseNames] = useState<any[]>([]);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -239,18 +241,19 @@ const AdminApplicationsPage = () => {
     );
   };
 
+  const getHouseNames = async () => {
+    const result = await HouseAPI.getAllHouseNames();
+    setHouseNames(
+      result.map((house: any) => ({
+        value: house.name,
+        label: house.name,
+      }))
+    );
+  };
+
   const debouncedLocation = useDebounce(getLocationOptions, 100);
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
-  const debouncedSocialMedias = useDebounce(getSocialMediaOptions, 100);
-  // const debouncedSchools = useDebounce(getSchoolAndUniversityOptions, 100);
-  const debouncedDegrees = useDebounce(getDegreeOptions, 100);
-  const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
-  const debouncedThemes = useDebounce(getThemeOptions, 100);
-  const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
-  const debouncedDiets = useDebounce(getDietsOptions, 100);
-  const debouncedJobTitles = useDebounce(getJObTitleOptions, 100);
-  const debouncedInterests = useDebounce(getInterestsOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
@@ -259,13 +262,14 @@ const AdminApplicationsPage = () => {
     getSocialMediaOptions();
     getDegreeOptions();
     getDietsOptions();
-    // getSchoolAndUniversityOptions();
+    getHouseNames();
     getFieldOfStudyOptions();
     getThemeOptions();
     getSkillsOfOtherOptions();
     getApplicationStatues();
     getApplicationTypes();
     getJObTitleOptions();
+    getInterestsOptions();
   }, []);
 
   const applyFilters = () => {
@@ -362,20 +366,6 @@ const AdminApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-          {/* <Image
-            alt="house photo"
-            src={`${Project.apis.v1}/public/images/${application.house.images.find(
-              (item) => item.id === application.house.thumbnailId
-            )?.key}`}
-            width={100}
-            height={100}
-            style={{
-              height: '32px',
-              width: '32px',
-              borderRadius: '8px',
-              objectFit: 'cover',
-            }}
-          /> */}
           <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
         </MarketTableItem>
       );
@@ -397,6 +387,9 @@ const AdminApplicationsPage = () => {
     }
     if (headItem.reference === 'tier') {
       return application.tier;
+    }
+    if (headItem.reference === 'date') {
+      return format(new Date(application.createdAt), 'MM/dd/yyyy');
     }
 
     if (headItem.reference === 'actions') {
@@ -501,7 +494,6 @@ const AdminApplicationsPage = () => {
                       type="multiselect"
                       label="Social Media"
                       placeholder="Please Select"
-                      onSearch={debouncedSocialMedias}
                       value={filter.socialMedia}
                       options={socialMedias}
                       onValue={(socialMedia) =>
@@ -631,8 +623,15 @@ const AdminApplicationsPage = () => {
                   <Grid columns={4}>
                     <Input
                       type="multiselect"
+                      label="House"
+                      placeholder="Please Select"
+                      options={houseNames}
+                      value={filter.house}
+                      onValue={(house) => setFilter({ ...filter, house })}
+                    />
+                    <Input
+                      type="multiselect"
                       label="Theme"
-                      onSearch={debouncedThemes}
                       placeholder="Please Select"
                       options={themes}
                       value={filter.theme}
@@ -642,7 +641,6 @@ const AdminApplicationsPage = () => {
                       type="multiselect"
                       label="Skills of Others"
                       placeholder="Please Select"
-                      onSearch={debouncedSkillsOfOthers}
                       value={filter.skillsOfOthers}
                       options={skillsOfthers}
                       onValue={(skillsOfOthers) =>
@@ -697,7 +695,6 @@ const AdminApplicationsPage = () => {
                       type="multiselect"
                       label="Interests and Hobbies"
                       placeholder="Please Select"
-                      onSearch={debouncedInterests}
                       options={interests}
                       value={filter.interestsAndHobbies}
                       onValue={(interestsAndHobbies) =>
@@ -709,7 +706,6 @@ const AdminApplicationsPage = () => {
                       label="Diet"
                       options={diets}
                       placeholder="Please Select"
-                      onSearch={debouncedDiets}
                       value={filter.diet}
                       onValue={(diet) => setFilter({ ...filter, diet })}
                     />

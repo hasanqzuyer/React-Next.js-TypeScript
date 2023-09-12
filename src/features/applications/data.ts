@@ -31,6 +31,7 @@ export const DApplicationsFilters = () => ({
   degree: [],
   fieldOfStudy: [],
 
+  house: [],
   theme: [],
   skillsOfOthers: [],
   houseLocation: [],
@@ -80,6 +81,11 @@ export const DApplicationsHead = [
   {
     reference: 'status',
     label: 'Status',
+    visible: true,
+  },
+  {
+    reference: 'date',
+    label: 'Application Date',
     visible: true,
   },
 ];
@@ -133,6 +139,11 @@ export const DAdminApplicationsHead = [
   {
     reference: 'status',
     label: 'Status',
+    visible: true,
+  },
+  {
+    reference: 'date',
+    label: 'Application Date',
     visible: true,
   },
   {

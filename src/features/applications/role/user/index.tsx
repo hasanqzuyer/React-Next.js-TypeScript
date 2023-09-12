@@ -16,6 +16,7 @@ import { ApplicationAPI } from 'api';
 import { useAppContext } from 'context';
 import { IApplication } from 'api/applications/types';
 import Project from 'constants/project';
+import { format } from 'date-fns';
 
 const UserApplicationsPage = () => {
   const { user, applicationStatus } = useAppContext();
@@ -117,6 +118,9 @@ const UserApplicationsPage = () => {
     }
     if (headItem.reference === 'status') {
       return application.status;
+    }
+    if (headItem.reference === 'date') {
+      return format(new Date(application.createdAt), 'MM/dd/yyyy');
     }
 
     return '';

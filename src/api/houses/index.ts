@@ -24,6 +24,13 @@ const HouseAPI = {
     return data;
   },
 
+  getAllHouseNames: async () => {
+    const { data } = await client.get(
+      `${Project.apis.v1}/house-projects/names`
+    );
+    return data;
+  },
+
   updateHouse: async (body: any, id: number) => {
     await client.patch(`${Project.apis.v1}/house-projects/${id}`, body);
   },
