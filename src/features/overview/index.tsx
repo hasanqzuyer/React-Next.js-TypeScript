@@ -135,6 +135,7 @@ const OverviewPage = (props: any) => {
           <OverviewTextContainer>
             {houseData?.info && (
               <OverviewTextContent
+                className="html"
                 dangerouslySetInnerHTML={{ __html: houseData.info }}
               />
             )}
