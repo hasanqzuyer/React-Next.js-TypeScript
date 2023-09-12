@@ -6,6 +6,7 @@ import {
   SExit,
   SplideItem,
   SplideMain,
+  ImageContainer,
 } from 'components/custom/gallery/styles';
 import Image from 'next/image';
 
@@ -29,7 +30,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
 
   return (
     <SGallery {...props}>
-      <div style={{ overflow: 'hidden', objectFit: 'cover' }}>
+      <ImageContainer>
         <Image
           alt="House thumbnail"
           src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
@@ -42,7 +43,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             objectFit: 'cover',
           }}
         />
-      </div>
+      </ImageContainer>
       {fullscreen && (
         <SFullScreenGallery>
           <SExit onClick={handleFullScreen}>
@@ -61,18 +62,20 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           >
             {images.map((image: any, index: number) => (
               <SplideItem key={image + index}>
-                <Image
-                  alt="house photo"
-                  src={`${Project.apis.v1}/public/images/${image?.key}`}
-                  width={1000}
-                  priority={true}
-                  height={1000}
-                  style={{
-                    height: `${fullscreen ? '70%' : '200px'}`,
-                    width: `${fullscreen ? '70%' : '100%'}`,
-                    objectFit: 'cover',
-                  }}
-                />
+                <ImageContainer>
+                  <Image
+                    alt="house photo"
+                    src={`${Project.apis.v1}/public/images/${image?.key}`}
+                    width={1000}
+                    priority={true}
+                    height={1000}
+                    style={{
+                      height: `${fullscreen ? '70%' : '200px'}`,
+                      width: `${fullscreen ? '70%' : '100%'}`,
+                      objectFit: 'cover',
+                    }}
+                  />
+                </ImageContainer>
               </SplideItem>
             ))}
           </SplideMain>
