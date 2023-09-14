@@ -58,7 +58,7 @@ const ApplicationStatusActions = ({
       icon: <ApproveIcon />,
       label: 'Shortlist',
       action: () => {
-        handleChange('Shortlist');
+        handleChange('Second Round');
         handleMenu();
       },
     },
@@ -66,7 +66,7 @@ const ApplicationStatusActions = ({
       icon: <DeclineIcon />,
       label: 'Reject',
       action: () => {
-        handleChange('Reject');
+        handleChange('Not Selected');
         handleMenu();
       },
     },
@@ -74,7 +74,7 @@ const ApplicationStatusActions = ({
       icon: <RecommendedIcon />,
       label: 'Select',
       action: () => {
-        handleChange('Select');
+        handleChange('Selected');
         handleMenu();
       },
     },
@@ -82,7 +82,7 @@ const ApplicationStatusActions = ({
       icon: <WithoutReportIcon />,
       label: 'Accomodate',
       action: () => {
-        handleChange('Accomodate');
+        handleChange('Accomodated');
         handleMenu();
       },
     },
@@ -100,7 +100,7 @@ const ApplicationStatusActions = ({
       icon: <ApproveIcon />,
       label: 'Shortlist',
       action: () => {
-        handleChange('Shortlist');
+        handleChange('Second Round');
         handleMenu();
       },
     },
@@ -108,7 +108,7 @@ const ApplicationStatusActions = ({
       icon: <DeclineIcon />,
       label: 'Reject',
       action: () => {
-        handleChange('Reject');
+        handleChange('Not Selected');
         handleMenu();
       },
     },
@@ -116,7 +116,7 @@ const ApplicationStatusActions = ({
       icon: <RecommendedIcon />,
       label: 'Select',
       action: () => {
-        handleChange('Select');
+        handleChange('Selected');
         handleMenu();
       },
     },
@@ -124,7 +124,7 @@ const ApplicationStatusActions = ({
       icon: <WithoutReportIcon />,
       label: 'Accomodate',
       action: () => {
-        handleChange('Accomodate');
+        handleChange('Accomodated');
         handleMenu();
       },
     },
@@ -147,7 +147,7 @@ const ApplicationStatusActions = ({
         <ApplicationStatusActionsMenu
           position={position}
           items={
-            status === 'Accomodate'
+            status === 'Accomodated'
               ? ApplicationStatusActions2
               : ApplicationStatusActions
           }
