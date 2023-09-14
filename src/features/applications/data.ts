@@ -174,19 +174,19 @@ export const DApplicationType = [
 
 export const DApplicationStatues = [
   {
-    name: 'Pending',
+    name: 'Applied',
   },
   {
-    name: 'Shortlist',
+    name: 'Second Round',
   },
   {
-    name: 'Reject',
+    name: 'Not Selected',
   },
   {
-    name: 'Select',
+    name: 'Selected',
   },
   {
-    name: 'Accomodate',
+    name: 'Accomodated',
   },
   {
     name: 'Widthdrawn',
