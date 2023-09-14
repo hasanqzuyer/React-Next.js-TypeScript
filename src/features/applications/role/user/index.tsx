@@ -79,14 +79,13 @@ const UserApplicationsPage = () => {
 
   const renderItem = ({ headItem, row }: TTableRenderItemObject) => {
     const application = row.data as IApplication;
-
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
           <Image
             alt="house photo"
             src={`${Project.apis.v1}/public/images/${
-              application.house.images.find(
+              application.house.images?.find(
                 (item) => item.id === application.house.thumbnailId
               )?.key
             }`}

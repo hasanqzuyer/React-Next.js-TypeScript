@@ -380,6 +380,16 @@ const Education = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'From Date must must be less than To Date!',
+                    validator: (fromDate) => {
+                      try {
+                        return new Date(education.to) > new Date(fromDate);
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
                 ]}
               />
               <Input
@@ -401,11 +411,21 @@ const Education = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'To Date must must be greater than From Date!',
+                    validator: (toDate) => {
+                      try {
+                        return new Date(education.from) < new Date(toDate);
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
                 ]}
               />
             </Stack>
             <Input
-              type="number"
+              type="text"
               label="Overall GPA"
               placeholder="Please Enter"
               value={education.overAllGPA}

@@ -128,6 +128,17 @@ const RegisterPage = () => {
                 }
               },
             },
+            {
+              message: t('First name must contain only letters'),
+              validator: (firstName) => {
+                try {
+                  nameSchema.validateSync({ pattern: firstName });
+                  return true;
+                } catch {
+                  return false;
+                }
+              },
+            },
           ]}
         />
         <RegisterCompanyLName
@@ -154,6 +165,17 @@ const RegisterPage = () => {
               validator: (lastName) => {
                 try {
                   nameSchema.validateSync({ length: lastName });
+                  return true;
+                } catch {
+                  return false;
+                }
+              },
+            },
+            {
+              message: t('Last name must contain only letters'),
+              validator: (lastName) => {
+                try {
+                  nameSchema.validateSync({ pattern: lastName });
                   return true;
                 } catch {
                   return false;

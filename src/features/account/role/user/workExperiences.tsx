@@ -272,7 +272,6 @@ const WorkExperience = (props: any) => {
   };
 
   const debouncedLocation = useDebounce(getLocationOptions, 100);
-  const debouncedJobTitles = useDebounce(getJobTitleOptions, 100);
 
   useEffect(() => {
     getLocationOptions();
@@ -386,6 +385,20 @@ const WorkExperience = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'From Date must must be less than To Date!',
+                    validator: (fromDate) => {
+                      try {
+                        if (experience.stillWorkHere) {
+                          return new Date() > new Date(fromDate);
+                        } else {
+                          return new Date(experience.to) > new Date(fromDate);
+                        }
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
                 ]}
               />
               <Input
@@ -407,6 +420,16 @@ const WorkExperience = (props: any) => {
                       try {
                         birthDateSchema.validateSync({ birthDate });
                         return true;
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
+                  {
+                    message: 'To Date must must be greater than From Date!',
+                    validator: (toDate) => {
+                      try {
+                        return new Date(experience.from) < new Date(toDate);
                       } catch {
                         return false;
                       }

@@ -3,7 +3,7 @@ import { AccountGrid } from 'features/users-overview/styles';
 import { Input } from 'components/ui';
 import { Stack } from 'components/system';
 import { AddIcon, DeleteIcon } from 'components/svg';
-import { useDebounce, useSnackbar } from 'hooks';
+import { useSnackbar } from 'hooks';
 import EducationApi from 'api/education';
 import { TEducation } from 'api/education/types';
 import { getDegrees } from 'utilities/degrees';
@@ -266,8 +266,6 @@ const Education = (props: any) => {
       }))
     );
   };
-  const debouncedDegrees = useDebounce(getDegreeOptions, 100);
-  const debouncedFieldOfStudy = useDebounce(getFieldOfStudyOptions, 100);
 
   useEffect(() => {
     getDegreeOptions();
@@ -411,7 +409,7 @@ const Education = (props: any) => {
               />
             </Stack>
             <Input
-              type="number"
+              type="text"
               label="Overall GPA"
               placeholder="Please Enter"
               disabled={disabled}

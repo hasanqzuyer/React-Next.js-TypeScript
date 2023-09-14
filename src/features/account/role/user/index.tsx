@@ -29,7 +29,7 @@ import { birthDateSchema } from 'utilities/validators';
 import { AccountChange, AccountSpan } from 'features/account/style';
 import { ChangePasswordModal } from './elements';
 
-const AccountPage = (props: any) => {
+const AccountPage = () => {
   const { user, getMeData } = useAppContext();
   const [tabs, setTabs] = useState(0);
   const { push } = useSnackbar();
@@ -48,14 +48,6 @@ const AccountPage = (props: any) => {
   const [eduIssuedArrays, setEduIssuedArrays] = useState<any[]>([]);
 
   const [saveCount, setCount] = useState<number>(0);
-
-  // Viktor
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditing(!isEditing);
-    setCount(1);
-  };
 
   const [info, setInfo] = useState<any>({
     firstName: '',
@@ -405,6 +397,7 @@ const AccountPage = (props: any) => {
     ) {
       setCount((count) => count + 1);
       getUserById(user.id);
+      getMeData();
     }
   }, [
     expSaving,

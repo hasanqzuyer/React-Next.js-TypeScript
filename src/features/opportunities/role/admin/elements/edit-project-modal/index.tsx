@@ -81,42 +81,42 @@ const EditHouseProjectModal = ({
     photos.length === 0;
 
   const handlePhotos = async () => {
-    const file: any = await pick({
+    const files: any = await pick({
       accept: 'image/jpg, image/jpeg, image/png',
+      multiple: true,
     });
 
     try {
-      await ImageApi.fileUpload(file).then(async (data) => {
-        setPhotos((prev: TImage[]) => [...prev, { ...data }]);
-        push('File successfully uploaded.', { variant: 'success' });
-      });
+      for (let index = 0; index < files.length; index++) {
+        const element = files[index];
+        await ImageApi.fileUpload(element).then(async (data) => {
+          setPhotos((prev: TImage[]) => [...prev, { ...data }]);
+        });
+      }
+      push('Images successfully uploaded.', { variant: 'success' });
     } catch (error: any) {
-      push('File upload failed.', { variant: 'error' });
+      push('Images upload failed.', { variant: 'error' });
     }
   };
 
   const handleDocuments = async () => {
-    const file: any = await pick({
+    const files: any = await pick({
       accept: 'application/pdf',
+      multiple: true,
     });
 
     try {
-      await DocumentApi.fileUpload(file).then(async (data) => {
-        if (data && file && file.name && file.type && data && data.id) {
-          setDocuments((prev: TDocument[]) => [
-            ...prev,
-            {
-              ...data,
-            },
-          ]);
-          push('File successfully uploaded.', { variant: 'success' });
-        }
-      });
+      for (let index = 0; index < files.length; index++) {
+        const element = files[index];
+        await DocumentApi.fileUpload(element).then(async (data) => {
+          setDocuments((prev: TDocument[]) => [...prev, { ...data }]);
+        });
+      }
+      push('Documents successfully uploaded.', { variant: 'success' });
     } catch (error: any) {
-      push('File upload failed.', { variant: 'error' });
+      push('Documents upload failed.', { variant: 'error' });
     }
   };
-
   const handleDeletePhoto = (id: number) => {
     try {
       ImageApi.fileDelete(id).then(() => {
@@ -166,7 +166,6 @@ const EditHouseProjectModal = ({
   };
 
   const debouncedLocation = useDebounce(getLocationOptions, 100);
-  const debouncedTheme = useDebounce(getThemeOptions, 100);
 
   useEffect(() => {
     getLocationOptions();

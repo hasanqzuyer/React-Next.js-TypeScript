@@ -177,9 +177,18 @@ export const DApplicationStatues = [
     name: 'Pending',
   },
   {
-    name: 'Approved',
+    name: 'Shortlist',
   },
   {
-    name: 'Rejected',
+    name: 'Reject',
+  },
+  {
+    name: 'Select',
+  },
+  {
+    name: 'Accomodate',
+  },
+  {
+    name: 'Widthdrawn',
   },
 ];

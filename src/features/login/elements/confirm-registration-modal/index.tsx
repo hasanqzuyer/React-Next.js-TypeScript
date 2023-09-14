@@ -34,11 +34,17 @@ const ConfirmRegistrationModal = ({
       const lang = locale ? locale.slice(0, 2) : '';
       await AuthorizationAPI.resendEmailConfirmation(body, lang);
       setClicked(true);
+      push('Successfully Sent, Please check your email inbox', {
+        variant: 'success',
+      });
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
-        push(e.response.data.message, {
-          variant: 'error',
-        });
+        if (e.response.data.message === 'Too many requests!') {
+          setClicked(false);
+          push(e.response.data.message, {
+            variant: 'error',
+          });
+        }
       }
     }
   };
@@ -50,6 +56,7 @@ const ConfirmRegistrationModal = ({
       )}
     </p>
   );
+
   const initialMessage = (
     <p>
       {t(
@@ -67,9 +74,7 @@ const ConfirmRegistrationModal = ({
   );
 
   useEffect(() => {
-    if (count === 0) {
-      setClicked(true);
-    }
+    setClicked(true);
   }, []);
 
   return (
