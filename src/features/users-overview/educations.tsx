@@ -383,6 +383,16 @@ const Education = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'From Date must must be less than To Date!',
+                    validator: (fromDate) => {
+                      try {
+                        return new Date(education.to) > new Date(fromDate);
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
                 ]}
               />
               <Input
@@ -400,6 +410,16 @@ const Education = (props: any) => {
                       try {
                         birthDateSchema.validateSync({ birthDate });
                         return true;
+                      } catch {
+                        return false;
+                      }
+                    },
+                  },
+                  {
+                    message: 'To Date must must be greater than From Date!',
+                    validator: (toDate) => {
+                      try {
+                        return new Date(education.from) < new Date(toDate);
                       } catch {
                         return false;
                       }
