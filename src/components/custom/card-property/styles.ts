@@ -49,6 +49,7 @@ export const CardPriceValue = styled.div<{ theme?: Theme }>`
     color: ${theme.palette.primary.main};
     font-size: 20px;
     font-weight: 700;
+    white-space: nowrap;
   `}
 `;
 
@@ -246,7 +247,7 @@ export const TableMenu = styled(Menu)<{
   position: { right: number; top: number };
 }>`
   ${({ position }) => `
-    position: fixed;
+    position: absolute;
     z-index: 200;
     width: 120px;
     right: ${position?.right}px;

@@ -27,6 +27,7 @@ import { useMenu, useModal } from 'hooks';
 import { ApplicationModal, EditProjectModal } from './elements';
 import { convertLocationToFlag } from 'utilities/converters';
 import Project from 'constants/project';
+import Tooltip from '../tooltip';
 
 const PropertyCard = ({
   image,
@@ -57,14 +58,13 @@ const PropertyCard = ({
       <Image
         src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
         alt="House thumbnail"
-        width={300}
+        width={600}
         height={300}
         priority={true}
         style={{
           width: '100%',
-          height: '100%',
           objectFit: 'cover',
-          maxHeight: '250px',
+          height: '300px',
           borderTopRightRadius: 7,
           borderTopLeftRadius: 7,
           cursor: 'pointer',
@@ -83,7 +83,17 @@ const PropertyCard = ({
         {house.theme && (
           <CardPrice>
             Theme
-            <CardPriceValue>{house.theme}</CardPriceValue>
+            {house.theme.length < 16 ? (
+              <CardPriceValue>{house.theme}</CardPriceValue>
+            ) : (
+              <Tooltip title={house.theme}>
+                <CardPriceValue>
+                  {house.theme.length > 16
+                    ? house.theme.slice(0, 16) + '...'
+                    : house.theme}
+                </CardPriceValue>
+              </Tooltip>
+            )}
           </CardPrice>
         )}
       </CardHead>
@@ -126,12 +136,16 @@ const PropertyCard = ({
         )}
         {dropdown && (
           <Button variant="contained" color="primary">
-            <ISpan onClick={handleMenu} ref={buttonRef}>
+            <ISpan
+              onClick={() => {
+                router.push(link);
+              }}
+            >
               {label}
-              <IDownArrow>
-                <CarretDownIcon style={{ marginLeft: '10px' }} />
-              </IDownArrow>
             </ISpan>
+            <IDownArrow onClick={handleMenu} ref={buttonRef}>
+              <CarretDownIcon style={{ marginLeft: '10px' }} />
+            </IDownArrow>
             {open && (
               <TableMenu
                 position={position}
