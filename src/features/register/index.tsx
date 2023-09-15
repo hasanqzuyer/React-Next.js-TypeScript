@@ -51,7 +51,6 @@ const RegisterPage = () => {
 
   const [legalsChecked, setLegalsChecked] = useState({
     commonLegal: false,
-    patientSpecificLegal: false,
   });
 
   const [crModal, openCrModal, closeCrModal] = useModal(false);
@@ -62,7 +61,6 @@ const RegisterPage = () => {
     !state.email ||
     !state.password ||
     !legalsChecked.commonLegal ||
-    !legalsChecked.patientSpecificLegal ||
     !!errors.find((x) => x);
 
   const handleRegister = async () => {
@@ -262,24 +260,6 @@ const RegisterPage = () => {
           value={legalsChecked.commonLegal}
           onValue={(v) =>
             setLegalsChecked({ ...legalsChecked, commonLegal: v })
-          }
-        />
-        <RegisterCheckbox
-          label={
-            <span
-              dangerouslySetInnerHTML={{
-                __html: `I consent to Shared Vacay's processing of my special category data as per the <a href='${process.env.NEXT_PUBLIC_PRIVACY_POLICY}' target='_blank'>Privacy Policy</a>`,
-              }}
-            />
-          }
-          size="small"
-          color="primary"
-          value={legalsChecked.patientSpecificLegal}
-          onValue={(patientSpecificLegal) =>
-            setLegalsChecked({
-              ...legalsChecked,
-              patientSpecificLegal,
-            })
           }
         />
       </Stack>
