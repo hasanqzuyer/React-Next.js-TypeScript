@@ -61,6 +61,7 @@ export const PageLayoutRightContainer = styled.div<{ theme?: Theme }>`
 export const PageLayoutRight = styled.img<{ theme?: Theme }>`
   ${({ theme }) => `
       width: 100%;
+      height: 100vh;
       object-fit: cover;
 
       ${theme.breakpoints.down('md')} {

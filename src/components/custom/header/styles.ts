@@ -25,7 +25,7 @@ export const HeaderMain = styled.header<{ theme?: Theme }>`
           padding: 24px 7.5% 0;
         }
         ${theme.breakpoints.up('xl')} {
-          padding: 24px 12.5% 0;
+          padding: 37px 12.5% 0;
         }
         `}
 `;
@@ -33,10 +33,10 @@ export const HeaderMain = styled.header<{ theme?: Theme }>`
 export const HeaderLogo = styled.img<{ theme?: Theme }>`
   ${({ theme }) => `
     ${theme.breakpoints.down('sm')} {
-      width: 70px;
+      width: 225px;
     }
     ${theme.breakpoints.up('sm')} {
-      width: 70px;
+      width: 225px;
     }
   `}
 `;
