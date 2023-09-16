@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from 'components/custom';
 import { TChangePasswordModalProps } from 'features/account/role/user/elements/change-password-modal/types';
 import { ChangePasswordModalMain } from 'features/account/role/user/elements/change-password-modal/styles';
@@ -8,29 +8,35 @@ import { useSnackbar } from 'hooks';
 import { AuthorizationAPI } from 'api';
 import { passwordSchema } from 'utilities/validators';
 
-const ChangePasswordModal = ({
-  onClose,
-  ...props
-}: TChangePasswordModalProps) => {
+const ChangePasswordModal = ({ onClose, ...props }) => {
   const [state, setState] = useState({
     oldPassword: '',
     newPassword: '',
     repeatNewPassword: '',
   });
-  const [errors, setErrors] = useState([false, false]);
-  const isDisabled =
-    !state.oldPassword ||
-    !state.newPassword ||
-    !!errors.find((x) => x) ||
-    !state.repeatNewPassword;
+  const [errors, setErrors] = useState([false, false, false]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleErrors = (index: number) => (value: boolean) => {
+  useEffect(() => {
+    const isDisabled =
+      !state.oldPassword ||
+      !state.newPassword ||
+      !!errors.find((x) => x) ||
+      !state.repeatNewPassword ||
+      state.newPassword !== state.repeatNewPassword;
+
+    setIsFormValid(!isDisabled);
+  }, [state, errors]);
+
+  const handleErrors = (index) => (value) => {
     setErrors((x) => x.map((a, b) => (b === index ? value : a)));
   };
 
   const { push } = useSnackbar();
 
   const changePassword = async () => {
+    if (!isFormValid) return;
+
     try {
       await AuthorizationAPI.adminResetPassword(
         state.oldPassword,
@@ -38,7 +44,7 @@ const ChangePasswordModal = ({
       );
       push('Password successfully updated!', { variant: 'success' });
       onClose();
-    } catch (e: any) {
+    } catch (e) {
       push(e.response.data.message, { variant: 'error' });
       onClose();
     }
@@ -53,7 +59,7 @@ const ChangePasswordModal = ({
           color="primary"
           variant="contained"
           size="large"
-          disabled={isDisabled}
+          disabled={!isFormValid}
           onClick={changePassword}
         >
           Change password
@@ -73,31 +79,31 @@ const ChangePasswordModal = ({
             onValue={(oldPassword) => setState({ ...state, oldPassword })}
             validators={[
               {
+                message: 'This field is required.',
+                validator: (password) => !!password,
+              },
+              {
                 message: 'Old password is required',
-                validator: (password) => {
-                  const v = password as string;
-                  if (v.trim()) return true;
-                  return false;
-                },
+                validator: (password) => !!password.trim(),
               },
             ]}
           />
           <Input
             type="password"
-            label={'New Password'}
+            label="New Password"
             required
-            placeholder={'Please Enter your Password'}
+            placeholder="Please Enter your Password"
             value={state.newPassword}
             onValue={(newPassword) => setState({ ...state, newPassword })}
             errorCallback={handleErrors(0)}
             validators={[
               {
+                message: 'This field is required.',
+                validator: (password) => !!password,
+              },
+              {
                 message: 'New Password is required',
-                validator: (password) => {
-                  const v = password as string;
-                  if (v.trim()) return true;
-                  return false;
-                },
+                validator: (password) => !!password.trim(),
               },
               {
                 message:
@@ -111,11 +117,17 @@ const ChangePasswordModal = ({
                   }
                 },
               },
+              {
+                message:
+                  'New password should not be the same as the old password',
+                validator: (password) => password !== state.oldPassword,
+              },
             ]}
           />
           <Input
             type="password"
             label="Repeat new password"
+            required
             placeholder="Please Enter"
             value={state.repeatNewPassword}
             onValue={(repeatNewPassword) =>
@@ -124,12 +136,13 @@ const ChangePasswordModal = ({
             errorCallback={handleErrors(1)}
             validators={[
               {
-                message: 'New Password and Confirm Password should be same',
-                validator: (password) => {
-                  const v = password === state.newPassword;
-                  if (v) return true;
-                  return false;
-                },
+                message: 'This field is required.',
+                validator: (password) => !!password,
+              },
+              {
+                message:
+                  'New password and confirmation password must be the same',
+                validator: (password) => password === state.newPassword,
               },
             ]}
           />

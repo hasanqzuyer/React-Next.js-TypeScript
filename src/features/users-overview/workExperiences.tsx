@@ -417,7 +417,7 @@ const WorkExperience = (props: any) => {
                     ? new Date().toISOString()
                     : experience.to
                 }
-                disabled={experience.stillWorkHere}
+                disabled={experience.stillWorkHere || disabled}
                 onValue={(to) => handleChange('to', to, experience.id)}
                 errorCallback={handleErrors(`${experience.id}_${index}_to`)}
                 validators={[
