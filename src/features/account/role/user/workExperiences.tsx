@@ -388,6 +388,7 @@ const WorkExperience = (props: any) => {
                   {
                     message: 'From Date must must be less than To Date!',
                     validator: (fromDate) => {
+                      if (!experience.to) return true;
                       try {
                         if (experience.stillWorkHere) {
                           return new Date() > new Date(fromDate);
@@ -399,24 +400,27 @@ const WorkExperience = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'To date is required!',
+                    validator: (date) => {
+                      return !(date && !experience.to);
+                    }
+                  }
                 ]}
               />
               <Input
                 type="date"
                 label="To"
                 placeholder="Please Select"
-                value={
-                  experience.stillWorkHere
-                    ? new Date().toISOString()
-                    : experience.to
-                }
-                disabled={experience.stillWorkHere}
+                value={experience.stillWorkHere ? null :  experience.to }
+                disabled={experience.stillWorkHere || experience.from == ""}
                 onValue={(to) => handleChange('to', to, experience.id)}
                 errorCallback={handleErrors(`${experience.id}_${index}_to`)}
                 validators={[
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
+                      if (experience.stillWorkHere) return true;
                       try {
                         birthDateSchema.validateSync({ birthDate });
                         return true;
@@ -428,6 +432,7 @@ const WorkExperience = (props: any) => {
                   {
                     message: 'To Date must must be greater than From Date!',
                     validator: (toDate) => {
+                      if (experience.stillWorkHere) return true
                       try {
                         return new Date(experience.from) < new Date(toDate);
                       } catch {
