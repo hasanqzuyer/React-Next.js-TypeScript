@@ -10,6 +10,7 @@ import {
   InputRow,
   InputError,
   InputChip,
+  InfoLabel,
   MultiSelectInputContainer,
 } from 'components/ui/input/styles';
 import { TInputProps } from 'components/ui/input/types';
@@ -48,6 +49,7 @@ const Input = ({
   noOptionsText,
   customDateFormat,
   isFilterActive = false,
+  infoLabel,
   ...props
 }: TInputProps) => {
   const [search, setSearch] = useState(initialSearch);
@@ -448,6 +450,7 @@ const Input = ({
         </MultiSelectInputContainer>
       )}
       {error && <InputError>{errorMessage}</InputError>}
+      {infoLabel && <InfoLabel>{infoLabel}</InfoLabel>}
     </InputMain>
   );
 };

@@ -736,6 +736,7 @@ const AccountPage = () => {
                   placeholder="Please Select"
                   options={themes}
                   value={housePreference.theme}
+                  infoLabel="Maximum 3 themes"
                   onValue={(theme) => {
                     if (theme.length <= 3) {
                       handleChangeHousePreference('theme', theme);
@@ -748,6 +749,7 @@ const AccountPage = () => {
                   placeholder="Please Select"
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
+                  infoLabel="Maximum 5 skills"
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
                     if (skillsOfOthers.length <= 5) {
@@ -758,6 +760,7 @@ const AccountPage = () => {
                     }
                   }}
                 />
+               
                 <Input
                   type="multiselect"
                   label="Location"
@@ -832,6 +835,7 @@ const AccountPage = () => {
                   label="Interests and Hobbies"
                   placeholder="Please Select"
                   options={interests}
+                  infoLabel="Maximum 3 interests and hobbies"
                   value={housePreference.interestsHobbies}
                   onValue={(interestsHobbies) => {
                     if (interestsHobbies.length <= 3) {
