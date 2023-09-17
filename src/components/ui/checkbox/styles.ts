@@ -14,7 +14,8 @@ export const CheckboxMain = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
         display: flex;
         align-items: center;
-        gap: ${theme.spacing(2)}
+        cursor: pointer;
+        gap: ${theme.spacing(2)},
     `}
 `;
 
@@ -68,10 +69,9 @@ export const CheckboxLabel = styled(Label)<{ theme?: Theme }>`
       display: block;
       font-size: 14px;
       color: ${theme.palette.common.gray[8]};
-      user-select: none;
       cursor: pointer;
       pointer-events: none;
-
+      margin-left: 5px;
       a {
         pointer-events: all !important;
       }

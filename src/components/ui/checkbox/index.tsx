@@ -35,7 +35,7 @@ const Checkbox = ({
   };
 
   return (
-    <CheckboxMain {...props}>
+    <CheckboxMain {...props} onClick={handleClick}>
       <CheckboxInput
         hidden
         color={color}
@@ -45,7 +45,7 @@ const Checkbox = ({
         disabled={disabled}
         onChange={handleChange}
       />
-      <CheckboxDisplay onClick={handleClick} size={size} color={color}>
+      <CheckboxDisplay size={size} color={color}>
         <CheckboxDisplayIcon />
       </CheckboxDisplay>
       {label && (
