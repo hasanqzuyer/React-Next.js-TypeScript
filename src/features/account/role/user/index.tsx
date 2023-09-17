@@ -188,6 +188,7 @@ const AccountPage = () => {
   };
 
   const [locations, setLocations] = useState<any[]>([]);
+  const [preferenenceLocations, setPreferenceLocations] = useState<any[]>([]);
   const [nationalities, setNationalities] = useState<any[]>([]);
   const [language, setLanguages] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
@@ -207,6 +208,18 @@ const AccountPage = () => {
       })
     );
   };
+
+  const getPreferenceLocations = async (searchTerm: string = '') => { 
+    const result = getLocations(searchTerm);
+    setPreferenceLocations(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  }
 
   const getNationalityOptions = async (searchTerm: string = '') => {
     const result = getNationalities(searchTerm);
@@ -283,6 +296,7 @@ const AccountPage = () => {
   };
 
   const debouncedLocation = useDebounce(getLocationOptions, 100);
+  const debouncedPreferenceLocation = useDebounce(getPreferenceLocations, 100);
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
   const debouncedSkillsOfOthers = useDebounce(getSkillsOfOtherOptions, 100);
@@ -290,6 +304,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     getLocationOptions();
+    getPreferenceLocations();
     getNationalityOptions();
     getLanguageOptions();
     getDietsOptions();
@@ -341,7 +356,10 @@ const AccountPage = () => {
       const interestsHobbies = housePreference.interestsHobbies
         .map((item: any) => item.value)
         .join(',');
-      let data = { ...housePreference, skillsOfOthers, interestsHobbies };
+      const theme = housePreference.theme
+        .map((item: any) => item.value)
+        .join(',');
+      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
@@ -762,8 +780,8 @@ const AccountPage = () => {
                   type="select"
                   label="Location"
                   placeholder="Please Select"
-                  onSearch={debouncedLocation}
-                  options={locations}
+                  onSearch={debouncedPreferenceLocation}
+                  options={preferenenceLocations}
                   value={
                     housePreference.location
                       ? {
