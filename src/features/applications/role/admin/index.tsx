@@ -34,6 +34,7 @@ import { IApplication } from 'api/applications/types';
 import { useAppContext } from 'context';
 import ApplicationStatusActions from './elements/application-status-modal';
 import { getJobTitles } from 'utilities/jobTitles';
+import { birthDateSchema } from 'utilities/validators';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { format } from 'date-fns';
 
@@ -530,12 +531,62 @@ const AdminApplicationsPage = () => {
                           onValue={(dateFrom) =>
                             setFilter({ ...filter, dateFrom })
                           }
+                          validators={[
+                            {
+                              message: 'Invalid Date!',
+                              validator: (birthDate) => {
+                                if (!birthDate) return true;
+                                try {
+                                  birthDateSchema.validateSync({ birthDate });
+                                  return true;
+                                } catch {
+                                  return false;
+                                }
+                              },
+                            },
+                            {
+                              message: 'From Date must must be less than To Date!',
+                              validator: (fromDate) => {
+                                if (!filter.dateTo || !fromDate) return true;
+                                try {
+                                  return new Date(filter.dateTo) > new Date(fromDate);
+                                } catch {
+                                  return false;
+                                }
+                              },
+                            },
+                          ]}
                         />
                         <Input
                           type="date"
                           placeholder="Please Select"
                           value={filter.dateTo}
                           onValue={(dateTo) => setFilter({ ...filter, dateTo })}
+                          validators={[
+                            {
+                              message: 'Invalid Date!',
+                              validator: (birthDate) => {
+                                if (!birthDate) return true;
+                                try {
+                                  birthDateSchema.validateSync({ birthDate });
+                                  return true;
+                                } catch {
+                                  return false;
+                                }
+                              },
+                            },
+                            {
+                              message: 'To Date must must be greater than From Date!',
+                              validator: (toDate) => {
+                                if (!filter.dateFrom || !toDate) return true
+                                try {
+                                  return new Date(filter.dateFrom) < new Date(toDate);
+                                } catch {
+                                  return false;
+                                }
+                              },
+                            },
+                          ]}
                         />
                       </Stack>
                     </Stack>
