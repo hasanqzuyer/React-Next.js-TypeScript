@@ -78,7 +78,7 @@ const AccountPage = () => {
     theme: [],
     skillsOfOthers: [],
     location: [],
-    language: '',
+    language: [],
     monthlyRentMax: 0,
     monthlyRentMin: 0,
     ageMax: 0,
@@ -188,6 +188,13 @@ const AccountPage = () => {
           value: name,
           label: name,
         }))
+      : [];
+
+      houseprf.language = houseprf.language
+      ? houseprf.language.split(',').map((name: string) => ({
+        value: name,
+        label: name,
+      }))
       : [];
           
       setHousePreference(houseprf);
@@ -370,7 +377,11 @@ const AccountPage = () => {
       const location = housePreference.location
         .map((item: any) => item.value)
         .join('@');
-      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme, location };
+
+      const language = housePreference.language
+        .map((item: any) => item.value)
+        .join(',');
+      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme, location, language };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
@@ -802,23 +813,16 @@ const AccountPage = () => {
                   }
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Language"
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
                   options={language}
-                  value={
-                    housePreference.language
-                      ? {
-                          label: housePreference.language,
-                          value: housePreference.language,
-                        }
-                      : null
-                  }
+                  value={housePreference.language}
                   onValue={(language) =>
                     handleChangeHousePreference(
                       'language',
-                      language ? language.value : language
+                      language
                     )
                   }
                 />
