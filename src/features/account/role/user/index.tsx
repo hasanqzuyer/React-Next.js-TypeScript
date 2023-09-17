@@ -699,16 +699,6 @@ const AccountPage = () => {
                   onValue={(instagram) =>
                     handleChangeSocialMedia('instagram', instagram)
                   }
-                  validators={[
-                    {
-                      message: 'Please enter a valid URL!',
-                      validator: (url) => {
-                        if (url == "") return true;
-                        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
-                        return regex.test(url);
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -718,16 +708,6 @@ const AccountPage = () => {
                   onValue={(linkedin) =>
                     handleChangeSocialMedia('linkedin', linkedin)
                   }
-                  validators={[
-                    {
-                      message: 'Please enter a valid URL!',
-                      validator: (url) => {
-                        if (url == "") return true;
-                        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
-                        return regex.test(url);
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -737,16 +717,6 @@ const AccountPage = () => {
                   onValue={(tiktok) =>
                     handleChangeSocialMedia('tiktok', tiktok)
                   }
-                  validators={[
-                    {
-                      message: 'Please enter a valid URL!',
-                      validator: (url) => {
-                        if (url == "") return true;
-                        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
-                        return regex.test(url);
-                      },
-                    },
-                  ]}
                 />
                 <Input
                   type="text"
@@ -756,16 +726,6 @@ const AccountPage = () => {
                   onValue={(website) =>
                     handleChangeSocialMedia('website', website)
                   }
-                  validators={[
-                    {
-                      message: 'Please enter a valid URL!',
-                      validator: (url) => {
-                        if (url == "") return true;
-                        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
-                        return regex.test(url);
-                      },
-                    },
-                  ]}
                 />
               </AccountGrid>
               <AccountHeadline>House Preferences</AccountHeadline>
