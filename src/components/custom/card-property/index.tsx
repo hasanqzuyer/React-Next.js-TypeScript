@@ -107,7 +107,11 @@ const PropertyCard = ({
             <CardAddressSmall src={flagUrl} />
             {house.location}
           </CardAddress>
-          <CardTitle>{house.name}</CardTitle>
+          <CardTitle>
+            {house.name.length > 40
+                    ? house.name.slice(0, 40) + '...'
+                    : house.name}
+          </CardTitle>
           {house.availableSpots && house.totalSpots && (
             <CardProgressItem>
               Available spots

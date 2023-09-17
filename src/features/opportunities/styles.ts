@@ -3,7 +3,7 @@ import { Theme } from '@mui/material';
 import { Stack } from 'components/system';
 
 export const ProjectsMain = styled(Stack)`
-  display: grid;
+  display: grid
 `;
 
 export const ProjectsGrid = styled.div<{ theme?: Theme }>`
