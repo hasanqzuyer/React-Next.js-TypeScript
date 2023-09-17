@@ -77,7 +77,7 @@ const AccountPage = () => {
     id: -1,
     theme: [],
     skillsOfOthers: [],
-    location: '',
+    location: [],
     language: '',
     monthlyRentMax: 0,
     monthlyRentMin: 0,
@@ -183,6 +183,13 @@ const AccountPage = () => {
             label: name,
           }))
         : [];
+      houseprf.location = houseprf.location
+        ? houseprf.location.split('@').map((name: string) => ({
+          value: name,
+          label: name,
+        }))
+      : [];
+          
       setHousePreference(houseprf);
     }
   };
@@ -359,7 +366,11 @@ const AccountPage = () => {
       const theme = housePreference.theme
         .map((item: any) => item.value)
         .join(',');
-      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme };
+
+      const location = housePreference.location
+        .map((item: any) => item.value)
+        .join('@');
+      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme, location };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
@@ -777,23 +788,16 @@ const AccountPage = () => {
                   }}
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Location"
                   placeholder="Please Select"
                   onSearch={debouncedPreferenceLocation}
                   options={preferenenceLocations}
-                  value={
-                    housePreference.location
-                      ? {
-                          label: housePreference.location,
-                          value: housePreference.location,
-                        }
-                      : null
-                  }
+                  value={housePreference.location}
                   onValue={(location) =>
                     handleChangeHousePreference(
                       'location',
-                      location ? location.value : location
+                      location
                     )
                   }
                 />
