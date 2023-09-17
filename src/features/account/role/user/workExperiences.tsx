@@ -377,6 +377,7 @@ const WorkExperience = (props: any) => {
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
+                      if (!experience.to) return true;
                       try {
                         birthDateSchema.validateSync({ birthDate });
                         return true;

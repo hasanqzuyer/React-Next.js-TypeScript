@@ -372,6 +372,7 @@ const Education = (props: any) => {
                   {
                     message: 'Invalid Date!',
                     validator: (birthDate) => {
+                      if (!education.to) return true;
                       try {
                         birthDateSchema.validateSync({ birthDate });
                         return true;
@@ -383,6 +384,7 @@ const Education = (props: any) => {
                   {
                     message: 'From Date must must be less than To Date!',
                     validator: (fromDate) => {
+                      if (!education.to) return true;
                       try {
                         return new Date(education.to) > new Date(fromDate);
                       } catch {
@@ -390,6 +392,12 @@ const Education = (props: any) => {
                       }
                     },
                   },
+                  {
+                    message: 'To date is required!',
+                    validator: (date) => {
+                      return !(date && !education.to);
+                    }
+                  }
                 ]}
               />
               <Input
@@ -397,6 +405,7 @@ const Education = (props: any) => {
                 label="To"
                 placeholder="Please Select"
                 value={education.to}
+                disabled={education.from == "" || education.from == null}
                 onValue={(to) => handleChange('to', to, education.id)}
                 errorCallback={handleErrors(`${education.id}_${index}_to`)}
                 validators={[
