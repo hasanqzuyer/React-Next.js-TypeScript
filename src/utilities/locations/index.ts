@@ -5,7 +5,7 @@ export const getLocations = (search: string) => {
   DLocations.forEach((element) => {
     const country = element.name;
     const cities = element.cities;
-    cities.forEach((city) => {
+    cities.sort().forEach((city) => {
       let locat = `${city}, ${country}`;
       locations.push(locat);
     });
