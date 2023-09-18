@@ -32,20 +32,21 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
     place-items: center flex-start;
     min-height: 100vh;
     width: 100%;
-    
+
     ${theme.breakpoints.down('md')} {
       padding: 12px 18px !important;
       min-height: unset;
       height: 100%;
+      margin-top: 100px;
     }
     ${theme.breakpoints.up('md')} {
-      padding: 150px 2.5% 150px;
+      padding: 0px 2.5% 0px;
     }
     ${theme.breakpoints.up('lg')} {
-      padding: 150px 7.5% 150px;
+      padding: 0px 7.5% 0px;
     }
     ${theme.breakpoints.up('xl')} {
-      padding: 150px 7.5% 150px 12.5%; 
+      padding: 0px 7.5% 0px 12.5%; 
     }
     `}
 `;
@@ -68,7 +69,7 @@ export const PageLayoutRight = styled.img<{ theme?: Theme }>`
         width: 100%;
         height: 100%;
         order: -1;
-        margin-top: 150px;
+        margin-top: 50px;
       }
     `}
 `;
