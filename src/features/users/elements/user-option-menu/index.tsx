@@ -33,7 +33,8 @@ const UserMenuActions = ({ reload, userId, ...props }: TUserOptionMenu) => {
         variant: 'success',
       });
     } catch (e: any) {
-      push('Some thing went wrong', { variant: 'error' });
+      console.log(e);
+      push('Something went wrong', { variant: 'error' });
     }
   };
 
