@@ -28,6 +28,7 @@ const ConfirmRegistrationModal = ({
   const { push } = useSnackbar();
 
   const [clicked, setClicked] = useState(false);
+  const [limiteReached, setLimiteReached] = useState(false);
 
   const resendVerification = async (body: TResendEmailConfirmation) => {
     setClicked(true);
@@ -40,12 +41,10 @@ const ConfirmRegistrationModal = ({
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
         console.log(e)
-        // if (e.response.data.message === 'Too many requests!') {
-        //   setClicked(false);
-        //   push(e.response.data.message, {
-        //     variant: 'error',
-        //   });
-        // }
+        if (e.response.data.message === 'Too many requests!') {
+          setClicked(false);
+          setLimiteReached(true)
+        }
       }
     }
   };
@@ -54,6 +53,14 @@ const ConfirmRegistrationModal = ({
     <p>
       {t(
         "A confirmation email has been resent to the email address you provided. If you still don't receive it within a few minutes, please reach out to us at support@brotherhoodhouse.com and we'll assist you as soon as possible."
+      )}
+    </p>
+  );
+
+  const limitReachedMessage = (
+    <p>
+      {t(
+        "We've reached the limit for sending email confirmation links to your inbox. If you haven't received our message, please check your SPAM folder. If the issue persists, please reach out to us at support@brotherhoodhouse.com and we'll assist you as soon as possible."
       )}
     </p>
   );
@@ -85,7 +92,7 @@ const ConfirmRegistrationModal = ({
           {t('Email Confirmation Required')}
         </SConfirmRegistrationModalTitle>
         <SConfirmRegistrationModalText>
-          {clicked ? resentMessage : initialMessage}
+          {clicked ? resentMessage : (limiteReached ? limitReachedMessage : initialMessage)}
         </SConfirmRegistrationModalText>
         <SConfirmRegistrationModalActions>
           <Button
