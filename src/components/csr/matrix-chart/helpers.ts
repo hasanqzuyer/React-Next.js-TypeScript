@@ -2,7 +2,7 @@ import { alpha } from '@mui/material';
 import Theme from 'theme';
 
 const HGenerateMatrix = (matrix: Array<Array<number>>) => {
-  const ret = [];
+  const ret: any[] = [];
   for (let i = 0; i < matrix.length; i += 1) {
     for (let j = 0; j < matrix[i].length; j += 1) {
       ret.push({ x: j + 1, y: i + 1, v: matrix[i][j] });

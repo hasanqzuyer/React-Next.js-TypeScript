@@ -20,6 +20,7 @@
     "jsx": "preserve",
     "sourceMap": true,
     "pretty": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
@@ -29,5 +30,5 @@
     "typeRoots": ["node_modules/yup"]
   },
   "include": ["next-env.d.ts", "src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src"]
 }

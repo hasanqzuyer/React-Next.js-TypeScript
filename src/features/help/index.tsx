@@ -21,7 +21,7 @@ import { UsersAPI } from 'api';
 
 const HelpPage = () => {
   const [tab, setTab] = useState(0);
-  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedTopic, setSelectedTopic] = useState<any>(null);
 
   const initialHelpFormData = {
     topic: null,
@@ -29,7 +29,7 @@ const HelpPage = () => {
     message: '',
   };
 
-  const [helpFormData, setHelpFormData] = useState(initialHelpFormData);
+  const [helpFormData, setHelpFormData] = useState<any>(initialHelpFormData);
 
   const { push } = useSnackbar();
 

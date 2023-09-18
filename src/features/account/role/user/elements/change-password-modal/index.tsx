@@ -8,7 +8,7 @@ import { useSnackbar } from 'hooks';
 import { AuthorizationAPI } from 'api';
 import { passwordSchema } from 'utilities/validators';
 
-const ChangePasswordModal = ({ onClose, ...props }) => {
+const ChangePasswordModal = ({ onClose, ...props }: any) => {
   const [state, setState] = useState({
     oldPassword: '',
     newPassword: '',
@@ -28,7 +28,7 @@ const ChangePasswordModal = ({ onClose, ...props }) => {
     setIsFormValid(!isDisabled);
   }, [state, errors]);
 
-  const handleErrors = (index) => (value) => {
+  const handleErrors = (index: any) => (value: any) => {
     setErrors((x) => x.map((a, b) => (b === index ? value : a)));
   };
 
@@ -44,7 +44,7 @@ const ChangePasswordModal = ({ onClose, ...props }) => {
       );
       push('Password successfully updated!', { variant: 'success' });
       onClose();
-    } catch (e) {
+    } catch (e: any) {
       push(e.response.data.message, { variant: 'error' });
       onClose();
     }
