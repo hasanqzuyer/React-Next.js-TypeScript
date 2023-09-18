@@ -23,7 +23,7 @@ const PurchaseToken = () => {
         sessionId: query.session_id as string,
       });
       setMessage(
-        'Congratulation! Your order to buy tokens has been placed successfully'
+        'Congratulations! Your token purchase order has been successfully processed.'
       );
       openCrModal();
     } catch (e: any) {
