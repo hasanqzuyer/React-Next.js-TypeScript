@@ -405,16 +405,16 @@ const WorkExperience = (props: any) => {
                     message: 'To date is required!',
                     validator: (date) => {
                       return !(date && !experience.to);
-                    }
-                  }
+                    },
+                  },
                 ]}
               />
               <Input
                 type="date"
                 label="To"
                 placeholder="Please Select"
-                value={experience.stillWorkHere ? null :  experience.to }
-                disabled={experience.stillWorkHere || experience.from == ""}
+                value={experience.stillWorkHere ? null : experience.to}
+                disabled={experience.stillWorkHere || experience.from == ''}
                 onValue={(to) => handleChange('to', to, experience.id)}
                 errorCallback={handleErrors(`${experience.id}_${index}_to`)}
                 validators={[
@@ -433,7 +433,7 @@ const WorkExperience = (props: any) => {
                   {
                     message: 'To Date must must be greater than From Date!',
                     validator: (toDate) => {
-                      if (experience.stillWorkHere) return true
+                      if (experience.stillWorkHere) return true;
                       try {
                         return new Date(experience.from) < new Date(toDate);
                       } catch {

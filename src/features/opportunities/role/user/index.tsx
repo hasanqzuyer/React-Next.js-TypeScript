@@ -90,7 +90,7 @@ const UserMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="Apply"
-                style={{ display: 'block'}}
+                style={{ display: 'block' }}
               />
             );
           })}
@@ -114,7 +114,7 @@ const UserMarketPage = () => {
                 }
                 house={house}
                 refresh={refresh}
-                style={{ display: 'block'}}
+                style={{ display: 'block' }}
                 label="Apply"
               />
             );
@@ -140,7 +140,7 @@ const UserMarketPage = () => {
                 }
                 house={house}
                 refresh={refresh}
-                style={{ display: 'block'}}
+                style={{ display: 'block' }}
                 label="Apply"
                 completed
               />

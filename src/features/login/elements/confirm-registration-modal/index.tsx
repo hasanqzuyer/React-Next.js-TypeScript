@@ -40,10 +40,10 @@ const ConfirmRegistrationModal = ({
       });
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
-        console.log(e)
+        console.log(e);
         if (e.response.data.message === 'Too many requests!') {
           setClicked(false);
-          setLimiteReached(true)
+          setLimiteReached(true);
         }
       }
     }
@@ -92,7 +92,11 @@ const ConfirmRegistrationModal = ({
           {t('Email Confirmation Required')}
         </SConfirmRegistrationModalTitle>
         <SConfirmRegistrationModalText>
-          {clicked ? resentMessage : (limiteReached ? limitReachedMessage : initialMessage)}
+          {clicked
+            ? resentMessage
+            : limiteReached
+            ? limitReachedMessage
+            : initialMessage}
         </SConfirmRegistrationModalText>
         <SConfirmRegistrationModalActions>
           <Button

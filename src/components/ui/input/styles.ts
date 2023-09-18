@@ -159,9 +159,8 @@ export const InputChip = styled(Chip)<{ theme?: Theme }>`
     `}
 `;
 
-
 export const InfoLabel = styled.div<{ theme?: Theme }>`
-${({ theme }) => `
+  ${({ theme }) => `
   color: ${theme.palette.common.gray[8]};
   font-size: 10px;
   font-weight: 500;

@@ -28,11 +28,12 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
   };
 
   const handleClickThumbnail = () => {
-    const thumbnailIndex = images.findIndex(img => img.key === thumbnail?.key)
+    const thumbnailIndex = images.findIndex(
+      (img) => img.key === thumbnail?.key
+    );
     handleFullScreen();
-    handleStartIndex(thumbnailIndex == -1 ? 0: thumbnailIndex);
-  }
-
+    handleStartIndex(thumbnailIndex == -1 ? 0 : thumbnailIndex);
+  };
 
   return (
     <SGallery {...props}>
@@ -48,7 +49,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             height: '100%',
             width: '100%',
             objectFit: 'cover',
-            cursor: 'pointer'
+            cursor: 'pointer',
           }}
         />
       </ImageContainer>

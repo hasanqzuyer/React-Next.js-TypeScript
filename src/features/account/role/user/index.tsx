@@ -185,18 +185,18 @@ const AccountPage = () => {
         : [];
       houseprf.location = houseprf.location
         ? houseprf.location.split('@').map((name: string) => ({
-          value: name,
-          label: name,
-        }))
-      : [];
+            value: name,
+            label: name,
+          }))
+        : [];
 
       houseprf.language = houseprf.language
-      ? houseprf.language.split(',').map((name: string) => ({
-        value: name,
-        label: name,
-      }))
-      : [];
-          
+        ? houseprf.language.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
+
       setHousePreference(houseprf);
     }
   };
@@ -223,7 +223,7 @@ const AccountPage = () => {
     );
   };
 
-  const getPreferenceLocations = async (searchTerm: string = '') => { 
+  const getPreferenceLocations = async (searchTerm: string = '') => {
     const result = getLocations(searchTerm);
     setPreferenceLocations(
       result.map((name: string) => {
@@ -233,7 +233,7 @@ const AccountPage = () => {
         };
       })
     );
-  }
+  };
 
   const getNationalityOptions = async (searchTerm: string = '') => {
     const result = getNationalities(searchTerm);
@@ -381,7 +381,14 @@ const AccountPage = () => {
       const language = housePreference.language
         .map((item: any) => item.value)
         .join(',');
-      let data = { ...housePreference, skillsOfOthers, interestsHobbies, theme, location, language };
+      let data = {
+        ...housePreference,
+        skillsOfOthers,
+        interestsHobbies,
+        theme,
+        location,
+        language,
+      };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
       } else {
@@ -476,7 +483,7 @@ const AccountPage = () => {
     setHprefHasChanged(true);
   };
 
-  console.log(housePreference)
+  console.log(housePreference);
 
   const handleChangeMinMaxHousePreference = (
     minName: string,
@@ -755,14 +762,14 @@ const AccountPage = () => {
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
                     // if (skillsOfOthers.length <= 5) {
-                      handleChangeHousePreference(
-                        'skillsOfOthers',
-                        skillsOfOthers
-                      );
+                    handleChangeHousePreference(
+                      'skillsOfOthers',
+                      skillsOfOthers
+                    );
                     // 0}
                   }}
                 />
-               
+
                 <Input
                   type="multiselect"
                   label="Location"
@@ -771,10 +778,7 @@ const AccountPage = () => {
                   options={preferenenceLocations}
                   value={housePreference.location}
                   onValue={(location) =>
-                    handleChangeHousePreference(
-                      'location',
-                      location
-                    )
+                    handleChangeHousePreference('location', location)
                   }
                 />
                 <Input
@@ -785,10 +789,7 @@ const AccountPage = () => {
                   options={language}
                   value={housePreference.language}
                   onValue={(language) =>
-                    handleChangeHousePreference(
-                      'language',
-                      language
-                    )
+                    handleChangeHousePreference('language', language)
                   }
                 />
                 <Input

@@ -85,7 +85,7 @@ const OverviewPage = (props: any) => {
     skillsOfOthers: [],
     location: '',
     language: '',
-    monthlyRentMax:  null,
+    monthlyRentMax: null,
     monthlyRentMin: null,
     ageMax: null,
     ageMin: null,
@@ -193,17 +193,17 @@ const OverviewPage = (props: any) => {
         : [];
       houseprf.location = houseprf.location
         ? houseprf.location.split('@').map((name: string) => ({
-          value: name,
-          label: name,
-        }))
-      : [];
+            value: name,
+            label: name,
+          }))
+        : [];
 
       houseprf.language = houseprf.language
-      ? houseprf.language.split(',').map((name: string) => ({
-        value: name,
-        label: name,
-      }))
-      : [];
+        ? houseprf.language.split(',').map((name: string) => ({
+            value: name,
+            label: name,
+          }))
+        : [];
       setHousePreference(houseprf);
     }
   };
@@ -230,7 +230,7 @@ const OverviewPage = (props: any) => {
     );
   };
 
-  const getPreferenceLocations = async (searchTerm: string = '') => { 
+  const getPreferenceLocations = async (searchTerm: string = '') => {
     const result = getLocations(searchTerm);
     setPreferenceLocations(
       result.map((name: string) => {
@@ -240,7 +240,7 @@ const OverviewPage = (props: any) => {
         };
       })
     );
-  }
+  };
 
   const getNationalityOptions = async (searchTerm: string = '') => {
     const result = getNationalities(searchTerm);
@@ -396,7 +396,7 @@ const OverviewPage = (props: any) => {
         interestsHobbies,
         theme,
         location,
-        language
+        language,
       };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
@@ -761,10 +761,10 @@ const OverviewPage = (props: any) => {
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
                     // if (skillsOfOthers.length <= 5) {
-                      handleChangeHousePreference(
-                        'skillsOfOthers',
-                        skillsOfOthers
-                      );
+                    handleChangeHousePreference(
+                      'skillsOfOthers',
+                      skillsOfOthers
+                    );
                     // }
                   }}
                   disabled={!isEditing}
@@ -777,10 +777,7 @@ const OverviewPage = (props: any) => {
                   options={preferenenceLocations}
                   value={housePreference.location}
                   onValue={(location) =>
-                    handleChangeHousePreference(
-                      'location',
-                      location
-                    )
+                    handleChangeHousePreference('location', location)
                   }
                   disabled={!isEditing}
                 />
@@ -792,10 +789,7 @@ const OverviewPage = (props: any) => {
                   options={language}
                   value={housePreference.language}
                   onValue={(language) =>
-                    handleChangeHousePreference(
-                      'language',
-                      language
-                    )
+                    handleChangeHousePreference('language', language)
                   }
                   disabled={!isEditing}
                 />

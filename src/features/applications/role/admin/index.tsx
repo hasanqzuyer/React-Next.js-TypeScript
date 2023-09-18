@@ -425,11 +425,11 @@ const AdminApplicationsPage = () => {
     }
 
     const flatData = data.map((d: any) => {
-      const { house, owner, ...rest} = d;
+      const { house, owner, ...rest } = d;
       return {
         ...rest,
         house_assigneeId: house.assigneeId,
-        house_availableSpots : house.availableSpots,
+        house_availableSpots: house.availableSpots,
         house_info: house.info,
         house_location: house.location,
         house_name: house.name,
@@ -451,9 +451,9 @@ const AdminApplicationsPage = () => {
         owner_role: owner.role,
         owner_skills: owner.skills,
         owner_tokenBalance: owner.tokenBalance,
-        owner_verified: owner.verified
-      }
-    })
+        owner_verified: owner.verified,
+      };
+    });
 
     const worksheet = XLSX.utils.json_to_sheet(flatData);
     const workbook = XLSX.utils.book_new();
@@ -461,7 +461,7 @@ const AdminApplicationsPage = () => {
     XLSX.writeFile(workbook, 'Applications.xlsx');
 
     closeEModal();
-  }
+  };
 
   return (
     <ProjectsMain>
@@ -604,11 +604,14 @@ const AdminApplicationsPage = () => {
                               },
                             },
                             {
-                              message: 'From Date must must be less than To Date!',
+                              message:
+                                'From Date must must be less than To Date!',
                               validator: (fromDate) => {
                                 if (!filter.dateTo || !fromDate) return true;
                                 try {
-                                  return new Date(filter.dateTo) > new Date(fromDate);
+                                  return (
+                                    new Date(filter.dateTo) > new Date(fromDate)
+                                  );
                                 } catch {
                                   return false;
                                 }
@@ -635,11 +638,14 @@ const AdminApplicationsPage = () => {
                               },
                             },
                             {
-                              message: 'To Date must must be greater than From Date!',
+                              message:
+                                'To Date must must be greater than From Date!',
                               validator: (toDate) => {
-                                if (!filter.dateFrom || !toDate) return true
+                                if (!filter.dateFrom || !toDate) return true;
                                 try {
-                                  return new Date(filter.dateFrom) < new Date(toDate);
+                                  return (
+                                    new Date(filter.dateFrom) < new Date(toDate)
+                                  );
                                 } catch {
                                   return false;
                                 }
@@ -856,7 +862,10 @@ const AdminApplicationsPage = () => {
         </Stack>
       </CardWithText>
       {eModal && (
-        <ExportApplicationsModal onClose={closeEModal} onExport={handleExport} />
+        <ExportApplicationsModal
+          onClose={closeEModal}
+          onExport={handleExport}
+        />
       )}
     </ProjectsMain>
   );

@@ -396,8 +396,8 @@ const Education = (props: any) => {
                     message: 'To date is required!',
                     validator: (date) => {
                       return !(date && !education.to);
-                    }
-                  }
+                    },
+                  },
                 ]}
               />
               <Input
@@ -405,7 +405,7 @@ const Education = (props: any) => {
                 label="To"
                 placeholder="Please Select"
                 value={education.to}
-                disabled={education.from == "" || education.from == null}
+                disabled={education.from == '' || education.from == null}
                 onValue={(to) => handleChange('to', to, education.id)}
                 errorCallback={handleErrors(`${education.id}_${index}_to`)}
                 validators={[
