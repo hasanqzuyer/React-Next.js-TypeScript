@@ -108,10 +108,15 @@ const PropertyCard = ({
             {house.location}
           </CardAddress>
           <CardTitle>
-            {house.name.length > 40
-                    ? house.name.slice(0, 40) + '...'
-                    : house.name}
+            <Tooltip title={house.name}>
+              <span>
+                {house.name.length > 40
+                        ? house.name.slice(0, 40) + '...'
+                        : house.name}
+              </span>
+            </Tooltip>
           </CardTitle>
+
           {house.availableSpots && house.totalSpots && (
             <CardProgressItem>
               Available spots
