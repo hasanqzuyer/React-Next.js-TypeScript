@@ -362,6 +362,7 @@ const UsersPage = () => {
       });
       data = selectedUsers;
     }
+    console.log(data)
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
@@ -641,6 +642,7 @@ const UsersPage = () => {
                 <Button
                   color="primary"
                   variant="contained"
+                  type='button'
                   onClick={applyFilters}
                 >
                   Filter
@@ -648,6 +650,7 @@ const UsersPage = () => {
                 <Button
                   color="secondary"
                   variant="outlined"
+                  type='button'
                   onClick={clearFilters}
                 >
                   Clear filter
