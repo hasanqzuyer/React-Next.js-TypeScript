@@ -191,11 +191,25 @@ const OverviewPage = (props: any) => {
             label: name,
           }))
         : [];
+      houseprf.location = houseprf.location
+        ? houseprf.location.split('@').map((name: string) => ({
+          value: name,
+          label: name,
+        }))
+      : [];
+
+      houseprf.language = houseprf.language
+      ? houseprf.language.split(',').map((name: string) => ({
+        value: name,
+        label: name,
+      }))
+      : [];
       setHousePreference(houseprf);
     }
   };
 
   const [locations, setLocations] = useState<any[]>([]);
+  const [preferenenceLocations, setPreferenceLocations] = useState<any[]>([]);
   const [nationalities, setNationalities] = useState<any[]>([]);
   const [language, setLanguages] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
@@ -215,6 +229,18 @@ const OverviewPage = (props: any) => {
       })
     );
   };
+
+  const getPreferenceLocations = async (searchTerm: string = '') => { 
+    const result = getLocations(searchTerm);
+    setPreferenceLocations(
+      result.map((name: string) => {
+        return {
+          value: name,
+          label: name,
+        };
+      })
+    );
+  }
 
   const getNationalityOptions = async (searchTerm: string = '') => {
     const result = getNationalities(searchTerm);
@@ -290,6 +316,7 @@ const OverviewPage = (props: any) => {
     );
   };
 
+  const debouncedPreferenceLocation = useDebounce(getPreferenceLocations, 100);
   const debouncedLocation = useDebounce(getLocationOptions, 100);
   const debouncedNationalities = useDebounce(getNationalityOptions, 100);
   const debouncedLanguages = useDebounce(getLanguageOptions, 100);
@@ -298,6 +325,7 @@ const OverviewPage = (props: any) => {
 
   useEffect(() => {
     getLocationOptions();
+    getPreferenceLocations();
     getNationalityOptions();
     getLanguageOptions();
     getDietsOptions();
@@ -355,11 +383,20 @@ const OverviewPage = (props: any) => {
       const theme = housePreference.theme
         .map((item: any) => item.value)
         .join(',');
+      const location = housePreference.location
+        .map((item: any) => item.value)
+        .join('@');
+
+      const language = housePreference.language
+        .map((item: any) => item.value)
+        .join(',');
       let data = {
         ...housePreference,
         skillsOfOthers,
         interestsHobbies,
         theme,
+        location,
+        language
       };
       if (housePreference.id === -1) {
         await HousePreferenceApi.createHousePreference(data).then(() => {});
@@ -706,6 +743,7 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={themes}
                   value={housePreference.theme}
+                  infoLabel="Maximum 3 themes"
                   onValue={(theme) => {
                     if (theme.length <= 3) {
                       handleChangeHousePreference('theme', theme);
@@ -719,6 +757,7 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
+                  infoLabel="Maximum 5 skills"
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
                     if (skillsOfOthers.length <= 5) {
@@ -731,45 +770,31 @@ const OverviewPage = (props: any) => {
                   disabled={!isEditing}
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Location"
                   placeholder="Please Select"
-                  onSearch={debouncedLocation}
-                  options={locations}
-                  value={
-                    housePreference.location
-                      ? {
-                          label: housePreference.location,
-                          value: housePreference.location,
-                        }
-                      : null
-                  }
+                  onSearch={debouncedPreferenceLocation}
+                  options={preferenenceLocations}
+                  value={housePreference.location}
                   onValue={(location) =>
                     handleChangeHousePreference(
                       'location',
-                      location ? location.value : location
+                      location
                     )
                   }
                   disabled={!isEditing}
                 />
                 <Input
-                  type="select"
+                  type="multiselect"
                   label="Language"
                   placeholder="Please Select"
                   onSearch={debouncedLanguages}
                   options={language}
-                  value={
-                    housePreference.language
-                      ? {
-                          label: housePreference.language,
-                          value: housePreference.language,
-                        }
-                      : null
-                  }
+                  value={housePreference.language}
                   onValue={(language) =>
                     handleChangeHousePreference(
                       'language',
-                      language ? language.value : language
+                      language
                     )
                   }
                   disabled={!isEditing}
