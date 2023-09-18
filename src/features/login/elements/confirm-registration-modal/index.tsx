@@ -30,21 +30,22 @@ const ConfirmRegistrationModal = ({
   const [clicked, setClicked] = useState(false);
 
   const resendVerification = async (body: TResendEmailConfirmation) => {
+    setClicked(true);
     try {
       const lang = locale ? locale.slice(0, 2) : '';
       await AuthorizationAPI.resendEmailConfirmation(body, lang);
-      setClicked(true);
       push('Successfully Sent, Please check your email inbox', {
         variant: 'success',
       });
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
-        if (e.response.data.message === 'Too many requests!') {
-          setClicked(false);
-          push(e.response.data.message, {
-            variant: 'error',
-          });
-        }
+        console.log(e)
+        // if (e.response.data.message === 'Too many requests!') {
+        //   setClicked(false);
+        //   push(e.response.data.message, {
+        //     variant: 'error',
+        //   });
+        // }
       }
     }
   };
@@ -73,9 +74,9 @@ const ConfirmRegistrationModal = ({
     </p>
   );
 
-  useEffect(() => {
-    setClicked(true);
-  }, []);
+  // useEffect(() => {
+  //   setClicked(true);
+  // }, []);
 
   return (
     <Modal size="medium" onClose={onClose} {...props}>
@@ -84,7 +85,7 @@ const ConfirmRegistrationModal = ({
           {t('Email Confirmation Required')}
         </SConfirmRegistrationModalTitle>
         <SConfirmRegistrationModalText>
-          {clicked ? initialMessage : resentMessage}
+          {clicked ? resentMessage : initialMessage}
         </SConfirmRegistrationModalText>
         <SConfirmRegistrationModalActions>
           <Button

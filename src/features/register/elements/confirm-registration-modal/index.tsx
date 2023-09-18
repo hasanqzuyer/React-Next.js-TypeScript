@@ -37,9 +37,9 @@ const ConfirmRegistrationModal = ({
       await AuthorizationAPI.resendEmailConfirmation(body, lang);
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
-        push(e.response.data.message, {
-          variant: 'error',
-        });
+        // push(e.response.data.message, {
+        //   variant: 'error',
+        // });
       }
     }
   };
