@@ -98,7 +98,7 @@ const ExportFinanceModal = ({
             },
           ]}
         />
-        <PaymentImage key={0} src="/static/assets/images/stripe.png" />
+        <PaymentImage key={0} src="/static/assets/images/stripe-badge-transparent.png" />
         {/* BASED ON SELECT OPTION HERE WILL DISPLAY DIFFERENT PAYMENT METHOD API  */}
       </AddProjectModalMain>
     </Modal>
