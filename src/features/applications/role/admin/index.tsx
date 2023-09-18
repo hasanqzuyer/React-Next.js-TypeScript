@@ -2,6 +2,7 @@ import React, { Children, useEffect, useMemo, useState } from 'react';
 import { CardWithText, NewCheckboxTable, Tabs } from 'components/custom';
 import { Collapse, Grid, Stack } from 'components/system';
 import { Button, Input, Label, Pagination } from 'components/ui';
+import * as XLSX from 'xlsx';
 
 import {
   DAdminApplicationsHead,
@@ -18,7 +19,7 @@ import {
 } from 'features/opportunities/styles';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon } from 'components/svg';
-import { useDebounce, usePagination, useSnackbar } from 'hooks';
+import { useDebounce, usePagination, useModal, useSnackbar } from 'hooks';
 import { ApplicationAPI, HouseAPI } from 'api';
 import { getLocations } from 'utilities/locations';
 import { getNationalities } from 'utilities/nationalities';
@@ -37,6 +38,7 @@ import { getJobTitles } from 'utilities/jobTitles';
 import { birthDateSchema } from 'utilities/validators';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { format } from 'date-fns';
+import ExportApplicationsModal from './elements/export-applications-modal';
 
 const AdminApplicationsPage = () => {
   const { applicationStatus } = useAppContext();
@@ -61,6 +63,9 @@ const AdminApplicationsPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const [tabs, setTabs] = useState(0);
+
+  const [eModal, openEModal, closeEModal] = useModal(false);
+
   const { push } = useSnackbar();
 
   const toggleFilter = () => {
@@ -407,6 +412,57 @@ const AdminApplicationsPage = () => {
     return '';
   };
 
+  const handleExport = (type: string) => {
+    let data: any = totalColumnItems;
+    if (type !== 'all') {
+      let selectedApplications: any[] = [];
+      totalColumnItems.forEach((user: any) => {
+        if (checkedusers.includes(user.id)) {
+          selectedApplications.push(user);
+        }
+      });
+      data = selectedApplications;
+    }
+
+    const flatData = data.map((d: any) => {
+      const { house, owner, ...rest} = d;
+      return {
+        ...rest,
+        house_assigneeId: house.assigneeId,
+        house_availableSpots : house.availableSpots,
+        house_info: house.info,
+        house_location: house.location,
+        house_name: house.name,
+        house_rent: house.rent,
+        house_status: house.status,
+        house_theme: house.theme,
+        house_totalSpots: house.totalSpots,
+        house_thumbnailId: house.thumbnailId,
+        owner_email: owner.email,
+        owner_dateOfBirth: owner.dateOfBirth,
+        owner_applicationCount: owner.applicationCount,
+        owner_firstName: owner.firstName,
+        owner_lastName: owner.lastName,
+        owner_invested: owner.invested,
+        owner_language: owner.language,
+        owner_location: owner.location,
+        owner_nationality: owner.nationality,
+        owner_profileImageUrl: owner.profileImageUrl,
+        owner_role: owner.role,
+        owner_skills: owner.skills,
+        owner_tokenBalance: owner.tokenBalance,
+        owner_verified: owner.verified
+      }
+    })
+
+    const worksheet = XLSX.utils.json_to_sheet(flatData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, 'Applications.xlsx');
+
+    closeEModal();
+  }
+
   return (
     <ProjectsMain>
       <CardWithText
@@ -419,6 +475,9 @@ const AdminApplicationsPage = () => {
             startIcon={<SlidersHorizontalIcon width="18" height="18" />}
           >
             Filters
+          </Button>,
+          <Button color="default" variant="contained" onClick={openEModal}>
+            Export
           </Button>,
         ])}
       >
@@ -796,6 +855,9 @@ const AdminApplicationsPage = () => {
           />
         </Stack>
       </CardWithText>
+      {eModal && (
+        <ExportApplicationsModal onClose={closeEModal} onExport={handleExport} />
+      )}
     </ProjectsMain>
   );
 };
