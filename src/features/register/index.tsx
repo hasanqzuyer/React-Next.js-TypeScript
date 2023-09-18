@@ -261,6 +261,7 @@ const RegisterPage = () => {
           onValue={(v) =>
             setLegalsChecked({ ...legalsChecked, commonLegal: v })
           }
+          style={{ padding: 0 }}
         />
       </Stack>
       <Button
