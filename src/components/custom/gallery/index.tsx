@@ -21,12 +21,18 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
   const handleFullScreen = () => {
     setFullscreen(!fullscreen);
   };
-
   const [startIndex, setStartIndex] = useState(0);
 
   const handleStartIndex = (value: any) => {
     setStartIndex(value);
   };
+
+  const handleClickThumbnail = () => {
+    const thumbnailIndex = images.findIndex(img => img.key === thumbnail?.key)
+    handleFullScreen();
+    handleStartIndex(thumbnailIndex == -1 ? 0: thumbnailIndex);
+  }
+
 
   return (
     <SGallery {...props}>
@@ -37,10 +43,12 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           width={1000}
           height={1000}
           priority={true}
+          onClick={handleClickThumbnail}
           style={{
             height: '100%',
             width: '100%',
             objectFit: 'cover',
+            cursor: 'pointer'
           }}
         />
       </ImageContainer>
