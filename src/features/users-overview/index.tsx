@@ -681,6 +681,7 @@ const OverviewPage = (props: any) => {
                   label="Type to Add Skills"
                   placeholder="Please Select"
                   onSearch={debouncedSkills}
+                  infoLabel="Maximum 5 skills"
                   isFilterActive
                   options={skills}
                   value={info.skills}
@@ -757,15 +758,14 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
-                  infoLabel="Maximum 5 skills"
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
-                    if (skillsOfOthers.length <= 5) {
+                    // if (skillsOfOthers.length <= 5) {
                       handleChangeHousePreference(
                         'skillsOfOthers',
                         skillsOfOthers
                       );
-                    }
+                    // }
                   }}
                   disabled={!isEditing}
                 />
@@ -849,6 +849,7 @@ const OverviewPage = (props: any) => {
                   placeholder="Please Select"
                   options={interests}
                   value={housePreference.interestsHobbies}
+                  infoLabel="Maximum 3 interests and hobbies"
                   onValue={(interestsHobbies) => {
                     if (interestsHobbies.length <= 3) {
                       handleChangeHousePreference(
