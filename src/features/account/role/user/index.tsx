@@ -79,12 +79,12 @@ const AccountPage = () => {
     skillsOfOthers: [],
     location: [],
     language: [],
-    monthlyRentMax: 0,
-    monthlyRentMin: 0,
-    ageMax: 0,
-    ageMin: 0,
-    tenantsMax: 0,
-    tenantsMin: 0,
+    monthlyRentMax: null,
+    monthlyRentMin: null,
+    ageMax: null,
+    ageMin: null,
+    tenantsMax: null,
+    tenantsMin: null,
     interestsHobbies: [],
     ownerId: user.id,
     diet: '',
@@ -475,6 +475,8 @@ const AccountPage = () => {
     });
     setHprefHasChanged(true);
   };
+
+  console.log(housePreference)
 
   const handleChangeMinMaxHousePreference = (
     minName: string,
