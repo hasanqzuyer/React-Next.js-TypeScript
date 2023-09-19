@@ -63,6 +63,7 @@ const CalendarCard = ({ ...props }: TCalendarCardProps) => {
       startDate,
       endDate
     );
+
     setEvents([...events]);
   };
 

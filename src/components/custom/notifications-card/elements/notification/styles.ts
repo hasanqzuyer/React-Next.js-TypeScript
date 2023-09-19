@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material';
 import { TNotificationVariantType } from 'components/custom/notifications-card/types';
+import Link from 'next/link';
 
 export const NotificationMain = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
@@ -18,7 +19,7 @@ export const NotificationContent = styled.div<{ theme?: Theme }>`
 `}
 `;
 
-export const NotificationStatus = styled.div<{
+export const NotificationStatus = styled(Link)<{
   theme?: Theme;
   variant: TNotificationVariantType;
 }>`
