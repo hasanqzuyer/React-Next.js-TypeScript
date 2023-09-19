@@ -80,6 +80,16 @@ export const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
+export const FImageContainer = styled.div`
+  width: 80%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+  overflow: hidden;
+`;
+
 export const SplideItem = styled(SplideSlide)`
   cursor: pointer;
 `;

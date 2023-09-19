@@ -7,6 +7,7 @@ import {
   SplideItem,
   SplideMain,
   ImageContainer,
+  FImageContainer
 } from 'components/custom/gallery/styles';
 import Image from 'next/image';
 
@@ -71,7 +72,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           >
             {images.map((image: any, index: number) => (
               <SplideItem key={image + index}>
-                <ImageContainer>
+                <FImageContainer>
                   <Image
                     alt="house photo"
                     src={`${Project.apis.v1}/public/images/${image?.key}`}
@@ -82,7 +83,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                       objectFit: 'contain',
                     }}
                   />
-                </ImageContainer>
+                </FImageContainer>
               </SplideItem>
             ))}
           </SplideMain>
