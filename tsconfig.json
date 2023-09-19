@@ -30,5 +30,5 @@
     "typeRoots": ["node_modules/yup"]
   },
   "include": ["next-env.d.ts", "src"],
-  "exclude": ["node_modules", "src"]
+  "exclude": ["node_modules"]
 }
