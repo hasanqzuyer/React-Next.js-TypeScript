@@ -16,6 +16,7 @@ import {
   ISpan,
   CardLink,
   IDownArrow,
+  EllipsisText,
 } from 'components/custom/card-property/styles';
 import Image from 'next/image';
 
@@ -110,11 +111,11 @@ const PropertyCard = ({
             </CardAddress>
             <CardTitle>
               <Tooltip title={house.name}>
-                <span>
+                <EllipsisText>
                   {house.name.length > 29
                     ? house.name.slice(0, 29) + '...'
                     : house.name}
-                </span>
+                </EllipsisText>
               </Tooltip>
             </CardTitle>
 
