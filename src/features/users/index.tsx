@@ -362,8 +362,92 @@ const UsersPage = () => {
       });
       data = selectedUsers;
     }
-    console.log(data);
-    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    const educationTemplate = {
+      createdAt: "",
+      degree: "",
+      fieldOfStudy : "",
+      from: "",
+      id: "",
+      overAllGPA: "",
+      ownerId: "",
+      to: "",
+      university: "",
+      updatedAt: "",
+    }
+
+    const experienceTemplate = {
+      company: "",
+      createdAt: "",
+      from : "",
+      id: "",
+      jobTitle: "",
+      location: "",
+      ownerId: "",
+      roleDescription: "",
+      stillWorkHere: "",
+      to: "",
+      updatedAt: "",
+    }
+
+    const housePreferenceTemplate = { 
+      ageMax: "",
+      ageMin: "",
+      createdAt: "",
+      diet: "",
+      id: "",
+      interestsHobbies: "",
+      language: "",
+      location: "",
+      monthlyRentMax: "",
+      monthlyRentMin: "",
+      motivation: "",
+      ownerId: "",
+      skillsOfOthers: "",
+      tenantsMax: "",
+      tenantsMin: "",
+      theme: "",
+      updatedAt: ""
+    }
+
+    const flatData = data.map(user => {
+      const { educations, experiences, housePreference, ...rest } = user;
+
+      let educationObject = {};
+      let experienceObject = {};
+      let housePreferenceObject = {};
+
+      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)].slice(0,4).forEach((work, index) => {
+        const keys = Object.keys(work);
+        keys.forEach(key => {
+          experienceObject[`${key}${index + 1}`] = work[key]
+        })
+      });
+
+      [...(educations ?? []), ...Array(4).fill(educationTemplate)].slice(0, 4).forEach((edu, index) => {
+        const keys = Object.keys(edu);
+        keys.forEach(key => {
+          educationObject[`${key}${index + 1}`] = edu[key]
+        })
+      });
+
+      [...(housePreference ?? []), ...Array(4).fill(housePreferenceTemplate)].slice(0, 4).forEach((hpref, index) => {
+        const keys = Object.keys(hpref);
+        keys.forEach(key => {
+          educationObject[`${key}${index + 1}`] = hpref[key]
+        })
+      });
+
+      return {
+        ...rest,
+        ...educationObject,
+        ...experienceObject,
+        ...housePreferenceObject
+      }
+
+    })
+
+    const worksheet = XLSX.utils.json_to_sheet(flatData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     XLSX.writeFile(workbook, 'Users.xlsx');
