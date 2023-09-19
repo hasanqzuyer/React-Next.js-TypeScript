@@ -21,7 +21,6 @@ import { UsersAPI } from 'api';
 
 const HelpPage = () => {
   const [tab, setTab] = useState(0);
-  const [selectedTopic, setSelectedTopic] = useState<any>(null);
 
   const initialHelpFormData = {
     topic: null,
@@ -47,11 +46,6 @@ const HelpPage = () => {
   const isDisabled =
     !helpFormData.topic || !helpFormData.subject || !helpFormData.message;
 
-  const handleTopicChange = (value) => {
-    console.log('Selected Topic:', value); // Debug line
-    const selected = topicOptions.find((option) => option.value === value);
-    setSelectedTopic(selected);
-  };
   const sendSupportEmail = async () => {
     const { topic, subject, message } = helpFormData;
 
@@ -149,8 +143,8 @@ const HelpPage = () => {
                   type="select"
                   label="Topic"
                   placeholder="Select Topic"
-                  value={selectedTopic ? selectedTopic.value : ''}
-                  onValue={handleTopicChange}
+                  value={helpFormData.topic}
+                  onValue={(value) => setHelpFormData({...helpFormData, topic: value})}
                   options={topicOptions}
                 />
                 <Input
