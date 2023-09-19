@@ -33,7 +33,6 @@ const NotificationsCard = ({ ...props }: TNotificationsCardProps) => {
   const getNotifications = async () => {
     try {
       const notificationData = await NotificationAPI.getNotificationsForMe();
-      console.log(notificationData)
       setNotifications([...notificationData]);
     } catch (error) {}
   };
