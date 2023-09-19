@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Menu from '../menu';
 
 export const CardMain = styled(Card)`
-  display: grid;
+  display: block;
   padding: 0 !important;
   position: relative;
 `;

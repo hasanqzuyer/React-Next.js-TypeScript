@@ -91,7 +91,6 @@ const AdminMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="View"
-                style={{ display: 'block' }}
                 dropdown
               />
             );
@@ -111,7 +110,6 @@ const AdminMarketPage = () => {
                 house={house}
                 refresh={refresh}
                 label="View"
-                style={{ display: 'block' }}
                 dropdown
               />
             );
@@ -134,7 +132,6 @@ const AdminMarketPage = () => {
                 label="View"
                 dropdown
                 completed
-                style={{ display: 'block' }}
               />
             );
           })}

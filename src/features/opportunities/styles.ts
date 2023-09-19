@@ -3,23 +3,22 @@ import { Theme } from '@mui/material';
 import { Stack } from 'components/system';
 
 export const ProjectsMain = styled(Stack)`
-  display: grid;
+  display: flex;
 `;
 
 export const ProjectsGrid = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 32% 32% 32%;
   gap: 16px 22px;
 
   ${theme.breakpoints.down('xl')} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 48% 48%;
   }
 
   ${theme.breakpoints.down('sm')} {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
-
   `}
 `;
 
