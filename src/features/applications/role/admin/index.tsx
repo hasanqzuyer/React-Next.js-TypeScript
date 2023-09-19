@@ -33,6 +33,7 @@ import { getSocialMedias } from 'utilities/socialMedias';
 import { getLanguages } from 'utilities/languages';
 import { IApplication } from 'api/applications/types';
 import { useAppContext } from 'context';
+import Link from 'next/link';
 import ApplicationStatusActions from './elements/application-status-modal';
 import { getJobTitles } from 'utilities/jobTitles';
 import { birthDateSchema } from 'utilities/validators';
@@ -352,7 +353,14 @@ const AdminApplicationsPage = () => {
   const renderItem = ({ headItem, row }: TTableRenderItemObject) => {
     const application = row.data as IApplication;
     if (headItem.reference === 'name') {
-      return `${application.owner.firstName} ${application.owner.lastName}`;
+      return (
+        <Link
+          style={{ textDecoration: 'none', color: '#4f4f4f' }}
+          href={`/users/overview?userId=${application.owner.id}`}
+        >
+          {application.owner.firstName} {application.owner.lastName}
+        </Link>
+      );
     }
     if (headItem.reference === 'location') {
       return application.owner.location;
