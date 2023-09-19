@@ -20,16 +20,16 @@ const Header = ({ ...props }) => {
         <HeaderLogo src="/static/assets/images/logo.png" />
       </HeaderLogoLink>
       <HeaderActions>
-        <Button variant="contained" color="primary" size="large">
-          <HeaderAction style={{ color: '#fff' }} href="/login">
-            {'LOGIN'}
-          </HeaderAction>
-        </Button>
-        <Button variant="contained" color="secondary" size="large">
-          <HeaderAction style={{ color: '#fff' }} href="/register">
-            {t('SIGN UP')}
-          </HeaderAction>
-        </Button>
+        <HeaderAction style={{ color: '#fff' }} href="/login">
+          <Button variant="contained" color="primary" size="large">
+              {'LOGIN'}
+          </Button>
+        </HeaderAction>
+        <HeaderAction style={{ color: '#fff' }} href="/register">
+          <Button variant="contained" color="secondary" size="large">
+              {t('SIGN UP')}
+          </Button>
+        </HeaderAction>
       </HeaderActions>
     </HeaderMain>
   );

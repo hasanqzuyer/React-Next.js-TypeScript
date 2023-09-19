@@ -69,7 +69,6 @@ export const HeaderActions = styled.div<{ theme?: Theme }>`
 export const HeaderAction = styled(Link)`
   text-decoration: none;
   button {
-    padding: 0 !important;
     font-size: 18px;
   }
 `;
