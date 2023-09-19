@@ -17,7 +17,7 @@ const ApplicationModal = ({
   const { user } = useAppContext();
   const [state, setState] = useState<any>({
     tier: {
-      label: 'Basic',
+      label: 'Basic (Cost: 1 Token)',
       value: 'Basic',
     },
     balance: 1,
@@ -46,7 +46,7 @@ const ApplicationModal = ({
   };
 
   const handleChangeTier = (tier: any) => {
-    switch (tier.value) {
+    switch (tier?.value) {
       case 'Basic':
         setState((data: any) => ({
           ...data,
@@ -103,9 +103,7 @@ const ApplicationModal = ({
         <Input
           type="text"
           label="Balance"
-          value={`Current Balance: ${user.tokenBalance}, Application Cost: ${
-            state.balance ? state.balance : 0
-          }`}
+          value={`${user.tokenBalance} Tokens`}
           onValue={() => {}}
           placeholder="Please Enter"
         />
@@ -116,19 +114,19 @@ const ApplicationModal = ({
           options={[
             {
               value: 'Basic',
-              label: 'Basic Application',
+              label: 'Basic (Cost: 1 Token)',
             },
             {
               value: 'Priority',
-              label: 'Priority Application',
+              label: 'Priority (Cost: 5 Tokens)',
             },
             {
               value: 'Premium',
-              label: 'Premium Application',
+              label: 'Premium (Cost: 10 Tokens)',
             },
             {
               value: 'Elite',
-              label: 'Elite Application',
+              label: 'Elite (Cost: 15 Tokens)',
             },
           ]}
           onValue={(tier) => handleChangeTier(tier)}
