@@ -59,7 +59,7 @@ const HelpPage = () => {
           topic: topic.label,
         };
         await UsersAPI.contactAdmin(formBody);
-        push('Sucess submitting form');
+        push('Message has been sent successfully.');
 
         setHelpFormData(initialHelpFormData);
       }
