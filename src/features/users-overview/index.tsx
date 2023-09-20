@@ -666,6 +666,7 @@ const OverviewPage = (props: any) => {
               <AccountHeadline>Education</AccountHeadline>
               <Education
                 userId={userId}
+                userInfo={info}
                 totalData={educations}
                 setTotalData={setEducations}
                 setHasChanged={setEduHasChanged}

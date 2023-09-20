@@ -672,6 +672,7 @@ const AccountPage = () => {
               <AccountHeadline>Education</AccountHeadline>
               <Education
                 userId={user.id}
+                userInfo={info}
                 totalData={educations}
                 setTotalData={setEducations}
                 setHasChanged={setEduHasChanged}

@@ -9,6 +9,7 @@ import { TEducation } from 'api/education/types';
 import { getDegrees } from 'utilities/degrees';
 import { getFieldOfStudies } from 'utilities/fieldOfStudy';
 import { birthDateSchema } from 'utilities/validators';
+import EducationExperienceDateRangePicker from './elements/EducationExperienceDateRangePicker';
 
 const Education = (props: any) => {
   const {
@@ -18,6 +19,7 @@ const Education = (props: any) => {
     saving,
     setSaving,
     userId,
+    userInfo,
     eduIssuedArrays,
     setEduIssuedArrays,
   } = props;
@@ -360,79 +362,15 @@ const Education = (props: any) => {
                 )
               }
             />
-            <Stack direction="horizontal">
-              <Input
-                type="date"
-                label="From"
-                placeholder="Please Select"
-                value={education.from}
-                onValue={(from) => handleChange('from', from, education.id)}
-                errorCallback={handleErrors(`${education.id}_${index}_from`)}
-                validators={[
-                  {
-                    message: 'Invalid Date!',
-                    validator: (birthDate) => {
-                      if (!education.to) return true;
-                      try {
-                        birthDateSchema.validateSync({ birthDate });
-                        return true;
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                  {
-                    message: 'From Date must must be less than To Date!',
-                    validator: (fromDate) => {
-                      if (!education.to) return true;
-                      try {
-                        return new Date(education.to) > new Date(fromDate);
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                  {
-                    message: 'To date is required!',
-                    validator: (date) => {
-                      return !(date && !education.to);
-                    },
-                  },
-                ]}
-              />
-              <Input
-                type="date"
-                label="To"
-                placeholder="Please Select"
-                value={education.to}
-                disabled={education.from == '' || education.from == null}
-                onValue={(to) => handleChange('to', to, education.id)}
-                errorCallback={handleErrors(`${education.id}_${index}_to`)}
-                validators={[
-                  {
-                    message: 'Invalid Date!',
-                    validator: (birthDate) => {
-                      try {
-                        birthDateSchema.validateSync({ birthDate });
-                        return true;
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                  {
-                    message: 'To Date must must be greater than From Date!',
-                    validator: (toDate) => {
-                      try {
-                        return new Date(education.from) < new Date(toDate);
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                ]}
-              />
-            </Stack>
+
+            <EducationExperienceDateRangePicker 
+              education={education}
+              handleChange={handleChange}
+              handleErrors={handleErrors(`${education.id}_${index}_to`)}
+              userBirthDate={userInfo.dateOfBirth}
+              disabled={false}
+            />
+
             <Input
               type="text"
               label="Overall GPA"
