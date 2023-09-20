@@ -30,11 +30,11 @@ const useMenu = (initialState: boolean): any => {
       ) as HTMLCollectionOf<HTMLElement>
     );
 
-    if (open) {
-      overflowHiddenElement[0].style.overflowY = 'hidden';
-    } else {
-      overflowHiddenElement[0].style.overflowY = 'auto';
-    }
+    // if (open) {
+    //   overflowHiddenElement[0].style.overflowY = 'hidden';
+    // } else {
+    //   overflowHiddenElement[0].style.overflowY = 'auto';
+    // }
   }, [open]);
 
   useEffect(() => {
