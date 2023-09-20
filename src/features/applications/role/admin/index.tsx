@@ -310,7 +310,9 @@ const AdminApplicationsPage = () => {
 
   useEffect(() => {
     getAllApplications()
-      .then((data) => setTotalColumnItems(data))
+      .then((data) => {
+        setTotalColumnItems(data) 
+      })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   }, [applicationStatus]);
 
@@ -432,8 +434,83 @@ const AdminApplicationsPage = () => {
       data = selectedApplications;
     }
 
+    const educationTemplate = {
+      createdAt: "",
+      degree: "",
+      fieldOfStudy : "",
+      from: "",
+      id: "",
+      overAllGPA: "",
+      ownerId: "",
+      to: "",
+      university: "",
+      updatedAt: "",
+    }
+
+    const experienceTemplate = {
+      company: "",
+      createdAt: "",
+      from : "",
+      id: "",
+      jobTitle: "",
+      location: "",
+      ownerId: "",
+      roleDescription: "",
+      stillWorkHere: "",
+      to: "",
+      updatedAt: "",
+    }
+
+    const housePreferenceTemplate = { 
+      ageMax: "",
+      ageMin: "",
+      createdAt: "",
+      diet: "",
+      id: "",
+      interestsHobbies: "",
+      language: "",
+      location: "",
+      monthlyRentMax: "",
+      monthlyRentMin: "",
+      motivation: "",
+      ownerId: "",
+      skillsOfOthers: "",
+      tenantsMax: "",
+      tenantsMin: "",
+      theme: "",
+      updatedAt: ""
+    }
+
     const flatData = data.map((d: any) => {
       const { house, owner, ...rest } = d;
+
+      const { educations, experiences, housePreference } = owner;
+
+      let educationObject = {};
+      let experienceObject = {};
+      let housePreferenceObject = {};
+
+      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)].slice(0,4).forEach((work, index) => {
+        const keys = Object.keys(work);
+        keys.forEach(key => {
+          experienceObject[`WE${index + 1} ${key}`] = work[key]
+        })
+      });
+
+      [...(educations ?? []), ...Array(4).fill(educationTemplate)].slice(0, 4).forEach((edu, index) => {
+        const keys = Object.keys(edu);
+        keys.forEach(key => {
+          educationObject[`ED${index + 1} ${key}`] = edu[key]
+        })
+      });
+
+      [...(housePreference ?? []), ...Array(4).fill(housePreferenceTemplate)].slice(0, 4).forEach((hpref, index) => {
+        const keys = Object.keys(hpref);
+        keys.forEach(key => {
+          housePreferenceObject[`HP${index + 1} ${key}`] = hpref[key]
+        })
+      });
+
       return {
         ...rest,
         house_assigneeId: house.assigneeId,
@@ -460,6 +537,9 @@ const AdminApplicationsPage = () => {
         owner_skills: owner.skills,
         owner_tokenBalance: owner.tokenBalance,
         owner_verified: owner.verified,
+        ...experienceObject,
+        ...educationObject,
+        ...housePreferenceObject
       };
     });
 

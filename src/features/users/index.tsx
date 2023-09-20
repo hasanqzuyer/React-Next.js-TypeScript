@@ -420,21 +420,21 @@ const UsersPage = () => {
       [...(experiences ?? []), ...Array(4).fill(experienceTemplate)].slice(0,4).forEach((work, index) => {
         const keys = Object.keys(work);
         keys.forEach(key => {
-          experienceObject[`${key}${index + 1}`] = work[key]
+          experienceObject[`WE${index + 1} ${key}`] = work[key]
         })
       });
 
       [...(educations ?? []), ...Array(4).fill(educationTemplate)].slice(0, 4).forEach((edu, index) => {
         const keys = Object.keys(edu);
         keys.forEach(key => {
-          educationObject[`${key}${index + 1}`] = edu[key]
+          educationObject[`ED${index + 1} ${key}`] = edu[key]
         })
       });
 
       [...(housePreference ?? []), ...Array(4).fill(housePreferenceTemplate)].slice(0, 4).forEach((hpref, index) => {
         const keys = Object.keys(hpref);
         keys.forEach(key => {
-          educationObject[`${key}${index + 1}`] = hpref[key]
+          housePreferenceTemplate[`HP${index + 1} ${key}`] = hpref[key]
         })
       });
 
