@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   InputMain,
   InputLabel,
@@ -50,6 +50,8 @@ const Input = ({
   customDateFormat,
   isFilterActive = false,
   infoLabel,
+  invokeValidation,
+  enableInvokeValidation = false,
   ...props
 }: TInputProps) => {
   const [search, setSearch] = useState(initialSearch);
@@ -143,6 +145,26 @@ const Input = ({
       setDisabledNewTag(false);
     }
   };
+
+  useEffect(() => {
+    if (enableInvokeValidation && invokeValidation) {
+      let errored = false;
+      for (let i = 0; i < validators.length; i += 1) {
+        const v = validators[i];
+        if (!v.validator(value)) {
+          setErrorMessage(v.message);
+          setError(true);
+          errored = true;
+          if (errorCallback) errorCallback(true);
+        }
+      }
+      if (!errored) {
+        setErrorMessage('');
+        setError(false);
+        if (errorCallback) errorCallback(false);
+      }
+    }
+  }, [invokeValidation, enableInvokeValidation])
 
   return (
     <InputMain {...props}>

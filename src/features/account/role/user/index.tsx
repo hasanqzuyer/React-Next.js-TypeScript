@@ -483,8 +483,6 @@ const AccountPage = () => {
     setHprefHasChanged(true);
   };
 
-  console.log(housePreference);
-
   const handleChangeMinMaxHousePreference = (
     minName: string,
     maxName: string,
@@ -662,6 +660,7 @@ const AccountPage = () => {
               <AccountHeadline>Work Experience</AccountHeadline>
               <WorkExperience
                 userId={user.id}
+                userInfo={info}
                 totalData={workExperiences}
                 setTotalData={setWorkExperiences}
                 setHasChanged={setExpHasChanged}

@@ -45,6 +45,8 @@ export type TInputProps = React.HTMLAttributes<HTMLDivElement> & {
   customDateFormat?: string;
   isFilterActive?: boolean;
   infoLabel?: string;
+  invokeValidation?: number;
+  enableInvokeValidation?: boolean;
   onInputChange?: (v: any) => void;
   errorCallback?: (e: boolean) => void;
   onNewTag?: (v: any) => void;
