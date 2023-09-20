@@ -8,7 +8,7 @@ import { getLocations } from 'utilities/locations';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
-import { birthDateSchema } from 'utilities/validators';
+import WorkExperienceDateRangePicker from "../account/role/user/elements/WorkExperienceDateRangePicker";
 
 const WorkExperience = (props: any) => {
   const {
@@ -21,6 +21,7 @@ const WorkExperience = (props: any) => {
     disabled,
     workIssuedArrays,
     setWorkIssuedArrays,
+    userInfo,
   } = props;
   const { push } = useSnackbar();
 
@@ -371,93 +372,13 @@ const WorkExperience = (props: any) => {
               }
               errorCallback={handleErrors(`${experience.id}_${index}_location`)}
             />
-            <Stack direction="horizontal" style={{ position: 'relative' }}>
-              <Input
-                type="date"
-                label="From"
-                placeholder="Please Select"
-                disabled={disabled}
-                value={experience.from}
-                onValue={(from) => handleChange('from', from, experience.id)}
-                errorCallback={handleErrors(`${experience.id}_${index}_from`)}
-                validators={[
-                  {
-                    message: 'Invalid Date!',
-                    validator: (birthDate) => {
-                      try {
-                        birthDateSchema.validateSync({ birthDate });
-                        return true;
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                  {
-                    message: 'From Date must must be less than To Date!',
-                    validator: (fromDate) => {
-                      try {
-                        if (experience.stillWorkHere) {
-                          return new Date() > new Date(fromDate);
-                        } else {
-                          return new Date(experience.to) > new Date(fromDate);
-                        }
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                ]}
-              />
-              <Input
-                type="date"
-                label="To"
-                placeholder="Please Select"
-                value={
-                  experience.stillWorkHere
-                    ? new Date().toISOString()
-                    : experience.to
-                }
-                disabled={experience.stillWorkHere || disabled}
-                onValue={(to) => handleChange('to', to, experience.id)}
-                errorCallback={handleErrors(`${experience.id}_${index}_to`)}
-                validators={[
-                  {
-                    message: 'Invalid Date!',
-                    validator: (birthDate) => {
-                      try {
-                        birthDateSchema.validateSync({ birthDate });
-                        return true;
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                  {
-                    message: 'To Date must must be greater than From Date!',
-                    validator: (toDate) => {
-                      try {
-                        return new Date(experience.from) < new Date(toDate);
-                      } catch {
-                        return false;
-                      }
-                    },
-                  },
-                ]}
-              />
-              <Checkbox
-                label="I still work here."
-                style={{
-                  position: 'absolute',
-                  right: '0',
-                  bottom: '-25px',
-                }}
-                value={experience.stillWorkHere}
-                disabled={disabled}
-                onValue={(stillWorkHere) => {
-                  handleChange('stillWorkHere', stillWorkHere, experience.id);
-                }}
-              />
-            </Stack>
+            <WorkExperienceDateRangePicker 
+              experience={experience}
+              handleChange={handleChange}
+              handleErrors={handleErrors(`${experience.id}_${index}_from`)}
+              userBirthDate={userInfo.dateOfBirth}
+              disabled={false}
+            />
             <Input
               type="text"
               label="Role Description"

@@ -653,6 +653,7 @@ const OverviewPage = (props: any) => {
               </PreferenceHeadline>
               <WorkExperience
                 userId={userId}
+                userInfo={info}
                 totalData={workExperiences}
                 setTotalData={setWorkExperiences}
                 setHasChanged={setExpHasChanged}

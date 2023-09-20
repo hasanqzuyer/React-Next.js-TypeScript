@@ -4,7 +4,7 @@ import { Input, Checkbox } from 'components/ui';
 import { birthDateSchema } from 'utilities/validators';
 import moment from 'moment';
 
-export const WorkExperienceDateRangePicker = ({ experience, handleChange, handleErrors, userBirthDate}) => {
+export const WorkExperienceDateRangePicker = ({ experience, handleChange, handleErrors, userBirthDate, disabled}) => {
 
   const [fromDateInvokeValidationTimestamp, setFromDateInvokeValidationTimestamp] = useState<number | undefined>(undefined)
   const [toDateInvokeValidationTimestamp, setToDateInvokeValidationTimstamp] = useState<number | undefined>(undefined)
@@ -19,8 +19,6 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
     setFromDateInvokeValidationTimestamp(new Date().getTime())
   }
 
-  console.log("User Birthdate:", userBirthDate)
-
   return (
     <Stack direction="horizontal" style={{ position: 'relative' }}>
       <Input
@@ -32,6 +30,7 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
         errorCallback={handleErrors}
         invokeValidation={fromDateInvokeValidationTimestamp}
         enableInvokeValidation
+        disabled={disabled}
         validators={[
           {
             message: 'Invalid Date!',
@@ -81,7 +80,7 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
         label="To"
         placeholder="Please Select"
         value={experience.stillWorkHere ? null : experience.to}
-        disabled={experience.stillWorkHere || experience.from == ''}
+        disabled={experience.stillWorkHere || experience.from == '' || disabled}
         onValue={onToChangeValue}
         errorCallback={handleErrors}
         invokeValidation={toDateInvokeValidationTimestamp}
