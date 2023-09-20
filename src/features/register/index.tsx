@@ -27,6 +27,9 @@ interface IFormData {
   role: string;
 }
 
+const TERMS_OF_SERVICES = "https://brotherhoodhouse.com/terms-of-use/"
+const PRIVACY_POLICY = "https://brotherhoodhouse.com/privacy-statement/"
+
 const RegisterPage = () => {
   const [state, setState] = useState<IFormData>({
     firstName: '',
@@ -251,7 +254,7 @@ const RegisterPage = () => {
           label={
             <span
               dangerouslySetInnerHTML={{
-                __html: `I agree to the <a href='${process.env.NEXT_PUBLIC_TERMS_OF_SERVICES}' target='_blank'>Terms of Services</a> and <a href='${process.env.NEXT_PUBLIC_PRIVACY_POLICY}' target='_blank'>Privacy Policy</a>`,
+                __html: `I agree to the <a href='${TERMS_OF_SERVICES}' target='_blank'>Terms of Services</a> and <a href='${PRIVACY_POLICY}' target='_blank'>Privacy Policy</a>`,
               }}
             />
           }
