@@ -72,7 +72,7 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
         label="To"
         placeholder="Please Select"
         value={education.to}
-        disabled={education.from == '' || education.from == null}
+        disabled={disabled}
         onValue={onToChangeValue}
         errorCallback={handleErrors}
         invokeValidation={toDateInvokeValidationTimestamp}
@@ -81,6 +81,7 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
           {
             message: 'Invalid Date!',
             validator: (birthDate: any) => {
+              if (!birthDate) return true;
               try {
                 birthDateSchema.validateSync({ birthDate });
                 return true;
