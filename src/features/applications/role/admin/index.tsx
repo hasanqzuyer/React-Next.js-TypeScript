@@ -504,10 +504,10 @@ const AdminApplicationsPage = () => {
         })
       });
 
-      [...(housePreference ?? []), ...Array(4).fill(housePreferenceTemplate)].slice(0, 4).forEach((hpref, index) => {
+      (housePreference ?? []).forEach((hpref, index) => {
         const keys = Object.keys(hpref);
         keys.forEach(key => {
-          housePreferenceObject[`HP${index + 1} ${key}`] = hpref[key]
+          housePreferenceObject[`HP ${key}`] = hpref[key]
         })
       });
 

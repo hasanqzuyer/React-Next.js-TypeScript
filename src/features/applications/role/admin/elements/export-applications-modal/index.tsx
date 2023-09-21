@@ -24,6 +24,8 @@ const ExportApplicationsModal = ({
           color="primary"
           variant="contained"
           size="large"
+          type="button"
+          key="export"
           onClick={() => onExport(radioState)}
         >
           Export
