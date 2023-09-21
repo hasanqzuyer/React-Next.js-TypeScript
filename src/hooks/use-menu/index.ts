@@ -30,11 +30,18 @@ const useMenu = (initialState: boolean): any => {
       ) as HTMLCollectionOf<HTMLElement>
     );
 
-    // if (open) {
-    //   overflowHiddenElement[0].style.overflowY = 'hidden';
-    // } else {
-    //   overflowHiddenElement[0].style.overflowY = 'auto';
-    // }
+    if (overflowHiddenElement.length > 0) {
+      if (open) {
+        overflowHiddenElement[0].style.overflowY = 'hidden';
+        overflowHiddenElement[0].style.paddingRight = '10px';
+      } else {
+        overflowHiddenElement[0].style.overflowY = 'auto';
+        overflowHiddenElement[0].style.paddingRight = '0px';
+      }
+    }
+    
+
+    
   }, [open]);
 
   useEffect(() => {
