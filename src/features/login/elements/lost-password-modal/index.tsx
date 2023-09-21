@@ -41,28 +41,21 @@ const LostPasswordModal = ({ onClose, ...props }: TLostPasswordModalProps) => {
       }
       onClose();
     } catch (e: any) {
-      let message = "";
-      const errorMessageFromServer = e?.response?.data?.message  
-      if (errorMessageFromServer == "limitedVerificationCode") {
-        message = "You've sent too many verfication code, please contact support!"; 
-      } else if (errorMessageFromServer == "updateVerificationCodeError") {
-        message = "Something went wrong! Please contact support!"
-      } else {
-        message = errorMessageFromServer;
-      }
-
       if (locale === 'de-DE') {
         push(
-          message,
-          { variant: 'error' }
+          'Wenn die von Ihnen eingegebene E-Mail-Adresse mit einem Konto verknüpft ist, sollten Sie bald eine E-Mail mit Schritten zum Zurücksetzen Ihres Passworts erhalten. ',
+          {
+            variant: 'success',
+          }
         );
       } else {
         push(
-          message,
-          { variant: 'error' }
+          'If the email address you entered is associated with an account, you will receive an email with instructions on how to reset your password.',
+          { variant: 'success' }
         );
       }
     }
+    onClose();
   };
 
   const isDisabled = !email.trim() || error;
