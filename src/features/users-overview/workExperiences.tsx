@@ -8,7 +8,7 @@ import { getLocations } from 'utilities/locations';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
-import WorkExperienceDateRangePicker from "../account/role/user/elements/WorkExperienceDateRangePicker";
+import WorkExperienceDateRangePicker from '../account/role/user/elements/WorkExperienceDateRangePicker';
 
 const WorkExperience = (props: any) => {
   const {
@@ -46,7 +46,7 @@ const WorkExperience = (props: any) => {
             insertedDatas[0]
           );
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -63,7 +63,7 @@ const WorkExperience = (props: any) => {
           const data = editedDatas[0];
           await HouseWorkExperienceApi.updateHouseWorkExperience(data, id);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -77,7 +77,7 @@ const WorkExperience = (props: any) => {
         DeletedArray.map(async (id) => {
           await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -378,7 +378,7 @@ const WorkExperience = (props: any) => {
               }
               errorCallback={handleErrors(`${experience.id}_${index}_location`)}
             />
-            <WorkExperienceDateRangePicker 
+            <WorkExperienceDateRangePicker
               experience={experience}
               handleChange={handleChange}
               handleErrors={handleErrors(`${experience.id}_${index}_from`)}

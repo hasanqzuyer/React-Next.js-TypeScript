@@ -164,7 +164,7 @@ const Input = ({
         if (errorCallback) errorCallback(false);
       }
     }
-  }, [invokeValidation, enableInvokeValidation])
+  }, [invokeValidation, enableInvokeValidation]);
 
   return (
     <InputMain {...props}>

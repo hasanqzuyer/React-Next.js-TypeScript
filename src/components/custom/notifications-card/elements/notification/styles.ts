@@ -16,7 +16,7 @@ export const NotifictionLinkContainer = styled(Link)<{ theme?: Theme }>`
   ${({ theme }) => `
     text-decoration: none;
   `}
-`
+`;
 
 export const NotificationContent = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `

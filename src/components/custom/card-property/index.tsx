@@ -55,7 +55,7 @@ const PropertyCard = ({
 
   return (
     <CardMain animation="zoom-in" {...props}>
-      <div style={{ display: "flex", flexDirection: 'column', width: '100%'}}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         {completed && <CardCompletedMark>Completed</CardCompletedMark>}
         <Image
           src={image ? `${Project.apis.v1}/public/images/${image.key}` : ''}
@@ -119,14 +119,14 @@ const PropertyCard = ({
               </Tooltip>
             </CardTitle>
 
-            {(
+            {
               <CardProgressItem>
                 Available spots
                 <CardProgressValue>
                   {house.availableSpots}/{house.totalSpots}
                 </CardProgressValue>
               </CardProgressItem>
-            )}
+            }
             {applied && (
               <CardProgressItem>
                 Status

@@ -20,7 +20,7 @@ const WorkExperience = (props: any) => {
     userId,
     workIssuedArrays,
     setWorkIssuedArrays,
-    userInfo
+    userInfo,
   } = props;
   const { push } = useSnackbar();
 
@@ -45,7 +45,7 @@ const WorkExperience = (props: any) => {
             insertedDatas[0]
           );
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -71,13 +71,12 @@ const WorkExperience = (props: any) => {
 
   // eslint-disable-next-line
   const handleDeleteing = async () => {
-   
     try {
       await Promise.all(
         DeletedArray.map(async (id) => {
           await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -373,7 +372,7 @@ const WorkExperience = (props: any) => {
                 )
               }
             />
-            <WorkExperienceDateRangePicker 
+            <WorkExperienceDateRangePicker
               experience={experience}
               handleChange={handleChange}
               handleErrors={handleErrors(`${experience.id}_${index}_from`)}

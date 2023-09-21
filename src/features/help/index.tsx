@@ -144,7 +144,9 @@ const HelpPage = () => {
                   label="Topic"
                   placeholder="Select Topic"
                   value={helpFormData.topic}
-                  onValue={(value) => setHelpFormData({...helpFormData, topic: value})}
+                  onValue={(value) =>
+                    setHelpFormData({ ...helpFormData, topic: value })
+                  }
                   options={topicOptions}
                 />
                 <Input

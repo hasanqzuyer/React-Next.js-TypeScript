@@ -47,7 +47,7 @@ const Education = (props: any) => {
           );
           await EducationApi.createEducation(insertedDatas[0]);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -64,8 +64,8 @@ const Education = (props: any) => {
           const data = editedDatas[0];
           await EducationApi.updateEducation(data, id);
         })
-      )
-      
+      );
+
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -79,7 +79,7 @@ const Education = (props: any) => {
         DeletedArray.map(async (id) => {
           await EducationApi.deleteEducation(id);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -370,7 +370,7 @@ const Education = (props: any) => {
               }
             />
 
-            <EducationExperienceDateRangePicker 
+            <EducationExperienceDateRangePicker
               education={education}
               handleChange={handleChange}
               handleErrors={handleErrors(`${education.id}_${index}_to`)}

@@ -311,7 +311,7 @@ const AdminApplicationsPage = () => {
   useEffect(() => {
     getAllApplications()
       .then((data) => {
-        setTotalColumnItems(data) 
+        setTotalColumnItems(data);
       })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   }, [applicationStatus]);
@@ -435,51 +435,51 @@ const AdminApplicationsPage = () => {
     }
 
     const educationTemplate = {
-      createdAt: "",
-      degree: "",
-      fieldOfStudy : "",
-      from: "",
-      id: "",
-      overAllGPA: "",
-      ownerId: "",
-      to: "",
-      university: "",
-      updatedAt: "",
-    }
+      createdAt: '',
+      degree: '',
+      fieldOfStudy: '',
+      from: '',
+      id: '',
+      overAllGPA: '',
+      ownerId: '',
+      to: '',
+      university: '',
+      updatedAt: '',
+    };
 
     const experienceTemplate = {
-      company: "",
-      createdAt: "",
-      from : "",
-      id: "",
-      jobTitle: "",
-      location: "",
-      ownerId: "",
-      roleDescription: "",
-      stillWorkHere: "",
-      to: "",
-      updatedAt: "",
-    }
+      company: '',
+      createdAt: '',
+      from: '',
+      id: '',
+      jobTitle: '',
+      location: '',
+      ownerId: '',
+      roleDescription: '',
+      stillWorkHere: '',
+      to: '',
+      updatedAt: '',
+    };
 
-    const housePreferenceTemplate = { 
-      ageMax: "",
-      ageMin: "",
-      createdAt: "",
-      diet: "",
-      id: "",
-      interestsHobbies: "",
-      language: "",
-      location: "",
-      monthlyRentMax: "",
-      monthlyRentMin: "",
-      motivation: "",
-      ownerId: "",
-      skillsOfOthers: "",
-      tenantsMax: "",
-      tenantsMin: "",
-      theme: "",
-      updatedAt: ""
-    }
+    const housePreferenceTemplate = {
+      ageMax: '',
+      ageMin: '',
+      createdAt: '',
+      diet: '',
+      id: '',
+      interestsHobbies: '',
+      language: '',
+      location: '',
+      monthlyRentMax: '',
+      monthlyRentMin: '',
+      motivation: '',
+      ownerId: '',
+      skillsOfOthers: '',
+      tenantsMax: '',
+      tenantsMin: '',
+      theme: '',
+      updatedAt: '',
+    };
 
     const flatData = data.map((d: any) => {
       const { house, owner, ...rest } = d;
@@ -490,25 +490,29 @@ const AdminApplicationsPage = () => {
       let experienceObject = {};
       let housePreferenceObject = {};
 
-      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)].slice(0,4).forEach((work, index) => {
-        const keys = Object.keys(work);
-        keys.forEach(key => {
-          experienceObject[`WE${index + 1} ${key}`] = work[key]
-        })
-      });
+      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)]
+        .slice(0, 4)
+        .forEach((work, index) => {
+          const keys = Object.keys(work);
+          keys.forEach((key) => {
+            experienceObject[`WE${index + 1} ${key}`] = work[key];
+          });
+        });
 
-      [...(educations ?? []), ...Array(4).fill(educationTemplate)].slice(0, 4).forEach((edu, index) => {
-        const keys = Object.keys(edu);
-        keys.forEach(key => {
-          educationObject[`ED${index + 1} ${key}`] = edu[key]
-        })
-      });
+      [...(educations ?? []), ...Array(4).fill(educationTemplate)]
+        .slice(0, 4)
+        .forEach((edu, index) => {
+          const keys = Object.keys(edu);
+          keys.forEach((key) => {
+            educationObject[`ED${index + 1} ${key}`] = edu[key];
+          });
+        });
 
       (housePreference ?? []).forEach((hpref, index) => {
         const keys = Object.keys(hpref);
-        keys.forEach(key => {
-          housePreferenceObject[`HP ${key}`] = hpref[key]
-        })
+        keys.forEach((key) => {
+          housePreferenceObject[`HP ${key}`] = hpref[key];
+        });
       });
 
       return {
@@ -539,7 +543,7 @@ const AdminApplicationsPage = () => {
         owner_verified: owner.verified,
         ...experienceObject,
         ...educationObject,
-        ...housePreferenceObject
+        ...housePreferenceObject,
       };
     });
 

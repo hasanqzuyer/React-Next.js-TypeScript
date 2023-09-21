@@ -7,7 +7,7 @@ import {
   SplideItem,
   SplideMain,
   ImageContainer,
-  FImageContainer
+  FImageContainer,
 } from 'components/custom/gallery/styles';
 import Image from 'next/image';
 

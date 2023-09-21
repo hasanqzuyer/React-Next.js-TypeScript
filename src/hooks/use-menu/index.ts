@@ -41,15 +41,17 @@ const useMenu = (initialState: boolean): any => {
 
       const handleScrollEvent = (e) => {
         setOpen(false);
-      }
+      };
 
-      overflowHiddenElement[0].addEventListener("scroll", handleScrollEvent)
+      overflowHiddenElement[0].addEventListener('scroll', handleScrollEvent);
 
-      return () => overflowHiddenElement[0].removeEventListener("scroll", handleScrollEvent)
+      return () =>
+        overflowHiddenElement[0].removeEventListener(
+          'scroll',
+          handleScrollEvent
+        );
     }
-    
   }, [open]);
-
 
   useEffect(() => {
     const trackClick = (e: MouseEvent) => {

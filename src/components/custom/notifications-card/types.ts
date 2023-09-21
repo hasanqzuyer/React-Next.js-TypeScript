@@ -13,7 +13,7 @@ export type TNotificationData = {
   id: number;
   description: string;
   title: string;
-  notificationPayload:any[];
+  notificationPayload: any[];
   variant: TNotificationVariantType;
 };
 

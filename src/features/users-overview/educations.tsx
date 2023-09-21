@@ -41,12 +41,14 @@ const Education = (props: any) => {
 
   const handleInsert = async () => {
     try {
-        await Promise.all(InsertedArray.map(async (id) => {
-        const insertedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        await EducationApi.createEducation(insertedDatas[0]);
-      }));
+      await Promise.all(
+        InsertedArray.map(async (id) => {
+          const insertedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          await EducationApi.createEducation(insertedDatas[0]);
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -77,7 +79,7 @@ const Education = (props: any) => {
           const data = editedDatas[0];
           await EducationApi.updateEducation(data, id);
         })
-      )
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -87,10 +89,12 @@ const Education = (props: any) => {
   // eslint-disable-next-line
   const handleDeleteing = async () => {
     try {
-      await Promise.all(DeletedArray.map(async (id) => {
-        await EducationApi.deleteEducation(id);
-      }))
-      
+      await Promise.all(
+        DeletedArray.map(async (id) => {
+          await EducationApi.deleteEducation(id);
+        })
+      );
+
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -367,8 +371,8 @@ const Education = (props: any) => {
                 )
               }
             />
-            
-            <EducationExperienceDateRangePicker 
+
+            <EducationExperienceDateRangePicker
               education={education}
               handleChange={handleChange}
               handleErrors={handleErrors(`${education.id}_${index}_to`)}

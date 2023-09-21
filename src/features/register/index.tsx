@@ -27,8 +27,8 @@ interface IFormData {
   role: string;
 }
 
-const TERMS_OF_SERVICES = "https://brotherhoodhouse.com/terms-of-use/"
-const PRIVACY_POLICY = "https://brotherhoodhouse.com/privacy-statement/"
+const TERMS_OF_SERVICES = 'https://brotherhoodhouse.com/terms-of-use/';
+const PRIVACY_POLICY = 'https://brotherhoodhouse.com/privacy-statement/';
 
 const RegisterPage = () => {
   const [state, setState] = useState<IFormData>({
