@@ -41,12 +41,12 @@ const Education = (props: any) => {
 
   const handleInsert = async () => {
     try {
-      InsertedArray.forEach(async (id) => {
+        await Promise.all(InsertedArray.map(async (id) => {
         const insertedDatas = totalData.filter(
           (element: any) => element.id === id
         );
         await EducationApi.createEducation(insertedDatas[0]);
-      });
+      }));
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -69,13 +69,15 @@ const Education = (props: any) => {
 
   const handleUpdate = async () => {
     try {
-      EditedArray.forEach(async (id) => {
-        const editedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        const data = editedDatas[0];
-        await EducationApi.updateEducation(data, id);
-      });
+      await Promise.all(
+        EditedArray.map(async (id) => {
+          const editedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          const data = editedDatas[0];
+          await EducationApi.updateEducation(data, id);
+        })
+      )
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -85,9 +87,10 @@ const Education = (props: any) => {
   // eslint-disable-next-line
   const handleDeleteing = async () => {
     try {
-      DeletedArray.forEach(async (id) => {
+      await Promise.all(DeletedArray.map(async (id) => {
         await EducationApi.deleteEducation(id);
-      });
+      }))
+      
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
