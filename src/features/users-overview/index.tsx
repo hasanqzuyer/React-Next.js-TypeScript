@@ -762,12 +762,10 @@ const OverviewPage = (props: any) => {
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
-                    // if (skillsOfOthers.length <= 5) {
                     handleChangeHousePreference(
                       'skillsOfOthers',
                       skillsOfOthers
                     );
-                    // }
                   }}
                   disabled={!isEditing}
                 />
@@ -810,6 +808,22 @@ const OverviewPage = (props: any) => {
                     )
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Monthly rent must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="min-max"
@@ -822,6 +836,28 @@ const OverviewPage = (props: any) => {
                     handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Age must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    },
+                    {
+                      message: 'Age must be between 18 and 120',
+                      validator: ({min, max}) => {
+                        return (min == null || (18 <= min &&  min <= 120)) && (min == null || (18 <= min &&  min <= 120))
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="min-max"
@@ -838,6 +874,22 @@ const OverviewPage = (props: any) => {
                     )
                   }
                   disabled={!isEditing}
+                  validators={[
+                    {
+                      message: 'Tenants must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="multiselect"

@@ -806,6 +806,22 @@ const AccountPage = () => {
                       monthlyRent
                     )
                   }
+                  validators={[
+                    {
+                      message: 'Monthly rent must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="min-max"
@@ -817,6 +833,28 @@ const AccountPage = () => {
                   onValue={(age) =>
                     handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
                   }
+                  validators={[
+                    {
+                      message: 'Age must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    },
+                    {
+                      message: 'Age must be between 18 and 120',
+                      validator: ({min, max}) => {
+                        return (min == null || (18 <= min &&  min <= 120)) && (min == null || (18 <= min &&  min <= 120))
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="min-max"
@@ -832,6 +870,22 @@ const AccountPage = () => {
                       tenants
                     )
                   }
+                  validators={[
+                    {
+                      message: 'Tenants must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (min == null || min >= 0) && (max == null || max >= 0)
+                      }
+                    },
+                    {
+                      message: 'Max must be greater than min',
+                      validator: ({min, max}) => {
+                        console.log(min, max)
+                        if (min == null || max == null) return true;
+                        return max > min;
+                      }
+                    }
+                  ]}
                 />
                 <Input
                   type="multiselect"
