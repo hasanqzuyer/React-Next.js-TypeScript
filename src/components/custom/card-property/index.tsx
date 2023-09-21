@@ -119,7 +119,7 @@ const PropertyCard = ({
               </Tooltip>
             </CardTitle>
 
-            {house.availableSpots && house.totalSpots && (
+            {(
               <CardProgressItem>
                 Available spots
                 <CardProgressValue>
