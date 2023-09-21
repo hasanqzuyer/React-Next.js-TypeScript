@@ -6,9 +6,11 @@ import {
   NotificationStatus,
   NotificationText,
   NotificationDate,
+  NotifictionLinkContainer,
 } from 'components/custom/notifications-card/elements/notification/styles';
 import { TNotificationProps } from 'components/custom/notifications-card/elements/notification/types';
 import { format } from 'date-fns';
+import Link from "next/link"
 
 const Notification = ({
   notification,
@@ -26,13 +28,15 @@ const Notification = ({
   
   return ( 
     <NotificationMain {...props}>
-      <NotificationContent>
-        <NotificationStatus variant={notification.variant} href={href} />
-        <NotificationText> {notification.description} </NotificationText>
-      </NotificationContent>
-      <NotificationDate>
-        {createdAt ? format(new Date(createdAt), 'MMM dd, yyyy | h:mm a') : null}
-      </NotificationDate>
+      <NotifictionLinkContainer href={href}>
+        <NotificationContent>
+          <NotificationStatus variant={notification.variant} />
+          <NotificationText> {notification.description} </NotificationText>
+        </NotificationContent>
+        <NotificationDate>
+          {createdAt ? format(new Date(createdAt), 'MMM dd, yyyy | h:mm a') : null}
+        </NotificationDate>
+      </NotifictionLinkContainer>
     </NotificationMain>
   )}
  
