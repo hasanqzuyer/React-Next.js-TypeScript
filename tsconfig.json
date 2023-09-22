@@ -20,7 +20,7 @@
     "jsx": "preserve",
     "sourceMap": true,
     "pretty": true,
-    "noImplicitAny": false,
+    // "noImplicitAny": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
