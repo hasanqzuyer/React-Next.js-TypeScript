@@ -7,7 +7,7 @@ import {
   PreferenceEditButton,
   PreferenceHeadline,
 } from 'features/users-overview/styles';
-import { Button, Input, Card } from 'components/ui';
+import { Button, Input, Card, MinMax } from 'components/ui';
 import { Stack } from 'components/system';
 import { Tabs } from 'components/custom';
 import UsersAPI from 'api/users';
@@ -106,6 +106,30 @@ const OverviewPage = (props: any) => {
   };
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const [isValidMonthlyRent, setIsValidMonthlyRent] = useState(true);
+  const [isValidAge, setIsValidAge] = useState(true);
+  const [isValidTenants, setIsValidTenants] = useState(true);
+
+  const validateErrorCallback = (isError: boolean, key: string) => {
+    switch (key) {
+      case 'monthlyRent': {
+        setIsValidMonthlyRent(!isError);
+        break;
+      }
+      case 'age' : {
+        setIsValidAge(!isError);
+        break;
+      }
+      case 'tenants' : { 
+        setIsValidTenants(!isError);
+        break;
+      }
+
+      default : return;
+    }
+  }
+
   useEffect(() => {
     const isDisable =
       !info.firstName ||
@@ -793,40 +817,46 @@ const OverviewPage = (props: any) => {
                   }
                   disabled={!isEditing}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax 
                   label="Monthly Rent"
+                  onValue={(monthlyRent) => handleChangeMinMaxHousePreference(
+                    'monthlyRentMin',
+                    'monthlyRentMax',
+                    monthlyRent
+                  )} 
                   value={{
                     min: housePreference.monthlyRentMin,
                     max: housePreference.monthlyRentMax,
                   }}
-                  onValue={(monthlyRent) =>
-                    handleChangeMinMaxHousePreference(
-                      'monthlyRentMin',
-                      'monthlyRentMax',
-                      monthlyRent
-                    )
-                  }
                   disabled={!isEditing}
-                  validators={[
+                  minValidators={[
                     {
-                      message: 'Monthly rent must be positive value!',
+                      message: 'Min must be positive value!',
                       validator: ({ min, max }) => {
-                        return (min == null || min >= 0) && (max == null || max >= 0)
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Max must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
                       message: 'Max must be greater than min',
                       validator: ({min, max}) => {
-                        console.log(min, max)
                         if (min == null || max == null) return true;
-                        return max > min;
+                        return parseFloat(max) > parseFloat(min);
                       }
                     }
                   ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'monthlyRent')}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax 
                   label="Age"
                   value={{
                     min: housePreference.ageMin,
@@ -836,36 +866,52 @@ const OverviewPage = (props: any) => {
                     handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
                   }
                   disabled={!isEditing}
-                  validators={[
+
+                  minValidators={[
                     {
-                      message: 'Age must be positive value!',
+                      message: 'Min age must be positive value!',
                       validator: ({ min, max }) => {
-                        return (min == null || min >= 0) && (max == null || max >= 0)
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                    {
+                      message: 'Min age must be between 18 and 120',
+                      validator: ({min, max}) => {
+                        return (min == null || (18 <= min &&  min <= 120))
+                      }
+                    }
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Max age must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
                       message: 'Max must be greater than min',
                       validator: ({min, max}) => {
-                        console.log(min, max)
                         if (min == null || max == null) return true;
-                        return max > min;
+                        return parseFloat(max) > parseFloat(min);
                       }
                     },
                     {
-                      message: 'Age must be between 18 and 120',
+                      message: 'Max age must be between 18 and 120',
                       validator: ({min, max}) => {
-                        return (min == null || (18 <= min &&  min <= 120)) && (min == null || (18 <= min &&  min <= 120))
+                        return (max == null || (18 <= max &&  max <= 120))
                       }
                     }
                   ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'age')}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax 
                   label="Tenants per House"
                   value={{
                     min: housePreference.tenantsMin,
                     max: housePreference.tenantsMax,
                   }}
+                  disabled={!isEditing}
                   onValue={(tenants) =>
                     handleChangeMinMaxHousePreference(
                       'tenantsMin',
@@ -873,24 +919,32 @@ const OverviewPage = (props: any) => {
                       tenants
                     )
                   }
-                  disabled={!isEditing}
-                  validators={[
+                  minValidators={[
                     {
-                      message: 'Tenants must be positive value!',
+                      message: 'Min must be positive value!',
                       validator: ({ min, max }) => {
-                        return (min == null || min >= 0) && (max == null || max >= 0)
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Max must be positive value!',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
                       message: 'Max must be greater than min',
                       validator: ({min, max}) => {
-                        console.log(min, max)
                         if (min == null || max == null) return true;
-                        return max > min;
+                        return parseFloat(max) > parseFloat(min);
                       }
                     }
                   ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'tenants')}
                 />
+               
                 <Input
                   type="multiselect"
                   label="Interests and Hobbies"
@@ -952,7 +1006,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing || isDisabled}
+                  disabled={!isEditing || isDisabled || !isValidAge || !isValidMonthlyRent || !isValidTenants}
                   onClick={handleSave}
                 >
                   Save
