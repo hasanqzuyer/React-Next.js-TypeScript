@@ -828,7 +828,7 @@ const AccountPage = () => {
                   }}
                   minValidators={[
                     {
-                      message: 'Min must be positive value!',
+                      message: 'Minimum monthly rent should be above zero.',
                       validator: ({ min, max }) => {
                         return (min == null || parseFloat(min) >= 0)
                       }
@@ -836,13 +836,13 @@ const AccountPage = () => {
                   ]}
                   maxValidators={[
                     {
-                      message: 'Max must be positive value!',
+                      message: 'Maximum monthly rent should be above zero.',
                       validator: ({ min, max }) => {
                         return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
-                      message: 'Max must be greater than min',
+                      message: 'Maximum monthly rent should exceed the minimum monthly rent.',
                       validator: ({min, max}) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
@@ -862,13 +862,13 @@ const AccountPage = () => {
                   }
                   minValidators={[
                     {
-                      message: 'Min age must be positive value!',
+                      message: 'Minimum age should be above zero.',
                       validator: ({ min, max }) => {
                         return (min == null || parseFloat(min) >= 0)
                       }
                     },
                     {
-                      message: 'Min age must be between 18 and 120',
+                      message: 'Age range should be between 18 and 120.',
                       validator: ({min, max}) => {
                         return (min == null || (18 <= min &&  min <= 120))
                       }
@@ -876,20 +876,20 @@ const AccountPage = () => {
                   ]}
                   maxValidators={[
                     {
-                      message: 'Max age must be positive value!',
+                      message: 'Maximum age should be above zero.',
                       validator: ({ min, max }) => {
                         return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
-                      message: 'Max must be greater than min',
+                      message: 'Maximum age should exceed the minimum age.',
                       validator: ({min, max}) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
                       }
                     },
                     {
-                      message: 'Max age must be between 18 and 120',
+                      message: 'Age range should be between 18 and 120.',
                       validator: ({min, max}) => {
                         return (max == null || (18 <= max &&  max <= 120))
                       }
@@ -912,7 +912,7 @@ const AccountPage = () => {
                   }
                   minValidators={[
                     {
-                      message: 'Min must be positive value!',
+                      message: 'Minimum tenants per house should be above zero.',
                       validator: ({ min, max }) => {
                         return (min == null || parseFloat(min) >= 0)
                       }
@@ -920,13 +920,13 @@ const AccountPage = () => {
                   ]}
                   maxValidators={[
                     {
-                      message: 'Max must be positive value!',
+                      message: 'Maximum tenants per house should be above zero.',
                       validator: ({ min, max }) => {
                         return (max == null || parseFloat(max) >= 0)
                       }
                     },
                     {
-                      message: 'Max must be greater than min',
+                      message: 'Maximum tenants per house should exceed the minimum tenants per house.',
                       validator: ({min, max}) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
