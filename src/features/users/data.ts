@@ -44,6 +44,7 @@ export const DUsersFilters = () => ({
   },
   interestsAndHobbies: [],
   diet: [],
+  accomodated: null
 });
 
 export const DUsersHead = [

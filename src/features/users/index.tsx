@@ -89,6 +89,7 @@ const UsersPage = () => {
     try {
       const response = await UsersAPI.getUsers({
         ...filters,
+        accomodated: filters.accomodated ? filters.accomodated.value : null,
       });
 
       if (response) {
@@ -390,25 +391,6 @@ const UsersPage = () => {
       updatedAt: '',
     };
 
-    const housePreferenceTemplate = {
-      ageMax: '',
-      ageMin: '',
-      createdAt: '',
-      diet: '',
-      id: '',
-      interestsHobbies: '',
-      language: '',
-      location: '',
-      monthlyRentMax: '',
-      monthlyRentMin: '',
-      motivation: '',
-      ownerId: '',
-      skillsOfOthers: '',
-      tenantsMax: '',
-      tenantsMin: '',
-      theme: '',
-      updatedAt: '',
-    };
 
     const flatData = data.map((user) => {
       const { educations, experiences, housePreference, ...rest } = user;
@@ -721,6 +703,18 @@ const UsersPage = () => {
                     onSearch={debouncedDiets}
                     value={filters.diet}
                     onValue={(diet) => setFilter({ ...filters, diet })}
+                  />
+
+                  <Input
+                    type="select"
+                    label="Accomodated"
+                    options={[
+                      { label: "Yes", value: true},
+                      { label: 'No', value: false}
+                    ]}
+                    placeholder="Please Select"
+                    value={filters.accomodated}
+                    onValue={(accomodated) => setFilter({ ...filters, accomodated })}
                   />
                 </Grid>
               )}
