@@ -646,7 +646,7 @@ const OverviewPage = (props: any) => {
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing || isDisabled}
+                  disabled={!isEditing || isDisabled || !isValidAge || !isValidMonthlyRent || !isValidTenants}
                   onClick={handleSave}
                 >
                   Save
