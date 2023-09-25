@@ -40,8 +40,7 @@ const ConfirmRegistrationModal = ({
       });
     } catch (e) {
       if (e instanceof AxiosError && e.response) {
-        console.log(e);
-        if (e.response.data.message === 'Too many requests!') {
+        if (e.response.data.message === 'limitedVerificationCode') {
           setClicked(false);
           setLimiteReached(true);
         }
