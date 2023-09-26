@@ -110,16 +110,16 @@ const AccountPage = () => {
         setIsValidMonthlyRent(!isError);
         break;
       }
-      case 'age' : {
+      case 'age': {
         setIsValidAge(!isError);
         break;
       }
-      case 'tenants' : { 
+      case 'tenants': {
         setIsValidTenants(!isError);
         break;
       }
 
-      default : return;
+      default: return;
     }
   }
 
@@ -167,16 +167,16 @@ const AccountPage = () => {
       dateOfBirth: data.dateOfBirth,
       language: data.language
         ? data.language.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [],
       location: data.location,
       skills: data.skills
         ? data.skills.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [],
     }));
 
@@ -190,34 +190,34 @@ const AccountPage = () => {
       let houseprf: any = data.housePreference[0];
       houseprf.skillsOfOthers = houseprf.skillsOfOthers
         ? houseprf.skillsOfOthers.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.interestsHobbies = houseprf.interestsHobbies
         ? houseprf.interestsHobbies.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.theme = houseprf.theme
         ? houseprf.theme.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.location = houseprf.location
         ? houseprf.location.split('@').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
 
       houseprf.language = houseprf.language
         ? houseprf.language.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
 
       setHousePreference(houseprf);
@@ -356,7 +356,7 @@ const AccountPage = () => {
       const language = info.language.map((item: any) => item.value).join(',');
       const skills = info.skills.map((item: any) => item.value).join(',');
       let data = { ...info, language, skills };
-      await UsersAPI.updateSingleUser(user.id, data).then(() => {});
+      await UsersAPI.updateSingleUser(user.id, data).then(() => { });
       setInfoSaving(false);
       setInfoHasChanged(false);
     } catch {
@@ -368,12 +368,12 @@ const AccountPage = () => {
   const saveSocialMedia = async () => {
     try {
       if (socialMedia.id === -1) {
-        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => {});
+        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => { });
       } else {
         await SocialMediaAPI.updateSocialMedia(
           socialMedia,
           socialMedia.id
-        ).then(() => {});
+        ).then(() => { });
       }
       setSocialMediaHasChanged(false);
       setSocialMediaSaving(false);
@@ -413,12 +413,12 @@ const AccountPage = () => {
         language,
       };
       if (housePreference.id === -1) {
-        await HousePreferenceApi.createHousePreference(data).then(() => {});
+        await HousePreferenceApi.createHousePreference(data).then(() => { });
       } else {
         await HousePreferenceApi.updateHousePreference(
           data,
           housePreference.id
-        ).then(() => {});
+        ).then(() => { });
       }
       setHprefHasChanged(false);
       setHprefSaving(false);
@@ -553,7 +553,7 @@ const AccountPage = () => {
                   label="Email"
                   placeholder="johndio@gmail.com"
                   value={info?.email}
-                  onValue={() => {}}
+                  onValue={() => { }}
                   disabled
                 />
                 <AccountChange>
@@ -562,7 +562,7 @@ const AccountPage = () => {
                     label="Password"
                     placeholder="**********"
                     value={info.password}
-                    onValue={() => {}}
+                    onValue={() => { }}
                     disabled
                   />
                   <AccountSpan onClick={openCpModal}>
@@ -581,9 +581,9 @@ const AccountPage = () => {
                   value={
                     info.location
                       ? {
-                          label: info.location,
-                          value: info.location,
-                        }
+                        label: info.location,
+                        value: info.location,
+                      }
                       : null
                   }
                   onValue={(location) =>
@@ -602,9 +602,9 @@ const AccountPage = () => {
                   value={
                     info.nationality
                       ? {
-                          label: info.nationality,
-                          value: info.nationality,
-                        }
+                        label: info.nationality,
+                        value: info.nationality,
+                      }
                       : null
                   }
                   onValue={(nationality) =>
@@ -649,10 +649,10 @@ const AccountPage = () => {
                 />
               </AccountGrid>
               {!expSaving &&
-              !infoSaving &&
-              !eduSaving &&
-              !socialMediaSaving &&
-              !hprefSaving ? (
+                !infoSaving &&
+                !eduSaving &&
+                !socialMediaSaving &&
+                !hprefSaving ? (
                 <Button
                   variant="contained"
                   color="primary"
@@ -709,9 +709,9 @@ const AccountPage = () => {
                 <Input
                   type="multiselect"
                   label="Type to Add Skills"
-                  placeholder="Please Select"
+                  placeholder={info.skills && info.skills.length === 5 ? '' : 'Please Select (Up to 5 Skills)'}
                   onSearch={debouncedSkills}
-                  infoLabel="Maximum 5 skills"
+                  //obrisanInfo="Maximum 5 skills"
                   isFilterActive
                   options={skills}
                   value={info.skills}
@@ -766,17 +766,17 @@ const AccountPage = () => {
                 <Input
                   type="multiselect"
                   label="Theme"
-                  placeholder="Please Select"
+                  placeholder={housePreference.theme && housePreference.theme.length === 3 ? '' : 'Please Select (Up to 3 themes)'}
                   options={themes}
                   value={housePreference.theme}
-                  infoLabel="Maximum 3 themes"
+                  //obrisaninfo="Maximum 3 themes"
                   onValue={(theme) => {
                     if (theme.length <= 3) {
                       handleChangeHousePreference('theme', theme);
                     }
                   }}
                 />
-                <Input
+                {/* <Input
                   type="multiselect"
                   label="Skills of Others"
                   placeholder="Please Select"
@@ -790,6 +790,19 @@ const AccountPage = () => {
                       skillsOfOthers
                     );
                     // 0}
+                  }}
+                /> */}
+                <Input
+                  type="multiselect"
+                  label="Skills of Others"
+                  placeholder={housePreference.skillsOfOthers && housePreference.skillsOfOthers.length === 5 ? '' : 'Please Select (Up to 5 Skills of Others)'}
+                  options={skillsOfthers}
+                  onSearch={debouncedSkillsOfOthers}
+                  value={housePreference.skillsOfOthers}
+                  onValue={(skillsOfOthers) => {
+                    if (skillsOfOthers.length <= 5) {
+                      handleChangeHousePreference('skillsOfOthers', skillsOfOthers);
+                    }
                   }}
                 />
 
@@ -815,13 +828,13 @@ const AccountPage = () => {
                     handleChangeHousePreference('language', language)
                   }
                 />
-                <MinMax 
+                <MinMax
                   label="Monthly Rent"
                   onValue={(monthlyRent) => handleChangeMinMaxHousePreference(
                     'monthlyRentMin',
                     'monthlyRentMax',
                     monthlyRent
-                  )} 
+                  )}
                   value={{
                     min: housePreference.monthlyRentMin,
                     max: housePreference.monthlyRentMax,
@@ -843,7 +856,7 @@ const AccountPage = () => {
                     },
                     {
                       message: 'Maximum monthly rent should exceed the minimum monthly rent.',
-                      validator: ({min, max}) => {
+                      validator: ({ min, max }) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
                       }
@@ -851,7 +864,7 @@ const AccountPage = () => {
                   ]}
                   errorCallback={(isError) => validateErrorCallback(isError, 'monthlyRent')}
                 />
-                 <MinMax 
+                <MinMax
                   label="Age"
                   value={{
                     min: housePreference.ageMin,
@@ -869,8 +882,8 @@ const AccountPage = () => {
                     },
                     {
                       message: 'Age range should be between 18 and 120.',
-                      validator: ({min, max}) => {
-                        return (min == null || (18 <= min &&  min <= 120))
+                      validator: ({ min, max }) => {
+                        return (min == null || (18 <= min && min <= 120))
                       }
                     }
                   ]}
@@ -883,21 +896,21 @@ const AccountPage = () => {
                     },
                     {
                       message: 'Maximum age should exceed the minimum age.',
-                      validator: ({min, max}) => {
+                      validator: ({ min, max }) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
                       }
                     },
                     {
                       message: 'Age range should be between 18 and 120.',
-                      validator: ({min, max}) => {
-                        return (max == null || (18 <= max &&  max <= 120))
+                      validator: ({ min, max }) => {
+                        return (max == null || (18 <= max && max <= 120))
                       }
                     }
                   ]}
                   errorCallback={(isError) => validateErrorCallback(isError, 'age')}
                 />
-                <MinMax 
+                <MinMax
                   label="Tenants per House"
                   value={{
                     min: housePreference.tenantsMin,
@@ -927,7 +940,7 @@ const AccountPage = () => {
                     },
                     {
                       message: 'Maximum tenants per house should exceed the minimum tenants per house.',
-                      validator: ({min, max}) => {
+                      validator: ({ min, max }) => {
                         if (min == null || max == null) return true;
                         return parseFloat(max) > parseFloat(min);
                       }
@@ -939,9 +952,9 @@ const AccountPage = () => {
                 <Input
                   type="multiselect"
                   label="Interests and Hobbies"
-                  placeholder="Please Select"
+                  placeholder={housePreference.interestsHobbies && housePreference.interestsHobbies.length === 3 ? '' : 'Please Select (Up to 3 Interests and Hobbies)'}
                   options={interests}
-                  infoLabel="Maximum 3 interests and hobbies"
+                  //obrisaninfo="Maximum 3 interests and hobbies"
                   value={housePreference.interestsHobbies}
                   onValue={(interestsHobbies) => {
                     if (interestsHobbies.length <= 3) {
@@ -960,9 +973,9 @@ const AccountPage = () => {
                   value={
                     housePreference.diet
                       ? {
-                          label: housePreference.diet,
-                          value: housePreference.diet,
-                        }
+                        label: housePreference.diet,
+                        value: housePreference.diet,
+                      }
                       : null
                   }
                   onValue={(diet) =>
@@ -986,10 +999,10 @@ const AccountPage = () => {
                 />
               </AccountGrid>
               {!expSaving &&
-              !infoSaving &&
-              !eduSaving &&
-              !socialMediaSaving &&
-              !hprefSaving ? (
+                !infoSaving &&
+                !eduSaving &&
+                !socialMediaSaving &&
+                !hprefSaving ? (
                 <Button
                   variant="contained"
                   color="primary"

@@ -40,6 +40,7 @@ import { birthDateSchema } from 'utilities/validators';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { format } from 'date-fns';
 import ExportApplicationsModal from './elements/export-applications-modal';
+import Tooltip from '/src/components/custom/tooltip';
 
 const AdminApplicationsPage = () => {
   const { applicationStatus } = useAppContext();
@@ -382,7 +383,13 @@ const AdminApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-          <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
+          <Tooltip title={application.house.name}>
+            <MarketTableItemLabel>{application.house.name.length > 20
+              ? application.house.name.slice(0, 20) + '...'
+              : application.house.name}
+            </MarketTableItemLabel>
+          </Tooltip>
+
         </MarketTableItem>
       );
     }

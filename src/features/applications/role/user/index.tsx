@@ -17,6 +17,7 @@ import { useAppContext } from 'context';
 import { IApplication } from 'api/applications/types';
 import Project from 'constants/project';
 import { format } from 'date-fns';
+import Tooltip from '/src/components/custom/tooltip';
 
 const UserApplicationsPage = () => {
   const { user, applicationStatus } = useAppContext();
@@ -84,11 +85,10 @@ const UserApplicationsPage = () => {
         <MarketTableItem>
           <Image
             alt="house photo"
-            src={`${Project.apis.v1}/public/images/${
-              application.house.images?.find(
-                (item) => item.id === application.house.thumbnailId
-              )?.key
-            }`}
+            src={`${Project.apis.v1}/public/images/${application.house.images?.find(
+              (item) => item.id === application.house.thumbnailId
+            )?.key
+              }`}
             width={100}
             priority={true}
             height={100}
@@ -99,8 +99,16 @@ const UserApplicationsPage = () => {
               objectFit: 'cover',
             }}
           />
-          <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
+
+          <Tooltip title={application.house.name}>
+            <MarketTableItemLabel>{application.house.name.length > 20
+              ? application.house.name.slice(0, 20) + '...'
+              : application.house.name}
+            </MarketTableItemLabel>
+          </Tooltip>
         </MarketTableItem>
+
+
       );
     }
     if (headItem.reference === 'theme') {
