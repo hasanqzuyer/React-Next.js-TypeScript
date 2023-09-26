@@ -3,6 +3,33 @@ import { Theme } from '@mui/material';
 import { LocalizationSelect } from 'components/custom';
 import { Stack } from 'components/system';
 import { Checkbox, Input } from 'components/ui';
+import Link from 'next/link';
+
+export const LoginLink = styled(Link)<{theme?: Theme}>`
+${({ theme }) => `
+  font-family: 'Poppins', sans-serif;
+  position: absolute;
+  right: 7.5%;
+  top: 24px;
+  z-index: 11;
+  text-decoration: none;
+  ${theme.breakpoints.down('md')} {
+    top: 12px;
+  }
+  ${theme.breakpoints.down('xs')} {
+    top: 15px;
+  }
+  button {
+    border-radius: 20rem;
+    font-weight: 700;
+    padding: 15px 24px;
+    font-size: 18px;
+    ${theme.breakpoints.down('xs')} {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+`}
+`;
 
 export const RegisterTitle = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
@@ -10,6 +37,9 @@ export const RegisterTitle = styled.div<{ theme?: Theme }>`
     font-weight: 700;
     color: ${theme.palette.primary.main};
     font-family: 'Poppins', sans-serif;
+    ${theme.breakpoints.down('sm')} {
+      font-size: 40px;
+    }
   `}
 `;
 export const RegisterSubtitle = styled.div<{ theme?: Theme }>`
@@ -20,6 +50,9 @@ export const RegisterSubtitle = styled.div<{ theme?: Theme }>`
     margin-top: -18px;
     margin-bottom: 18px;
     font-family: 'Poppins', sans-serif;
+    ${theme.breakpoints.down('sm')} {
+      font-size: 15px;
+    }
   `}
 `;
 
@@ -38,6 +71,10 @@ export const RegisterInfluencerMain = styled(Stack)<{ theme?: Theme }>`
 `;
 export const RegisterCompanyMain = styled(Stack)<{ theme?: Theme }>`
   ${({ theme }) => `
+
+  ${theme.breakpoints.up('md')} {
+    margin-top: 20%;
+}
 
   ${theme.breakpoints.down('sm')} {
     .css-9v3k90-StackMain {

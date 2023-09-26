@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  LoginLink,
   RegisterTitle,
   RegisterSubtitle,
   RegisterCompanyMain,
@@ -92,6 +93,11 @@ const RegisterPage = () => {
   };
   return (
     <RegisterCompanyMain>
+      <LoginLink style={{ color: '#fff' }} href="/login">
+        <Button variant="contained" color="primary" size="large">
+            {'LOGIN'}
+        </Button>
+      </LoginLink>
       <RegisterTitle>Sign Up</RegisterTitle>
       <RegisterSubtitle>
         Don't walk your ambitious path alone. Join Brotherhood House to find
