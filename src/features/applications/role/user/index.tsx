@@ -17,7 +17,7 @@ import { useAppContext } from 'context';
 import { IApplication } from 'api/applications/types';
 import Project from 'constants/project';
 import { format } from 'date-fns';
-import Tooltip from '/src/components/custom/tooltip';
+import Tooltip from 'components/custom/tooltip';
 
 const UserApplicationsPage = () => {
   const { user, applicationStatus } = useAppContext();
@@ -124,7 +124,13 @@ const UserApplicationsPage = () => {
       return `€${application.house.rent}`;
     }
     if (headItem.reference === 'status') {
-      return application.status;
+      if (application.house.status.toLowerCase() === "completed" && application.status.toLowerCase() === 'not selected') {
+        return 'Not Selected'
+      } else if (application.status === "Not Selected") {
+        return "Applied"
+      } else {
+        return application.status;
+      }
     }
     if (headItem.reference === 'date') {
       return format(new Date(application.createdAt), 'MM/dd/yyyy');

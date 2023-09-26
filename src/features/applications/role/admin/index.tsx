@@ -477,7 +477,6 @@ const AdminApplicationsPage = () => {
       let experienceObject = {};
       let housePreferenceObject = {};
 
-
       [...((experiences ?? []).sort((a: any, b: any) => a.id - b.id )), ...Array(4).fill(experienceTemplate)]
         .slice(0, 4)
         .forEach((work, index) => {
