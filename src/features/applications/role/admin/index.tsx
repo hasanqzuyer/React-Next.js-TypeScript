@@ -468,26 +468,6 @@ const AdminApplicationsPage = () => {
       updatedAt: '',
     };
 
-    const housePreferenceTemplate = {
-      ageMax: '',
-      ageMin: '',
-      createdAt: '',
-      diet: '',
-      id: '',
-      interestsHobbies: '',
-      language: '',
-      location: '',
-      monthlyRentMax: '',
-      monthlyRentMin: '',
-      motivation: '',
-      ownerId: '',
-      skillsOfOthers: '',
-      tenantsMax: '',
-      tenantsMin: '',
-      theme: '',
-      updatedAt: '',
-    };
-
     const flatData = data.map((d: any) => {
       const { house, owner, ...rest } = d;
 
@@ -497,7 +477,8 @@ const AdminApplicationsPage = () => {
       let experienceObject = {};
       let housePreferenceObject = {};
 
-      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)]
+
+      [...((experiences ?? []).sort((a: any, b: any) => a.id - b.id )), ...Array(4).fill(experienceTemplate)]
         .slice(0, 4)
         .forEach((work, index) => {
           const keys = Object.keys(work);
@@ -506,7 +487,7 @@ const AdminApplicationsPage = () => {
           });
         });
 
-      [...(educations ?? []), ...Array(4).fill(educationTemplate)]
+      [...((educations ?? []).sort((a: any, b: any) => a.id - b.id )), ...Array(4).fill(educationTemplate)]
         .slice(0, 4)
         .forEach((edu, index) => {
           const keys = Object.keys(edu);
