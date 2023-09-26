@@ -126,7 +126,7 @@ const UserApplicationsPage = () => {
     if (headItem.reference === 'status') {
       if (application.house.status.toLowerCase() === "completed" && application.status.toLowerCase() === 'not selected') {
         return 'Not Selected'
-      } else if (application.status === "Not Selected") {
+      } else if (application.status.toLowerCase() === "Not Selected".toLowerCase()) {
         return "Applied"
       } else {
         return application.status;
