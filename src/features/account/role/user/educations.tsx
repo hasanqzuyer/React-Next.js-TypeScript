@@ -99,8 +99,8 @@ const Education = (props: any) => {
       to: '',
       overAllGPA: 0,
       ownerId: userId,
-      createdAt: '',
-      updatedAt: '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const json = JSON.stringify(totalData);
     const tempTotalData = JSON.parse(json);

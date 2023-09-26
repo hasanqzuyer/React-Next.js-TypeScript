@@ -70,8 +70,8 @@ const AccountPage = () => {
     instagram: '',
     website: '',
     ownerId: user.id,
-    createdAt: '',
-    updatedAt: '',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   });
   const [housePreference, setHousePreference] = useState<any>({
     id: -1,

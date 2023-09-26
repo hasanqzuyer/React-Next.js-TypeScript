@@ -297,8 +297,8 @@ const WorkExperience = (props: any) => {
         stillWorkHere: false,
         roleDescription: '',
         ownerId: userId,
-        createdAt: '',
-        updatedAt: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       const json = JSON.stringify(totalData);
       const tempTotalData = JSON.parse(json);
