@@ -383,7 +383,7 @@ const WorkExperience = (props: any) => {
               handleChange={handleChange}
               handleErrors={handleErrors(`${experience.id}_${index}_from`)}
               userBirthDate={userInfo.dateOfBirth}
-              disabled={false}
+              disabled={disabled}
             />
             <Input
               type="text"

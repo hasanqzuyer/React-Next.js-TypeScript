@@ -83,8 +83,8 @@ const OverviewPage = (props: any) => {
     id: -1,
     theme: [],
     skillsOfOthers: [],
-    location: '',
-    language: '',
+    location: [],
+    language: [],
     monthlyRentMax: null,
     monthlyRentMin: null,
     ageMax: null,
@@ -514,6 +514,8 @@ const OverviewPage = (props: any) => {
     });
     setHprefHasChanged(true);
   };
+
+  console.log(housePreference.location)
 
   return (
     <Stack>
