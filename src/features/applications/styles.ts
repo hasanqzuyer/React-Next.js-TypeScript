@@ -52,6 +52,7 @@ export const MarketTableItem = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  
 `;
 
 export const MarketTableItemImage = styled.img`

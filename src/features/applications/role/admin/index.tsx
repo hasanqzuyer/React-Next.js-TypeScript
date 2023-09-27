@@ -15,7 +15,7 @@ import {
   MarketPageFilterActions,
   ProjectsMain,
   MarketTableItem,
-  MarketTableItemLabel,
+  EllipsisText
 } from 'features/opportunities/styles';
 import { TTableRenderItemObject } from 'components/custom/table/types';
 import { SlidersHorizontalIcon } from 'components/svg';
@@ -40,6 +40,7 @@ import { birthDateSchema } from 'utilities/validators';
 import { getInterestsAndHobbies } from 'utilities/interests';
 import { format } from 'date-fns';
 import ExportApplicationsModal from './elements/export-applications-modal';
+import Tooltip from 'components/custom/tooltip';
 
 const AdminApplicationsPage = () => {
   const { applicationStatus } = useAppContext();
@@ -380,7 +381,13 @@ const AdminApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-          <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
+              <Tooltip title={application.house.name}>
+                <EllipsisText>
+                  {application.house.name.length > 29
+                    ? application.house.name.slice(0, 29) + '...'
+                    : application.house.name}
+                </EllipsisText>
+              </Tooltip>
         </MarketTableItem>
       );
     }
