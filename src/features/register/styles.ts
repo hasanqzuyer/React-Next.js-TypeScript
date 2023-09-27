@@ -72,10 +72,6 @@ export const RegisterInfluencerMain = styled(Stack)<{ theme?: Theme }>`
 export const RegisterCompanyMain = styled(Stack)<{ theme?: Theme }>`
   ${({ theme }) => `
 
-  ${theme.breakpoints.up('md')} {
-    margin-top: 20%;
-}
-
   ${theme.breakpoints.down('sm')} {
     .css-9v3k90-StackMain {
       flex-direction: column;

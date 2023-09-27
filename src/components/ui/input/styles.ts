@@ -40,7 +40,7 @@ export const InputMain = styled.div<{ theme?: Theme }>`
     ${theme.breakpoints.down('sm')} {
       .MuiInputBase-root {
         .MuiInputBase-input {
-          padding: ${theme.spacing(0.5)} !important;
+          padding: ${theme.spacing(1.5)} !important;
           font-size: 14px
         }
       }

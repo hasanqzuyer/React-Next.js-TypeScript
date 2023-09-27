@@ -43,7 +43,8 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
       padding: 12px 18px !important;
       min-height: unset;
       height: 100%;
-      margin-top: 100px;
+      margin-top: 0;
+      order: 1
     }
     ${theme.breakpoints.up('md')} {
       padding: 0px 2.5% 0px;
