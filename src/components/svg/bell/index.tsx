@@ -23,13 +23,6 @@ const BellIcon = ({ ...props }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <ellipse
-      cx="13.5545"
-      cy="3.27339"
-      rx="3.21762"
-      ry="3.21089"
-      fill="#F7931A"
-    />
   </svg>
 );
 
