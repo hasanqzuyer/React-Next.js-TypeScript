@@ -34,11 +34,24 @@ export const getLocations = (search: string) => {
     });
     return filterd.sort().slice(0, 10);
   }
-  return locations
-            .map(lvalue => {
-              if (lvalue.city === '') return lvalue.country;
-              return `${lvalue.city}, ${lvalue.country}`;
-            })
-            .sort()
-            .slice(0, 10);
+
+  return [
+    'Å, Chad',
+    'Å, Norway',
+    'Å, Syrian Arab Republic',
+    'Aabenraa, Denmark',
+    'Aabybro, Denmark',
+    'Aachen, Germany',
+    'Aadorf, Switzerland',
+    'Aa en Hunze, Netherlands',
+    'Aakirkeby, Denmark',
+    'Aakre, Estonia'
+  ]
+  // return locations
+  //           .map(lvalue => {
+  //             if (lvalue.city === '') return lvalue.country;
+  //             return `${lvalue.city}, ${lvalue.country}`;
+  //           })
+  //           .sort()
+  //           .slice(0, 10);
 };
