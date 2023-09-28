@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ProjectsMain,
   MarketTableItem,
-  MarketTableItemLabel,
+  EllipsisText
 } from 'features/opportunities/styles';
 import Image from 'next/image';
 
@@ -17,6 +17,7 @@ import { useAppContext } from 'context';
 import { IApplication } from 'api/applications/types';
 import Project from 'constants/project';
 import { format } from 'date-fns';
+import Tooltip from 'components/custom/tooltip';
 
 const UserApplicationsPage = () => {
   const { user, applicationStatus } = useAppContext();
@@ -82,24 +83,13 @@ const UserApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-          <Image
-            alt="house photo"
-            src={`${Project.apis.v1}/public/images/${
-              application.house.images?.find(
-                (item) => item.id === application.house.thumbnailId
-              )?.key
-            }`}
-            width={100}
-            priority={true}
-            height={100}
-            style={{
-              height: '32px',
-              width: '32px',
-              borderRadius: '8px',
-              objectFit: 'cover',
-            }}
-          />
-          <MarketTableItemLabel>{application.house.name}</MarketTableItemLabel>
+              <Tooltip title={application.house.name}>
+                <EllipsisText>
+                  {application.house.name.length > 29
+                    ? application.house.name.slice(0, 29) + '...'
+                    : application.house.name}
+                </EllipsisText>
+              </Tooltip>
         </MarketTableItem>
       );
     }
