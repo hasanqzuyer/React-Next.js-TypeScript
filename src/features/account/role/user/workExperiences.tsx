@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AccountGrid } from 'features/users-overview/styles';
-import { Input, Checkbox } from 'components/ui';
+import { Input } from 'components/ui';
 import { Stack } from 'components/system';
 import { AddIcon, DeleteIcon } from 'components/svg';
 import { useDebounce, useSnackbar } from 'hooks';
@@ -313,7 +313,7 @@ const WorkExperience = (props: any) => {
     <>
       {totalData?.map((experience: TWorkExperience, index: any) => {
         return (
-          <AccountGrid style={{ position: 'relative', marginBottom: '20px' }}>
+          <AccountGrid style={{ position: 'relative', marginBottom: '30px' }}>
             <Input
               type="select"
               label="Job Title"
@@ -391,15 +391,16 @@ const WorkExperience = (props: any) => {
                 width: 'fit-content',
                 display: 'grid',
                 placeItems: 'center',
+                gridColumn: 'span 2'
               }}
             >
               <Stack
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                 onClick={() => handleDelete(experience.id)}
               >
                 <DeleteIcon style={{ color: '#9F9FB0' }} />
               </Stack>
-              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+              <Stack style={{ cursor: 'pointer', alignItems: 'flex-start'}} onClick={handleAdd}>
                 <AddIcon style={{ color: '#9F9FB0' }} />
               </Stack>
             </Stack>

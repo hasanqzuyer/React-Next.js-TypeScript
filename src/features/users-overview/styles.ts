@@ -23,9 +23,15 @@ export const AccountGrid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px 177px;
   padding-right: 90px;
-  @media screen and (max-width: 768px) {
-    gap: 20px 50px;
+  @media screen and (max-width: 900px) {
     padding-right: 20px;
+    gap: 10px 50px;
+    .css-1ny51ew-StackMain {
+      position: static !important;
+      width: 100% !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
   }
   @media screen and (max-width: 425px) {
     display: flex;

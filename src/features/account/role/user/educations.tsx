@@ -375,6 +375,7 @@ const Education = (props: any) => {
               type="text"
               label="Overall GPA"
               placeholder="Please Enter"
+              style={{ gridColumn: '1/3' }}
               value={education.overAllGPA}
               onValue={(overAllGPA) =>
                 handleChange('overAllGPA', overAllGPA, education.id)
@@ -388,10 +389,11 @@ const Education = (props: any) => {
                 width: 'fit-content',
                 display: 'grid',
                 placeItems: 'center',
+                gridColumn: 'span 2'
               }}
             >
               <Stack
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                 onClick={() => handleDelete(education.id)}
               >
                 <DeleteIcon style={{ color: '#9F9FB0' }} />
