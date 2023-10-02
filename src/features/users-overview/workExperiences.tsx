@@ -8,7 +8,7 @@ import { getLocations } from 'utilities/locations';
 import { TWorkExperience } from 'api/workExperience/types';
 import HouseWorkExperienceApi from 'api/workExperience';
 import { getJobTitles } from 'utilities/jobTitles';
-import WorkExperienceDateRangePicker from "../account/role/user/elements/WorkExperienceDateRangePicker";
+import WorkExperienceDateRangePicker from '../account/role/user/elements/WorkExperienceDateRangePicker';
 
 const WorkExperience = (props: any) => {
   const {
@@ -37,14 +37,16 @@ const WorkExperience = (props: any) => {
 
   const handleInsert = async () => {
     try {
-      InsertedArray.forEach(async (id) => {
-        const insertedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        await HouseWorkExperienceApi.createHouseWorkExperience(
-          insertedDatas[0]
-        );
-      });
+      await Promise.all(
+        InsertedArray.map(async (id) => {
+          const insertedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          await HouseWorkExperienceApi.createHouseWorkExperience(
+            insertedDatas[0]
+          );
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -53,13 +55,15 @@ const WorkExperience = (props: any) => {
 
   const handleUpdate = async () => {
     try {
-      EditedArray.forEach(async (id) => {
-        const editedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        const data = editedDatas[0];
-        await HouseWorkExperienceApi.updateHouseWorkExperience(data, id);
-      });
+      await Promise.all(
+        EditedArray.map(async (id) => {
+          const editedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          const data = editedDatas[0];
+          await HouseWorkExperienceApi.updateHouseWorkExperience(data, id);
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -69,9 +73,11 @@ const WorkExperience = (props: any) => {
   // eslint-disable-next-line
   const handleDeleteing = async () => {
     try {
-      DeletedArray.forEach(async (id) => {
-        await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
-      });
+      await Promise.all(
+        DeletedArray.map(async (id) => {
+          await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -372,12 +378,12 @@ const WorkExperience = (props: any) => {
               }
               errorCallback={handleErrors(`${experience.id}_${index}_location`)}
             />
-            <WorkExperienceDateRangePicker 
+            <WorkExperienceDateRangePicker
               experience={experience}
               handleChange={handleChange}
               handleErrors={handleErrors(`${experience.id}_${index}_from`)}
               userBirthDate={userInfo.dateOfBirth}
-              disabled={false}
+              disabled={disabled}
             />
             <Input
               type="text"

@@ -89,6 +89,7 @@ const UsersPage = () => {
     try {
       const response = await UsersAPI.getUsers({
         ...filters,
+        accomodated: filters.accomodated ? filters.accomodated.value : null,
       });
 
       if (response) {
@@ -364,88 +365,72 @@ const UsersPage = () => {
     }
 
     const educationTemplate = {
-      createdAt: "",
-      degree: "",
-      fieldOfStudy : "",
-      from: "",
-      id: "",
-      overAllGPA: "",
-      ownerId: "",
-      to: "",
-      university: "",
-      updatedAt: "",
-    }
+      createdAt: '',
+      degree: '',
+      fieldOfStudy: '',
+      from: '',
+      id: '',
+      overAllGPA: '',
+      ownerId: '',
+      to: '',
+      university: '',
+      updatedAt: '',
+    };
 
     const experienceTemplate = {
-      company: "",
-      createdAt: "",
-      from : "",
-      id: "",
-      jobTitle: "",
-      location: "",
-      ownerId: "",
-      roleDescription: "",
-      stillWorkHere: "",
-      to: "",
-      updatedAt: "",
-    }
+      company: '',
+      createdAt: '',
+      from: '',
+      id: '',
+      jobTitle: '',
+      location: '',
+      ownerId: '',
+      roleDescription: '',
+      stillWorkHere: '',
+      to: '',
+      updatedAt: '',
+    };
 
-    const housePreferenceTemplate = { 
-      ageMax: "",
-      ageMin: "",
-      createdAt: "",
-      diet: "",
-      id: "",
-      interestsHobbies: "",
-      language: "",
-      location: "",
-      monthlyRentMax: "",
-      monthlyRentMin: "",
-      motivation: "",
-      ownerId: "",
-      skillsOfOthers: "",
-      tenantsMax: "",
-      tenantsMin: "",
-      theme: "",
-      updatedAt: ""
-    }
 
-    const flatData = data.map(user => {
+    const flatData = data.map((user) => {
       const { educations, experiences, housePreference, ...rest } = user;
 
       let educationObject = {};
       let experienceObject = {};
       let housePreferenceObject = {};
 
-      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)].slice(0,4).forEach((work, index) => {
-        const keys = Object.keys(work);
-        keys.forEach(key => {
-          experienceObject[`${key}${index + 1}`] = work[key]
-        })
-      });
+      [...(experiences ?? []), ...Array(4).fill(experienceTemplate)]
+        .slice(0, 4)
+        .forEach((work, index) => {
+          const keys = Object.keys(work);
+          keys.forEach((key) => {
+            experienceObject[`WE${index + 1} ${key}`] = work[key];
+          });
+        });
 
-      [...(educations ?? []), ...Array(4).fill(educationTemplate)].slice(0, 4).forEach((edu, index) => {
-        const keys = Object.keys(edu);
-        keys.forEach(key => {
-          educationObject[`${key}${index + 1}`] = edu[key]
-        })
-      });
+      [...(educations ?? []), ...Array(4).fill(educationTemplate)]
+        .slice(0, 4)
+        .forEach((edu, index) => {
+          const keys = Object.keys(edu);
+          keys.forEach((key) => {
+            educationObject[`ED${index + 1} ${key}`] = edu[key];
+          });
+        });
 
-      [...(housePreference ?? []), ...Array(4).fill(housePreferenceTemplate)].slice(0, 4).forEach((hpref, index) => {
+      (housePreference ?? []).forEach((hpref, index) => {
         const keys = Object.keys(hpref);
-        keys.forEach(key => {
-          educationObject[`${key}${index + 1}`] = hpref[key]
-        })
+        keys.forEach((key) => {
+          housePreferenceObject[`HP ${key}`] = hpref[key];
+        });
       });
 
       return {
         ...rest,
         ...educationObject,
         ...experienceObject,
-        ...housePreferenceObject
-      }
-
-    })
+        ...housePreferenceObject,
+      };
+    });
 
     const worksheet = XLSX.utils.json_to_sheet(flatData);
     const workbook = XLSX.utils.book_new();
@@ -718,6 +703,18 @@ const UsersPage = () => {
                     onSearch={debouncedDiets}
                     value={filters.diet}
                     onValue={(diet) => setFilter({ ...filters, diet })}
+                  />
+
+                  <Input
+                    type="select"
+                    label="Accomodated"
+                    options={[
+                      { label: "Yes", value: true},
+                      { label: 'No', value: false}
+                    ]}
+                    placeholder="Please Select"
+                    value={filters.accomodated}
+                    onValue={(accomodated) => setFilter({ ...filters, accomodated })}
                   />
                 </Grid>
               )}

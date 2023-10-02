@@ -12,6 +12,12 @@ export const NotificationMain = styled.div<{ theme?: Theme }>`
     `}
 `;
 
+export const NotifictionLinkContainer = styled(Link)<{ theme?: Theme }>`
+  ${({ theme }) => `
+    text-decoration: none;
+  `}
+`;
+
 export const NotificationContent = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
     display: block;
@@ -19,7 +25,7 @@ export const NotificationContent = styled.div<{ theme?: Theme }>`
 `}
 `;
 
-export const NotificationStatus = styled(Link)<{
+export const NotificationStatus = styled.div<{
   theme?: Theme;
   variant: TNotificationVariantType;
 }>`

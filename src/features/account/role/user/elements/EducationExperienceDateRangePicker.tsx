@@ -4,20 +4,29 @@ import { Input, Checkbox } from 'components/ui';
 import { birthDateSchema } from 'utilities/validators';
 import moment from 'moment';
 
-export const EducationExperienceDateRangePicker = ({ education, handleChange, handleErrors, userBirthDate, disabled}) => {
-
-  const [fromDateInvokeValidationTimestamp, setFromDateInvokeValidationTimestamp] = useState<number | undefined>(undefined)
-  const [toDateInvokeValidationTimestamp, setToDateInvokeValidationTimstamp] = useState<number | undefined>(undefined)
+export const EducationExperienceDateRangePicker = ({
+  education,
+  handleChange,
+  handleErrors,
+  userBirthDate,
+  disabled,
+}) => {
+  const [
+    fromDateInvokeValidationTimestamp,
+    setFromDateInvokeValidationTimestamp,
+  ] = useState<number | undefined>(undefined);
+  const [toDateInvokeValidationTimestamp, setToDateInvokeValidationTimstamp] =
+    useState<number | undefined>(undefined);
 
   const onFromChangeValue = (from: any) => {
-    handleChange('from', from, education.id)
-    setToDateInvokeValidationTimstamp(new Date().getTime())
-  }
+    handleChange('from', from, education.id);
+    setToDateInvokeValidationTimstamp(new Date().getTime());
+  };
 
   const onToChangeValue = (to: any) => {
-    handleChange('to', to, education.id)
-    setFromDateInvokeValidationTimestamp(new Date().getTime())
-  }
+    handleChange('to', to, education.id);
+    setFromDateInvokeValidationTimestamp(new Date().getTime());
+  };
 
   return (
     <Stack direction="horizontal">
@@ -56,15 +65,15 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
             validator: (date: any) => {
               if (!userBirthDate || !date) return true;
               return new Date(userBirthDate) < new Date(date);
-            }
+            },
           },
           {
             message: 'From date must not be future date!',
             validator: (date: any) => {
               if (!date) return true;
               return new Date() > new Date(date);
-            }
-          }
+            },
+          },
         ]}
       />
       <Input
@@ -95,7 +104,7 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
             validator: (date: any) => {
               if (!userBirthDate || !date) return true;
               return new Date(userBirthDate) < new Date(date);
-            }
+            },
           },
           {
             message: 'To Date must be greater than From Date!',
@@ -113,7 +122,7 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
             validator: (date: any) => {
               if (!date) return true;
               return new Date() > new Date(date);
-            }
+            },
           },
           {
             message: 'To date is required!',
@@ -124,7 +133,7 @@ export const EducationExperienceDateRangePicker = ({ education, handleChange, ha
         ]}
       />
     </Stack>
-  )
-}
+  );
+};
 
 export default EducationExperienceDateRangePicker;

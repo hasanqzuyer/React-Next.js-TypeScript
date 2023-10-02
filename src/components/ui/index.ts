@@ -14,3 +14,4 @@ export { default as InputGroup } from 'components/ui/input-group';
 export { default as Snackbar } from 'components/ui/snackbar';
 export { default as RadioButton } from 'components/ui/radio';
 export { default as Slider } from 'components/ui/slider';
+export { default as MinMax } from 'components/ui/min-max';

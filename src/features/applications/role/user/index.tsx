@@ -83,7 +83,25 @@ const UserApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-              <Tooltip title={application.house.name}>
+
+          <Image
+            alt="house photo"
+            src={`${Project.apis.v1}/public/images/${application.house.images?.find(
+              (item) => item.id === application.house.thumbnailId
+            )?.key
+              }`}
+            width={100}
+            priority={true}
+            height={100}
+            style={{
+              height: '32px',
+              width: '32px',
+              borderRadius: '8px',
+              objectFit: 'cover',
+            }}
+          />
+
+             <Tooltip title={application.house.name}>
                 <EllipsisText>
                   {application.house.name.length > 29
                     ? application.house.name.slice(0, 29) + '...'
@@ -91,6 +109,8 @@ const UserApplicationsPage = () => {
                 </EllipsisText>
               </Tooltip>
         </MarketTableItem>
+
+
       );
     }
     if (headItem.reference === 'theme') {
@@ -106,7 +126,13 @@ const UserApplicationsPage = () => {
       return `€${application.house.rent}`;
     }
     if (headItem.reference === 'status') {
-      return application.status;
+      if (application.house.status.toLowerCase() === "completed" && application.status.toLowerCase() === 'not selected') {
+        return 'Not Selected'
+      } else if (application.status.toLowerCase() === "Not Selected".toLowerCase()) {
+        return "Applied"
+      } else {
+        return application.status;
+      }
     }
     if (headItem.reference === 'date') {
       return format(new Date(application.createdAt), 'MM/dd/yyyy');

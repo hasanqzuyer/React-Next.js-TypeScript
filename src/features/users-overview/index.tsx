@@ -7,7 +7,7 @@ import {
   PreferenceEditButton,
   PreferenceHeadline,
 } from 'features/users-overview/styles';
-import { Button, Input, Card } from 'components/ui';
+import { Button, Input, Card, MinMax } from 'components/ui';
 import { Stack } from 'components/system';
 import { Tabs } from 'components/custom';
 import UsersAPI from 'api/users';
@@ -83,8 +83,8 @@ const OverviewPage = (props: any) => {
     id: -1,
     theme: [],
     skillsOfOthers: [],
-    location: '',
-    language: '',
+    location: [],
+    language: [],
     monthlyRentMax: null,
     monthlyRentMin: null,
     ageMax: null,
@@ -106,6 +106,30 @@ const OverviewPage = (props: any) => {
   };
 
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const [isValidMonthlyRent, setIsValidMonthlyRent] = useState(true);
+  const [isValidAge, setIsValidAge] = useState(true);
+  const [isValidTenants, setIsValidTenants] = useState(true);
+
+  const validateErrorCallback = (isError: boolean, key: string) => {
+    switch (key) {
+      case 'monthlyRent': {
+        setIsValidMonthlyRent(!isError);
+        break;
+      }
+      case 'age': {
+        setIsValidAge(!isError);
+        break;
+      }
+      case 'tenants': {
+        setIsValidTenants(!isError);
+        break;
+      }
+
+      default: return;
+    }
+  }
+
   useEffect(() => {
     const isDisable =
       !info.firstName ||
@@ -151,16 +175,16 @@ const OverviewPage = (props: any) => {
       dateOfBirth: data.dateOfBirth,
       language: data.language
         ? data.language.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [],
       location: data.location,
       skills: data.skills
         ? data.skills.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [],
     }));
 
@@ -175,34 +199,34 @@ const OverviewPage = (props: any) => {
       let houseprf: any = data.housePreference[0];
       houseprf.skillsOfOthers = houseprf.skillsOfOthers
         ? houseprf.skillsOfOthers.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.interestsHobbies = houseprf.interestsHobbies
         ? houseprf.interestsHobbies.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.theme = houseprf.theme
         ? houseprf.theme.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       houseprf.location = houseprf.location
         ? houseprf.location.split('@').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
 
       houseprf.language = houseprf.language
         ? houseprf.language.split(',').map((name: string) => ({
-            value: name,
-            label: name,
-          }))
+          value: name,
+          label: name,
+        }))
         : [];
       setHousePreference(houseprf);
     }
@@ -340,7 +364,7 @@ const OverviewPage = (props: any) => {
       const language = info.language.map((item: any) => item.value).join(',');
       const skills = info.skills.map((item: any) => item.value).join(',');
       let data = { ...info, language, skills };
-      await UsersAPI.updateSingleUser(userId, data).then(() => {});
+      await UsersAPI.updateSingleUser(userId, data).then(() => { });
       setInfoSaving(false);
       setInfoHasChanged(false);
     } catch {
@@ -352,12 +376,12 @@ const OverviewPage = (props: any) => {
   const saveSocialMedia = async () => {
     try {
       if (socialMedia.id === -1) {
-        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => {});
+        await SocialMediaAPI.createSocialMedia(socialMedia).then(() => { });
       } else {
         await SocialMediaAPI.updateSocialMedia(
           socialMedia,
           socialMedia.id
-        ).then(() => {});
+        ).then(() => { });
       }
       setSocialMediaHasChanged(false);
       setSocialMediaSaving(false);
@@ -399,12 +423,12 @@ const OverviewPage = (props: any) => {
         language,
       };
       if (housePreference.id === -1) {
-        await HousePreferenceApi.createHousePreference(data).then(() => {});
+        await HousePreferenceApi.createHousePreference(data).then(() => { });
       } else {
         await HousePreferenceApi.updateHousePreference(
           data,
           housePreference.id
-        ).then(() => {});
+        ).then(() => { });
       }
       setHprefHasChanged(false);
       setHprefSaving(false);
@@ -491,6 +515,8 @@ const OverviewPage = (props: any) => {
     setHprefHasChanged(true);
   };
 
+  console.log(housePreference.location)
+
   return (
     <Stack>
       <Tabs tabs={['Info', 'Application']} value={tabs} onValue={setTabs} />
@@ -528,7 +554,7 @@ const OverviewPage = (props: any) => {
                   label="Email"
                   placeholder="johndio@gmail.com"
                   value={info?.email}
-                  onValue={() => {}}
+                  onValue={() => { }}
                   disabled
                 />
               </AccountGrid>
@@ -543,9 +569,9 @@ const OverviewPage = (props: any) => {
                   value={
                     info.location
                       ? {
-                          label: info.location,
-                          value: info.location,
-                        }
+                        label: info.location,
+                        value: info.location,
+                      }
                       : null
                   }
                   onValue={(location) =>
@@ -565,9 +591,9 @@ const OverviewPage = (props: any) => {
                   value={
                     info.nationality
                       ? {
-                          label: info.nationality,
-                          value: info.nationality,
-                        }
+                        label: info.nationality,
+                        value: info.nationality,
+                      }
                       : null
                   }
                   onValue={(nationality) =>
@@ -614,15 +640,15 @@ const OverviewPage = (props: any) => {
                 />
               </AccountGrid>
               {!expSaving &&
-              !infoSaving &&
-              !eduSaving &&
-              !socialMediaSaving &&
-              !hprefSaving ? (
+                !infoSaving &&
+                !eduSaving &&
+                !socialMediaSaving &&
+                !hprefSaving ? (
                 <Button
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing || isDisabled}
+                  disabled={!isEditing || isDisabled || !isValidAge || !isValidMonthlyRent || !isValidTenants}
                   onClick={handleSave}
                 >
                   Save
@@ -681,9 +707,9 @@ const OverviewPage = (props: any) => {
                 <Input
                   type="multiselect"
                   label="Type to Add Skills"
-                  placeholder="Please Select"
+                  placeholder={info.skills && info.skills.length === 5 ? '' : 'Please Select (Up to 5 Skills)'}
                   onSearch={debouncedSkills}
-                  infoLabel="Maximum 5 skills"
+                  //infoLabel="Maximum 5 skills"
                   isFilterActive
                   options={skills}
                   value={info.skills}
@@ -743,10 +769,10 @@ const OverviewPage = (props: any) => {
                 <Input
                   type="multiselect"
                   label="Theme"
-                  placeholder="Please Select"
+                  placeholder={housePreference.theme && housePreference.theme.length === 3 ? '' : 'Please Select (Up to 3 themes)'}
                   options={themes}
                   value={housePreference.theme}
-                  infoLabel="Maximum 3 themes"
+                  //infoLabel="Maximum 3 themes"
                   onValue={(theme) => {
                     if (theme.length <= 3) {
                       handleChangeHousePreference('theme', theme);
@@ -757,17 +783,14 @@ const OverviewPage = (props: any) => {
                 <Input
                   type="multiselect"
                   label="Skills of Others"
-                  placeholder="Please Select"
+                  placeholder={housePreference.skillsOfOthers && housePreference.skillsOfOthers.length === 5 ? '' : 'Please Select (Up to 5 Skills of Others)'}
                   options={skillsOfthers}
                   onSearch={debouncedSkillsOfOthers}
                   value={housePreference.skillsOfOthers}
                   onValue={(skillsOfOthers) => {
-                    // if (skillsOfOthers.length <= 5) {
-                    handleChangeHousePreference(
-                      'skillsOfOthers',
-                      skillsOfOthers
-                    );
-                    // }
+                    if (skillsOfOthers.length <= 5) {
+                      handleChangeHousePreference('skillsOfOthers', skillsOfOthers);
+                    }
                   }}
                   disabled={!isEditing}
                 />
@@ -795,24 +818,46 @@ const OverviewPage = (props: any) => {
                   }
                   disabled={!isEditing}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax
                   label="Monthly Rent"
+                  onValue={(monthlyRent) => handleChangeMinMaxHousePreference(
+                    'monthlyRentMin',
+                    'monthlyRentMax',
+                    monthlyRent
+                  )}
                   value={{
                     min: housePreference.monthlyRentMin,
                     max: housePreference.monthlyRentMax,
                   }}
-                  onValue={(monthlyRent) =>
-                    handleChangeMinMaxHousePreference(
-                      'monthlyRentMin',
-                      'monthlyRentMax',
-                      monthlyRent
-                    )
-                  }
                   disabled={!isEditing}
+                  minValidators={[
+                    {
+                      message: 'Minimum monthly rent should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Maximum monthly rent should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
+                      }
+                    },
+                    {
+                      message: 'Maximum monthly rent should exceed the minimum monthly rent.',
+                      validator: ({ min, max }) => {
+                        if (min == null || max == null) return true;
+                        return parseFloat(max) > parseFloat(min);
+                      }
+                    }
+                  ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'monthlyRent')}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax
                   label="Age"
                   value={{
                     min: housePreference.ageMin,
@@ -822,14 +867,52 @@ const OverviewPage = (props: any) => {
                     handleChangeMinMaxHousePreference('ageMin', 'ageMax', age)
                   }
                   disabled={!isEditing}
+
+                  minValidators={[
+                    {
+                      message: 'Minimum age should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                    {
+                      message: 'Age range should be between 18 and 120.',
+                      validator: ({ min, max }) => {
+                        return (min == null || (18 <= min && min <= 120))
+                      }
+                    }
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Maximum age should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
+                      }
+                    },
+                    {
+                      message: 'Maximum age should exceed the minimum age.',
+                      validator: ({ min, max }) => {
+                        if (min == null || max == null) return true;
+                        return parseFloat(max) > parseFloat(min);
+                      }
+                    },
+                    {
+                      message: 'Age range should be between 18 and 120.',
+                      validator: ({ min, max }) => {
+                        return (max == null || (18 <= max && max <= 120))
+                      }
+                    }
+                  ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'age')}
                 />
-                <Input
-                  type="min-max"
+
+                <MinMax
                   label="Tenants per House"
                   value={{
                     min: housePreference.tenantsMin,
                     max: housePreference.tenantsMax,
                   }}
+                  disabled={!isEditing}
                   onValue={(tenants) =>
                     handleChangeMinMaxHousePreference(
                       'tenantsMin',
@@ -837,15 +920,39 @@ const OverviewPage = (props: any) => {
                       tenants
                     )
                   }
-                  disabled={!isEditing}
+                  minValidators={[
+                    {
+                      message: 'Minimum tenants per house should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (min == null || parseFloat(min) >= 0)
+                      }
+                    },
+                  ]}
+                  maxValidators={[
+                    {
+                      message: 'Maximum tenants per house should be above zero.',
+                      validator: ({ min, max }) => {
+                        return (max == null || parseFloat(max) >= 0)
+                      }
+                    },
+                    {
+                      message: 'Maximum tenants per house should exceed the minimum tenants per house.',
+                      validator: ({ min, max }) => {
+                        if (min == null || max == null) return true;
+                        return parseFloat(max) > parseFloat(min);
+                      }
+                    }
+                  ]}
+                  errorCallback={(isError) => validateErrorCallback(isError, 'tenants')}
                 />
+
                 <Input
                   type="multiselect"
                   label="Interests and Hobbies"
-                  placeholder="Please Select"
+                  placeholder={housePreference.interestsHobbies && housePreference.interestsHobbies.length === 3 ? '' : 'Please Select (Up to 3 Interests and Hobbies)'}
                   options={interests}
                   value={housePreference.interestsHobbies}
-                  infoLabel="Maximum 3 interests and hobbies"
+                  //infoLabel="Maximum 3 interests and hobbies"
                   onValue={(interestsHobbies) => {
                     if (interestsHobbies.length <= 3) {
                       handleChangeHousePreference(
@@ -864,9 +971,9 @@ const OverviewPage = (props: any) => {
                   value={
                     housePreference.diet
                       ? {
-                          label: housePreference.diet,
-                          value: housePreference.diet,
-                        }
+                        label: housePreference.diet,
+                        value: housePreference.diet,
+                      }
                       : null
                   }
                   onValue={(diet) =>
@@ -892,15 +999,15 @@ const OverviewPage = (props: any) => {
                 />
               </AccountGrid>
               {!expSaving &&
-              !infoSaving &&
-              !eduSaving &&
-              !socialMediaSaving &&
-              !hprefSaving ? (
+                !infoSaving &&
+                !eduSaving &&
+                !socialMediaSaving &&
+                !hprefSaving ? (
                 <Button
                   variant="contained"
                   color="primary"
                   style={{ width: '130px', alignSelf: 'flex-end' }}
-                  disabled={!isEditing || isDisabled}
+                  disabled={!isEditing || isDisabled || !isValidAge || !isValidMonthlyRent || !isValidTenants}
                   onClick={handleSave}
                 >
                   Save

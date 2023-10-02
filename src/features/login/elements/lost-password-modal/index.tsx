@@ -44,7 +44,9 @@ const LostPasswordModal = ({ onClose, ...props }: TLostPasswordModalProps) => {
       if (locale === 'de-DE') {
         push(
           'Wenn die von Ihnen eingegebene E-Mail-Adresse mit einem Konto verknüpft ist, sollten Sie bald eine E-Mail mit Schritten zum Zurücksetzen Ihres Passworts erhalten. ',
-          { variant: 'success' }
+          {
+            variant: 'success',
+          }
         );
       } else {
         push(
@@ -53,6 +55,7 @@ const LostPasswordModal = ({ onClose, ...props }: TLostPasswordModalProps) => {
         );
       }
     }
+    onClose();
   };
 
   const isDisabled = !email.trim() || error;

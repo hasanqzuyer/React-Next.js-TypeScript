@@ -4,20 +4,30 @@ import { Input, Checkbox } from 'components/ui';
 import { birthDateSchema } from 'utilities/validators';
 import moment from 'moment';
 
-export const WorkExperienceDateRangePicker = ({ experience, handleChange, handleErrors, userBirthDate, disabled, hideCheckbox = false}) => {
-
-  const [fromDateInvokeValidationTimestamp, setFromDateInvokeValidationTimestamp] = useState<number | undefined>(undefined)
-  const [toDateInvokeValidationTimestamp, setToDateInvokeValidationTimstamp] = useState<number | undefined>(undefined)
+export const WorkExperienceDateRangePicker = ({
+  experience,
+  handleChange,
+  handleErrors,
+  userBirthDate,
+  disabled,
+  hideCheckbox = false,
+}) => {
+  const [
+    fromDateInvokeValidationTimestamp,
+    setFromDateInvokeValidationTimestamp,
+  ] = useState<number | undefined>(undefined);
+  const [toDateInvokeValidationTimestamp, setToDateInvokeValidationTimstamp] =
+    useState<number | undefined>(undefined);
 
   const onFromChangeValue = (from: any) => {
-    handleChange('from', from, experience.id)
-    setToDateInvokeValidationTimstamp(new Date().getTime())
-  }
+    handleChange('from', from, experience.id);
+    setToDateInvokeValidationTimstamp(new Date().getTime());
+  };
 
   const onToChangeValue = (to: any) => {
-    handleChange('to', to, experience.id)
-    setFromDateInvokeValidationTimestamp(new Date().getTime())
-  }
+    handleChange('to', to, experience.id);
+    setFromDateInvokeValidationTimestamp(new Date().getTime());
+  };
 
   return (
     <Stack direction="horizontal" style={{ position: 'relative' }}>
@@ -64,15 +74,15 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
             validator: (date: any) => {
               if (!userBirthDate || !date) return true;
               return new Date(userBirthDate) < new Date(date);
-            }
+            },
           },
           {
             message: 'From date must not be future date!',
             validator: (date: any) => {
               if (!date) return true;
               return new Date() > new Date(date);
-            }
-          }
+            },
+          },
         ]}
       />
       <Input
@@ -103,7 +113,7 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
             validator: (date: any) => {
               if (!userBirthDate || !date) return true;
               return new Date(userBirthDate) < new Date(date);
-            }
+            },
           },
           {
             message: 'To Date must be greater than From Date!',
@@ -121,7 +131,7 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
             validator: (date: any) => {
               if (!date) return true;
               return new Date() > new Date(date);
-            }
+            },
           },
           {
             message: 'To date is required!',
@@ -132,22 +142,24 @@ export const WorkExperienceDateRangePicker = ({ experience, handleChange, handle
           },
         ]}
       />
-     {!hideCheckbox &&  <Checkbox
-        label="I still work here."
-        style={{
-          position: 'absolute',
-          right: '0',
-          bottom: '-25px',
-        }}
-        value={experience.stillWorkHere}
-        onValue={(stillWorkHere) => {
-          handleChange('stillWorkHere', stillWorkHere, experience.id);
-          setFromDateInvokeValidationTimestamp(new Date().getTime());
-          setToDateInvokeValidationTimstamp(new Date().getTime());
-        }}
-      /> }
+      {!hideCheckbox && (
+        <Checkbox
+          label="I still work here."
+          style={{
+            position: 'absolute',
+            right: '0',
+            bottom: '-25px',
+          }}
+          value={experience.stillWorkHere}
+          onValue={(stillWorkHere) => {
+            handleChange('stillWorkHere', stillWorkHere, experience.id);
+            setFromDateInvokeValidationTimestamp(new Date().getTime());
+            setToDateInvokeValidationTimstamp(new Date().getTime());
+          }}
+        />
+      )}
     </Stack>
-  )
-}
+  );
+};
 
 export default WorkExperienceDateRangePicker;

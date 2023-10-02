@@ -20,7 +20,7 @@ const WorkExperience = (props: any) => {
     userId,
     workIssuedArrays,
     setWorkIssuedArrays,
-    userInfo
+    userInfo,
   } = props;
   const { push } = useSnackbar();
 
@@ -36,14 +36,16 @@ const WorkExperience = (props: any) => {
 
   const handleInsert = async () => {
     try {
-      InsertedArray.forEach(async (id) => {
-        const insertedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        await HouseWorkExperienceApi.createHouseWorkExperience(
-          insertedDatas[0]
-        );
-      });
+      await Promise.all(
+        InsertedArray.map(async (id) => {
+          const insertedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          await HouseWorkExperienceApi.createHouseWorkExperience(
+            insertedDatas[0]
+          );
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -52,13 +54,15 @@ const WorkExperience = (props: any) => {
 
   const handleUpdate = async () => {
     try {
-      EditedArray.forEach(async (id) => {
-        const editedDatas = totalData.filter(
-          (element: any) => element.id === id
-        );
-        const data = editedDatas[0];
-        await HouseWorkExperienceApi.updateHouseWorkExperience(data, id);
-      });
+      await Promise.all(
+        EditedArray.map(async (id) => {
+          const editedDatas = totalData.filter(
+            (element: any) => element.id === id
+          );
+          const data = editedDatas[0];
+          await HouseWorkExperienceApi.updateHouseWorkExperience(data, id);
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -68,9 +72,11 @@ const WorkExperience = (props: any) => {
   // eslint-disable-next-line
   const handleDeleteing = async () => {
     try {
-      DeletedArray.forEach(async (id) => {
-        await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
-      });
+      await Promise.all(
+        DeletedArray.map(async (id) => {
+          await HouseWorkExperienceApi.deleteHouseWorkExperience(id);
+        })
+      );
       return Promise.resolve(true);
     } catch (error) {
       return Promise.reject(error);
@@ -291,8 +297,8 @@ const WorkExperience = (props: any) => {
         stillWorkHere: false,
         roleDescription: '',
         ownerId: userId,
-        createdAt: '',
-        updatedAt: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       const json = JSON.stringify(totalData);
       const tempTotalData = JSON.parse(json);
@@ -366,7 +372,7 @@ const WorkExperience = (props: any) => {
                 )
               }
             />
-            <WorkExperienceDateRangePicker 
+            <WorkExperienceDateRangePicker
               experience={experience}
               handleChange={handleChange}
               handleErrors={handleErrors(`${experience.id}_${index}_from`)}

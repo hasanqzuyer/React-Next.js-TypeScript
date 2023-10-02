@@ -33,15 +33,19 @@ const HelpPage = () => {
   const { push } = useSnackbar();
 
   const topicOptions = [
-    { value: 0, label: 'Account and Verification' },
-    { value: 1, label: 'Payments and Earnings' },
-    { value: 2, label: 'Campaigns and Surveys' },
-    { value: 3, label: 'Technical Support' },
-    { value: 4, label: 'Privacy and Compliance' },
-    { value: 5, label: 'Donations & Affiliate Program' },
-    { value: 6, label: 'Benefits' },
-    { value: 7, label: 'General Inquiry' },
+    { value: 0, label: 'Application & Housing' },
+    { value: 1, label: 'Payments & Fees' },
+    { value: 2, label: 'Technical Support' },
+    { value: 3, label: 'Community & Policies' },
+    { value: 4, label: 'General Inquiries' },
+    // { value: 5, label: 'Donations & Affiliate Program' },
+    // { value: 6, label: 'Benefits' },
+    // { value: 7, label: 'General Inquiry' },
   ];
+
+  //   //Technical Support
+  //   Community & Policies
+  // General Inquiries
 
   const isDisabled =
     !helpFormData.topic || !helpFormData.subject || !helpFormData.message;
@@ -144,7 +148,9 @@ const HelpPage = () => {
                   label="Topic"
                   placeholder="Select Topic"
                   value={helpFormData.topic}
-                  onValue={(value) => setHelpFormData({...helpFormData, topic: value})}
+                  onValue={(value) =>
+                    setHelpFormData({ ...helpFormData, topic: value })
+                  }
                   options={topicOptions}
                 />
                 <Input
