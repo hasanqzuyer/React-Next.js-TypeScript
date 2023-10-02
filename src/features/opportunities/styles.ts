@@ -48,6 +48,7 @@ export const MarketHeadline = styled.div<{ theme?: Theme }>`
 `;
 
 export const MarketTableItem = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -60,6 +61,9 @@ export const MarketTableItemImage = styled.img`
   border-radius: 8px;
 `;
 
-export const MarketTableItemLabel = styled.div`
-  color: #464e5f;
-`;
+export const EllipsisText = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+`

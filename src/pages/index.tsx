@@ -8,7 +8,11 @@ const Home = () => {
   const { role, setRouteName } = useAppContext();
 
   useEffect(() => {
-    setRouteName('Home');
+    if(role === 'ADMIN') {
+      setRouteName('Users');
+  } else {
+      setRouteName('Opportunities');
+  }
   }, []);
 
   return (

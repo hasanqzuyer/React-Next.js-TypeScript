@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
+  RegisterLink,
   LoginTitle,
   LoginSubtitle,
   LoginSpan,
   LoginAction,
 } from 'features/login/styles';
-import { Button, Checkbox, Input } from 'components/ui';
+import { Button, Input } from 'components/ui';
 import { Stack } from 'components/system';
 import { useModal, useSnackbar } from 'hooks';
 import {
@@ -70,6 +71,11 @@ const Login = () => {
 
   return (
     <Stack onKeyDown={handleKeyDown}>
+      <RegisterLink style={{ color: '#fff' }} href="/register">
+        <Button variant="contained" color="secondary" size="large">
+            {t('SIGN UP')}
+        </Button>
+      </RegisterLink> 
       <LoginTitle>{t('Login Now')}</LoginTitle>
       <LoginSubtitle>
         {t(

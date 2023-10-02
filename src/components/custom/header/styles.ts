@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material';
-import Link from 'next/link';
 
 export const HeaderMain = styled.header<{ theme?: Theme }>`
   ${({ theme }) => `
@@ -32,45 +31,13 @@ export const HeaderMain = styled.header<{ theme?: Theme }>`
 
 export const HeaderLogo = styled.img<{ theme?: Theme }>`
   ${({ theme }) => `
-    ${theme.breakpoints.down('sm')} {
-      width: 225px;
+    ${theme.breakpoints.down('xs')} {
+      width: 180px;
     }
-    ${theme.breakpoints.up('sm')} {
+    ${theme.breakpoints.up('xs')} {
       width: 225px;
     }
   `}
-`;
-
-export const HeaderActions = styled.div<{ theme?: Theme }>`
-  ${({ theme }) => `
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  width: auto;
-  button {
-    border-radius: 20rem;
-    font-weight: 700;
-    padding: 16px 24px;
-  }
-
-  ${theme.breakpoints.down('sm')} {
-    button {
-      font-size: 14px;
-    }
-  }
-  ${theme.breakpoints.up('sm')} {
-    button {
-      font-size: 16px;
-    }
-  }
-  `}
-`;
-
-export const HeaderAction = styled(Link)`
-  text-decoration: none;
-  button {
-    font-size: 18px;
-  }
 `;
 
 export const HeaderLogoLink = styled.a`
