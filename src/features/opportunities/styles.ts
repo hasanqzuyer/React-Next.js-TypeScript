@@ -27,16 +27,19 @@ export const MarketPageFilter = styled(Stack)<{ theme?: Theme }>`
         border-radius: 4px;
         border: 1px solid ${theme.palette.common.black}20;
         padding: ${theme.spacing(5)};
-    `}
+  `}
 `;
 
-export const MarketPageFilterActions = styled(Stack)<{
-  theme?: Theme;
-}>`
-  justify-content: flex-end;
-  & > * {
-    min-width: 100px;
-  }
+export const MarketPageFilterActions = styled(Stack)<{theme?: Theme;}>`
+  ${({ theme }) => `
+    justify-content: flex-end;
+    & > * {
+      min-width: 100px;
+    }
+    ${theme.breakpoints.down('sm')} {
+      justify-content: center;
+    }
+  `}
 `;
 
 export const MarketHeadline = styled.div<{ theme?: Theme }>`

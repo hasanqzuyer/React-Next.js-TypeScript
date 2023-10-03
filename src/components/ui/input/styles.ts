@@ -37,12 +37,17 @@ export const InputMain = styled.div<{ theme?: Theme }>`
         }
       }
     }
+    ${theme.breakpoints.down('md')} {
+      .MuiInputBase-root {
+        .MuiInputBase-input {
+          font-size: 14px
+        }
+      }
+    }
     ${theme.breakpoints.down('sm')} {
       .MuiInputBase-root {
         .MuiInputBase-input {
-          padding: ${theme.spacing(1.5)} !important;
-          font-size: 14px
-        }
+          padding: ${theme.spacing(1.5)} !important;        }
       }
     }
   `}
@@ -52,6 +57,9 @@ export const InputLabel = styled(Label)<{ theme?: Theme }>`
   ${({ theme }) => `
     margin-bottom: ${theme.spacing(0.5)};
     color: #7E839F;
+    ${theme.breakpoints.down('md')} {
+      font-size: 13px
+    }
   `}
 `;
 
@@ -75,13 +83,12 @@ export const InputText = styled(TextField)`
       opacity: 1;
       color: rgba(0, 0, 0, 0.55) !important;
       -webkit-text-fill-color: rgba(0, 0, 0, 0.55) !important; !important;
-
-      
     }
   }
 `;
 
-export const InputMultiSelect = styled(Autocomplete)`
+export const InputMultiSelect = styled(Autocomplete)<{ theme?: Theme }>`
+${({ theme }) => `
   border-color: rgba(0, 0, 0, 0.26) !important;
 
   input,
@@ -96,12 +103,19 @@ export const InputMultiSelect = styled(Autocomplete)`
   }
 
   .MuiAutocomplete-endAdornment {
-    top: 7.5px !important;
-  }
-
-  &:disabled {
-    border: 1px solid rgba(0, 0, 0, 0.26) !important;
-  }
+      top: 7.5px !important;
+      ${theme.breakpoints.down('md')} {
+        top: 3.5px !important;
+      };
+      ${theme.breakpoints.down('sm')} {
+        top: 1.5px !important;
+      }
+    }
+    
+    &:disabled {
+      border: 1px solid rgba(0, 0, 0, 0.26) !important;
+    }
+  `}
 `;
 
 export const MultiSelectInputContainer = styled.div<{
@@ -141,7 +155,7 @@ export const InputRow = styled.div<{ theme?: Theme }>`
     align-items: center;
     ${theme.breakpoints.down('sm')} {
       display: grid;
-      gap: ${theme.spacing(4)};
+      gap: ${theme.spacing(2)};
 
       span {
         display: none;
