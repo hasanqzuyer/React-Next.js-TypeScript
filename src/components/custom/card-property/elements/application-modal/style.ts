@@ -21,7 +21,6 @@ export const AddProjectHeadline = styled.div`
 
 export const AddProjectDocumentPlaceholder = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   font-size: 16px;
   background: #f8f9fd;

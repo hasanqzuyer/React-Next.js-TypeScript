@@ -396,6 +396,7 @@ const AddHouseProjectModal = ({
             {photos && photos.length ? (
               photos.map((item: TImage, idx: number) => {
                 const { key, name, id } = item;
+                console.log(name.length);
                 return (
                   <>
                     <AddProjectDocumentPlaceholder>
@@ -407,7 +408,8 @@ const AddHouseProjectModal = ({
                           }}
                           key={id}
                         >
-                          {name}
+                        {/* {name.length > 20 ? name.slice(0, 20) + '...' : name} */}
+                        {name}
                         </ImageUploadButton>
                       </ImageLinkContainer>
                       <ThumbnailContainer>
