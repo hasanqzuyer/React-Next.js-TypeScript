@@ -6,7 +6,6 @@ import {
   OverviewTextContainer,
   OverviewTextHeadline,
   OverviewTextContent,
-  OverviewBackButton,
 } from 'features/overview/styles';
 import { Gallery, Table, Tabs } from 'components/custom';
 import { Button, Card, Pagination } from 'components/ui';
