@@ -6,9 +6,9 @@ const useMenu = (initialState: boolean): any => {
 
   const [open, setOpen] = useState<boolean>(initialState);
 
-  const [position, setPosition] = useState<{ right: number; top: number }>({
+  const [position, setPosition] = useState<{ right: number; bottom: number }>({
     right: 0,
-    top: 0,
+    bottom: 0,
   });
   const openRef = useRef<boolean>(open);
 
@@ -18,8 +18,8 @@ const useMenu = (initialState: boolean): any => {
       const rect = buttonRef.current.getBoundingClientRect();
 
       setPosition({
-        right: window.innerWidth - rect.right,
-        top: rect.top + rect.height,
+        right: window.innerWidth - rect.left,
+        bottom: window.innerHeight - rect.bottom,
       });
     }
 
