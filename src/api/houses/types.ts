@@ -11,6 +11,7 @@ export type TCreateHouse = {
   rent: number | null;
   theme: string;
   info: string;
+  currency: string;
   status: string;
   thumbnailId: number | null;
 };
@@ -31,6 +32,7 @@ export interface IHouse {
   status: string;
   assignee: IUser | null;
   thumbnailId: number | null;
+  currency: string;
   images: TImage[];
   documents: TDocument[];
   applications: IApplication[];
