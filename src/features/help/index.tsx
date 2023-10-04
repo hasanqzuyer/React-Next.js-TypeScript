@@ -78,8 +78,7 @@ const HelpPage = () => {
         <Tabs
           value={tab}
           onValue={setTab}
-          tabs={['Frequently Asked Questions', 'Contact us']}
-          // tabs={['FAQ', 'Contact us']}
+          tabs={['FAQ', 'Contact us']}
         />
         {tab === 0 ? (
           <Stack>
