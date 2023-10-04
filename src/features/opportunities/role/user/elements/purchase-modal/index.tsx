@@ -73,10 +73,6 @@ const ExportFinanceModal = ({
           placeholder="Please Select"
           options={[
             {
-              value: 1,
-              label: '1 Token - EUR 0,99',
-            },
-            {
               value: 5,
               label: '5 Tokens - EUR 2,99 (40% Discount)',
             },
