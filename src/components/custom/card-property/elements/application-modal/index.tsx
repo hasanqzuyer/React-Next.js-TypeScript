@@ -17,7 +17,7 @@ const ApplicationModal = ({
   const { user } = useAppContext();
   const [state, setState] = useState<any>({
     tier: {
-      label: 'Basic (Cost: Free)',
+      label: 'Basic (Cost: 0 Tokens)',
       value: 'Basic',
     },
     balance: 0,
@@ -114,7 +114,7 @@ const ApplicationModal = ({
           options={[
             {
               value: 'Basic',
-              label: 'Basic (Cost: Free)',
+              label: 'Basic (Cost: 0 Tokens)',
             },
             {
               value: 'Priority',
