@@ -101,20 +101,24 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           direction: 'ttb',
           breakpoints: {
             1536: {
-              direction: 'ltr',
-              height: '200px',
+              height: '400px',
+              perPage: 2,
+              gap: '2rem',
             },
             768: {
               direction: 'ltr',
               height: '200px',
-              perPage: 2,
+              perPage: 1,
             },
             480: {
               direction: 'ltr',
               height: '200px',
               perPage: 1,
-              padding: { right: 50, left: 0 },
             },
+            400: {
+              height: '150px',
+              arrows: false,
+            }
           },
         }}
         aria-label="My Favorite Images"

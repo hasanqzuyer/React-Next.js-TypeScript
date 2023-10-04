@@ -13,6 +13,14 @@ export const SGallery = styled(Card)<{ theme?: Theme }>`
   grid-template-columns: 3fr 1fr;
   gap: 16px;
   overflow: auto;
+  @media screen and (max-width: 780px) {
+    grid-template-columns: auto;
+  }
+  @media screen and (max-width: 480px) {
+    grid-template-columns: 0fr 1fr;
+    gap: 0;
+    overflow: hidden;
+  }
   .splide__slide {
     display: grid;
     place-items: center;
@@ -20,10 +28,17 @@ export const SGallery = styled(Card)<{ theme?: Theme }>`
 
     img {
       border-radius: 8px;
+      @media screen and (max-width: 400px) {
+        height: 150px !important;
+        width: 80% !important;
+      }
     }
     ${theme.breakpoints.down('xl')} {
       grid-template-columns: 1fr;
       max-height: unset;
+    }
+    @media screen and (max-width: 400px) {
+      margin-right: 1.5rem !important;
     }
   `}
 `;
