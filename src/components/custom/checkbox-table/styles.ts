@@ -83,12 +83,7 @@ export const TableBodyCell = styled.td<{ theme?: Theme; action?: boolean }>`
         color: ${theme.palette.common.gray[10]};
         white-space: nowrap; 
 
-                ${
-                  action
-                    ? `
-          padding: ${theme.spacing(8)} ${theme.spacing(5)} ${theme.spacing(
-                        8
-                      )} ${theme.spacing(5)};
+        ${action ? `padding: ${theme.spacing(8)} ${theme.spacing(5)} ${theme.spacing(8)} ${theme.spacing(5)};
           min-width: 50px;
           width: 50px;
           height: 100%;
