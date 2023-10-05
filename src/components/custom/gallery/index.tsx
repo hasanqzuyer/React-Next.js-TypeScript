@@ -108,7 +108,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             768: {
               direction: 'ltr',
               height: '200px',
-              perPage: 1,
+              perPage: 2,
             },
             480: {
               direction: 'ltr',
