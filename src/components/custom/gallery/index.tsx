@@ -121,8 +121,9 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               perPage: 1,
             },
             400: {
+              direction: 'ltr',
               height: '150px',
-              arrows: false,
+              perPage: 1,
             }
           },
         }}
