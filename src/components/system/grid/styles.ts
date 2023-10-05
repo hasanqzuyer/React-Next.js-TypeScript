@@ -11,7 +11,6 @@ export const GridMain = styled.div<{
         display: grid;
         grid-template-rows: ${rows ? `repeat(${rows}, 1fr)` : 'auto'};
         grid-template-columns: ${columns ? `repeat(${columns}, 1fr)` : 'auto'};
-        place-items: center;
         gap: ${theme.spacing(5)};
         ${theme.breakpoints.down('md')} {
           gap: ${theme.spacing(2)};
