@@ -80,7 +80,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                     priority={true}
                     height={900}
                     style={{
-                      objectFit: 'contain',
+                      borderRadius: '8px'
                     }}
                   />
                 </FImageContainer>

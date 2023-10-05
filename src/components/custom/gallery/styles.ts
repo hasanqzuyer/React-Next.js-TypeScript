@@ -35,11 +35,15 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
         height: ${fullscreen ? '70%' : '150px'};
       }
       @media screen and (max-width: 1200px) {
-        height: ${fullscreen ? '100%' : '250px'};
+        height: ${fullscreen ? '80%' : '250px'};
         width: ${fullscreen ? '100%' : '100%'};
       }
       @media screen and (max-width: 768px) {
+        height: ${fullscreen ? '63%' : '150px'};
+      }
+      @media screen and (max-width: 650px) {
         height: ${fullscreen ? '100%' : '150px'};
+        width: ${fullscreen ? '70%' : '150px'};
       }
       @media screen and (max-width: 480px) {
         height: ${fullscreen ? '90%' : '200px'};
