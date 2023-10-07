@@ -43,7 +43,6 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
       }
       @media screen and (max-width: 650px) {
         height: ${fullscreen ? '100%' : '150px'};
-        width: ${fullscreen ? '70%' : '150px'};
       }
       @media screen and (max-width: 480px) {
         height: ${fullscreen ? '90%' : '200px'};
