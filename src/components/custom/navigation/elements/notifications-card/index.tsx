@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   NotificationsCardList,
   NotificationsCardMain,
@@ -15,11 +15,19 @@ const NotificationsCard = ({ onClose, ...props }: TNotificationsCardProps) => {
   const { role } = useAppContext();
   const [notifications, setNotifications] = useState<TNotification[]>([]);
 
+  
   const getNotifications = async () => {
-    const notificationData = await NotificationAPI.getNotificationsForMe();
-    console.log(notificationData);
-    setNotifications(notificationData);
+    try {
+      const notificationData = await NotificationAPI.getNotificationsForMe();
+      setNotifications([...notificationData]);
+    } catch (error) {}
   };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
+
+  console.log(notifications)
   return (
     <Modal size="small" title={<>Notifications</>} onClose={onClose} {...props}>
       <NotificationsCardMain>

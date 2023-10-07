@@ -31,10 +31,15 @@ export const UsersPageFilter = styled(Stack)<{ theme?: Theme }>`
 export const UsersPageFilterActions = styled(Stack)<{
   theme?: Theme;
 }>`
-  justify-content: flex-end;
-  & > * {
-    min-width: 100px;
-  }
+  ${({ theme }) => `
+    justify-content: flex-end;
+    & > * {
+      min-width: 100px;
+    }
+    ${theme.breakpoints.down('sm')} {
+      justify-content: center;
+    }
+  `}
 `;
 
 export const UsersHeadline = styled.div<{ theme?: Theme }>`

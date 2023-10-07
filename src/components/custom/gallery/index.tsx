@@ -37,7 +37,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
   };
 
   return (
-    <SGallery {...props}>
+    <SGallery fullscreen={fullscreen}>
       <ImageContainer>
         <Image
           alt="House thumbnail"
@@ -80,7 +80,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                     priority={true}
                     height={900}
                     style={{
-                      objectFit: 'contain',
+                      borderRadius: '8px'
                     }}
                   />
                 </FImageContainer>
@@ -96,25 +96,35 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           perMove: 1,
           drag: true,
           pagination: false,
-          gap: '16px',
-          height: '750px',
+          gap: '2rem',
+          height: '600px',
           direction: 'ttb',
           breakpoints: {
             1536: {
-              direction: 'ltr',
-              height: '200px',
+              height: '500px',
+              perPage: 3,
+              gap: '2rem',
+            },
+            1200: {
+              height: '500px',
+              perPage: 2,
+              gap: '1rem',
             },
             768: {
-              direction: 'ltr',
-              height: '200px',
+              height: '310px',
               perPage: 2,
+              gap: '1rem',
             },
             480: {
               direction: 'ltr',
               height: '200px',
               perPage: 1,
-              padding: { right: 50, left: 0 },
             },
+            400: {
+              direction: 'ltr',
+              height: '150px',
+              perPage: 1,
+            }
           },
         }}
         aria-label="My Favorite Images"
@@ -133,11 +143,6 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               width={250}
               height={250}
               priority={true}
-              style={{
-                height: `${fullscreen ? '70%' : '200px'}`,
-                width: `${fullscreen ? '70%' : '100%'}`,
-                objectFit: 'cover',
-              }}
             />
           </SplideItem>
         ))}

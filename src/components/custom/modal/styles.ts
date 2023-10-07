@@ -77,6 +77,9 @@ export const ModalTitle = styled.div<{ theme?: Theme }>`
     color: ${theme.palette.primary.main};
     text-overflow: ellipsis;
     overflow: hidden;
+    ${theme.breakpoints.down('sm')} {
+      font-size: 18px;
+    }
   `}
 `;
 

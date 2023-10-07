@@ -13,14 +13,14 @@ export const ApplicationStatusActionsMain = styled.div<{ theme?: Theme }>`
 `;
 
 export const ApplicationStatusActionsMenu = styled(Menu)<{
-  position: { right: number; top: number };
+  position: { right: number; bottom: number };
 }>`
   ${({ position }) => `
   position: fixed;
   z-index: 200;
   width: 150px;
   right: ${position?.right}px;
-  top: ${position?.top}px;
+  bottom: ${position?.bottom}px;
   `}
 `;
 

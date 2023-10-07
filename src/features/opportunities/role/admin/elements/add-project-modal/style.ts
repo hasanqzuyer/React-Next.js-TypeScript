@@ -3,7 +3,14 @@ import { Grid } from 'components/system';
 import { Menu } from 'components/custom';
 import { Theme } from '@mui/material';
 export const AddProjectModalMain = styled(Grid)`
-  width: 100%;
+  ${({ theme }) => `
+    width: 100%;
+    place-items: normal;
+    grid-template-columns: auto;
+    ${theme.breakpoints.down('sm')} {
+      overflow: hidden;
+    }
+  `}
 `;
 
 export const AddProjectHeadline = styled.div`
@@ -13,7 +20,6 @@ export const AddProjectHeadline = styled.div`
   color: #7e839f;
   font-size: 16px;
   font-weight: 600;
-
   svg {
     width: 15px;
     height: 15px;
@@ -32,26 +38,50 @@ export const PaymentImage = styled.img<{ theme?: Theme }>`
     `}
 `;
 
-export const AddProjectDocumentPlaceholder = styled.div`
+export const AddProjectDocumentPlaceholder = styled.div<{ theme?: Theme }>`
+${({ theme }) => `
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 16px;
   background: #f8f9fd;
   padding: 16px 12px;
+    ${theme.breakpoints.down('sm')} {
+      padding: 10px 8px;
+      gap: 10px;
+    }
+  `}
 `;
 
 export const ISpan = styled.div`
   cursor: pointer;
 `;
 
-export const ImageLinkContainer = styled.div`
-  width: 50%;
+export const ImageLinkContainer = styled.div<{ theme?: Theme }>`
+  ${({ theme }) => `
+    width: 50%;
+    button {
+      ${theme.breakpoints.down('sm')} {
+        font-size: 12px !important;
+      }
+    }
+  `}
 `;
-export const ThumbnailContainer = styled.div`
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
+export const ThumbnailContainer = styled.div<{ theme?: Theme }>`
+  ${({ theme }) => `
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .ex31mqd0 {
+      ${theme.breakpoints.down('sm')} {
+        font-size: 12px !important;
+      };
+      ${theme.breakpoints.down('sm')} {
+        font-size: 11px !important;
+      }
+    }
+  `}
 `;
 
 export const ToBeApprovedActionsMenu = styled(Menu)<{
@@ -110,6 +140,7 @@ export const ImageUploadButton = styled.button`
   text-decoration: underline;
   cursor: pointer;
   text-align: left;
+  overflow-wrap: anywhere;
 `;
 
 export const ImageActions = styled.div`

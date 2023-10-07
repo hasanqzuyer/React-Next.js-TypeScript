@@ -8,7 +8,6 @@ export const CardMain = styled(Card)<{ theme?: Theme }>`
         display: flex;
         flex-direction: column;
         gap: ${theme.spacing(5)};
-        overflow: hidden;
     `}
 `;
 

@@ -47,5 +47,8 @@ export const CardMain = styled.div<{
         padding: ${theme.spacing(5)}; 
         box-shadow: 0px 2px 5px ${theme.palette.common.black}10;
         // animation: ${animations[animation as keyof typeof animations]};
+        ${theme.breakpoints.down('sm')} {
+          overflow: auto;
+        }
     `}
 `;
