@@ -60,10 +60,13 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
 
 export const PageLayoutRightContainer = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
-  min-height: 100vh;
+    min-height: 100%;
     overflow: hidden;
     width: 100%;
-    `}
+    img{
+      height: 100%;
+    }
+  `}
 `;
 
 export const PageLayoutRight = styled.img<{ theme?: Theme }>`
