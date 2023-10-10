@@ -17,10 +17,10 @@ const ApplicationModal = ({
   const { user } = useAppContext();
   const [state, setState] = useState<any>({
     tier: {
-      label: 'Basic (Cost: 1 Token)',
+      label: 'Basic (Cost: 0 Tokens)',
       value: 'Basic',
     },
-    balance: 1,
+    balance: 0,
   });
   const { push } = useSnackbar();
 
@@ -51,7 +51,7 @@ const ApplicationModal = ({
         setState((data: any) => ({
           ...data,
           tier,
-          balance: 1,
+          balance: 0,
         }));
         break;
       case 'Priority':
@@ -114,7 +114,7 @@ const ApplicationModal = ({
           options={[
             {
               value: 'Basic',
-              label: 'Basic (Cost: 1 Token)',
+              label: 'Basic (Cost: 0 Tokens)',
             },
             {
               value: 'Priority',

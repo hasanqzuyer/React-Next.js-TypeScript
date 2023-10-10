@@ -51,6 +51,7 @@ const EditHouseProjectModal = ({
     info: '',
     status: 'Primary',
     thumbnailId: null,
+    currency: '',
     assignee: null,
     applications: [],
     images: [],
@@ -386,6 +387,24 @@ const EditHouseProjectModal = ({
                   status: status ? status.value : status,
                 })
               }
+            />
+             <Input
+              type="text"
+              label="Currency"
+              required
+              placeholder="Please Enter"
+              value={houseData?.currency}
+              onValue={(currency) => setHouseData({ ...houseData, currency })}
+              validators={[
+                {
+                  message: 'Currency is required',
+                  validator: (currency) => {
+                    const v = currency as string;
+                    if (v) return true;
+                    return false;
+                  },
+                },
+              ]}
             />
             <GridCell columnSpan={2}>
               <Stack>

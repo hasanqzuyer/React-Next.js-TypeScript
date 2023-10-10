@@ -79,7 +79,7 @@ const PropertyCard = ({
           {house.rent && (
             <CardPrice>
               Rent
-              <CardPriceValue>€{formatNumber(house.rent)}</CardPriceValue>
+              <CardPriceValue>{house.currency}{formatNumber(house.rent)}</CardPriceValue>
             </CardPrice>
           )}
           {house.theme && (
