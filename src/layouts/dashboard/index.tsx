@@ -38,16 +38,10 @@ const DashboardLayout = ({ children, ...props }: TDashboardLayoutProps) => {
   }, [width]);
 
   return (
-    <DashboardLayoutMain {...props}>
+    <DashboardLayoutMain {...props} showMobileMenu={showMobileMenu}>
       <DashboardLayoutNavbar />
       <DashboardLayoutBox>
-        <DashboardLayoutSidebar
-          style={
-            showMobileMenu
-              ? { transform: 'translateX(0)' }
-              : { transform: 'translateX(-100%)' }
-          }
-        />
+        <DashboardLayoutSidebar/>
         <DashboardLayoutContainerOuter className="overflow-y-hidden">
           <DashboardLayoutContainer>
             <DashboardLayoutContent>{children}</DashboardLayoutContent>

@@ -18,8 +18,8 @@ export const DashboardLayoutBox = styled.div`
   display: flex;
 `;
 
-export const DashboardLayoutSidebar = styled(Sidebar)<{ theme?: Theme }>`
-  ${({ theme }) => `
+export const DashboardLayoutSidebar = styled(Sidebar)<{ theme?: Theme, showMobileMenu?: boolean  }>`
+  ${({ theme, showMobileMenu }) => `
     min-width: 175px;
     width: 175px;
     height: 100%;
@@ -33,6 +33,11 @@ export const DashboardLayoutSidebar = styled(Sidebar)<{ theme?: Theme }>`
       left: 0;
       background: #fff;
       z-index: 9999;
+    }
+
+    ${theme.breakpoints.down('sm')} {
+      transform: ${showMobileMenu ? 'translateX(0)' : 'translateX(-100%)'};
+
     }
   `}
 `;
