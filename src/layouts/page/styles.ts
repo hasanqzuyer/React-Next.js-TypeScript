@@ -1,10 +1,18 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material';
 
-export const PageLayoutMain = styled.div`
+export const PageLayoutMain = styled.div<{ theme?: Theme }>`
+${({ theme }) => `
+  position: relative;
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
+    ${theme.breakpoints.down('md')} {
+      height: 100%;
+      overflow: unset;
+    }
+  `}
 `;
 
 export const PageLayoutContent = styled.div<{ theme?: Theme }>`
