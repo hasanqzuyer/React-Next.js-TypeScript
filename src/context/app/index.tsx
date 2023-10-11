@@ -22,7 +22,7 @@ const AppContextProvider = ({ ...props }) => {
     user: null,
     role: 'USER',
     initialLoading: true,
-    showMobileMenu: false,
+    showMobileMenu: true,
     currency: 'CHF',
     influencer: null,
     houseStatus: 0,

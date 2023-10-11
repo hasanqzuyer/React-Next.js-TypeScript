@@ -25,7 +25,7 @@ export const DashboardLayoutSidebar = styled(Sidebar)<{ theme?: Theme, showMobil
     height: 100%;
 
     ${theme.breakpoints.down('lg')} {
-      transform: translateX(-100%);
+      // transform: translateX(-100%);
       transition: transform 0.15s ease-in-out;
       position: fixed;
       height: 100vh;
@@ -34,11 +34,7 @@ export const DashboardLayoutSidebar = styled(Sidebar)<{ theme?: Theme, showMobil
       background: #fff;
       z-index: 9999;
     }
-
-    ${theme.breakpoints.down('sm')} {
-      transform: ${showMobileMenu ? 'translateX(0)' : 'translateX(-100%)'};
-
-    }
+    
   `}
 `;
 
