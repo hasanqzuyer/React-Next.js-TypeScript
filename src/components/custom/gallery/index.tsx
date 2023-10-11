@@ -96,35 +96,26 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           perMove: 1,
           drag: true,
           pagination: false,
-          gap: '2rem',
-          height: '600px',
+          gap: '10px',
+          height: '660px',
           direction: 'ttb',
           breakpoints: {
-            1536: {
-              height: '500px',
+            1400: {
+              height: '600px',
               perPage: 3,
-              gap: '2rem',
             },
-            1200: {
-              height: '500px',
+            800: {
+              height: '400px',
               perPage: 2,
-              gap: '1rem',
             },
-            768: {
-              height: '310px',
-              perPage: 2,
-              gap: '1rem',
-            },
-            480: {
+            600: {
               direction: 'ltr',
-              height: '200px',
               perPage: 1,
             },
-            400: {
-              direction: 'ltr',
-              height: '150px',
-              perPage: 1,
-            }
+            375: {
+              gap: 0,
+              height: '220px'
+            },
           },
         }}
         aria-label="My Favorite Images"
@@ -140,8 +131,8 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             <Image
               alt="house photo"
               src={`${Project.apis.v1}/public/images/${image?.key}`}
-              width={250}
-              height={250}
+              width={220}
+              height={220}
               priority={true}
             />
           </SplideItem>

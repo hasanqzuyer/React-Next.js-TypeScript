@@ -17,6 +17,8 @@ const DashboardLayout = ({ children, ...props }: TDashboardLayoutProps) => {
   const { showMobileMenu, handleMobileMenu } = useAppContext();
   const [width, setWidth] = useState(window.innerWidth);
 
+  let done = false;
+
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);

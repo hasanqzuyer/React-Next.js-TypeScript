@@ -7,16 +7,13 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
   ${({ theme, fullscreen }) => `
   height: 100%;
   max-width: 100%;
-  max-height: 800px;
+  max-height: 700px;
   padding: 20px;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 16px;
   overflow: auto;
-  @media screen and (max-width: 1200px) {
-    grid-template-columns: 2fr 1fr;
-  }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 600px) {
     grid-template-columns: 0fr 1fr;
     gap: 0;
     overflow: hidden;
@@ -28,36 +25,12 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
 
     img {
       width: ${fullscreen ? '70%' : '100%'};
-      height: ${fullscreen ? '70%' : '190px'};
+      height: ${fullscreen ? '70%' : '100%'};
       border-radius: 8px;
       object-fit: cover;
-      @media screen and (max-width: 1536px) {
-        height: ${fullscreen ? '70%' : '150px'};
+      @media screen and (max-width: 375px) {
+        height: ${fullscreen ? '70%' : '220px'};
       }
-      @media screen and (max-width: 1200px) {
-        height: ${fullscreen ? '80%' : '250px'};
-        width: ${fullscreen ? '100%' : '100%'};
-      }
-      @media screen and (max-width: 768px) {
-        height: ${fullscreen ? '63%' : '150px'};
-      }
-      @media screen and (max-width: 650px) {
-        height: ${fullscreen ? '100%' : '150px'};
-      }
-      @media screen and (max-width: 480px) {
-        height: ${fullscreen ? '90%' : '200px'};
-      }
-      @media screen and (max-width: 400px) {
-        height: ${fullscreen ? '70%' : '150px'};
-      }
-    }
-
-    ${theme.breakpoints.down('xl')} {
-      grid-template-columns: 1fr;
-      max-height: unset;
-    }
-    @media screen and (max-width: 400px) {
-      margin-right: 1.5rem !important;
     }
   `}
 `;
