@@ -42,9 +42,12 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
     display: grid;
     justify-content: flex-start;
-    margin-top: 10%;
+    margin-top: 7%;
     min-height: 100vh;
     width: 100%;
+    ${theme.breakpoints.down('lg')} {
+      height: 0%;
+    }
 
     ${theme.breakpoints.down('md')} {
       place-items: center flex-start;
