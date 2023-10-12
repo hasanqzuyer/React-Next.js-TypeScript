@@ -12,7 +12,7 @@ import {
   CardProgressValue,
   CardProgressItem,
   CardCompletedMark,
-  TableMenu,
+  MenuDropdown,
   ISpan,
   CardLink,
   IDownArrow,
@@ -85,13 +85,13 @@ const PropertyCard = ({
           {house.theme && (
             <CardPrice>
               Theme
-              {house.theme.length < 16 ? (
+              {house.theme.length < 14 ? (
                 <CardPriceValue>{house.theme}</CardPriceValue>
               ) : (
                 <Tooltip title={house.theme}>
                   <CardPriceValue>
-                    {house.theme.length > 16
-                      ? house.theme.slice(0, 16) + '...'
+                    {house.theme.length > 14
+                      ? house.theme.slice(0, 14) + '...'
                       : house.theme}
                   </CardPriceValue>
                 </Tooltip>
@@ -112,8 +112,8 @@ const PropertyCard = ({
             <CardTitle>
               <Tooltip title={house.name}>
                 <EllipsisText>
-                  {house.name.length > 29
-                    ? house.name.slice(0, 29) + '...'
+                  {house.name.length > 24
+                    ? house.name.slice(0, 24) + '...'
                     : house.name}
                 </EllipsisText>
               </Tooltip>
@@ -158,8 +158,7 @@ const PropertyCard = ({
                 <CarretDownIcon style={{ marginLeft: '10px' }} />
               </IDownArrow>
               {open && (
-                <TableMenu
-                  position={position}
+                <MenuDropdown 
                   items={[
                     {
                       icon: <HouseIcon />,

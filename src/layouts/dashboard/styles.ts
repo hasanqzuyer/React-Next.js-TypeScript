@@ -52,8 +52,8 @@ export const DashboardLayoutContainer = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
     width: 100%;
     display: flex;
-    padding: ${theme.spacing(5)};
     gap: ${theme.spacing(5)};
+    padding: 5rem 1.25rem;
     `}
 `;
 

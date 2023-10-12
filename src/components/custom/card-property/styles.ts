@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material';
 import { Card } from 'components/ui';
-import Link from 'next/link';
-import Menu from '../menu';
+import Menu from '../menu-dropdown';
 
 export const CardMain = styled(Card)`
   display: block;
   padding: 0 !important;
   position: relative;
+  overflow: inherit !important;
 `;
 
 export const CardCompletedMark = styled.div`
@@ -194,6 +194,7 @@ export const CardProgressAvailableValue = styled.div`
 
 export const CardButton = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
+    position: relative;
     width: 100%;
     background: ${theme.palette.primary.main};
     color: ${theme.palette.common.white};
@@ -243,15 +244,12 @@ export const CardDropdown = styled.div`
   gap: 10px;
 `;
 
-export const TableMenu = styled(Menu)<{
-  position: { right: number; top: number };
-}>`
-  ${({ position }) => `
+export const MenuDropdown = styled(Menu)`
     position: absolute;
     z-index: 200;
     width: 120px;
-    right: ${position?.right}px;
-    top: ${position?.top}px;
+    right: 10px;
+    top: 25px;
 
     &:last-child,
     &:first-child {
@@ -261,7 +259,6 @@ export const TableMenu = styled(Menu)<{
     .MenuItem {
       grid-template-columns: 1fr;
     }
-    `}
 `;
 
 export const ISpan = styled.span`
