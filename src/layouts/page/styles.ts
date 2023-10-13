@@ -6,8 +6,6 @@ ${({ theme }) => `
   position: relative;
   display: flex;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
     ${theme.breakpoints.down('md')} {
       height: 100%;
       overflow: unset;
@@ -17,7 +15,6 @@ ${({ theme }) => `
 
 export const PageLayoutContent = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
-    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -28,12 +25,12 @@ export const PageLayoutContent = styled.div<{ theme?: Theme }>`
       display: grid;
       grid-template-columns: auto;
       grid-template-rows: 1fr auto;
-      gap: 100px;
+      gap: 50px;
       align-items: center;
       justify-content: unset;
     }   
     ${theme.breakpoints.down('sm')} {
-      gap: 0;
+      gap: 20px;
     }
   `}
 `;
@@ -42,13 +39,7 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
     display: grid;
     justify-content: flex-start;
-    margin-top: 7%;
-    min-height: 100vh;
     width: 100%;
-    ${theme.breakpoints.down('lg')} {
-      height: 0%;
-    }
-
     ${theme.breakpoints.down('md')} {
       place-items: center flex-start;
       padding: 12px 18px !important;
@@ -58,38 +49,36 @@ export const PageLayoutLeft = styled.div<{ theme?: Theme }>`
       order: 1
     }
     ${theme.breakpoints.up('md')} {
-      padding: 0px 2.5% 0px;
+      padding: 0px 2.5% 2.5%;
     }
     ${theme.breakpoints.up('lg')} {
-      padding: 0px 7.5% 0px;
+      padding: 0px 7.5% 2.5%;
     }
     ${theme.breakpoints.up('xl')} {
       padding: 0px 7.5% 0px 12.5%; 
     }
+
+    & > div {
+      margin-top: 30%;
+      ${theme.breakpoints.down('md')} {
+        margin-top: 0;
+      }
+    }
     `}
 `;
 
-export const PageLayoutRightContainer = styled.div<{ theme?: Theme }>`
-  ${({ theme }) => `
-    min-height: 100%;
-    overflow: hidden;
+export const PageLayoutRightContainer = styled.div<{ theme?: Theme, imageUrl?: string  }>`
+  ${({ theme, imageUrl }) => `
+    background-image: url(${imageUrl});
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
-    img{
-      height: 100%;
+    min-height: 100vh;
+    ${theme.breakpoints.down('md')} {
+      min-height: 900px;
+    }
+    ${theme.breakpoints.down('xs')} {
+      min-height: 500px;
     }
   `}
-`;
-
-export const PageLayoutRight = styled.img<{ theme?: Theme }>`
-  ${({ theme }) => `
-      width: 100%;
-      object-fit: cover;
-
-      ${theme.breakpoints.down('md')} {
-        width: 100%;
-        height: 100%;
-        order: -1;
-        margin-top: 50px;
-      }
-    `}
 `;

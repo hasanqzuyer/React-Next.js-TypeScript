@@ -4,7 +4,6 @@ import { TPageLayoutProps } from 'layouts/page/type';
 import {
   PageLayoutMain,
   PageLayoutLeft,
-  PageLayoutRight,
   PageLayoutContent,
   PageLayoutRightContainer,
 } from 'layouts/page/styles';
@@ -15,12 +14,7 @@ const PageLayout = ({ children, ...props }: TPageLayoutProps) => (
     <Header />
     <PageLayoutContent>
       <PageLayoutLeft>{children}</PageLayoutLeft>
-      <PageLayoutRightContainer>
-        <PageLayoutRight
-          key={0}
-          src="/static/assets/images/authorization.jpg"
-        />
-      </PageLayoutRightContainer>
+      <PageLayoutRightContainer imageUrl={"/static/assets/images/authorization.jpg"} />
     </PageLayoutContent>
   </PageLayoutMain>
 );
