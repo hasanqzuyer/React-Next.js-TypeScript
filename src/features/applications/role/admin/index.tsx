@@ -307,6 +307,7 @@ const AdminApplicationsPage = () => {
         }
 
         setTotalColumnItems(applications);
+        handlePageChange(1);
       })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   };
@@ -385,13 +386,13 @@ const AdminApplicationsPage = () => {
     if (headItem.reference === 'house') {
       return (
         <MarketTableItem>
-              <Tooltip title={application.house.name}>
-                <EllipsisText>
-                  {application.house.name.length > 29
-                    ? application.house.name.slice(0, 29) + '...'
-                    : application.house.name}
-                </EllipsisText>
-              </Tooltip>
+          <Tooltip title={application.house.name}>
+            <EllipsisText>
+              {application.house.name.length > 29
+                ? application.house.name.slice(0, 29) + '...'
+                : application.house.name}
+            </EllipsisText>
+          </Tooltip>
         </MarketTableItem>
       );
     }
@@ -479,7 +480,7 @@ const AdminApplicationsPage = () => {
       let experienceObject = {};
       let housePreferenceObject = {};
 
-      [...((experiences ?? []).sort((a: any, b: any) => a.id - b.id )), ...Array(4).fill(experienceTemplate)]
+      [...((experiences ?? []).sort((a: any, b: any) => a.id - b.id)), ...Array(4).fill(experienceTemplate)]
         .slice(0, 4)
         .forEach((work, index) => {
           const keys = Object.keys(work);
@@ -488,7 +489,7 @@ const AdminApplicationsPage = () => {
           });
         });
 
-      [...((educations ?? []).sort((a: any, b: any) => a.id - b.id )), ...Array(4).fill(educationTemplate)]
+      [...((educations ?? []).sort((a: any, b: any) => a.id - b.id)), ...Array(4).fill(educationTemplate)]
         .slice(0, 4)
         .forEach((edu, index) => {
           const keys = Object.keys(edu);

@@ -252,6 +252,7 @@ const UsersPage = () => {
         }
 
         setTotalColumnItems(users);
+        handlePageChange(1);
       })
       .catch((error) => push('Something went wrong!', { variant: 'error' }));
   };
@@ -709,8 +710,8 @@ const UsersPage = () => {
                     type="select"
                     label="Accomodated"
                     options={[
-                      { label: "Yes", value: true},
-                      { label: 'No', value: false}
+                      { label: "Yes", value: true },
+                      { label: 'No', value: false }
                     ]}
                     placeholder="Please Select"
                     value={filters.accomodated}
