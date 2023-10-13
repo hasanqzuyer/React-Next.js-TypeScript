@@ -117,13 +117,13 @@ export const EducationExperienceDateRangePicker = ({
               }
             },
           },
-          {
-            message: 'To date must not be future date!',
-            validator: (date: any) => {
-              if (!date) return true;
-              return new Date() > new Date(date);
-            },
-          },
+          // {
+          //   message: 'To date must not be future date!',
+          //   validator: (date: any) => {
+          //     if (!date) return true;
+          //     return new Date() > new Date(date);
+          //   },
+          // },
           {
             message: 'To date is required!',
             validator: (date: any) => {
