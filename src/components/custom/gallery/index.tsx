@@ -96,10 +96,13 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           perMove: 1,
           drag: true,
           pagination: false,
-          gap: '10px',
-          height: '660px',
+          gap: '4%',
+          height: '1200px',
           direction: 'ttb',
           breakpoints: {
+            1920: {
+              height: '800px',
+            },
             1400: {
               height: '600px',
               perPage: 3,
@@ -108,11 +111,12 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               height: '400px',
               perPage: 2,
             },
-            600: {
+            649: {
+              height: '430px',
               direction: 'ltr',
               perPage: 1,
             },
-            375: {
+            419: {
               gap: 0,
               height: '220px'
             },

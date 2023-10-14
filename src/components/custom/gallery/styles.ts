@@ -7,19 +7,16 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
   ${({ theme, fullscreen }) => `
   height: 100%;
   max-width: 100%;
-  max-height: 700px;
   padding: 20px;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 16px;
   overflow: auto;
-  @media screen and (max-width: 600px) {
-    grid-template-columns: 0fr 1fr;
-    gap: 0;
+  ${theme.breakpoints.down('sm')} {
+    grid-template-columns: 1fr;
     overflow: hidden;
   }
   .splide__slide {
-    display: grid;
     place-items: center;
     max-height: 100%;
 
@@ -28,7 +25,7 @@ export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
       height: ${fullscreen ? '70%' : '100%'};
       border-radius: 8px;
       object-fit: cover;
-      @media screen and (max-width: 375px) {
+      ${theme.breakpoints.down('xs')} {
         height: ${fullscreen ? '70%' : '220px'};
       }
     }
@@ -43,7 +40,6 @@ export const SFullScreenGallery = styled.div<{ theme?: Theme }>`
   z-index: 999;
 
   .splide__slide {
-    display: grid;
     place-items: center;
   }
 `;
@@ -87,6 +83,9 @@ export const ImageContainer = styled.div<{ theme?: Theme }>`
     object-fit: none;
     overflow: hidden;
     border-radius: 8px;
+      ${theme.breakpoints.down('sm')} {
+        display: none;
+      }
     `}
     `;
 
