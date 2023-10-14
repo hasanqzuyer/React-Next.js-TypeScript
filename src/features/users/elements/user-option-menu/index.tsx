@@ -1,7 +1,6 @@
 import React from 'react';
 import { useMenu, useSnackbar } from 'hooks';
 import {
-  ApproveIcon,
   DeleteIcon,
   ReceivedIcon,
   VerticalDotsIcon,
