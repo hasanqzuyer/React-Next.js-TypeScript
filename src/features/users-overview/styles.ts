@@ -21,7 +21,7 @@ export const PreferenceHeadline = styled.div`
 export const AccountGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 177px;
+  gap: 16px 10%;
   padding-right: 90px;
   @media screen and (max-width: 900px) {
     padding-right: 20px;
