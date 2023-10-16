@@ -66,7 +66,7 @@ export const InputLabel = styled(Label)<{ theme?: Theme }>`
 export const InputSelect = styled(Autocomplete)`
   .MuiOutlinedInput-root {
     padding: 0 !important;
-  }
+  }  
 `;
 
 export const InputSelectItem = styled(MenuItem)``;
