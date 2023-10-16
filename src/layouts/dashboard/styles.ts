@@ -53,8 +53,8 @@ export const DashboardLayoutContainer = styled.div<{ theme?: Theme }>`
     width: 100%;
     display: flex;
     gap: ${theme.spacing(5)};
-    padding: 5rem 1.25rem;
-    `}
+    padding: 2rem 1.25rem 5rem;
+  `}
 `;
 
 export const DashboardLayoutContent = styled.div<{ theme?: Theme }>`
