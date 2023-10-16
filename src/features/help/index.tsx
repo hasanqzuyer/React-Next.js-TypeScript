@@ -93,13 +93,24 @@ const HelpPage = () => {
               ]}
             />
             <HelpCollapse
+              title="Is Brotherhood House free?"
+              openIcon={<ArrowDownIcon />}
+              closeIcon={<ArrowUpIcon />}
+              text={[
+                `Yes, Brotherhood House proudly offers a free tier through our Basic applications, ensuring ambitious young men have access to our community without financial barriers. We fund this by monetizing higher-tier applications and charging commissions from our collaborations with real estate companies.`,
+                `Instead of merely capitalizing on these commissions, we channel them back into our ecosystem, offering free consulting services to our selected tenants. This added value stems from our commitment to more than just housing—it's about propelling aspirations and dreams. By providing these complimentary services, our members can also leverage the invaluable network of our founder, bridging connections, knowledge, and opportunities.`,
+                `In essence, Brotherhood House isn't just a place to stay. We're a cornerstone for growth, mentorship, and collaboration, ensuring every member thrives and is poised for success.`
+              ]}
+            />
+
+            <HelpCollapse
               title="What Are Tokens and How Do I Use Them?"
               openIcon={<ArrowDownIcon />}
               closeIcon={<ArrowUpIcon />}
               text={[
-                `Tokens serve as the in-app currency, which you'll need for applying to different types of housing projects within Brotherhood House. Upon successful registration, you're granted an initial set of tokens. Additionally, you'll receive a fresh set of tokens every 1st of the month.`,
-                `If you run out of tokens or want to increase your chances of securing your desired housing, you can purchase additional tokens through Stripe. The pricing structure is designed to give you a better deal with larger purchases. For instance, buying tokens in bulk offers you a progressively increasing discount—up to 70% off compared to purchasing them individually.`,
-                `Different types of applications, like Elite, Premium, Priority, and Basic, will cost varying amounts of tokens. For example, an Elite Application will consume more tokens but will be read first, giving you a better chance of selection. The application types are read in a specific order to streamline the selection process, with Stripe ensuring all your transactions are secure.`,
+                `Tokens serve as the in-app currency, which you'll need for applying to different types of housing projects within Brotherhood House. Different types of applications, like Elite, Premium, and Priority, cost varying amounts of tokens. However, the Basic application is entirely free and costs 0 tokens.`,
+                `If you run out of tokens or want to increase your chances of securing your desired housing by opting for more premium applications, you can purchase additional tokens through Stripe. The pricing structure is designed to give you a better deal with larger purchases. For instance, buying tokens in bulk offers you a progressively increasing discount—up to 70% off compared to purchasing them individually.`,
+                `Different types of applications, like Elite, Premium, Priority, will cost varying amounts of tokens. For example, an Elite Application will consume more tokens but will be read first, giving you a better chance of selection. The application types are read in a specific order to streamline the selection process, with Stripe ensuring all your transactions are secure.`
               ]}
             />
             <HelpCollapse
