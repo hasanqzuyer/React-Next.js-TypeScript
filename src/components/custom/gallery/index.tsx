@@ -42,15 +42,12 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
         <Image
           alt="House thumbnail"
           src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
-          width={1000}
-          height={1000}
+          layout='fill'
+          objectFit='cover'
           priority={true}
           onClick={handleClickThumbnail}
           style={{
-            height: '100%',
-            width: '100%',
-            objectFit: 'cover',
-            cursor: 'pointer',
+            borderRadius: '8px'
           }}
         />
       </ImageContainer>
@@ -76,9 +73,11 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                   <Image
                     alt="house photo"
                     src={`${Project.apis.v1}/public/images/${image?.key}`}
-                    width={1300}
+                    // width={1300}
+                    // height={900}
                     priority={true}
-                    height={900}
+                    layout='fill'
+                    objectFit='cover'
                     style={{
                       borderRadius: '8px'
                     }}
@@ -98,22 +97,29 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           pagination: false,
           gap: '4%',
           height: '1200px',
+          cover: true,
+          // height: '10rem',
+          lazyLoad: 'nearby',
           direction: 'ttb',
           breakpoints: {
             1920: {
               height: '800px',
+              gap: '1rem',
             },
             1400: {
               height: '600px',
+              gap: '1rem',
               perPage: 3,
             },
             800: {
               height: '400px',
+              gap: '1rem',
               perPage: 2,
             },
             649: {
               height: '430px',
               direction: 'ltr',
+              gap: '1rem',
               perPage: 1,
             },
             419: {
@@ -135,9 +141,12 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             <Image
               alt="house photo"
               src={`${Project.apis.v1}/public/images/${image?.key}`}
-              width={220}
-              height={220}
+              layout='fill'
+              objectFit='cover'
               priority={true}
+              style={{
+                borderRadius: '8px'
+              }}
             />
           </SplideItem>
         ))}

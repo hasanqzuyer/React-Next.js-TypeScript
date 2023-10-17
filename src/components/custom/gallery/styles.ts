@@ -1,9 +1,10 @@
+
 import { Button, Card } from 'components/ui';
 import styled from '@emotion/styled';
 import { Theme } from '@mui/material';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 
-export const SGallery = styled(Card)<{ theme?: Theme; fullscreen?: boolean }>`
+export const SGallery = styled(Card) <{ theme?: Theme; fullscreen?: boolean }>`
   ${({ theme, fullscreen }) => `
   height: 100%;
   max-width: 100%;
@@ -48,7 +49,7 @@ export const SFullScreenGallery = styled.div<{ theme?: Theme }>`
   }
 `;
 
-export const SExit = styled(Button)<{ theme?: Theme }>`
+export const SExit = styled(Button) <{ theme?: Theme }>`
   ${({ theme }) => `
     position: fixed;
     top: 20px;
@@ -84,9 +85,9 @@ export const SplideMain = styled(Splide)``;
 
 export const ImageContainer = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
-    object-fit: none;
-    overflow: hidden;
-    border-radius: 8px;
+      width: 100%;
+      height: 100%;
+      position: relative;
       ${theme.breakpoints.down('sm')} {
         display: none;
       }
@@ -100,8 +101,9 @@ export const FImageContainer = styled.div<{ theme?: Theme }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    object-fit: cover;
-    overflow: hidden;
+    // object-fit: cover;
+    // overflow: hidden;
+    position: relative;
     ${theme.breakpoints.down('md')} {
       height: 40%;
     }
@@ -110,4 +112,5 @@ export const FImageContainer = styled.div<{ theme?: Theme }>`
 
 export const SplideItem = styled(SplideSlide)`
   cursor: pointer;
+  border-radius: 8px;
 `;
