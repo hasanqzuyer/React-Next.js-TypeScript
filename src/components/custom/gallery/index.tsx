@@ -43,11 +43,15 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           alt="House thumbnail"
           src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
           layout='fill'
-          objectFit='cover'
+          object-fit="cover"
           priority={true}
+          width={0}
+          height={0}
           onClick={handleClickThumbnail}
           style={{
-            borderRadius: '8px'
+            borderRadius: '8px',
+            width: '100%',
+            cursor: "pointer"
           }}
         />
       </ImageContainer>
@@ -66,6 +70,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               start: startIndex,
             }}
             aria-label="My Favorite Images"
+            fullscreen={fullscreen}
           >
             {images.map((image: any, index: number) => (
               <SplideItem key={image + index}>
@@ -73,13 +78,15 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                   <Image
                     alt="house photo"
                     src={`${Project.apis.v1}/public/images/${image?.key}`}
-                    // width={1300}
-                    // height={900}
+                    width={0}
+                    height={0}
                     priority={true}
+                    object-fit="cover"
                     layout='fill'
-                    objectFit='cover'
                     style={{
-                      borderRadius: '8px'
+                      borderRadius: '8px',
+                      width: '100%', 
+    
                     }}
                   />
                 </FImageContainer>
@@ -142,10 +149,13 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               alt="house photo"
               src={`${Project.apis.v1}/public/images/${image?.key}`}
               layout='fill'
-              objectFit='cover'
+              object-fit="cover"
+              width={0}
+              height={0}
               priority={true}
               style={{
-                borderRadius: '8px'
+                borderRadius: '8px',
+                width: '100%', 
               }}
             />
           </SplideItem>

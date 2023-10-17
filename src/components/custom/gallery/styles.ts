@@ -81,13 +81,18 @@ export const SGalleryMainPhoto = styled.img`
   border-radius: 8px;
 `;
 
-export const SplideMain = styled(Splide)``;
+export const SplideMain = styled(Splide) <{ fullscreen?: boolean }>`
+  ${({ fullscreen }) => `
+    width: ${fullscreen && '100vw !important'};
+  `}
+`;
 
 export const ImageContainer = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
       width: 100%;
       height: 100%;
       position: relative;
+      object-fit: cover;
       ${theme.breakpoints.down('sm')} {
         display: none;
       }
@@ -106,6 +111,9 @@ export const FImageContainer = styled.div<{ theme?: Theme }>`
     position: relative;
     ${theme.breakpoints.down('md')} {
       height: 40%;
+    }
+    img{
+      position: fixed;
     }
   `}
 `;
