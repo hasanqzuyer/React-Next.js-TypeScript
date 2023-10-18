@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { AccountGrid } from 'features/users-overview/styles';
 import { Input, Checkbox } from 'components/ui';
 import { Stack } from 'components/system';
@@ -28,12 +28,17 @@ const WorkExperience = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
-  const [width, setWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [width, setWidth] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+  useLayoutEffect(() => {
+    if (typeof window !== "undefined") {
+      setWidth(window.innerWidth);
+
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   const [saveState, setSaveState] = useState({
@@ -409,7 +414,7 @@ const WorkExperience = (props: any) => {
             {!disabled && (
               <Stack
                 style={{
-                  position: width > 900 ? 'absolute' : 'static',
+                  position: width && width > 900 ? 'absolute' : 'static',
                   right: '36px',
                   top: '90px',
                   width: width > 900 ? 'fit-content' : '100%',
