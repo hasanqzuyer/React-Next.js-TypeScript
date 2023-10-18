@@ -29,9 +29,16 @@ const Education = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
+  const [width, setWidth] = useState(window.innerWidth);
 
   const [degrees, setDegrees] = useState<any[]>([]);
   const [fieldOfStudy, setFieldOfStudy] = useState<any[]>([]);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [saveState, setSaveState] = useState({
     Updated: false,
@@ -384,6 +391,7 @@ const Education = (props: any) => {
               type="text"
               label="Overall GPA"
               placeholder="Please Enter"
+              style={{ gridColumn: '1/3' }}
               disabled={disabled}
               value={education.overAllGPA}
               onValue={(overAllGPA) =>
@@ -393,19 +401,20 @@ const Education = (props: any) => {
             {!disabled && (
               <Stack
                 style={{
-                  position: 'absolute',
+                  position: width > 900 ? 'absolute' : 'static',
                   right: '36px',
                   top: '90px',
-                  width: 'fit-content',
+                  width: width > 900 ? 'fit-content' : '100%',
                   display: 'grid',
                   placeItems: 'center',
+                  gridColumn: width > 900 ? 'span 2' : '1/3'
                 }}
               >
                 <Stack
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                   onClick={() => handleDelete(education.id)}
                 >
-                  <DeleteIcon style={{ color: '#9F9FB0' }} />
+                  <DeleteIcon style={{ color: '#9F9FB0', justifySelf: 'flex-end' }} />
                 </Stack>
                 <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
                   <AddIcon style={{ color: '#9F9FB0' }} />
