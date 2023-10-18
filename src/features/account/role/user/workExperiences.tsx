@@ -406,7 +406,7 @@ const WorkExperience = (props: any) => {
                 width: width > 900 ? 'fit-content' : '100%',
                 display: 'grid',
                 placeItems: 'center',
-                gridTemplateColumns: width > 900 ? 'span 2' : '1fr 1fr'
+                gridColumn: width > 900 ? 'span 2' : '1/3'
               }}
             >
               <Stack

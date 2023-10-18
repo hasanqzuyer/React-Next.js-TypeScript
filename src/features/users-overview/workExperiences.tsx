@@ -28,7 +28,13 @@ const WorkExperience = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
-  const [width] = useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [saveState, setSaveState] = useState({
     Updated: false,
@@ -409,7 +415,7 @@ const WorkExperience = (props: any) => {
                   width: width > 900 ? 'fit-content' : '100%',
                   display: 'grid',
                   placeItems: 'center',
-                  gridTemplateColumns: width > 900 ? 'span 2' : '1fr 1fr'
+                  gridColumn: width > 900 ? 'span 2' : '1/3',
                 }}
               >
                 <Stack
