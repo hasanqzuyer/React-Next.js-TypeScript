@@ -51,7 +51,8 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           style={{
             borderRadius: '8px',
             width: '100%',
-            cursor: "pointer"
+            cursor: "pointer",
+            objectFit: "cover",
           }}
         />
       </ImageContainer>
