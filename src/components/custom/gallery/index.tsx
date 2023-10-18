@@ -85,8 +85,8 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                     layout='fill'
                     style={{
                       borderRadius: '8px',
-                      width: '100%', 
-    
+                      width: '100%',
+
                     }}
                   />
                 </FImageContainer>
@@ -109,12 +109,21 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           lazyLoad: 'nearby',
           direction: 'ttb',
           breakpoints: {
-            1920: {
+            9999: {
               height: '800px',
               gap: '1rem',
             },
-            1400: {
+            1920: {
               height: '600px',
+              gap: '1rem',
+            },
+            1650: {
+              height: '500px',
+              gap: '1rem',
+              perPage: 3,
+            },
+            1400: {
+              height: '450px',
               gap: '1rem',
               perPage: 3,
             },
@@ -155,7 +164,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               priority={true}
               style={{
                 borderRadius: '8px',
-                width: '100%', 
+                width: '100%',
               }}
             />
           </SplideItem>
