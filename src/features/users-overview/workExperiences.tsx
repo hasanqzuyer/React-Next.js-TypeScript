@@ -418,7 +418,7 @@ const WorkExperience = (props: any) => {
                   right: '36px',
                   top: '90px',
                   width: width > 900 ? 'fit-content' : '100%',
-                  display: width > 900 ? 'grid' : 'contents',
+                  display: 'grid',
                   // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
                   gridColumn: width > 900 ? 'span 2' : '1/3',
@@ -428,7 +428,7 @@ const WorkExperience = (props: any) => {
                 <Stack
                   style={{
                     cursor: 'pointer', display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-end',
                     marginLeft: width <= 425 ? '8px' : '0',
                   }}
                   onClick={() => handleDelete(experience.id)}
@@ -438,7 +438,7 @@ const WorkExperience = (props: any) => {
                 <Stack style={{
                   cursor: 'pointer',
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   marginLeft: width <= 425 ? '8px' : '0',
 
 
