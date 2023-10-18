@@ -404,7 +404,7 @@ const WorkExperience = (props: any) => {
                 right: '36px',
                 top: '90px',
                 width: width > 900 ? 'fit-content' : '100%',
-                display: 'grid',
+                display: width > 900 ? 'grid' : 'contents',
                 placeItems: 'center',
                 gridColumn: width > 900 ? 'span 2' : '1/3'
               }}
@@ -421,8 +421,11 @@ const WorkExperience = (props: any) => {
               </Stack>
               <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
                 <AddIcon style={{
-                  color: '#9F9FB0'
-                }} />
+                  color: '#9F9FB0',
+                  width: width > 900 ? '24px' : '24px',
+                  height: width > 900 ? '19px' : '24px',
+
+                }} viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
               </Stack>
             </Stack>
           </AccountGrid>

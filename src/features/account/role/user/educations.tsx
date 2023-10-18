@@ -342,9 +342,9 @@ const Education = (props: any) => {
               value={
                 education.degree
                   ? {
-                      label: education.degree,
-                      value: education.degree,
-                    }
+                    label: education.degree,
+                    value: education.degree,
+                  }
                   : null
               }
               onValue={(degree) =>
@@ -363,9 +363,9 @@ const Education = (props: any) => {
               value={
                 education.fieldOfStudy
                   ? {
-                      label: education.fieldOfStudy,
-                      value: education.fieldOfStudy,
-                    }
+                    label: education.fieldOfStudy,
+                    value: education.fieldOfStudy,
+                  }
                   : null
               }
               onValue={(fieldOfStudy) =>
@@ -401,10 +401,14 @@ const Education = (props: any) => {
                 right: '36px',
                 top: '90px',
                 width: width > 900 ? 'fit-content' : '100%',
-                display: 'grid',
+                display: width > 900 ? 'grid' : 'contents',
+
                 placeItems: 'center',
                 gridColumn: width > 900 ? 'span 2' : '1/3'
               }}
+
+            // <svg width="24" height="23" viewBox="0 0 23 18" 
+
             >
               <Stack
                 style={{ cursor: 'pointer', alignItems: 'flex-end' }}
@@ -413,7 +417,12 @@ const Education = (props: any) => {
                 <DeleteIcon style={{ color: '#9F9FB0', justifySelf: 'flex-end' }} />
               </Stack>
               <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
-                <AddIcon style={{ color: '#9F9FB0' }} />
+                <AddIcon style={{
+                  color: '#9F9FB0',
+                  width: width > 900 ? '24px' : '24px',
+                  height: width > 900 ? '19px' : '24px',
+
+                }} viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
               </Stack>
             </Stack>
           </AccountGrid>
