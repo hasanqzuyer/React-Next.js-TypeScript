@@ -42,15 +42,17 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
         <Image
           alt="House thumbnail"
           src={`${Project.apis.v1}/public/images/${thumbnail?.key}`}
-          width={1000}
-          height={1000}
+          layout='fill'
+          object-fit="cover"
           priority={true}
+          width={0}
+          height={0}
           onClick={handleClickThumbnail}
           style={{
-            height: '100%',
+            borderRadius: '8px',
             width: '100%',
-            objectFit: 'cover',
-            cursor: 'pointer',
+            cursor: "pointer",
+            objectFit: "cover",
           }}
         />
       </ImageContainer>
@@ -69,6 +71,7 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
               start: startIndex,
             }}
             aria-label="My Favorite Images"
+            fullscreen={fullscreen}
           >
             {images.map((image: any, index: number) => (
               <SplideItem key={image + index}>
@@ -76,11 +79,15 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
                   <Image
                     alt="house photo"
                     src={`${Project.apis.v1}/public/images/${image?.key}`}
-                    width={1300}
+                    width={0}
+                    height={0}
                     priority={true}
-                    height={900}
+                    object-fit="cover"
+                    layout='fill'
                     style={{
-                      borderRadius: '8px'
+                      borderRadius: '8px',
+                      width: '100%',
+
                     }}
                   />
                 </FImageContainer>
@@ -98,22 +105,38 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
           pagination: false,
           gap: '4%',
           height: '1200px',
+          cover: true,
+          // height: '10rem',
+          lazyLoad: 'nearby',
           direction: 'ttb',
           breakpoints: {
-            1920: {
+            9999: {
               height: '800px',
+              gap: '1rem',
+            },
+            1920: {
+              height: '600px',
+              gap: '1rem',
+            },
+            1650: {
+              height: '500px',
+              gap: '1rem',
+              perPage: 3,
             },
             1400: {
-              height: '600px',
+              height: '450px',
+              gap: '1rem',
               perPage: 3,
             },
             800: {
               height: '400px',
+              gap: '1rem',
               perPage: 2,
             },
             649: {
               height: '430px',
               direction: 'ltr',
+              gap: '1rem',
               perPage: 1,
             },
             419: {
@@ -135,9 +158,15 @@ const Gallery = ({ thumbnail, images, ...props }: TGalleryProps) => {
             <Image
               alt="house photo"
               src={`${Project.apis.v1}/public/images/${image?.key}`}
-              width={220}
-              height={220}
+              layout='fill'
+              object-fit="cover"
+              width={0}
+              height={0}
               priority={true}
+              style={{
+                borderRadius: '8px',
+                width: '100%',
+              }}
             />
           </SplideItem>
         ))}
