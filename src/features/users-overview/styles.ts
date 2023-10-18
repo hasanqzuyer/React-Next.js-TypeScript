@@ -31,7 +31,7 @@ export const AccountGrid = styled.div`
       width: 100% !important;
       grid-template-columns: 1fr 1fr;
       gap: 5px;
-      display: contents !important;
+      
     }
   }
   @media screen and (max-width: 425px) {

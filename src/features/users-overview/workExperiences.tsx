@@ -330,9 +330,9 @@ const WorkExperience = (props: any) => {
               value={
                 experience.jobTitle
                   ? {
-                      label: experience.jobTitle,
-                      value: experience.jobTitle,
-                    }
+                    label: experience.jobTitle,
+                    value: experience.jobTitle,
+                  }
                   : null
               }
               onValue={(jobTitle) =>
@@ -364,9 +364,9 @@ const WorkExperience = (props: any) => {
               value={
                 experience.location
                   ? {
-                      label: experience.location,
-                      value: experience.location,
-                    }
+                    label: experience.location,
+                    value: experience.location,
+                  }
                   : null
               }
               onValue={(location) =>
@@ -402,7 +402,7 @@ const WorkExperience = (props: any) => {
             {!disabled && (
               <Stack
                 style={{
-                  position: 'absolute',
+                  position: 'unset',
                   right: '36px',
                   top: '90px',
                   width: 'fit-content',
