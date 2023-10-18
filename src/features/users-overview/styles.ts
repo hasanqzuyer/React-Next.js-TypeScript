@@ -25,7 +25,7 @@ export const AccountGrid = styled.div`
   padding-right: 90px;
   @media screen and (max-width: 900px) {
     padding-right: 20px;
-    gap: 10px 50px;
+    gap: 10px 15px;
     .css-1ny51ew-StackMain {
       position: static !important;
       width: 100% !important;

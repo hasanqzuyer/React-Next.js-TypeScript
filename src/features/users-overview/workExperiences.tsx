@@ -28,6 +28,7 @@ const WorkExperience = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
+  const [width] = useState(window.innerWidth);
 
   const [saveState, setSaveState] = useState({
     Updated: false,
@@ -402,16 +403,17 @@ const WorkExperience = (props: any) => {
             {!disabled && (
               <Stack
                 style={{
-                  position: 'absolute',
+                  position: width > 900 ? 'absolute' : 'static',
                   right: '36px',
                   top: '90px',
-                  width: 'fit-content',
+                  width: width > 900 ? 'fit-content' : '100%',
                   display: 'grid',
                   placeItems: 'center',
+                  gridTemplateColumns: width > 900 ? 'span 2' : '1fr 1fr'
                 }}
               >
                 <Stack
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                   onClick={() => handleDelete(experience.id)}
                 >
                   <DeleteIcon style={{ color: '#9F9FB0' }} />

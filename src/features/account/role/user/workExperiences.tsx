@@ -27,12 +27,14 @@ const WorkExperience = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
+  const [width] = useState(window.innerWidth);
 
   const [saveState, setSaveState] = useState({
     Updated: false,
     Inserted: false,
     Deleted: false,
   });
+  
 
   const handleInsert = async () => {
     try {
@@ -391,23 +393,28 @@ const WorkExperience = (props: any) => {
             />
             <Stack
               style={{
-                position: 'absolute',
+                position: width > 900 ? 'absolute' : 'static',
                 right: '36px',
                 top: '90px',
-                width: 'fit-content',
+                width: width > 900 ? 'fit-content' : '100%',
                 display: 'grid',
                 placeItems: 'center',
-                gridColumn: 'span 2'
+                gridTemplateColumns: width > 900 ? 'span 2' : '1fr 1fr'
               }}
             >
               <Stack
                 style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                 onClick={() => handleDelete(experience.id)}
               >
-                <DeleteIcon style={{ color: '#9F9FB0' }} />
+                <DeleteIcon 
+                style={{ 
+                  color: '#9F9FB0',
+                  justifySelf: 'flex-end'
+                }} />
               </Stack>
-              <Stack style={{ cursor: 'pointer', alignItems: 'flex-start'}} onClick={handleAdd}>
-                <AddIcon style={{ color: '#9F9FB0' }} />
+              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+                <AddIcon style={{ 
+                color: '#9F9FB0' }} />
               </Stack>
             </Stack>
           </AccountGrid>
