@@ -405,12 +405,13 @@ const WorkExperience = (props: any) => {
                 top: '90px',
                 width: width > 900 ? 'fit-content' : '100%',
                 display: width > 900 ? 'grid' : 'contents',
+                // display: width >= 425 ? 'grid' : 'contents',
                 placeItems: 'center',
                 gridColumn: width > 900 ? 'span 2' : '1/3'
               }}
             >
               <Stack
-                style={{ cursor: 'pointer', alignItems: 'flex-end' }}
+                style={{ cursor: 'pointer', alignItems: 'center', display: 'flex' }}
                 onClick={() => handleDelete(experience.id)}
               >
                 <DeleteIcon
@@ -419,7 +420,7 @@ const WorkExperience = (props: any) => {
                     justifySelf: 'flex-end'
                   }} />
               </Stack>
-              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+              <Stack style={{ cursor: 'pointer', alignItems: 'center', display: 'flex' }} onClick={handleAdd}>
                 <AddIcon style={{
                   color: '#9F9FB0',
                   width: width > 900 ? '24px' : '24px',

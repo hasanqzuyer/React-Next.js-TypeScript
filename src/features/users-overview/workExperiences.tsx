@@ -419,28 +419,43 @@ const WorkExperience = (props: any) => {
                   top: '90px',
                   width: width > 900 ? 'fit-content' : '100%',
                   display: width > 900 ? 'grid' : 'contents',
+                  // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
                   gridColumn: width > 900 ? 'span 2' : '1/3',
+
                 }}
               >
                 <Stack
-                  style={{ cursor: 'pointer', alignItems: 'flex-end' }}
+                  style={{
+                    cursor: 'pointer', display: 'flex',
+                    alignItems: 'center',
+                    marginLeft: width <= 425 ? '8px' : '0',
+                  }}
                   onClick={() => handleDelete(experience.id)}
                 >
                   <DeleteIcon style={{ color: '#9F9FB0' }} />
                 </Stack>
-                <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+                <Stack style={{
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: width <= 425 ? '8px' : '0',
+
+
+                }} onClick={handleAdd}>
                   <AddIcon style={{
                     color: '#9F9FB0',
                     width: width > 900 ? '24px' : '24px',
                     height: width > 900 ? '19px' : '24px',
+                    marginLeft: width <= 425 ? '8px' : '0',
                   }
 
                   } viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
                 </Stack>
               </Stack>
-            )}
-          </AccountGrid>
+            )
+            }
+          </AccountGrid >
         );
       })}
     </>

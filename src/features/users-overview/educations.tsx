@@ -406,6 +406,7 @@ const Education = (props: any) => {
                   top: '90px',
                   width: width > 900 ? 'fit-content' : '100%',
                   display: width > 900 ? 'grid' : 'contents',
+                  // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
                   gridColumn: width > 900 ? 'span 2' : '1/3'
                 }}
@@ -414,14 +415,15 @@ const Education = (props: any) => {
                   style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                   onClick={() => handleDelete(education.id)}
                 >
-                  <DeleteIcon style={{ color: '#9F9FB0', justifySelf: 'flex-end' }} />
+                  <DeleteIcon style={{ color: '#9F9FB0', justifySelf: 'flex-end', alignItems: 'center', display: 'flex' }} />
                 </Stack>
                 <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
                   <AddIcon style={{
                     color: '#9F9FB0',
                     width: width > 900 ? '24px' : '24px',
                     height: width > 900 ? '19px' : '24px',
-
+                    alignItems: 'center', display: 'flex',
+                    marginLeft: width <= 425 ? '8px' : '0',
                   }} viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
                 </Stack>
               </Stack>

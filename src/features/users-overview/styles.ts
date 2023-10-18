@@ -34,12 +34,12 @@ export const AccountGrid = styled.div`
       
     }
   }
-  @media screen and (max-width: 425px) {
+   @media screen and (max-width: 425px) {
     display: flex;
-    flex-direction: column;
-    gap: 25px 50px;
-    padding-right: 10px;
-  }
+   flex-direction: column;
+     gap: 25px 50px;
+     padding-right: 10px;
+   }
 `;
 
 export const PreferenceEditButton = styled.div`
