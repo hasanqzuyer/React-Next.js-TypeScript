@@ -27,14 +27,21 @@ const WorkExperience = (props: any) => {
   const [InsertedArray, setInsertedArray] = useState<any[]>([]);
   const [EditedArray, setEditedArray] = useState<any[]>([]);
   const [DeletedArray, setDeletedArray] = useState<any[]>([]);
-  const [width] = useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [saveState, setSaveState] = useState({
     Updated: false,
     Inserted: false,
     Deleted: false,
   });
-  
+
+
 
   const handleInsert = async () => {
     try {
@@ -330,9 +337,9 @@ const WorkExperience = (props: any) => {
               value={
                 experience.jobTitle
                   ? {
-                      label: experience.jobTitle,
-                      value: experience.jobTitle,
-                    }
+                    label: experience.jobTitle,
+                    value: experience.jobTitle,
+                  }
                   : null
               }
               onValue={(jobTitle) =>
@@ -361,9 +368,9 @@ const WorkExperience = (props: any) => {
               value={
                 experience.location
                   ? {
-                      label: experience.location,
-                      value: experience.location,
-                    }
+                    label: experience.location,
+                    value: experience.location,
+                  }
                   : null
               }
               onValue={(location) =>
@@ -406,15 +413,16 @@ const WorkExperience = (props: any) => {
                 style={{ cursor: 'pointer', alignItems: 'flex-end' }}
                 onClick={() => handleDelete(experience.id)}
               >
-                <DeleteIcon 
-                style={{ 
-                  color: '#9F9FB0',
-                  justifySelf: 'flex-end'
-                }} />
+                <DeleteIcon
+                  style={{
+                    color: '#9F9FB0',
+                    justifySelf: 'flex-end'
+                  }} />
               </Stack>
               <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
-                <AddIcon style={{ 
-                color: '#9F9FB0' }} />
+                <AddIcon style={{
+                  color: '#9F9FB0'
+                }} />
               </Stack>
             </Stack>
           </AccountGrid>
