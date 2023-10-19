@@ -417,11 +417,12 @@ const WorkExperience = (props: any) => {
                   position: width && width > 900 ? 'absolute' : 'static',
                   right: '36px',
                   top: '90px',
-                  width: width > 900 ? 'fit-content' : '100%',
+                  // width: width > 900 ? 'fit-content' : '100%',
                   display: 'grid',
+                  gridTemplateColumns: width && width > 900 ? 'unset' : '1fr 1fr',
                   // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
-                  gridColumn: width > 900 ? 'span 2' : '1/3',
+                  gridColumn: width && width > 900 ? 'span 2' : '1/3',
 
                 }}
               >
@@ -438,7 +439,7 @@ const WorkExperience = (props: any) => {
                 <Stack style={{
                   cursor: 'pointer',
                   display: 'flex',
-                  alignItems: 'flex-start',
+                  alignItems: width > 900 ? 'flex-end' : "flex-start",
                   marginLeft: width <= 425 ? '8px' : '0',
 
 

@@ -397,32 +397,44 @@ const Education = (props: any) => {
             />
             <Stack
               style={{
-                position: width > 900 ? 'absolute' : 'static',
+                position: width && width > 900 ? 'absolute' : 'static',
                 right: '36px',
                 top: '90px',
-                width: width > 900 ? 'fit-content' : '100%',
-                display: width > 900 ? 'grid' : 'contents',
+                // width: width > 900 ? 'fit-content' : '100%',
+                display: 'grid',
+                gridTemplateColumns: width && width > 900 ? 'unset' : '1fr 1fr',
                 // display: width >= 425 ? 'grid' : 'contents',
                 placeItems: 'center',
-                gridColumn: width > 900 ? 'span 2' : '1/3'
+                gridColumn: width && width > 900 ? 'span 2' : '1/3',
+
               }}
-
-            // <svg width="24" height="23" viewBox="0 0 23 18" 
-
             >
               <Stack
-                style={{ cursor: 'pointer', alignItems: 'flex-end' }}
+                style={{
+                  cursor: 'pointer', display: 'flex',
+                  alignItems: 'flex-end',
+                  marginLeft: width <= 425 ? '8px' : '0',
+                }}
                 onClick={() => handleDelete(education.id)}
               >
-                <DeleteIcon style={{ color: '#9F9FB0', justifySelf: 'flex-end', alignItems: 'center', display: 'flex' }} />
+                <DeleteIcon style={{ color: '#9F9FB0' }} />
               </Stack>
-              <Stack style={{ cursor: 'pointer' }} onClick={handleAdd}>
+              <Stack style={{
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: width > 900 ? 'flex-end' : "flex-start",
+                marginLeft: width <= 425 ? '8px' : '0',
+
+
+              }} onClick={handleAdd}>
                 <AddIcon style={{
                   color: '#9F9FB0',
                   width: width > 900 ? '24px' : '24px',
                   height: width > 900 ? '19px' : '24px',
-                  alignItems: 'center', display: 'flex'
-                }} viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
+                  marginLeft: width <= 425 ? '8px' : '0',
+                }
+
+                } viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
               </Stack>
             </Stack>
           </AccountGrid>
