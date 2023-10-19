@@ -5,7 +5,7 @@ import { Menu, MenuNoPortal } from 'components/custom';
 
 export const NavigationMain = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
-        z-index: 1400;
+        z-index: 900;
         position: relative;
         width: 100%;
         padding: ${theme.spacing(5)} ${theme.spacing(10)};
@@ -21,8 +21,8 @@ export const NavigationMain = styled.div<{ theme?: Theme }>`
 
         ${theme.breakpoints.down('sm')} {
           padding: ${theme.spacing(5)} ${theme.spacing(5)} ${theme.spacing(
-    5
-  )} ${theme.spacing(2.5)};
+  5
+)} ${theme.spacing(2.5)};
           gap: 0;
         }
     `}
@@ -152,16 +152,16 @@ export const NavigationProfileName = styled.div<{ theme?: Theme }>`
     `}
 `;
 
-export const NavigationProfileImage = styled(Avatar)<{ theme?: Theme }>`
+export const NavigationProfileImage = styled(Avatar) <{ theme?: Theme }>`
   ${({ theme }) => `
         background-color: ${theme.palette.common.white}20;
         color: ${theme.palette.common.white};
     `}
 `;
 
-export const NavigationSearch = styled(Search)<{ theme?: Theme }>``;
+export const NavigationSearch = styled(Search) <{ theme?: Theme }>``;
 
-export const NavigationProfileDropdown = styled(Menu)<{
+export const NavigationProfileDropdown = styled(Menu) <{
   theme?: Theme;
   position?: { right: number; top: number };
 }>`
@@ -236,7 +236,7 @@ export const NavigationMenuButton = styled.div<{ theme?: Theme }>`
     `}
 `;
 
-export const NavigationBalanceDropdown = styled(MenuNoPortal)<{
+export const NavigationBalanceDropdown = styled(MenuNoPortal) <{
   theme?: Theme;
   position: { right: number; top: number };
 }>`
