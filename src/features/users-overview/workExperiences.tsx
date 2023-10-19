@@ -423,7 +423,7 @@ const WorkExperience = (props: any) => {
                   // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
                   gridColumn: width && width > 900 ? 'span 2' : '1/3',
-
+                  width: 'auto'
                 }}
               >
                 <Stack

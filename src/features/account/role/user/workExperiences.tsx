@@ -409,12 +409,14 @@ const WorkExperience = (props: any) => {
                 // display: width >= 425 ? 'grid' : 'contents',
                 placeItems: 'center',
                 gridColumn: width && width > 900 ? 'span 2' : '1/3',
+                width: 'auto'
 
               }}
             >
               <Stack
                 style={{
-                  cursor: 'pointer', display: 'flex',
+                  cursor: 'pointer',
+                  display: 'flex',
                   alignItems: 'flex-end',
                   marginLeft: width <= 425 ? '8px' : '0',
                 }}
@@ -422,6 +424,7 @@ const WorkExperience = (props: any) => {
               >
                 <DeleteIcon style={{ color: '#9F9FB0' }} />
               </Stack>
+
               <Stack style={{
                 cursor: 'pointer',
                 display: 'flex',

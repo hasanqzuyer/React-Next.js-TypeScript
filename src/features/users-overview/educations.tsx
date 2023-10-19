@@ -428,6 +428,7 @@ const Education = (props: any) => {
                   display: 'flex',
                   alignItems: width > 900 ? 'flex-end' : "flex-start",
                   marginLeft: width <= 425 ? '8px' : '0',
+                  width: 'auto'
 
 
                 }} onClick={handleAdd}>
