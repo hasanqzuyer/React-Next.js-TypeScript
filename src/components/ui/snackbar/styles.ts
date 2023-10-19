@@ -5,6 +5,7 @@ import { TSnackbarVariant } from 'components/ui/snackbar/types';
 
 export const SnackbarMain = styled(SnackbarContent)<{ theme?: Theme }>`
   min-width: auto !important;
+  justify-content: center !important;
 `;
 
 export const SnackbarElement = styled(Alert)<{

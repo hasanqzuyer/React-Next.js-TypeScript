@@ -38,7 +38,7 @@ export const SFullScreenGallery = styled.div<{ theme?: Theme }>`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.85);
-  z-index: 999;
+  z-index: 1501;
 
   .splide__slide {
     display: grid;
