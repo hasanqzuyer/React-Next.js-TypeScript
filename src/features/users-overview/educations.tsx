@@ -435,6 +435,7 @@ const Education = (props: any) => {
                     color: '#9F9FB0',
                     width: width > 900 ? '24px' : '24px',
                     height: width > 900 ? '19px' : '24px',
+                    alignItems: width > 900 ? 'flex-end' : "flex-start",
                     marginLeft: width <= 425 ? '8px' : '0',
                   }
 

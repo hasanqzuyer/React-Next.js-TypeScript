@@ -434,6 +434,7 @@ const Education = (props: any) => {
                   width: width > 900 ? '24px' : '24px',
                   height: width > 900 ? '19px' : '24px',
                   marginLeft: width <= 425 ? '8px' : '0',
+                  alignItems: width > 900 ? 'flex-end' : "flex-start",
                 }
 
                 } viewBox={width > 900 ? '0 0 19 19' : '0 0 23 18'} />
