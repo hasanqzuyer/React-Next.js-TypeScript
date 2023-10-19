@@ -5,7 +5,7 @@ import { Menu, MenuNoPortal } from 'components/custom';
 
 export const NavigationMain = styled.div<{ theme?: Theme }>`
   ${({ theme }) => `
-        z-index: 2000;
+        z-index: 1400;
         position: relative;
         width: 100%;
         padding: ${theme.spacing(5)} ${theme.spacing(10)};
