@@ -410,7 +410,7 @@ const Education = (props: any) => {
                   // display: width >= 425 ? 'grid' : 'contents',
                   placeItems: 'center',
                   gridColumn: width && width > 900 ? 'span 2' : '1/3',
-
+                  width: 'auto'
                 }}
               >
                 <Stack
@@ -428,7 +428,6 @@ const Education = (props: any) => {
                   display: 'flex',
                   alignItems: width > 900 ? 'flex-end' : "flex-start",
                   marginLeft: width <= 425 ? '8px' : '0',
-                  width: 'auto'
 
 
                 }} onClick={handleAdd}>
