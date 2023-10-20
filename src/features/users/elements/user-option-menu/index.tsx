@@ -28,7 +28,7 @@ const UserMenuActions = ({ reload, userId, ...props }: TUserOptionMenu) => {
     try {
       await UsersAPI.deleteUser(userId);
       reload();
-      push(`User Deleted successfully!`, {
+      push(`User has been banned successfully!`, {
         variant: 'success',
       });
     } catch (e: any) {
