@@ -24,48 +24,6 @@ const ApplicationModal = ({
   });
   const { push } = useSnackbar();
 
-  const [showBasicOption, setShowBasicOption] = useState<boolean>(false);
-
-
-  const getAllApplications = async (): Promise<any> => {
-    try {
-      const response = await ApplicationAPI.getApplications({
-        ownerId: user.id,
-      });
-
-      if (response) {
-
-        const hasBasicApplication = response.some(
-          (application: any) => application.houseId === houseId && application.tier === "Basic"
-        )
-
-        setShowBasicOption(!hasBasicApplication)
-
-        console.log(showBasicOption)
-        setShowBasicOption(false)
-      } else {
-        //  setShowBasicOption(true)
-        setShowBasicOption(false)
-      }
-
-
-      return response;
-      throw new Error('Error: Failed to fetch data!');
-    } catch (error) {
-      push('Something went wrong!', { variant: 'error' });
-    }
-  };
-
-  useEffect(() => {
-    getAllApplications()
-  })
-
-  // useEffect(() => {
-  //   getAllApplications()
-  //     .then((data) => setTotalColumnItems(data))
-  //     .catch((error) => push('Something went wrong!', { variant: 'error' }));
-  // }, [applicationStatus]);
-
 
   const handleApply = async () => {
     if (state.tier) {
@@ -153,22 +111,14 @@ const ApplicationModal = ({
           placeholder="Please Enter"
         />
         <Input
-          key={showBasicOption ? "withBasic" : "withoutBasic"}
           type="select"
           label="Application Type"
           value={state.tier}
           options={[
-
-
-            ...(showBasicOption ?
-              [
-                {
-                  value: 'Basic',
-                  label: 'Basic (Cost: 0 Tokens)',
-                },
-              ] : []
-
-            ),
+            {
+              value: 'Basic',
+              label: 'Basic (Cost: 0 Tokens)',
+            },
             {
               value: 'Priority',
               label: 'Priority (Cost: 5 Tokens)',
