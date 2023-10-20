@@ -463,7 +463,7 @@ const AccountPage = () => {
       !eduSaving &&
       !hprefSaving &&
       !socialMediaSaving &&
-      user.id
+      !user.id
     ) {
       setCount((count) => count + 1);
       getUserById(user.id);
