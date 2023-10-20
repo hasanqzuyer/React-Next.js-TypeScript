@@ -101,13 +101,13 @@ const UserApplicationsPage = () => {
             }}
           />
 
-             <Tooltip title={application.house.name}>
-                <EllipsisText>
-                  {application.house.name.length > 29
-                    ? application.house.name.slice(0, 29) + '...'
-                    : application.house.name}
-                </EllipsisText>
-              </Tooltip>
+          <Tooltip title={application.house.name}>
+            <EllipsisText>
+              {application.house.name.length > 29
+                ? application.house.name.slice(0, 29) + '...'
+                : application.house.name}
+            </EllipsisText>
+          </Tooltip>
         </MarketTableItem>
 
 
@@ -123,7 +123,8 @@ const UserApplicationsPage = () => {
       return application.tier;
     }
     if (headItem.reference === 'rent') {
-      return `€${application.house.rent}`;
+      console.log(application.house)
+      return `${application.house.currency}${application.house.rent}`;
     }
     if (headItem.reference === 'status') {
       if (application.house.status.toLowerCase() === "completed" && application.status.toLowerCase() === 'not selected') {

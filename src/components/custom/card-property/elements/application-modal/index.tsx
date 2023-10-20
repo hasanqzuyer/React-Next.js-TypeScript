@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'components/custom';
 import { AddProjectModalMain } from 'features/opportunities/role/admin/elements/add-project-modal/style';
 import { Button, Input } from 'components/ui';
@@ -23,6 +23,49 @@ const ApplicationModal = ({
     balance: 0,
   });
   const { push } = useSnackbar();
+
+  const [showBasicOption, setShowBasicOption] = useState<boolean>(false);
+
+
+  const getAllApplications = async (): Promise<any> => {
+    try {
+      const response = await ApplicationAPI.getApplications({
+        ownerId: user.id,
+      });
+
+      if (response) {
+
+        const hasBasicApplication = response.some(
+          (application: any) => application.houseId === houseId && application.tier === "Basic"
+        )
+
+        setShowBasicOption(!hasBasicApplication)
+
+        console.log(showBasicOption)
+        setShowBasicOption(false)
+      } else {
+        //  setShowBasicOption(true)
+        setShowBasicOption(false)
+      }
+
+
+      return response;
+      throw new Error('Error: Failed to fetch data!');
+    } catch (error) {
+      push('Something went wrong!', { variant: 'error' });
+    }
+  };
+
+  useEffect(() => {
+    getAllApplications()
+  })
+
+  // useEffect(() => {
+  //   getAllApplications()
+  //     .then((data) => setTotalColumnItems(data))
+  //     .catch((error) => push('Something went wrong!', { variant: 'error' }));
+  // }, [applicationStatus]);
+
 
   const handleApply = async () => {
     if (state.tier) {
@@ -81,6 +124,8 @@ const ApplicationModal = ({
     }
   };
 
+
+
   return (
     <Modal
       size="medium"
@@ -104,18 +149,26 @@ const ApplicationModal = ({
           type="text"
           label="Balance"
           value={`${user.tokenBalance} Tokens`}
-          onValue={() => {}}
+          onValue={() => { }}
           placeholder="Please Enter"
         />
         <Input
+          key={showBasicOption ? "withBasic" : "withoutBasic"}
           type="select"
           label="Application Type"
           value={state.tier}
           options={[
-            {
-              value: 'Basic',
-              label: 'Basic (Cost: 0 Tokens)',
-            },
+
+
+            ...(showBasicOption ?
+              [
+                {
+                  value: 'Basic',
+                  label: 'Basic (Cost: 0 Tokens)',
+                },
+              ] : []
+
+            ),
             {
               value: 'Priority',
               label: 'Priority (Cost: 5 Tokens)',

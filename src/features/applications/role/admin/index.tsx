@@ -406,7 +406,7 @@ const AdminApplicationsPage = () => {
       return application.tier;
     }
     if (headItem.reference === 'rent') {
-      return `€${application.house.rent}`;
+      return `${application.house.currency}${application.house.rent}`;
     }
     if (headItem.reference === 'status') {
       return application.status;
