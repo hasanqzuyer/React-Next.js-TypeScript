@@ -53,6 +53,7 @@ const Checkbox = ({
           onClick={handleClick}
           helper={helper}
           required={required}
+          disabled={disabled}
         >
           {label}
         </CheckboxLabel>

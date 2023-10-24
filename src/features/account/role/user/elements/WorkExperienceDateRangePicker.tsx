@@ -144,9 +144,11 @@ export const WorkExperienceDateRangePicker = ({
       />
       {!hideCheckbox && (
         <Checkbox
+          disabled={disabled}
           label="I still work here."
           style={{
             position: 'absolute',
+            cursor: disabled ? "default !important" : "pointer !important",
             right: '0',
             bottom: '-25px',
           }}
