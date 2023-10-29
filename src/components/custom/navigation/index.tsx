@@ -49,16 +49,32 @@ const Navigation = ({ ...props }: TNavigationProps) => {
     }
   };
 
+  const getRouteName = () => {
+    if (router.pathname === '/houses'){
+      return "Houses"
+    }
+    if (router.pathname === '/'){
+    if(role === "ADMIN"){
+        return "Users"
+      }else{
+        return "Houses"
+      }
+    }
+    const base = router.pathname.replace("/", "");
+    return `${base.charAt(0).toUpperCase()}${base.slice(1)}`
+  }
+
   const handleSidebar = () => {
     handleMobileMenu(!showMobileMenu);
   };
+
   return (
     <NavigationMain {...props}>
       <NavigationMenu>
         <NavigationMenuButton onClick={handleSidebar}>
           <MenuIcon />
         </NavigationMenuButton>
-        <NavigationRouteName>{routeName}</NavigationRouteName>
+        <NavigationRouteName>{getRouteName()}</NavigationRouteName>
       </NavigationMenu>
       <NavigationItems>
         {['USER'].includes(role) && (

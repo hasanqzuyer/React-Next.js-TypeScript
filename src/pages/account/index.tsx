@@ -7,9 +7,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 const Account = () => {
   const { role, setRouteName } = useAppContext();
 
-  useEffect(() => {
-    setRouteName('Account');
-  }, []);
+  // useEffect(() => {
+  //   setRouteName('Account');
+  // }, []);
 
   return (
     <>
