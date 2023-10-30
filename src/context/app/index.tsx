@@ -26,6 +26,7 @@ const AppContextProvider = ({ ...props }) => {
     currency: 'CHF',
     influencer: null,
     houseStatus: 0,
+    houseName: '',
     userStatus: 0,
     applicationStatus: 0,
     notificationStatus: 0,
@@ -49,6 +50,10 @@ const AppContextProvider = ({ ...props }) => {
 
   const handleHouseStatus = (value: number) => {
     setState((x) => ({ ...x, houseStatus: value }));
+  };
+
+  const setHouseName = (houseName: string) => {
+    setState((x) => ({ ...x, houseName }));
   };
 
   const handleUserStatus = (value: number) => {
@@ -125,6 +130,7 @@ const AppContextProvider = ({ ...props }) => {
       handleCurrencyChange,
       handleInfluencer,
       handleUserStatus,
+      setHouseName,
       handleHouseStatus,
       handleApplicationStatus,
       handleNotificationStatus,
@@ -139,6 +145,7 @@ const AppContextProvider = ({ ...props }) => {
       handleCurrencyChange,
       handleInfluencer,
       handleUserStatus,
+      setHouseName,
       handleHouseStatus,
       handleApplicationStatus,
       handleNotificationStatus,

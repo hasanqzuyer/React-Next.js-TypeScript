@@ -32,7 +32,7 @@ const Navigation = ({ ...props }: TNavigationProps) => {
 
   const router = useRouter();
 
-  const { routeName, role, user, handleMobileMenu, showMobileMenu } =
+  const { routeName, role, user, handleMobileMenu, showMobileMenu, houseName } =
     useAppContext();
 
   const handleMenu = () => {
@@ -50,6 +50,9 @@ const Navigation = ({ ...props }: TNavigationProps) => {
   };
 
   const getRouteName = () => {
+    if (router.pathname === '/houses/overview'){
+      return "Houses"
+    }
     if (router.pathname === '/houses'){
       return "Houses"
     }
@@ -74,7 +77,10 @@ const Navigation = ({ ...props }: TNavigationProps) => {
         <NavigationMenuButton onClick={handleSidebar}>
           <MenuIcon />
         </NavigationMenuButton>
-        <NavigationRouteName>{getRouteName()}</NavigationRouteName>
+        { vacayName === '' ?
+        <NavigationRouteName>{getRouteName()}{vacayName}</NavigationRouteName> :
+        <NavigationRouteName>{getRouteName()} - {vacayName}</NavigationRouteName>
+        }
       </NavigationMenu>
       <NavigationItems>
         {['USER'].includes(role) && (

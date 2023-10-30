@@ -5,6 +5,7 @@ export const createInitialState = (): TAppContext => ({
   user: null,
   influencer: null,
   currency: 'CHF',
+  houseName: '',
   login: async (_x) => {},
   setRouteName: () => {},
   logout: () => {},
@@ -21,6 +22,7 @@ export const createInitialState = (): TAppContext => ({
   getMeData: async () => {},
   handleUserStatus: () => {},
   handleHouseStatus: () => {},
+  setHouseName: () => {},
   handleApplicationStatus: () => {},
   handleNotificationStatus: () => {},
 });

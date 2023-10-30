@@ -11,6 +11,7 @@ export type TAppContextState = {
   currency: string;
   influencer: null | IUser;
   houseStatus: number;
+  houseName: string;
   applicationStatus: number;
   userStatus: number;
   notificationStatus: number;
@@ -24,6 +25,7 @@ export type TAppContext = TAppContextState & {
   handleCurrencyChange: (value: string) => void;
   handleInfluencer: (value: IUser) => void;
   getMeData: () => Promise<any>;
+  setHouseName: (name: string) => void;
   handleHouseStatus: (value: number) => void;
   handleApplicationStatus: (value: number) => void;
   handleUserStatus: (value: number) => void;

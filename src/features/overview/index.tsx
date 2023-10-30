@@ -25,7 +25,7 @@ import { useAppContext } from 'context';
 const OverviewPage = (props: any) => {
   const { houseId } = props;
   const router = useRouter();
-  const { houseStatus } = useAppContext();
+  const { houseStatus, user, setHouseName } = useAppContext();
   const [tab, setTab] = useState(0);
 
   const [houseData, setHouseData] = useState<IHouse>({
@@ -106,6 +106,7 @@ const OverviewPage = (props: any) => {
 
   useEffect(() => {
     setTotalResults(houseData.documents?.length);
+    setHouseName(houseData?.name);
   }, [houseData.documents]);
   return (
     <OverviewMain>
