@@ -50,6 +50,9 @@ const Navigation = ({ ...props }: TNavigationProps) => {
   };
 
   const getRouteName = () => {
+    if (router.pathname === '/users/overview'){
+      return "Users"
+    }
     if (router.pathname === '/houses/overview'){
       return "Houses"
     }
