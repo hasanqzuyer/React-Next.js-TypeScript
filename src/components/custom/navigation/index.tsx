@@ -81,8 +81,8 @@ const Navigation = ({ ...props }: TNavigationProps) => {
           <MenuIcon />
         </NavigationMenuButton>
         { vacayName === '' ?
-        <NavigationRouteName>{getRouteName()}{vacayName}</NavigationRouteName> :
-        <NavigationRouteName>{getRouteName()} - {vacayName}</NavigationRouteName>
+        <NavigationRouteName>{getRouteName()}</NavigationRouteName> :
+        <NavigationRouteName>{vacayName}</NavigationRouteName>
         }
       </NavigationMenu>
       <NavigationItems>
